@@ -15,8 +15,6 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   // Control when content becomes visible after initial delay
   const [showContent, setShowContent] = useState(false);
-  // Show the first word prominently before name animation
-  const [showFirstWord, setShowFirstWord] = useState(false);
   // Control when name animation starts
   const [showName, setShowName] = useState(false);
   // Trigger exit animation sequence
@@ -29,30 +27,19 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
   const delays = [1000, 800, 650, 500]; // Slower transitions
 
   useEffect(() => {
-    // Initial delay before showing first word
+    // Initial delay before showing content
     const showTimer = setTimeout(() => {
-      setShowFirstWord(true);
-    }, 300);
+      setShowContent(true);
+      setShowName(true);
+    }, 500); // Slightly longer initial delay
 
     return () => clearTimeout(showTimer);
   }, []);
 
   useEffect(() => {
-    if (!showFirstWord) return;
-
-    // Show first word for 1.5 seconds, then start name animation
-    const nameTimer = setTimeout(() => {
-      setShowName(true);
-      setShowContent(true);
-    }, 1500);
-
-    return () => clearTimeout(nameTimer);
-  }, [showFirstWord]);
-
-  useEffect(() => {
     if (!showContent) return;
 
-    // Cycle through words with decreasing delays (skip first word since it's already shown)
+    // Cycle through words with decreasing delays
     if (currentWordIndex < words.length - 1) {
       const timer = setTimeout(() => {
         setCurrentWordIndex((prev) => prev + 1);
@@ -92,23 +79,6 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
           ease: [0.25, 0.46, 0.45, 0.94], // Smoother cubic-bezier for exit
         }}
       >
-        {/* First Word - Prominently Displayed */}
-        <AnimatePresence mode="wait">
-          {showFirstWord && !showName && (
-            <motion.div
-              className="text-center"
-              initial={{ opacity: 0, y: 30, scale: 0.9 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -30, scale: 0.9 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-            >
-              <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light text-white/90 tracking-wide">
-                {words[0]}
-              </h2>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
         {/* Main Name Animation */}
         <motion.div
           className="text-center mb-8"
@@ -136,29 +106,27 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
           </h1>
         </motion.div>
 
-        {/* Rotating Words Section - Skip first word since it's shown prominently */}
+        {/* Rotating Words Section */}
         <motion.div
           className="h-16 flex items-center justify-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: showContent ? 1 : 0 }}
-          transition={{ duration: 0.6, delay: 1.0 }}
+          transition={{ duration: 0.6, delay: 1.2 }}
         >
           <AnimatePresence mode="wait">
-            {currentWordIndex > 0 && (
-              <motion.p
-                key={currentWordIndex}
-                className="text-2xl sm:text-3xl md:text-4xl font-light text-white/80 tracking-wide"
-                initial={{ opacity: 0, y: 20, scale: 0.9 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -20, scale: 1.1 }}
-                transition={{
-                  duration: 0.4,
-                  ease: "easeInOut",
-                }}
-              >
-                {words[currentWordIndex]}
-              </motion.p>
-            )}
+            <motion.p
+              key={currentWordIndex}
+              className="text-2xl sm:text-3xl md:text-4xl font-light text-white/80 tracking-wide"
+              initial={{ opacity: 0, y: 20, scale: 0.9 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -20, scale: 1.1 }}
+              transition={{
+                duration: 0.4,
+                ease: "easeInOut",
+              }}
+            >
+              {words[currentWordIndex]}
+            </motion.p>
           </AnimatePresence>
         </motion.div>
 
@@ -167,7 +135,7 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
           className="absolute bottom-12 left-1/2 transform -translate-x-1/2"
           initial={{ opacity: 0 }}
           animate={{ opacity: showContent ? 0.6 : 0 }}
-          transition={{ duration: 0.6, delay: 1.4 }}
+          transition={{ duration: 0.6, delay: 1.6 }}
         >
           <div className="w-32 h-0.5 bg-white/20 rounded-full overflow-hidden">
             <motion.div
@@ -177,7 +145,7 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
               transition={{
                 duration: 4.0, // Slightly longer for smoother feel
                 ease: "easeInOut",
-                delay: 1.6,
+                delay: 1.8,
               }}
             />
           </div>
