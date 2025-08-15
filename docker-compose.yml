@@ -1,20 +1,9 @@
-version: '3.8'
-
 services:
   web:
     build: .
-    ports:
-      - "3000:80"
-      - "3443:443"
-    labels:
-      - traefik.http.routers.web.rule=Host(`aaronbarlow.dev`,`www.aaronbarlow.dev`)
-      - traefik.http.services.web.loadbalancer.server.port=80
-      - traefik.http.routers.web-https.rule=Host(`aaronbarlow.dev`,`www.aaronbarlow.dev`)
-      - traefik.http.routers.web-https.tls=true
-      - traefik.http.services.web-https.loadbalancer.server.port=443
-    healthcheck:
-      test: ["CMD", "wget", "-qO-", "http://localhost/"]
-      interval: 10s
-      timeout: 3s
-      retries: 5
     restart: unless-stopped
+    labels:
+      - traefik.http.routers.personal.rule=Host(`aaronbarlow.dev`,`www.aaronbarlow.dev`)
+      - traefik.http.routers.personal.entrypoints=websecure
+      - traefik.http.routers.personal.tls=true
+      - traefik.http.services.personal.loadbalancer.server.port=80
