@@ -203,6 +203,7 @@ const Header = ({ className = '' }: HeaderProps) => {
             variant="ghost"
             size="icon"
             onClick={toggleTheme}
+            aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
             className="rounded-full transition-all duration-500 ease-in-out w-12 h-12 hover:scale-110 active:scale-95"
           >
             <motion.div
@@ -228,6 +229,9 @@ const Header = ({ className = '' }: HeaderProps) => {
           <Button
             variant="ghost"
             size="icon"
+            aria-label={
+              mobileMenuOpen ? 'Close mobile menu' : 'Open mobile menu'
+            }
             className="md:hidden rounded-full"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >

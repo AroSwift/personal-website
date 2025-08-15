@@ -30,6 +30,16 @@ export default defineConfig({
           ui: ['@radix-ui/react-icons', '@radix-ui/react-slot', 'lucide-react'],
           animations: ['framer-motion'],
         },
+        // Optimize chunk size
+        chunkFileNames: 'assets/[name]-[hash].js',
+        entryFileNames: 'assets/[name]-[hash].js',
+        assetFileNames: 'assets/[name]-[hash].[ext]',
+      },
+      // Tree shaking optimization
+      treeshake: {
+        moduleSideEffects: false,
+        propertyReadSideEffects: false,
+        unknownGlobalSideEffects: false,
       },
     },
     // Reduce bundle size
@@ -38,7 +48,26 @@ export default defineConfig({
       compress: {
         drop_console: true,
         drop_debugger: true,
+        pure_funcs: [
+          'console.log',
+          'console.info',
+          'console.debug',
+          'console.warn',
+        ],
+        passes: 2,
+      },
+      mangle: {
+        toplevel: true,
       },
     },
+    // Optimize CSS
+    cssCodeSplit: true,
+    // Reduce chunk size warnings threshold
+    chunkSizeWarningLimit: 1000,
+  },
+  // Optimize dependencies
+  optimizeDeps: {
+    include: ['react', 'react-dom', 'react-router-dom'],
+    exclude: ['@radix-ui/react-icons', 'lucide-react'],
   },
 });

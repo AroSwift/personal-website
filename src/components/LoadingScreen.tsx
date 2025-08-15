@@ -21,7 +21,7 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
   const [isExiting, setIsExiting] = useState(false);
 
   // Words to cycle through during loading animation
-  const words = ['Architect', 'Orchestrator', 'Inventor', 'Engineer'];
+  const words = ['Architect', 'Designer', 'Inventor', 'Engineer'];
 
   // Timing delays between word transitions (slower for more dramatic effect)
   const delays = [1000, 800, 650, 500]; // Slower transitions

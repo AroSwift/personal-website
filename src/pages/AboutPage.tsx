@@ -181,9 +181,12 @@ const AboutPage = () => {
                 transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
               >
                 <img
-                  src="/profile-aaron.jpg"
+                  src="/profile-aaron-800.webp"
                   alt="Aaron Barlow"
                   className="w-full h-full object-cover hover:scale-110 transition-transform duration-700 ease-out"
+                  srcSet="/profile-aaron-400.webp 400w, /profile-aaron-800.webp 800w"
+                  sizes="(max-width: 640px) 400px, 800px"
+                  loading="lazy"
                 />
               </motion.div>
 

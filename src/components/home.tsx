@@ -163,9 +163,12 @@ function Home() {
                 >
                   {/* Cartoon image - shown by default */}
                   <motion.img
-                    src="/profile-guy.png"
+                    src="/profile-guy-800.webp"
                     alt="Profile"
                     className="w-full h-full object-cover relative z-10"
+                    srcSet="/profile-guy-400.webp 400w, /profile-guy-800.webp 800w"
+                    sizes="(max-width: 640px) 400px, 800px"
+                    loading="eager"
                     animate={{
                       opacity: isHovering ? 0 : 1,
                       clipPath: isDragging
@@ -178,9 +181,12 @@ function Home() {
 
                   {/* Real image underneath - revealed on hover */}
                   <motion.img
-                    src="/profile-aaron.jpg"
+                    src="/profile-aaron-800.webp"
                     alt="Aaron Barlow"
                     className="absolute inset-0 w-full h-full object-cover z-0"
+                    srcSet="/profile-aaron-400.webp 400w, /profile-aaron-800.webp 800w"
+                    sizes="(max-width: 640px) 400px, 800px"
+                    loading="lazy"
                     animate={{
                       opacity: isHovering ? 1 : 0,
                     }}

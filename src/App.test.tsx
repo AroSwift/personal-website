@@ -34,18 +34,18 @@ describe('App', () => {
   beforeEach(() => {
     // Clear localStorage before each test
     vi.clearAllMocks();
-    localStorage.getItem.mockReturnValue(null);
+    (localStorage.getItem as any).mockReturnValue(null);
   });
 
   it('renders loading screen for first-time visitors', () => {
-    localStorage.getItem.mockReturnValue(null);
+    (localStorage.getItem as any).mockReturnValue(null);
     testingLibraryRender(<App />);
 
     expect(screen.getByTestId('loading-screen')).toBeInTheDocument();
   });
 
   it('skips loading screen for returning visitors', () => {
-    localStorage.getItem.mockReturnValue('true');
+    (localStorage.getItem as any).mockReturnValue('true');
     testingLibraryRender(<App />);
 
     expect(screen.queryByTestId('loading-screen')).not.toBeInTheDocument();
@@ -53,7 +53,7 @@ describe('App', () => {
   });
 
   it('renders with correct initial route', () => {
-    localStorage.getItem.mockReturnValue('true');
+    (localStorage.getItem as any).mockReturnValue('true');
     testingLibraryRender(<App />);
 
     expect(screen.getByTestId('home-page')).toBeInTheDocument();

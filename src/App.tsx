@@ -10,6 +10,7 @@ import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
 import ProjectsPage from './pages/ProjectsPage';
 import ContactPage from './pages/ContactPage';
+import { PWAStatus } from './components/PWAStatus';
 
 // Meta tag configurations for SEO
 const metaTagsConfig = {
@@ -174,6 +175,7 @@ function App() {
           <Route path="/projects" element={<ProjectsPage />} />
           <Route path="/contact" element={<ContactPage />} />
         </Routes>
+        <PWAStatus />
       </div>
     </Router>
   );

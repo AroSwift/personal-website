@@ -10,6 +10,7 @@ A modern, responsive personal website for Aaron Barlow built with React, TypeScr
 - **Responsive Design**: Optimized for desktop, tablet, and mobile devices
 - **TypeScript**: Full type safety and better development experience
 - **Performance**: Built with Vite for fast development and optimized builds
+- **PWA Support**: Progressive Web App with offline functionality and installation capabilities
 
 ## Tech Stack
 
