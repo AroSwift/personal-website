@@ -2,8 +2,22 @@ services:
   web:
     build: .
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:80/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
     labels:
+      - traefik.enable=true
       - traefik.http.routers.personal.rule=Host(`aaronbarlow.dev`,`www.aaronbarlow.dev`)
       - traefik.http.routers.personal.entrypoints=websecure
       - traefik.http.routers.personal.tls=true
       - traefik.http.services.personal.loadbalancer.server.port=80
+    # IMPORTANT: do NOT publish ports here
+    # ports: []   # ensure this section is absent
+
+networks:
+  default:
+    name: coolify
+    external: true

@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
-import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import Header from "@/components/layout/Header";
+import React, { useState, useEffect, useRef } from 'react';
+import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
+import Header from '@/components/layout/Header';
 
 // Home page with interactive profile image
 function Home() {
@@ -16,11 +16,11 @@ function Home() {
 
   useEffect(() => {
     // Initialize theme from localStorage on component mount
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme === "dark") {
-      document.documentElement.classList.add("dark");
-    } else if (savedTheme === "light") {
-      document.documentElement.classList.remove("dark");
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else if (savedTheme === 'light') {
+      document.documentElement.classList.remove('dark');
     }
     // If no saved theme, keep current state (don't force light mode)
   }, []);
@@ -66,11 +66,11 @@ function Home() {
   useEffect(() => {
     // Add global mouse event listeners when dragging
     if (isDragging) {
-      document.addEventListener("mousemove", handleMouseMove as any);
-      document.addEventListener("mouseup", handleMouseUp);
+      document.addEventListener('mousemove', handleMouseMove as any);
+      document.addEventListener('mouseup', handleMouseUp);
       return () => {
-        document.removeEventListener("mousemove", handleMouseMove as any);
-        document.removeEventListener("mouseup", handleMouseUp);
+        document.removeEventListener('mousemove', handleMouseMove as any);
+        document.removeEventListener('mouseup', handleMouseUp);
       };
     }
   }, [isDragging]);
@@ -83,27 +83,27 @@ function Home() {
       const rect = profileImageRef.current.getBoundingClientRect();
       const centerX = rect.left + rect.width / 2;
       const centerY = rect.top + rect.height / 2;
-      
+
       // Calculate distance from mouse to image center
       const deltaX = e.clientX - centerX;
       const deltaY = e.clientY - centerY;
       const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-      
+
       // Apply gravity effect - image moves towards mouse if within range
       const range = window.innerWidth < 768 ? 100 : 300; // Smaller range on mobile
       if (distance < range) {
         const strength = (range - distance) / range; // Stronger when closer
-        setGravityOffset({ 
-          x: deltaX * strength * 0.3, 
-          y: deltaY * strength * 0.3 
+        setGravityOffset({
+          x: deltaX * strength * 0.3,
+          y: deltaY * strength * 0.3,
         });
       } else {
         setGravityOffset({ x: 0, y: 0 });
       }
     };
 
-    document.addEventListener("mousemove", handleMouseMove);
-    return () => document.removeEventListener("mousemove", handleMouseMove);
+    document.addEventListener('mousemove', handleMouseMove);
+    return () => document.removeEventListener('mousemove', handleMouseMove);
   }, [isDragging]);
 
   return (
@@ -128,11 +128,11 @@ function Home() {
                 <motion.div
                   ref={profileImageRef}
                   className={cn(
-                    "w-40 h-40 sm:w-56 sm:h-56 md:w-72 md:h-72 lg:w-96 lg:h-96 xl:w-112 xl:h-112 rounded-2xl sm:rounded-3xl overflow-hidden mb-4 sm:mb-6 md:mb-8 lg:mb-12 xl:mb-16 bg-muted dark:bg-gray-800 shadow-lg hover:shadow-2xl cursor-pointer relative select-none mx-auto lg:mx-0",
+                    'w-40 h-40 sm:w-56 sm:h-56 md:w-72 md:h-72 lg:w-96 lg:h-96 xl:w-112 xl:h-112 rounded-2xl sm:rounded-3xl overflow-hidden mb-4 sm:mb-6 md:mb-8 lg:mb-12 xl:mb-16 bg-muted dark:bg-gray-800 shadow-lg hover:shadow-2xl cursor-pointer relative select-none mx-auto lg:mx-0',
                     isHovering &&
-                      "border-4 border-dashed border-foreground/60 shadow-2xl",
+                      'border-4 border-dashed border-foreground/60 shadow-2xl',
                     !isHovering &&
-                      "border-2 border-border/50 dark:border-border/30 shadow-lg",
+                      'border-2 border-border/50 dark:border-border/30 shadow-lg'
                   )}
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{
@@ -145,9 +145,9 @@ function Home() {
                   transition={{
                     duration: isDragging ? 0.3 : 0.6,
                     repeat: isDragging ? Infinity : 0,
-                    repeatType: "reverse",
-                    x: { type: "spring", stiffness: 150, damping: 15 },
-                    y: { type: "spring", stiffness: 150, damping: 15 },
+                    repeatType: 'reverse',
+                    x: { type: 'spring', stiffness: 150, damping: 15 },
+                    y: { type: 'spring', stiffness: 150, damping: 15 },
                   }}
                   onMouseEnter={() => setIsHovering(true)}
                   onMouseLeave={() => {
@@ -157,8 +157,8 @@ function Home() {
                   onMouseDown={handleMouseDown}
                   onMouseMove={handleMouseMove}
                   style={{
-                    transition: isDragging ? "none" : "transform 0.3s ease-out",
-                    userSelect: "none",
+                    transition: isDragging ? 'none' : 'transform 0.3s ease-out',
+                    userSelect: 'none',
                   }}
                 >
                   {/* Cartoon image - shown by default */}
@@ -170,10 +170,10 @@ function Home() {
                       opacity: isHovering ? 0 : 1,
                       clipPath: isDragging
                         ? `circle(${Math.sqrt(dragPosition.x ** 2 + dragPosition.y ** 2)}px at ${dragPosition.x}px ${dragPosition.y}px)`
-                        : "circle(100% at 50% 50%)",
+                        : 'circle(100% at 50% 50%)',
                     }}
                     transition={{ duration: isDragging ? 0.1 : 0 }}
-                    style={{ userSelect: "none" }}
+                    style={{ userSelect: 'none' }}
                   />
 
                   {/* Real image underneath - revealed on hover */}
@@ -185,7 +185,7 @@ function Home() {
                       opacity: isHovering ? 1 : 0,
                     }}
                     transition={{ duration: 0 }}
-                    style={{ userSelect: "none" }}
+                    style={{ userSelect: 'none' }}
                   />
 
                   {/* Hover hint text */}
@@ -213,7 +213,7 @@ function Home() {
                       transition={{
                         duration: 0.3,
                         repeat: Infinity,
-                        repeatType: "reverse",
+                        repeatType: 'reverse',
                       }}
                     >
                       Surprise! It's really me!
@@ -240,7 +240,7 @@ function Home() {
                       transition={{
                         duration: 0.6,
                         delay: 0.6,
-                        ease: "easeOut",
+                        ease: 'easeOut',
                       }}
                       className="w-[70%] sm:w-auto mx-auto sm:mx-0"
                     >
@@ -259,7 +259,7 @@ function Home() {
                       transition={{
                         duration: 0.6,
                         delay: 0.7,
-                        ease: "easeOut",
+                        ease: 'easeOut',
                       }}
                       className="w-[70%] sm:w-auto mx-auto sm:mx-0"
                     >
@@ -297,7 +297,7 @@ function Home() {
                       transition={{
                         duration: 2,
                         repeat: Infinity,
-                        ease: "easeInOut",
+                        ease: 'easeInOut',
                       }}
                     />
                     Now
@@ -316,7 +316,7 @@ function Home() {
                       className="font-medium text-foreground hover:text-muted-foreground transition-colors underline underline-offset-4"
                     >
                       Visit projects
-                    </Link>{" "}
+                    </Link>{' '}
                     for latest work
                   </p>
                 </motion.div>

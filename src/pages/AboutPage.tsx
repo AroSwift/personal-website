@@ -1,120 +1,116 @@
-import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import {
-  ExternalLink,
-  Mail,
-  Github,
-} from "lucide-react";
+import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { ExternalLink, Mail, Github } from 'lucide-react';
 
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import Header from "../components/layout/Header";
+import { Badge } from '@/components/ui/badge';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import Header from '../components/layout/Header';
 
 // About page
 const AboutPage = () => {
-  const [theme, setTheme] = useState<"light" | "dark">("light");
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
 
   useEffect(() => {
-    const isDark = document.documentElement.classList.contains("dark");
-    setTheme(isDark ? "dark" : "light");
+    const isDark = document.documentElement.classList.contains('dark');
+    setTheme(isDark ? 'dark' : 'light');
   }, []);
 
   // Skills
   const skills = [
-    "Ruby",
-    "Ruby on Rails",
-    "Python",
-    "Go",
-    "TypeScript",
-    "JavaScript",
-    "Vue.js",
-    "React",
-    "CoffeeScript",
-    "Crystal",
-    "Amber",
-    "Ember.js",
-    "PHP",
-    "C/C++",
-    "C#",
-    "Processing",
-    "Assembly",
-    "SQL",
-    "Bash",
-    "HTML",
-    "CSS",
-    "Sass",
-    "Git",
-    "FastAPI",
-    "Flask",
-    "gRPC",
-    "REST",
-    "Redis",
-    "PostgreSQL",
-    "Docker",
-    "Kubernetes",
-    "Kustomize",
-    "Argo CD",
-    "Slurm",
-    "CI/CD",
-    "Prometheus",
-    "Grafana",
-    "OpenTelemetry",
-    "ROCm",
-    "HashiCorp Vault",
-    "MinIO",
-    "KubeDB",
-    "Stash",
-    "SonarQube",
-    "NVFLARE",
-    "PyTorch",
-    "Natural Language Processing (NLP)",
-    "spaCy",
-    "RASA",
-    "TensorFlow",
-    "Keras API",
-    "Pandas",
-    "NumPy",
-    "scikit-learn",
-    "AI-driven workflow automation",
-    "Embedded Systems development",
+    'Ruby',
+    'Ruby on Rails',
+    'Python',
+    'Go',
+    'TypeScript',
+    'JavaScript',
+    'Vue.js',
+    'React',
+    'CoffeeScript',
+    'Crystal',
+    'Amber',
+    'Ember.js',
+    'PHP',
+    'C/C++',
+    'C#',
+    'Processing',
+    'Assembly',
+    'SQL',
+    'Bash',
+    'HTML',
+    'CSS',
+    'Sass',
+    'Git',
+    'FastAPI',
+    'Flask',
+    'gRPC',
+    'REST',
+    'Redis',
+    'PostgreSQL',
+    'Docker',
+    'Kubernetes',
+    'Kustomize',
+    'Argo CD',
+    'Slurm',
+    'CI/CD',
+    'Prometheus',
+    'Grafana',
+    'OpenTelemetry',
+    'ROCm',
+    'HashiCorp Vault',
+    'MinIO',
+    'KubeDB',
+    'Stash',
+    'SonarQube',
+    'NVFLARE',
+    'PyTorch',
+    'Natural Language Processing (NLP)',
+    'spaCy',
+    'RASA',
+    'TensorFlow',
+    'Keras API',
+    'Pandas',
+    'NumPy',
+    'scikit-learn',
+    'AI-driven workflow automation',
+    'Embedded Systems development',
   ];
 
   // Professional experience timeline
   const experience = [
     {
-      company: "Oak Ridge National Laboratory",
-      role: "HPC Software Engineer",
-      period: "Jun 2020 - Present",
-      location: "Oak Ridge, TN (Remote)",
+      company: 'Oak Ridge National Laboratory',
+      role: 'HPC Software Engineer',
+      period: 'Jun 2020 - Present',
+      location: 'Oak Ridge, TN (Remote)',
       highlights: [
-        "Enabled privacy-preserving federated learning at exascale on Frontier (first U.S. exascale system; TOP500 #2)",
-        "Owned and scaled myOLCF used by thousands (~4k) across 1,000+ projects with 99.9%+ availability",
-        "Improved application responsiveness by 1320× (−99.92%) through JSON:API serializer and Redis caching optimization",
-        "Built Smart Facility metrics platform ingesting compute/data/I/O/efficiency metrics",
-        "Standardized GitOps delivery with Kustomize + Argo CD on Kubernetes",
+        'Enabled privacy-preserving federated learning at exascale on Frontier (first U.S. exascale system; TOP500 #2)',
+        'Owned and scaled myOLCF used by thousands (~4k) across 1,000+ projects with 99.9%+ availability',
+        'Improved application responsiveness by 1320× (−99.92%) through JSON:API serializer and Redis caching optimization',
+        'Built Smart Facility metrics platform ingesting compute/data/I/O/efficiency metrics',
+        'Standardized GitOps delivery with Kustomize + Argo CD on Kubernetes',
       ],
     },
     {
-      company: "Bank of America",
-      role: "Global Technology Summer Analyst (ML Engineer Intern)",
-      period: "Jun 2019 - Aug 2019",
-      location: "Greater Los Angeles Area",
+      company: 'Bank of America',
+      role: 'Global Technology Summer Analyst (ML Engineer Intern)',
+      period: 'Jun 2019 - Aug 2019',
+      location: 'Greater Los Angeles Area',
       highlights: [
-        "Built NLP entity extraction service achieving 96% F1 score",
-        "Resulted in over $20 million in annual savings through automation",
+        'Built NLP entity extraction service achieving 96% F1 score',
+        'Resulted in over $20 million in annual savings through automation',
       ],
     },
     {
-      company: "Oak Ridge National Laboratory",
-      role: "Software Developer Intern, National Center for Computational Sciences (NCCS)",
-      period: "May 2015 - May 2019",
-      location: "Oak Ridge, TN",
+      company: 'Oak Ridge National Laboratory',
+      role: 'Software Developer Intern, National Center for Computational Sciences (NCCS)',
+      period: 'May 2015 - May 2019',
+      location: 'Oak Ridge, TN',
       highlights: [
-        "Year-round development of HPC-centric services, applications, and BI tools; shipped production features across internal portals",
-        "Automated supercomputer-access communications via a policy-aware email system; standardized messaging and reduced manual steps",
-        "Built a WordPress/REST plugin to sync and display HPC metrics on olcf.ornl.gov; improved data freshness and reduced update toil",
+        'Year-round development of HPC-centric services, applications, and BI tools; shipped production features across internal portals',
+        'Automated supercomputer-access communications via a policy-aware email system; standardized messaging and reduced manual steps',
+        'Built a WordPress/REST plugin to sync and display HPC metrics on olcf.ornl.gov; improved data freshness and reduced update toil',
       ],
     },
   ];
@@ -122,30 +118,30 @@ const AboutPage = () => {
   // Educational background
   const education = [
     {
-      school: "East Tennessee State University",
-      degree: "Bachelor of Science, Computer Science",
-      period: "Aug 2017 - May 2020",
-      gpa: "3.94/4.00",
+      school: 'East Tennessee State University',
+      degree: 'Bachelor of Science, Computer Science',
+      period: 'Aug 2017 - May 2020',
+      gpa: '3.94/4.00',
       honors: "Dean's List",
       activities:
-        "ACM (President, 2019-2020), Ethical Hacking (Vice President, 2018-2019)",
+        'ACM (President, 2019-2020), Ethical Hacking (Vice President, 2018-2019)',
     },
     {
-      school: "Pellissippi State Community College",
-      degree: "Associate of Science, Computer and Information Sciences",
-      period: "Aug 2015 - May 2017",
-      gpa: "3.84/4",
+      school: 'Pellissippi State Community College',
+      degree: 'Associate of Science, Computer and Information Sciences',
+      period: 'Aug 2015 - May 2017',
+      gpa: '3.84/4',
       honors: "Dean's List",
-      activities: "Phi Theta Kappa Honor Society, Gamma Beta Phi Society",
+      activities: 'Phi Theta Kappa Honor Society, Gamma Beta Phi Society',
     },
   ];
 
   // Leadership and community involvement
   const organizations = [
-    "ORNL Pathways to Computing Internship Program Workshop - Organizer (Jan 2022 - Present)",
-    "PEARC (Advanced Research Computing Conference) - Student Program Committee Chair (Jan 2021 - Present)",
-    "ACM (Association for Computing Machinery) - President (Jan 2019 - May 2020)",
-    "Ethical Hacking - Vice President (Jan 2018 - Dec 2019)",
+    'ORNL Pathways to Computing Internship Program Workshop - Organizer (Jan 2022 - Present)',
+    'PEARC (Advanced Research Computing Conference) - Student Program Committee Chair (Jan 2021 - Present)',
+    'ACM (Association for Computing Machinery) - President (Jan 2019 - May 2020)',
+    'Ethical Hacking - Vice President (Jan 2018 - Dec 2019)',
   ];
 
   // Conference presentations and talks
@@ -173,7 +169,7 @@ const AboutPage = () => {
             className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 mb-16 lg:mb-24"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+            transition={{ duration: 0.8, ease: 'easeOut' }}
           >
             {/* Left Column - Profile Image and Contact Info */}
             <div className="lg:col-span-7">
@@ -182,7 +178,7 @@ const AboutPage = () => {
                 className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 lg:w-48 lg:h-48 xl:w-64 xl:h-64 rounded-2xl sm:rounded-3xl md:rounded-[2rem] overflow-hidden mb-4 sm:mb-6 md:mb-8 border-2 sm:border-4 border-border/50 dark:border-border/30 bg-muted shadow-lg hover:shadow-xl transition-all duration-500 hover:scale-105"
                 initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
                 animate={{ opacity: 1, scale: 1, rotate: 0 }}
-                transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+                transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
               >
                 <img
                   src="/profile-aaron.jpg"
@@ -196,7 +192,7 @@ const AboutPage = () => {
                 className="mb-8 sm:mb-12 md:mb-16"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
+                transition={{ duration: 0.8, delay: 0.4, ease: 'easeOut' }}
               >
                 <motion.h1
                   className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-normal leading-tight tracking-tight max-w-4xl mb-4"
@@ -271,7 +267,7 @@ const AboutPage = () => {
                 className="pt-0 w-full"
                 initial={{ opacity: 0, x: 40 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
+                transition={{ duration: 0.8, delay: 0.5, ease: 'easeOut' }}
               >
                 <motion.p
                   className="text-base sm:text-lg leading-relaxed mb-6 text-foreground/90"
@@ -330,7 +326,7 @@ const AboutPage = () => {
             className="mb-16 lg:mb-24"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.5, duration: 0.8, ease: "easeOut" }}
+            transition={{ delay: 1.5, duration: 0.8, ease: 'easeOut' }}
           >
             <motion.h2
               className="text-2xl sm:text-3xl font-normal mb-8 text-center"
@@ -349,7 +345,7 @@ const AboutPage = () => {
                   transition={{
                     delay: 1.8 + index * 0.2,
                     duration: 0.6,
-                    ease: "easeOut",
+                    ease: 'easeOut',
                   }}
                 >
                   <Card className="border-border/50 hover:shadow-lg transition-shadow duration-300">
@@ -395,7 +391,7 @@ const AboutPage = () => {
             className="mb-16 lg:mb-24"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 2.4, duration: 0.8, ease: "easeOut" }}
+            transition={{ delay: 2.4, duration: 0.8, ease: 'easeOut' }}
           >
             <motion.h2
               className="text-2xl sm:text-3xl font-normal mb-8 text-center"
@@ -409,7 +405,7 @@ const AboutPage = () => {
               className="flex flex-wrap gap-2 justify-center"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 2.7, duration: 0.8, ease: "easeOut" }}
+              transition={{ delay: 2.7, duration: 0.8, ease: 'easeOut' }}
             >
               {skills.map((skill, index) => (
                 <motion.div
@@ -434,7 +430,7 @@ const AboutPage = () => {
             className="mb-16 lg:mb-24"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 3.2, duration: 0.8, ease: "easeOut" }}
+            transition={{ delay: 3.2, duration: 0.8, ease: 'easeOut' }}
           >
             <h2 className="text-2xl sm:text-3xl font-normal mb-8 text-center">
               Education
@@ -476,7 +472,7 @@ const AboutPage = () => {
             className="mb-16 lg:mb-24"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 3.6, duration: 0.8, ease: "easeOut" }}
+            transition={{ delay: 3.6, duration: 0.8, ease: 'easeOut' }}
           >
             <h2 className="text-2xl sm:text-3xl font-normal mb-8 text-center">
               Organizations & Community
@@ -533,7 +529,7 @@ const AboutPage = () => {
             className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6 mb-16 lg:mb-24"
             initial={{ opacity: 0, y: 30, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 0.8, delay: 4.0, ease: "easeOut" }}
+            transition={{ duration: 0.8, delay: 4.0, ease: 'easeOut' }}
           >
             <Link to="/projects" className="w-full sm:w-auto">
               <Button className="w-full sm:w-auto bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200 rounded-full px-8 sm:px-12 py-4 sm:py-6 text-lg sm:text-xl font-medium transition-colors duration-500">

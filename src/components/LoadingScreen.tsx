@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface LoadingScreenProps {
   onComplete: () => void;
@@ -21,7 +21,7 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
   const [isExiting, setIsExiting] = useState(false);
 
   // Words to cycle through during loading animation
-  const words = ["Architect", "Orchestrator", "Inventor", "Engineer"];
+  const words = ['Architect', 'Orchestrator', 'Inventor', 'Engineer'];
 
   // Timing delays between word transitions (slower for more dramatic effect)
   const delays = [1000, 800, 650, 500]; // Slower transitions
@@ -42,7 +42,7 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
     // Cycle through words with decreasing delays
     if (currentWordIndex < words.length - 1) {
       const timer = setTimeout(() => {
-        setCurrentWordIndex((prev) => prev + 1);
+        setCurrentWordIndex(prev => prev + 1);
       }, delays[currentWordIndex]);
 
       return () => clearTimeout(timer);
@@ -72,8 +72,8 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
       <motion.div
         className="fixed inset-0 z-[9999] bg-black flex flex-col items-center justify-center overflow-hidden"
         initial={{ y: 0 }}
-        animate={{ y: isExiting ? "-100%" : 0 }}
-        exit={{ y: "-100%" }}
+        animate={{ y: isExiting ? '-100%' : 0 }}
+        exit={{ y: '-100%' }}
         transition={{
           duration: isExiting ? 1.5 : 0,
           ease: [0.25, 0.46, 0.45, 0.94], // Smoother cubic-bezier for exit
@@ -84,11 +84,11 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
           className="text-center mb-8"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: showName ? 1 : 0, y: showName ? 0 : 30 }}
-          transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+          transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
         >
           <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-light text-white tracking-tight leading-none">
             {/* Animate each letter individually for staggered effect */}
-            {"Aaron Barlow".split("").map((letter, index) => (
+            {'Aaron Barlow'.split('').map((letter, index) => (
               <motion.span
                 key={index}
                 className="inline-block"
@@ -97,10 +97,10 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
                 transition={{
                   duration: 0.6,
                   delay: 0.4 + index * 0.05, // Staggered delay for each letter
-                  ease: "easeOut",
+                  ease: 'easeOut',
                 }}
               >
-                {letter === " " ? "\u00A0" : letter}
+                {letter === ' ' ? '\u00A0' : letter}
               </motion.span>
             ))}
           </h1>
@@ -122,7 +122,7 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
               exit={{ opacity: 0, y: -20, scale: 1.1 }}
               transition={{
                 duration: 0.4,
-                ease: "easeInOut",
+                ease: 'easeInOut',
               }}
             >
               {words[currentWordIndex]}
@@ -140,11 +140,11 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
           <div className="w-32 h-0.5 bg-white/20 rounded-full overflow-hidden">
             <motion.div
               className="h-full bg-white/60 rounded-full"
-              initial={{ width: "0%" }}
-              animate={{ width: "100%" }}
+              initial={{ width: '0%' }}
+              animate={{ width: '100%' }}
               transition={{
                 duration: 4.0, // Slightly longer for smoother feel
-                ease: "easeInOut",
+                ease: 'easeInOut',
                 delay: 1.8,
               }}
             />

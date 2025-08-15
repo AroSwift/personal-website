@@ -20,6 +20,7 @@ A modern, responsive personal website for Aaron Barlow built with React, TypeScr
 - **UI Components**: Radix UI primitives with custom styling
 - **Animations**: Framer Motion
 - **Icons**: Lucide React
+- **Testing**: Vitest + React Testing Library
 - **Forms**: React Hook Form
 - **Database**: Supabase (configured for future use)
 
@@ -44,7 +45,8 @@ personal-website/
 ├── dist/                   # Build output
 ├── Dockerfile              # Docker configuration
 ├── nginx.conf              # Nginx configuration
-├── docker-compose.yml      # Docker Compose for local testing
+├── docker-compose.yml      # Docker Compose for production (Coolify)
+├── docker-compose.local.yml # Docker Compose for local testing
 ├── .dockerignore           # Docker ignore file
 └── configuration files
 ```
@@ -83,6 +85,56 @@ personal-website/
 - `npm run build` - Build for production
 - `npm run preview` - Preview production build locally
 - `npm run serve` - Serve production build locally
+- `npm test` - Run tests in watch mode
+
+## Testing
+
+The project includes a comprehensive test suite built with Vitest and React Testing Library.
+
+### Test Structure
+
+```
+src/
+├── test/
+│   ├── setup.tsx          # Test configuration and mocks
+│   └── utils.tsx          # Custom test utilities
+├── components/
+│   ├── home.test.tsx      # Home component tests
+│   └── LoadingScreen.test.tsx  # Loading screen tests
+├── pages/
+│   └── HomePage.test.tsx  # Page component tests
+└── App.test.tsx           # Main app tests
+```
+
+### Running Tests
+
+```bash
+# Run all tests
+npm test
+
+# Run tests in watch mode
+npm test
+
+# Run specific test file
+npm test -- --run src/components/home.test.tsx
+```
+
+### Test Coverage
+
+The test suite covers:
+- **Component Rendering**: Verifies components render correctly
+- **User Interactions**: Tests button clicks and navigation
+- **Routing Logic**: Ensures proper page routing
+- **Loading States**: Tests loading screen functionality
+- **Content Validation**: Checks for expected text and elements
+
+### Writing Tests
+
+Tests follow React Testing Library best practices:
+- Test behavior, not implementation
+- Use semantic queries (getByText, getByRole)
+- Keep tests simple and focused
+- Mock external dependencies appropriately
 
 ## Customization
 
@@ -114,40 +166,52 @@ The project uses Vite for building. Configuration can be modified in `vite.confi
 
 ### Coolify Deployment (Recommended)
 
-This project is configured for deployment on Coolify with a fully code-owned Docker setup.
+This project is configured for deployment on Coolify with a fully code-owned Docker setup using docker-compose.yml for proper Traefik integration.
 
 #### Coolify Configuration:
 
 1. **App Type**: Select "Dockerfile" (not Buildpack/Static)
-2. **Expose Port**: 80 (HTTP) and 443 (HTTPS)
+2. **Expose Port**: 80 (HTTP only - no port publishing needed)
 3. **Domain**: Attach your domain (e.g., `aaronbarlow.dev`) to this app only
-4. **SSL**: The container automatically generates self-signed certificates for HTTPS
+4. **SSL**: Handled automatically by Traefik with Let's Encrypt certificates
 
 #### Coolify Setup Steps:
 
 1. In Coolify dashboard, create a new application
 2. Connect your Git repository
 3. Set **Application Type** to "Dockerfile"
-4. Set **Port** to "80" (HTTP) and "443" (HTTPS)
+4. Set **Port** to "80" (HTTP only)
 5. Add your domain(s): `aaronbarlow.dev` and `www.aaronbarlow.dev`
-6. Deploy!
+6. **Important**: The docker-compose.yml file handles Traefik integration automatically
+7. Deploy!
+
+#### How It Works:
+
+The docker-compose.yml file includes:
+- **Traefik labels** for automatic routing and SSL termination
+- **Coolify network** integration for proper container communication
+- **No port publishing** - Traefik communicates directly over Docker network
+- **Health checks** for container monitoring
 
 ### Local Docker Testing
 
 Test the Docker setup locally:
 
 ```bash
-# Build and run with Docker Compose
-docker-compose up --build
+# Build and run with Docker Compose for local development
+docker-compose -f docker-compose.local.yml up --build
 
-# Or build and run manually
+# Or build and run manually (for local development)
 docker build -t personal-website .
-docker run -p 3000:80 -p 3443:443 personal-website
+docker run -p 3000:80 personal-website
 ```
 
-Then visit `http://localhost:3000` (will redirect to HTTPS) or `https://localhost:3443`
+Then visit `http://localhost:3000`
 
-**Note**: The docker-compose setup includes Traefik labels for production deployment with automatic HTTPS termination.
+**Note**: 
+- The main `docker-compose.yml` includes Traefik labels for production deployment with Coolify
+- Use `docker-compose.local.yml` for local testing (includes port publishing and health checks)
+- The health check endpoint is available at `http://localhost:3000/health`
 
 ### SSL Certificate Options
 
@@ -215,6 +279,14 @@ If you're getting 404 errors on routes like `/projects`, ensure:
 1. You're using the Dockerfile deployment (not static hosting)
 2. The nginx.conf file is properly configured with `try_files $uri $uri/ /index.html;`
 3. Only one app is bound to your domain in Coolify
+
+### 502 Bad Gateway Errors
+If you're getting 502 errors in Coolify:
+1. **Check docker-compose.yml**: Ensure it includes the `coolify` external network
+2. **Verify Traefik labels**: Make sure all required Traefik labels are present
+3. **No port publishing**: The docker-compose.yml should NOT publish ports to the host
+4. **Single domain binding**: Ensure only this app is bound to your domain in Coolify
+5. **Check container logs**: Look for access logs when visiting the site
 
 ### Container Health Checks
 To verify the container is running properly:

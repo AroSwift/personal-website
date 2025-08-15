@@ -1,130 +1,128 @@
-import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import {
-  ExternalLink,
-} from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import Header from "@/components/layout/Header";
+import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { ExternalLink } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import Header from '@/components/layout/Header';
 
 // Projects page
 const ProjectsPage = () => {
-  const [theme, setTheme] = useState<"light" | "dark">("light");
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
 
   useEffect(() => {
-    const isDark = document.documentElement.classList.contains("dark");
-    setTheme(isDark ? "dark" : "light");
+    const isDark = document.documentElement.classList.contains('dark');
+    setTheme(isDark ? 'dark' : 'light');
   }, []);
 
   // Projects
   const featuredProjects = [
     {
-      title: "Automatic Movie Creation",
+      title: 'Automatic Movie Creation',
       description:
-        "Multi-agent workflow generates script → storyboard images → 10-sec clips → stitches, QC, and auto-publishes.",
-      tech: "Agentic Pipeline, Runway, Cling",
-      category: "AI Automation",
-      year: "2024",
-      status: "Active",
+        'Multi-agent workflow generates script → storyboard images → 10-sec clips → stitches, QC, and auto-publishes.',
+      tech: 'Agentic Pipeline, Runway, Cling',
+      category: 'AI Automation',
+      year: '2024',
+      status: 'Active',
     },
     {
-      title: "Anthologia (AI Video Storytelling)",
+      title: 'Anthologia (AI Video Storytelling)',
       description:
-        "Multi-agent pipeline turns concepts into 20-second videos with 4 scenes, using DALL·E 3 + Veo 3.0, ElevenLabs narration/SFX.",
-      tech: "CrewAI, DALL·E 3, Veo 3.0, ElevenLabs, LatentSync",
-      category: "AI Automation",
-      year: "2024",
-      status: "Active",
+        'Multi-agent pipeline turns concepts into 20-second videos with 4 scenes, using DALL·E 3 + Veo 3.0, ElevenLabs narration/SFX.',
+      tech: 'CrewAI, DALL·E 3, Veo 3.0, ElevenLabs, LatentSync',
+      category: 'AI Automation',
+      year: '2024',
+      status: 'Active',
     },
     {
-      title: "Project Cadenza",
+      title: 'Project Cadenza',
       description:
-        "Agentic pipeline creates artists/albums, writes lyrics, generates songs, masters audio, produces thumbnails/art, and auto-uploads to YouTube.",
-      tech: "GPT, Suno, Udio, YouTube API",
-      category: "AI Automation",
-      year: "2024",
-      status: "Active",
+        'Agentic pipeline creates artists/albums, writes lyrics, generates songs, masters audio, produces thumbnails/art, and auto-uploads to YouTube.',
+      tech: 'GPT, Suno, Udio, YouTube API',
+      category: 'AI Automation',
+      year: '2024',
+      status: 'Active',
     },
     {
-      title: "myOLCF",
+      title: 'myOLCF',
       description:
-        "HPC self-service portal empowering scientists to access OLCF services, manage projects, check allocations, and update profiles.",
-      tech: "Ruby on Rails, PostgreSQL, Redis",
-      category: "HPC Platform",
-      year: "2020-Present",
-      status: "Production",
-      link: "https://my.olcf.ornl.gov",
+        'HPC self-service portal empowering scientists to access OLCF services, manage projects, check allocations, and update profiles.',
+      tech: 'Ruby on Rails, PostgreSQL, Redis',
+      category: 'HPC Platform',
+      year: '2020-Present',
+      status: 'Production',
+      link: 'https://my.olcf.ornl.gov',
     },
     {
-      title: "AI Prediction-Market Trading System",
+      title: 'AI Prediction-Market Trading System',
       description:
-        "Multi-agent analysis with real-time WebSocket feeds, vector DB, and Kelly sizing for automated trading decisions.",
-      tech: "CrewAI, WebSocket, Vector DB, Kalshi API",
-      category: "AI Trading",
-      year: "2024",
-      status: "Development",
+        'Multi-agent analysis with real-time WebSocket feeds, vector DB, and Kelly sizing for automated trading decisions.',
+      tech: 'CrewAI, WebSocket, Vector DB, Kalshi API',
+      category: 'AI Trading',
+      year: '2024',
+      status: 'Development',
     },
     {
-      title: "HOA Management Platform",
+      title: 'HOA Management Platform',
       description:
-        "Multi-tenant Rails+React application with modules for dues, violations, residents, and public sites.",
-      tech: "Ruby on Rails, React, Vite, Inertia",
-      category: "Web Platform",
-      year: "2023",
-      status: "Production",
+        'Multi-tenant Rails+React application with modules for dues, violations, residents, and public sites.',
+      tech: 'Ruby on Rails, React, Vite, Inertia',
+      category: 'Web Platform',
+      year: '2023',
+      status: 'Production',
     },
   ];
 
   // Achievements
   const achievements = [
     {
-      title: "Performance Breakthrough",
+      title: 'Performance Breakthrough',
       description:
-        "Achieved 1320× performance improvement (−99.92%) in myOLCF through architectural changes",
-      impact: "Serving 4k+ users across 1,000+ projects",
+        'Achieved 1320× performance improvement (−99.92%) in myOLCF through architectural changes',
+      impact: 'Serving 4k+ users across 1,000+ projects',
     },
     {
-      title: "Exascale Computing",
+      title: 'Exascale Computing',
       description:
-        "Enabled privacy-preserving federated learning at exascale on Frontier supercomputer",
+        'Enabled privacy-preserving federated learning at exascale on Frontier supercomputer',
       impact: "World's first exascale system deployment",
     },
     {
-      title: "Cost Savings",
+      title: 'Cost Savings',
       description:
-        "Built NLP entity extraction service achieving 96% F1 score at Bank of America",
-      impact: "$20M+ annual savings through automation",
+        'Built NLP entity extraction service achieving 96% F1 score at Bank of America',
+      impact: '$20M+ annual savings through automation',
     },
   ];
 
   // Skills
   const skills = [
-    "Ruby on Rails",
-    "Python",
-    "TypeScript",
-    "React",
-    "Go",
-    "PostgreSQL",
-    "Redis",
-    "Docker",
-    "Kubernetes",
-    "AI/ML",
-    "CrewAI",
-    "Vector Databases",
-    "WebSocket",
-    "HPC",
-    "Slurm",
-    "GitOps",
-    "Argo CD",
-    "Prometheus",
-    "Grafana",
-    "REST APIs",
-    "gRPC",
-    "Microservices",
-    "Performance Optimization",
-    "System Architecture",
+    'Ruby on Rails',
+    'Python',
+    'TypeScript',
+    'React',
+    'Go',
+    'PostgreSQL',
+    'Redis',
+    'Docker',
+    'Kubernetes',
+    'AI/ML',
+    'CrewAI',
+    'Vector Databases',
+    'WebSocket',
+    'HPC',
+    'Slurm',
+    'GitOps',
+    'Argo CD',
+    'Prometheus',
+    'Grafana',
+    'REST APIs',
+    'gRPC',
+    'Microservices',
+    'Performance Optimization',
+    'System Architecture',
   ];
 
   return (
@@ -146,7 +144,7 @@ const ProjectsPage = () => {
             className="mb-16 lg:mb-24"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+            transition={{ duration: 0.8, ease: 'easeOut' }}
           >
             <motion.h1
               className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-normal leading-tight tracking-tight mb-8"
@@ -174,7 +172,7 @@ const ProjectsPage = () => {
             className="mb-16 lg:mb-24"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6, duration: 0.8, ease: "easeOut" }}
+            transition={{ delay: 0.6, duration: 0.8, ease: 'easeOut' }}
           >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {featuredProjects.map((project, index) => (
@@ -185,7 +183,7 @@ const ProjectsPage = () => {
                   transition={{
                     delay: 0.8 + index * 0.1, // Staggered animation delay
                     duration: 0.6,
-                    ease: "easeOut",
+                    ease: 'easeOut',
                   }}
                 >
                   <Card className="border-border/50 hover:shadow-lg transition-all duration-300 h-full group hover:border-border">
@@ -199,11 +197,11 @@ const ProjectsPage = () => {
                             </Badge>
                             <Badge
                               variant={
-                                project.status === "Active"
-                                  ? "default"
-                                  : project.status === "Production"
-                                    ? "secondary"
-                                    : "outline"
+                                project.status === 'Active'
+                                  ? 'default'
+                                  : project.status === 'Production'
+                                    ? 'secondary'
+                                    : 'outline'
                               }
                               className="text-xs"
                             >
@@ -236,7 +234,7 @@ const ProjectsPage = () => {
                       </p>
                       {/* Technology Stack Badges */}
                       <div className="flex flex-wrap gap-1">
-                        {project.tech.split(", ").map((tech, techIndex) => (
+                        {project.tech.split(', ').map((tech, techIndex) => (
                           <Badge
                             key={techIndex}
                             variant="outline"
@@ -258,7 +256,7 @@ const ProjectsPage = () => {
             className="mb-16 lg:mb-24"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.4, duration: 0.8, ease: "easeOut" }}
+            transition={{ delay: 1.4, duration: 0.8, ease: 'easeOut' }}
           >
             <motion.h2
               className="text-2xl sm:text-3xl font-normal mb-8 text-center"
@@ -277,7 +275,7 @@ const ProjectsPage = () => {
                   transition={{
                     delay: 1.7 + index * 0.2, // Staggered animation
                     duration: 0.6,
-                    ease: "easeOut",
+                    ease: 'easeOut',
                   }}
                 >
                   <Card className="border-border/50 h-full">
@@ -303,7 +301,7 @@ const ProjectsPage = () => {
             className="mb-16 lg:mb-24"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 2.2, duration: 0.8, ease: "easeOut" }}
+            transition={{ delay: 2.2, duration: 0.8, ease: 'easeOut' }}
           >
             <motion.h2
               className="text-2xl sm:text-3xl font-normal mb-8 text-center"
@@ -317,7 +315,7 @@ const ProjectsPage = () => {
               className="flex flex-wrap gap-2 justify-center"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 2.5, duration: 0.8, ease: "easeOut" }}
+              transition={{ delay: 2.5, duration: 0.8, ease: 'easeOut' }}
             >
               {skills.map((skill, index) => (
                 <motion.div
@@ -342,7 +340,7 @@ const ProjectsPage = () => {
             className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6 mb-16 lg:mb-24"
             initial={{ opacity: 0, y: 30, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 0.8, delay: 3.0, ease: "easeOut" }}
+            transition={{ duration: 0.8, delay: 3.0, ease: 'easeOut' }}
           >
             <Link to="/about" className="w-full sm:w-auto">
               <Button className="w-full sm:w-auto bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200 rounded-full px-8 sm:px-12 py-4 sm:py-6 text-lg sm:text-xl font-medium transition-colors duration-500">

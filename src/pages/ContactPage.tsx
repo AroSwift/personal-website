@@ -1,14 +1,8 @@
-import { useState } from "react";
-import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import {
-  Github,
-  Linkedin,
-  Copy,
-  ExternalLink,
-  Check,
-} from "lucide-react";
-import Header from "@/components/layout/Header";
+import { useState } from 'react';
+import { motion } from 'framer-motion';
+import { Button } from '@/components/ui/button';
+import { Github, Linkedin, Copy, ExternalLink, Check } from 'lucide-react';
+import Header from '@/components/layout/Header';
 
 /**
  * ContactPage Component
@@ -24,7 +18,7 @@ const ContactPage = () => {
    * Resets feedback after 2 seconds
    */
   const copyEmail = () => {
-    navigator.clipboard.writeText("abarlow505@gmail.com");
+    navigator.clipboard.writeText('abarlow505@gmail.com');
     setEmailCopied(true);
     setTimeout(() => setEmailCopied(false), 2000);
   };
@@ -32,14 +26,14 @@ const ContactPage = () => {
   // Social media links with icons and URLs
   const socialLinks = [
     {
-      name: "GitHub",
+      name: 'GitHub',
       icon: Github,
-      url: "https://github.com/AroSwift",
+      url: 'https://github.com/AroSwift',
     },
     {
-      name: "LinkedIn",
+      name: 'LinkedIn',
       icon: Linkedin,
-      url: "https://linkedin.com/in/allaaronbarlow/",
+      url: 'https://linkedin.com/in/allaaronbarlow/',
     },
   ];
 
@@ -79,21 +73,21 @@ const ContactPage = () => {
                   transition={{ delay: 0.5, duration: 0.6 }}
                 >
                   I enjoy connecting with new people. The easiest way to reach
-                  me is via{" "}
+                  me is via{' '}
                   <button
                     onClick={() =>
-                      window.open("mailto:abarlow505@gmail.com", "_blank")
+                      window.open('mailto:abarlow505@gmail.com', '_blank')
                     }
                     className="underline-fade-out hover:text-gray-600 dark:hover:text-gray-400 transition-colors cursor-pointer bg-transparent border-none p-0 font-inherit text-inherit"
                   >
                     email
-                  </button>{" "}
-                  but alternatively feel free to send me a message through{" "}
+                  </button>{' '}
+                  but alternatively feel free to send me a message through{' '}
                   <button
                     onClick={() =>
                       window.open(
-                        "https://linkedin.com/in/allaaronbarlow/",
-                        "_blank",
+                        'https://linkedin.com/in/allaaronbarlow/',
+                        '_blank'
                       )
                     }
                     className="underline-fade-out hover:text-gray-600 dark:hover:text-gray-400 transition-colors cursor-pointer bg-transparent border-none p-0 font-inherit text-inherit"
@@ -114,8 +108,8 @@ const ContactPage = () => {
                   <Button
                     onClick={() =>
                       window.open(
-                        "https://github.com/AroSwift/resume/blob/main/resume.pdf",
-                        "_blank",
+                        'https://github.com/AroSwift/resume/blob/main/resume.pdf',
+                        '_blank'
                       )
                     }
                     className="bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200 rounded-full px-7 sm:px-9 py-5 sm:py-7 text-lg sm:text-xl md:text-2xl font-medium flex items-center gap-3 transition-colors duration-500"
@@ -135,7 +129,7 @@ const ContactPage = () => {
                     <Button
                       onClick={copyEmail}
                       variant="outline"
-                      className={`w-full sm:w-auto border-2 ${emailCopied ? "border-green-600/40 dark:border-green-400/60 text-green-800 dark:text-green-200 bg-green-50/80 dark:bg-green-900/40" : "border-black dark:border-white text-black dark:text-white hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black"} rounded-full px-7 sm:px-9 py-5 sm:py-7 text-lg sm:text-xl md:text-2xl font-medium flex items-center gap-3 transition-all duration-500`}
+                      className={`w-full sm:w-auto border-2 ${emailCopied ? 'border-green-600/40 dark:border-green-400/60 text-green-800 dark:text-green-200 bg-green-50/80 dark:bg-green-900/40' : 'border-black dark:border-white text-black dark:text-white hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black'} rounded-full px-7 sm:px-9 py-5 sm:py-7 text-lg sm:text-xl md:text-2xl font-medium flex items-center gap-3 transition-all duration-500`}
                     >
                       <motion.div
                         animate={emailCopied ? { rotate: 360 } : { rotate: 0 }}
@@ -147,7 +141,7 @@ const ContactPage = () => {
                           <Copy className="h-5 w-5 sm:h-6 sm:w-6" />
                         )}
                       </motion.div>
-                      {emailCopied ? "Copied!" : "Copy email"}
+                      {emailCopied ? 'Copied!' : 'Copy email'}
                     </Button>
                   </motion.div>
 
@@ -157,8 +151,8 @@ const ContactPage = () => {
                     className="border-2 border-black dark:border-white text-black dark:text-white hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black rounded-full px-7 sm:px-9 py-5 sm:py-7 text-lg sm:text-xl md:text-2xl font-medium flex items-center gap-3 transition-colors duration-500"
                     onClick={() =>
                       window.open(
-                        "https://linkedin.com/in/allaaronbarlow/",
-                        "_blank",
+                        'https://linkedin.com/in/allaaronbarlow/',
+                        '_blank'
                       )
                     }
                   >
