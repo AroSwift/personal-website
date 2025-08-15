@@ -1,6 +1,6 @@
-# Personal Website
+# Personal Website - Aaron Barlow
 
-A modern, responsive personal website built with React, TypeScript, and Tailwind CSS. This website showcases my work, accomplishments, and provides a professional online presence.
+A modern, responsive personal website for Aaron Barlow built with React, TypeScript, and Tailwind CSS. This website showcases my work, accomplishments, and provides a professional online presence.
 
 ## Features
 
@@ -42,6 +42,10 @@ personal-website/
 │   └── App.tsx             # Main application component
 ├── public/                 # Static assets
 ├── dist/                   # Build output
+├── Dockerfile              # Docker configuration
+├── nginx.conf              # Nginx configuration
+├── docker-compose.yml      # Docker Compose for local testing
+├── .dockerignore           # Docker ignore file
 └── configuration files
 ```
 
@@ -51,12 +55,13 @@ personal-website/
 
 - Node.js (version 16 or higher)
 - npm or yarn package manager
+- Docker (for deployment)
 
 ### Installation
 
 1. Clone the repository:
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/yourusername/personal-website.git
    cd personal-website
    ```
 
@@ -77,6 +82,7 @@ personal-website/
 - `npm run dev` - Start development server
 - `npm run build` - Build for production
 - `npm run preview` - Preview production build locally
+- `npm run serve` - Serve production build locally
 
 ## Customization
 
@@ -106,12 +112,127 @@ The project uses Vite for building. Configuration can be modified in `vite.confi
 
 ## Deployment
 
-The project can be deployed to various platforms:
+### Coolify Deployment (Recommended)
+
+This project is configured for deployment on Coolify with a fully code-owned Docker setup.
+
+#### Coolify Configuration:
+
+1. **App Type**: Select "Dockerfile" (not Buildpack/Static)
+2. **Expose Port**: 80 (HTTP) and 443 (HTTPS)
+3. **Domain**: Attach your domain (e.g., `aaronbarlow.dev`) to this app only
+4. **SSL**: The container automatically generates self-signed certificates for HTTPS
+
+#### Coolify Setup Steps:
+
+1. In Coolify dashboard, create a new application
+2. Connect your Git repository
+3. Set **Application Type** to "Dockerfile"
+4. Set **Port** to "80" (HTTP) and "443" (HTTPS)
+5. Add your domain(s): `aaronbarlow.dev` and `www.aaronbarlow.dev`
+6. Deploy!
+
+### Local Docker Testing
+
+Test the Docker setup locally:
+
+```bash
+# Build and run with Docker Compose
+docker-compose up --build
+
+# Or build and run manually
+docker build -t personal-website .
+docker run -p 3000:80 -p 3443:443 personal-website
+```
+
+Then visit `http://localhost:3000` (will redirect to HTTPS) or `https://localhost:3443`
+
+**Note**: The docker-compose setup includes Traefik labels for production deployment with automatic HTTPS termination.
+
+### SSL Certificate Options
+
+For production deployment, you have several SSL certificate options:
+
+**Option A: Origin Certificate (Recommended)**
+- Generate a certificate from your domain provider
+- Mount the certificate and private key in your Docker container
+- Provides long-term validity and optimal performance
+
+**Option B: Let's Encrypt (Automatic)**
+- Let your reverse proxy handle automatic certificate generation
+- Certificates auto-renew every 90 days
+- Works well with Traefik and similar tools
+
+**Option C: Self-Signed (Development Only)**
+- The container generates self-signed certificates automatically
+- Suitable for local development and testing
+- Not recommended for production use
+
+### Manual Deployment
+
+If you prefer to deploy manually:
+
+```bash
+# Build the Docker image
+docker build -t personal-website .
+
+# Run the container
+docker run -d -p 80:80 -p 443:443 --name personal-website-site personal-website
+```
+
+### Alternative Static Hosting
+
+The project can also be deployed to various static hosting platforms:
 
 1. **Vercel**: Connect your repository and deploy automatically
 2. **Netlify**: Drag and drop the `dist` folder or connect your repository
 3. **GitHub Pages**: Use GitHub Actions to build and deploy
 4. **Any static hosting service**: Build the project and upload the `dist` folder
+
+**Note**: For static hosting, you'll need to configure the hosting provider to handle SPA routing (similar to the nginx `try_files` directive).
+
+## Configuration
+
+### Environment Variables
+If you plan to use Supabase or other external services, create a `.env` file in the root directory and add your configuration variables.
+
+### Build Configuration
+The project uses Vite for building. Configuration can be modified in `vite.config.ts`.
+
+### Nginx Configuration
+The `nginx.conf` file handles:
+- HTTPS/SSL configuration with automatic HTTP to HTTPS redirect
+- SPA routing (React Router support)
+- Static asset caching
+- Security headers (including HSTS)
+- Gzip compression
+- Proxy headers for CDN/reverse proxy compatibility
+
+## Troubleshooting
+
+### 404 Errors on Subpages
+If you're getting 404 errors on routes like `/projects`, ensure:
+1. You're using the Dockerfile deployment (not static hosting)
+2. The nginx.conf file is properly configured with `try_files $uri $uri/ /index.html;`
+3. Only one app is bound to your domain in Coolify
+
+### Container Health Checks
+To verify the container is running properly:
+```bash
+# Check if container is listening on port 80
+docker exec <container-name> ss -lntp
+
+# Check nginx logs
+docker logs <container-name>
+```
+
+### Build Issues
+If you encounter build issues:
+```bash
+# Clean and rebuild
+docker system prune -f
+docker build --no-cache -t personal-website .
+```
 
 ## Contributing
 

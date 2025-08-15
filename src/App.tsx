@@ -1,10 +1,114 @@
 import { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import LoadingScreen from './components/LoadingScreen';
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
 import ProjectsPage from './pages/ProjectsPage';
 import ContactPage from './pages/ContactPage';
+
+// Meta tag configurations for SEO
+const metaTagsConfig = {
+  '/': {
+    title: 'Aaron Barlow - HPC Software Engineer & AI Developer',
+    description: 'Aaron Barlow is an HPC Software Engineer at Oak Ridge National Laboratory, building agentic AI workflows and enabling exascale computing. View projects and experience.',
+    keywords: 'Aaron Barlow, HPC Software Engineer, AI Developer, Oak Ridge National Laboratory, agentic workflows, exascale computing',
+    ogTitle: 'Aaron Barlow - HPC Software Engineer & AI Developer',
+    ogDescription: 'Aaron Barlow is an HPC Software Engineer at Oak Ridge National Laboratory, building agentic AI workflows and enabling exascale computing.',
+    ogType: 'website',
+    twitterCard: 'summary_large_image',
+    twitterTitle: 'Aaron Barlow - HPC Software Engineer & AI Developer',
+    twitterDescription: 'Aaron Barlow is an HPC Software Engineer at Oak Ridge National Laboratory, building agentic AI workflows and enabling exascale computing.'
+  },
+  '/about': {
+    title: 'About Aaron Barlow - HPC Software Engineer',
+    description: 'Learn about Aaron Barlow\'s experience as an HPC Software Engineer at Oak Ridge National Laboratory, skills, education, and professional background.',
+    keywords: 'Aaron Barlow, about, HPC Software Engineer, Oak Ridge National Laboratory, experience, skills, education',
+    ogTitle: 'About Aaron Barlow - HPC Software Engineer',
+    ogDescription: 'Learn about Aaron Barlow\'s experience as an HPC Software Engineer at Oak Ridge National Laboratory, skills, education, and professional background.',
+    ogType: 'website',
+    twitterCard: 'summary_large_image',
+    twitterTitle: 'About Aaron Barlow - HPC Software Engineer',
+    twitterDescription: 'Learn about Aaron Barlow\'s experience as an HPC Software Engineer at Oak Ridge National Laboratory, skills, education, and professional background.'
+  },
+  '/projects': {
+    title: 'Projects by Aaron Barlow - AI Automation & HPC Solutions',
+    description: 'Explore Aaron Barlow\'s projects including AI automation workflows, HPC platform engineering, and performance optimization at scale.',
+    keywords: 'Aaron Barlow, projects, AI automation, HPC, agentic workflows, performance optimization',
+    ogTitle: 'Projects by Aaron Barlow - AI Automation & HPC Solutions',
+    ogDescription: 'Explore Aaron Barlow\'s projects including AI automation workflows, HPC platform engineering, and performance optimization at scale.',
+    ogType: 'website',
+    twitterCard: 'summary_large_image',
+    twitterTitle: 'Projects by Aaron Barlow - AI Automation & HPC Solutions',
+    twitterDescription: 'Explore Aaron Barlow\'s projects including AI automation workflows, HPC platform engineering, and performance optimization at scale.'
+  },
+  '/contact': {
+    title: 'Contact Aaron Barlow - Get in Touch',
+    description: 'Get in touch with Aaron Barlow. Contact information, social media links, and ways to connect for collaboration opportunities.',
+    keywords: 'Aaron Barlow, contact, email, LinkedIn, GitHub, collaboration',
+    ogTitle: 'Contact Aaron Barlow - Get in Touch',
+    ogDescription: 'Get in touch with Aaron Barlow. Contact information, social media links, and ways to connect for collaboration opportunities.',
+    ogType: 'website',
+    twitterCard: 'summary_large_image',
+    twitterTitle: 'Contact Aaron Barlow - Get in Touch',
+    twitterDescription: 'Get in touch with Aaron Barlow. Contact information, social media links, and ways to connect for collaboration opportunities.'
+  }
+};
+
+// Function to update meta tags
+const updateMetaTags = (pathname: string) => {
+  const config = metaTagsConfig[pathname as keyof typeof metaTagsConfig];
+  if (!config) return;
+
+  // Update document title
+  document.title = config.title;
+
+  // Update or create meta tags
+  const updateMetaTag = (name: string, content: string) => {
+    let meta = document.querySelector(`meta[name="${name}"]`) as HTMLMetaElement;
+    if (!meta) {
+      meta = document.createElement('meta');
+      meta.name = name;
+      document.head.appendChild(meta);
+    }
+    meta.content = content;
+  };
+
+  const updatePropertyMetaTag = (property: string, content: string) => {
+    let meta = document.querySelector(`meta[property="${property}"]`) as HTMLMetaElement;
+    if (!meta) {
+      meta = document.createElement('meta');
+      meta.setAttribute('property', property);
+      document.head.appendChild(meta);
+    }
+    meta.content = content;
+  };
+
+  // Update meta tags
+  updateMetaTag('description', config.description);
+  updateMetaTag('keywords', config.keywords);
+  updatePropertyMetaTag('og:title', config.ogTitle);
+  updatePropertyMetaTag('og:description', config.ogDescription);
+  updatePropertyMetaTag('og:type', config.ogType);
+  updateMetaTag('twitter:card', config.twitterCard);
+  updateMetaTag('twitter:title', config.twitterTitle);
+  updateMetaTag('twitter:description', config.twitterDescription);
+};
+
+// Component to handle meta tag updates
+const MetaTagManager = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    updateMetaTags(location.pathname);
+  }, [location.pathname]);
+
+  // Initialize meta tags on first load
+  useEffect(() => {
+    updateMetaTags(location.pathname);
+  }, []);
+
+  return null;
+};
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -38,6 +142,7 @@ function App() {
 
   return (
     <Router>
+      <MetaTagManager />
       <div className="App">
         <Routes>
           <Route path="/" element={<HomePage />} />
