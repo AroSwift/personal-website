@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Moon, Sun, Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useAnimation } from 'framer-motion';
 
 interface HeaderProps {
   className?: string;
@@ -14,6 +14,9 @@ const Header = ({ className = '' }: HeaderProps) => {
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrollY, setScrollY] = useState(0);
+  const [hasTriggeredPostLoadAnimation, setHasTriggeredPostLoadAnimation] = useState(false);
+  
+  const themeIconAnimation = useAnimation();
 
   useEffect(() => {
     // Check localStorage first, then fallback to current DOM state
@@ -40,6 +43,77 @@ const Header = ({ className = '' }: HeaderProps) => {
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Check for post-loading animation trigger
+  useEffect(() => {
+    const checkForPostLoadAnimation = () => {
+      const shouldTrigger = localStorage.getItem('triggerPostLoadAnimation');
+      if (shouldTrigger === 'true' && !hasTriggeredPostLoadAnimation) {
+        setHasTriggeredPostLoadAnimation(true);
+        
+        // Clear the flag
+        localStorage.removeItem('triggerPostLoadAnimation');
+        
+        // Run the sophisticated spinning animation
+        const runAnimation = async () => {
+          // Phase 1: Fast spin (3 rotations in 600ms)
+          await themeIconAnimation.start({
+            rotate: 1080, // 3 * 360 degrees
+            scale: [1, 1.15, 1],
+            transition: {
+              rotate: { duration: 0.6, ease: 'linear' },
+              scale: { duration: 0.3, ease: 'easeOut' }
+            }
+          });
+
+          // Phase 2: Deceleration (1 rotation in 800ms with easing)
+          await themeIconAnimation.start({
+            rotate: 1440, // 4 * 360 degrees
+            scale: 1,
+            transition: {
+              rotate: { duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }, // Smooth deceleration
+              scale: { duration: 0.2, ease: 'easeOut' }
+            }
+          });
+
+          // Phase 3: Settling (smooth stop in 400ms)
+          await themeIconAnimation.start({
+            rotate: 1440, // Keep final rotation
+            scale: 1,
+            transition: {
+              rotate: { duration: 0.4, ease: [0.34, 1.56, 0.64, 1] }, // Bounce-like settling
+              scale: { duration: 0.2, ease: 'easeOut' }
+            }
+          });
+        };
+
+        // Small delay to ensure smooth transition from loading screen
+        setTimeout(() => {
+          runAnimation();
+        }, 300);
+      }
+    };
+
+    // Check immediately
+    checkForPostLoadAnimation();
+
+    // Also check periodically for the first few seconds
+    const interval = setInterval(checkForPostLoadAnimation, 100);
+    setTimeout(() => clearInterval(interval), 3000);
+
+    return () => clearInterval(interval);
+  }, [hasTriggeredPostLoadAnimation, themeIconAnimation]);
+
+  // Handle normal theme toggle animation
+  useEffect(() => {
+    if (!hasTriggeredPostLoadAnimation) {
+      // Only apply normal theme toggle animation if post-loading animation hasn't triggered
+      themeIconAnimation.set({
+        rotate: theme === 'light' ? 0 : 180,
+        scale: 1
+      });
+    }
+  }, [theme, hasTriggeredPostLoadAnimation, themeIconAnimation]);
 
   const toggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
@@ -198,7 +272,7 @@ const Header = ({ className = '' }: HeaderProps) => {
 
         {/* Mobile Menu Button */}
         <div className="flex items-center gap-2 ml-16 lg:ml-24 xl:ml-32">
-          {/* Dark / light switch icon */}
+          {/* Dark / light switch icon with enhanced animation */}
           <Button
             variant="ghost"
             size="icon"
@@ -207,15 +281,10 @@ const Header = ({ className = '' }: HeaderProps) => {
             className="rounded-full transition-all duration-500 ease-in-out w-12 h-12 hover:scale-110 active:scale-95"
           >
             <motion.div
-              initial={false}
-              animate={{
-                rotate: theme === 'light' ? 0 : 180,
-                scale: [1, 1.1, 1],
-              }}
-              transition={{
-                rotate: { duration: 0.6, ease: 'easeInOut' },
-                scale: { duration: 0.2, ease: 'easeOut' },
-              }}
+              animate={themeIconAnimation}
+              initial={{ rotate: 0, scale: 1 }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
               {theme === 'light' ? (
                 <Moon className="h-5 w-5" />

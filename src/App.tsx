@@ -158,6 +158,9 @@ function App() {
     localStorage.setItem('hasVisited', 'true');
     setHasVisited(true);
     setIsLoading(false);
+    
+    // Set flag for post-loading animation
+    localStorage.setItem('triggerPostLoadAnimation', 'true');
   };
 
   // Show loading screen only for first-time visitors
