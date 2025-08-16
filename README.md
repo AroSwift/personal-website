@@ -16,7 +16,7 @@ A modern, responsive personal website for Aaron Barlow built with React, TypeScr
 
 ### Build Performance
 - **Production Deployment Time**: 32.5s (average of 8 runs)
-- **Local Build Speed**: 3.62s average (compile-only)
+- **Local Build Speed**: 1.51s average (compile-only)
 
 ### Page Speed Scores
 

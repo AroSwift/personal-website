@@ -32,8 +32,10 @@ const ContactPage = () => {
 
   return (
     <div className="min-h-screen text-black dark:text-white bg-neutral-200 dark:bg-neutral-900 relative overflow-hidden transition-colors duration-800">
-      {/* Animated hue overlay */}
+      {/* Multi-layered animated hue overlays for sophisticated effect */}
       <div className="animated-hue-overlay" />
+      <div className="animated-hue-overlay-slow" />
+      <div className="animated-hue-overlay-fast" />
       {/* Neutral background - no gradients */}
 
       <Header />
@@ -48,7 +50,7 @@ const ContactPage = () => {
       </div>
 
       {/* Main Content - Mobile-first padding to prevent overlap */}
-      <main className="pt-[50rem] sm:pt-[32rem] md:pt-[28rem] lg:pt-[28rem] xl:pt-[32rem] 2xl:pt-[36rem] min-h-screen flex flex-col">
+      <main className="pt-[25rem] sm:pt-[32rem] md:pt-[28rem] lg:pt-[28rem] xl:pt-[32rem] 2xl:pt-[36rem] min-h-screen flex flex-col">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col flex-1 justify-end pb-8 sm:pb-16 md:pb-20 lg:pb-24 xl:pb-32">
           <div className="relative z-20">
             <motion.div
@@ -105,7 +107,7 @@ const ContactPage = () => {
                         '_blank'
                       )
                     }
-                    className="bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200 rounded-full px-5 sm:px-6 py-3 sm:py-5 text-base sm:text-lg md:text-xl font-medium flex items-center gap-3 transition-colors duration-500"
+                    className="bg-black dark:bg-soft-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-soft-white-hover rounded-full px-5 sm:px-6 py-3 sm:py-5 text-base sm:text-lg md:text-xl font-medium flex items-center gap-3 transition-colors duration-500"
                   >
                     My Resume
                     <ExternalLink className="h-4 w-4 sm:h-5 sm:w-5" />
@@ -122,7 +124,7 @@ const ContactPage = () => {
                     <Button
                       onClick={copyEmail}
                       variant="outline"
-                      className={`w-full sm:w-auto border-2 ${emailCopied ? 'border-green-600/40 dark:border-green-400/60 text-green-800 dark:text-green-200 bg-green-50/80 dark:bg-green-900/40' : 'border-black dark:border-white text-black dark:text-white hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black'} rounded-full px-5 sm:px-6 py-3 sm:py-5 text-base sm:text-lg md:text-xl font-medium flex items-center gap-3 transition-all duration-500`}
+                      className={`w-full sm:w-auto border-2 ${emailCopied ? 'border-green-600/40 dark:border-green-400/60 text-green-800 dark:text-green-200 bg-green-50/80 dark:bg-green-900/40' : 'border-black dark:border-soft-white text-black dark:text-soft-white hover:bg-black dark:hover:bg-soft-white hover:text-white dark:hover:text-black'} rounded-full px-5 sm:px-6 py-3 sm:py-5 text-base sm:text-lg md:text-xl font-medium flex items-center gap-3 transition-all duration-500`}
                     >
                       <motion.div
                         animate={emailCopied ? { rotate: 360 } : { rotate: 0 }}
@@ -141,7 +143,7 @@ const ContactPage = () => {
                   {/* LinkedIn Reach Out Button */}
                   <Button
                     variant="outline"
-                    className="border-2 border-black dark:border-white text-black dark:text-white hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black rounded-full px-5 sm:px-6 py-3 sm:py-5 text-base sm:text-lg md:text-xl font-medium flex items-center gap-3 transition-colors duration-500"
+                    className="border-2 border-black dark:border-soft-white text-black dark:text-soft-white hover:bg-black dark:hover:bg-soft-white hover:text-white dark:hover:text-black rounded-full px-5 sm:px-6 py-3 sm:py-5 text-base sm:text-lg md:text-xl font-medium flex items-center gap-3 transition-colors duration-500"
                     onClick={() =>
                       window.open(
                         'https://linkedin.com/in/allaaronbarlow/',

@@ -129,12 +129,13 @@ const ProjectsPage = () => {
 
   return (
     <div className="min-h-screen text-foreground bg-background relative overflow-hidden">
-      {/* Animated hue overlay */}
+      {/* Multi-layered animated hue overlays for sophisticated effect */}
       <div className="animated-hue-overlay" />
+      <div className="animated-hue-overlay-slow" />
+      <div className="animated-hue-overlay-fast" />
       {/* Subtle warm gradient with cool accent - matching homepage */}
       <div className="absolute inset-0 bg-gradient-to-tl from-orange-100/40 via-amber-50/20 to-transparent pointer-events-none dark:from-orange-900/10 dark:via-amber-900/5 dark:to-transparent transition-all duration-800 ease-in-out" />
       <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-blue-50/25 pointer-events-none dark:to-blue-900/10 transition-all duration-800 ease-in-out" />
-      <div className="absolute top-1/2 left-0 w-1/2 h-3/4 bg-gradient-to-r from-cyan-100/15 via-blue-100/10 to-transparent pointer-events-none transform -translate-y-1/4 dark:from-cyan-900/10 dark:via-blue-900/5 blur-sm transition-all duration-800 ease-in-out" />
 
       <Header />
 
@@ -149,7 +150,7 @@ const ProjectsPage = () => {
             transition={{ duration: 0.8, ease: 'easeOut' }}
           >
             <motion.h1
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-normal leading-tight tracking-tight mb-8"
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-normal leading-tight tracking-tight mb-8 dark:text-enhanced"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
@@ -188,13 +189,13 @@ const ProjectsPage = () => {
                     ease: 'easeOut',
                   }}
                 >
-                  <Card className="border-border/50 hover:shadow-lg transition-all duration-300 h-full group hover:border-border">
+                  <Card className="border-border/50 hover:shadow-lg transition-all duration-300 h-full group hover:border-border dark:card-enhanced dark:hover-enhanced">
                     <CardHeader className="pb-4">
                       <div className="flex items-start justify-between mb-3">
                         <div className="flex-1">
                           {/* Project Category and Status Badges */}
                           <div className="flex items-center gap-3 mb-2">
-                            <Badge variant="secondary" className="text-xs">
+                            <Badge variant="secondary" className="text-xs dark:enhanced-glow">
                               {project.category}
                             </Badge>
                             <Badge
@@ -205,7 +206,7 @@ const ProjectsPage = () => {
                                     ? 'secondary'
                                     : 'outline'
                               }
-                              className="text-xs"
+                              className="text-xs dark:enhanced-glow"
                             >
                               {project.status}
                             </Badge>
@@ -240,7 +241,7 @@ const ProjectsPage = () => {
                           <Badge
                             key={techIndex}
                             variant="outline"
-                            className="text-xs font-normal"
+                            className="text-xs font-normal dark:enhanced-glow"
                           >
                             {tech}
                           </Badge>
@@ -261,7 +262,7 @@ const ProjectsPage = () => {
             transition={{ delay: 2.0, duration: 0.8, ease: 'easeOut' }}
           >
             <motion.h2
-              className="text-2xl sm:text-3xl font-normal mb-8 text-center"
+              className="text-2xl sm:text-3xl font-normal mb-8 text-center dark:text-enhanced"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 2.1, duration: 0.6 }}
@@ -280,7 +281,7 @@ const ProjectsPage = () => {
                     ease: 'easeOut',
                   }}
                 >
-                  <Card className="border-border/50 h-full">
+                  <Card className="border-border/50 h-full dark:card-enhanced dark:hover-enhanced">
                     <CardContent className="p-6">
                       <h3 className="text-xl font-semibold mb-3">
                         {achievement.title}
@@ -306,7 +307,7 @@ const ProjectsPage = () => {
             transition={{ delay: 2.8, duration: 0.8, ease: 'easeOut' }}
           >
             <motion.h2
-              className="text-2xl sm:text-3xl font-normal mb-8 text-center"
+              className="text-2xl sm:text-3xl font-normal mb-8 text-center dark:text-enhanced"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 2.9, duration: 0.6 }}
@@ -328,7 +329,7 @@ const ProjectsPage = () => {
                 >
                   <Badge
                     variant="secondary"
-                    className="px-3 py-1 text-base hover:scale-105 transition-transform duration-200"
+                    className="px-3 py-1 text-base hover:scale-105 transition-transform duration-200 dark:enhanced-glow"
                   >
                     {skill}
                   </Badge>
@@ -345,14 +346,14 @@ const ProjectsPage = () => {
             transition={{ duration: 0.8, delay: 3.6, ease: 'easeOut' }}
           >
             <Link to="/about" className="w-full sm:w-auto">
-              <Button className="w-full sm:w-auto bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200 rounded-full px-8 sm:px-12 py-4 sm:py-6 text-lg sm:text-xl font-medium transition-colors duration-500">
+              <Button className="w-full sm:w-auto bg-black dark:bg-soft-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-soft-white-hover rounded-full px-8 sm:px-12 py-4 sm:py-6 text-lg sm:text-xl font-medium transition-colors duration-500 dark:enhanced-glow dark:hover-enhanced">
                 About Me
               </Button>
             </Link>
             <Link to="/contact" className="w-full sm:w-auto">
               <Button
                 variant="outline"
-                className="w-full sm:w-auto border-2 border-black dark:border-white text-black dark:text-white hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black rounded-full px-8 sm:px-12 py-4 sm:py-6 text-lg sm:text-xl font-medium transition-colors duration-500"
+                className="w-full sm:w-auto border-2 border-black dark:border-soft-white text-black dark:text-soft-white hover:bg-black dark:hover:bg-soft-white hover:text-white dark:hover:text-black rounded-full px-8 sm:px-12 py-4 sm:py-6 text-lg sm:text-xl font-medium transition-colors duration-500 dark:enhanced-glow dark:hover-enhanced"
               >
                 Get in Touch
               </Button>
@@ -368,21 +369,21 @@ const ProjectsPage = () => {
           >
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 text-base text-muted-foreground transition-colors duration-600">
               <div>
-                <h4 className="font-medium text-foreground mb-2 transition-colors duration-600">
+                <h4 className="font-medium text-foreground mb-2 transition-colors duration-600 dark:text-enhanced">
                   Location
                 </h4>
                 <p>Charlotte, NC (EST)</p>
                 <p>Open to remote</p>
               </div>
               <div>
-                <h4 className="font-medium text-foreground mb-2 transition-colors duration-600">
+                <h4 className="font-medium text-foreground mb-2 transition-colors duration-600 dark:text-enhanced">
                   Currently
                 </h4>
                 <p>HPC Software Engineer @ ORNL</p>
                 <p>Building agentic AI workflows</p>
               </div>
               <div>
-                <h4 className="font-medium text-foreground mb-2 transition-colors duration-600">
+                <h4 className="font-medium text-foreground mb-2 transition-colors duration-600 dark:text-enhanced">
                   Principles
                 </h4>
                 <p>Ship fast, then make it faster</p>

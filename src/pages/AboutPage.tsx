@@ -181,12 +181,13 @@ const AboutPage = () => {
 
   return (
     <div className="min-h-screen text-foreground bg-background relative overflow-hidden">
-      {/* Animated hue overlay */}
+      {/* Multi-layered animated hue overlays for sophisticated effect */}
       <div className="animated-hue-overlay" />
+      <div className="animated-hue-overlay-slow" />
+      <div className="animated-hue-overlay-fast" />
       {/* Subtle warm gradient with cool accent - matching homepage */}
       <div className="absolute inset-0 bg-gradient-to-tl from-orange-100/40 via-amber-50/20 to-transparent pointer-events-none dark:from-orange-900/10 dark:via-amber-900/5 dark:to-transparent transition-all duration-800 ease-in-out" />
       <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-blue-50/25 pointer-events-none dark:to-blue-900/10 transition-all duration-800 ease-in-out" />
-      <div className="absolute top-1/2 left-0 w-1/2 h-3/4 bg-gradient-to-r from-cyan-100/15 via-blue-100/10 to-transparent pointer-events-none transform -translate-y-1/4 dark:from-cyan-900/10 dark:via-blue-900/5 blur-sm transition-all duration-800 ease-in-out" />
 
       <Header />
 
@@ -361,7 +362,7 @@ const AboutPage = () => {
             transition={{ delay: 1.5, duration: 0.8, ease: 'easeOut' }}
           >
             <motion.h2
-              className="text-2xl sm:text-3xl font-normal mb-8 text-center"
+              className="text-2xl sm:text-3xl font-normal mb-8 text-center dark:text-enhanced"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.6, duration: 0.6 }}
@@ -380,7 +381,7 @@ const AboutPage = () => {
                     ease: 'easeOut',
                   }}
                 >
-                  <Card className="border-border/50 hover:shadow-lg transition-shadow duration-300">
+                  <Card className="border-border/50 hover:shadow-lg transition-shadow duration-300 dark:card-enhanced dark:hover-enhanced">
                     <CardHeader>
                       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                         <div>
@@ -426,7 +427,7 @@ const AboutPage = () => {
             transition={{ delay: 2.4, duration: 0.8, ease: 'easeOut' }}
           >
             <motion.h2
-              className="text-2xl sm:text-3xl font-normal mb-8 text-center"
+              className="text-2xl sm:text-3xl font-normal mb-8 text-center dark:text-enhanced"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 2.5, duration: 0.6 }}
@@ -448,7 +449,7 @@ const AboutPage = () => {
                 >
                   <Badge
                     variant="secondary"
-                    className="px-3 py-1 text-base hover:scale-105 transition-transform duration-200"
+                    className="px-3 py-1 text-base hover:scale-105 transition-transform duration-200 dark:enhanced-glow"
                   >
                     {skill}
                   </Badge>
@@ -464,12 +465,12 @@ const AboutPage = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 3.2, duration: 0.8, ease: 'easeOut' }}
           >
-            <h2 className="text-2xl sm:text-3xl font-normal mb-8 text-center">
+            <h2 className="text-2xl sm:text-3xl font-normal mb-8 text-center dark:text-enhanced">
               Education
             </h2>
             <div className="space-y-6">
               {education.map((edu, index) => (
-                <Card key={index} className="border-border/50">
+                <Card key={index} className="border-border/50 dark:card-enhanced dark:hover-enhanced">
                   <CardHeader>
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                       <div>
@@ -507,7 +508,7 @@ const AboutPage = () => {
             transition={{ delay: 3.6, duration: 0.8, ease: 'easeOut' }}
           >
             <motion.h2
-              className="text-2xl sm:text-3xl font-normal mb-8 text-center"
+              className="text-2xl sm:text-3xl font-normal mb-8 text-center dark:text-enhanced"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 3.7, duration: 0.6 }}
@@ -526,16 +527,16 @@ const AboutPage = () => {
                     ease: 'easeOut',
                   }}
                 >
-                  <Card className="border-border/50 hover:shadow-lg transition-all duration-300 h-full group hover:border-border">
+                  <Card className="border-border/50 hover:shadow-lg transition-all duration-300 h-full group hover:border-border dark:card-enhanced dark:hover-enhanced">
                     <CardHeader className="pb-4">
                       <div className="flex items-start justify-between mb-3">
                         <div className="flex-1">
                           {/* Conference and Category Badges */}
                           <div className="flex items-center gap-3 mb-3">
-                            <Badge variant="secondary" className="text-xs">
+                            <Badge variant="secondary" className="text-xs dark:enhanced-glow">
                               {presentation.category}
                             </Badge>
-                            <Badge variant="outline" className="text-xs">
+                            <Badge variant="outline" className="text-xs dark:enhanced-glow">
                               {presentation.conference}
                             </Badge>
                           </div>
@@ -573,7 +574,7 @@ const AboutPage = () => {
                           <Badge
                             key={tagIndex}
                             variant="outline"
-                            className="text-xs font-normal"
+                            className="text-xs font-normal dark:enhanced-glow"
                           >
                             {tag}
                           </Badge>
@@ -582,15 +583,15 @@ const AboutPage = () => {
 
                       {/* Download Button */}
                       <div className="flex justify-end">
-                        <a
-                          href={presentation.pdfUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200 rounded-full px-6 py-3 text-sm font-medium transition-colors duration-300 hover:scale-105"
-                        >
-                          <Download className="h-4 w-4" />
-                          Download Presentation
-                        </a>
+                                                  <a
+                            href={presentation.pdfUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 bg-black dark:bg-soft-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-soft-white-hover rounded-full px-6 py-3 text-sm font-medium transition-colors duration-300 hover:scale-105 dark:enhanced-glow dark:hover-enhanced"
+                          >
+                            <Download className="h-4 w-4" />
+                            Download Presentation
+                          </a>
                       </div>
                     </CardContent>
                   </Card>
@@ -606,11 +607,11 @@ const AboutPage = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 4.0, duration: 0.8, ease: 'easeOut' }}
           >
-            <h2 className="text-2xl sm:text-3xl font-normal mb-8 text-center">
+            <h2 className="text-2xl sm:text-3xl font-normal mb-8 text-center dark:text-enhanced">
               Organizations & Community
             </h2>
             <div className="max-w-4xl mx-auto">
-              <Card className="border-border/50">
+              <Card className="border-border/50 dark:card-enhanced dark:hover-enhanced">
                 <CardHeader>
                   <CardTitle className="text-xl">Leadership Roles</CardTitle>
                 </CardHeader>
@@ -643,14 +644,14 @@ const AboutPage = () => {
             transition={{ duration: 0.8, delay: 3.8, ease: 'easeOut' }}
           >
             <Link to="/projects" className="w-full sm:w-auto">
-              <Button className="w-full sm:w-auto bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200 rounded-full px-8 sm:px-12 py-4 sm:py-6 text-lg sm:text-xl font-medium transition-colors duration-500">
+              <Button className="w-full sm:w-auto bg-black dark:bg-soft-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-soft-white-hover rounded-full px-8 sm:px-12 py-4 sm:py-6 text-lg sm:text-xl font-medium transition-colors duration-500 dark:enhanced-glow dark:hover-enhanced">
                 View Projects
               </Button>
             </Link>
             <Link to="/contact" className="w-full sm:w-auto">
               <Button
                 variant="outline"
-                className="w-full sm:w-auto border-2 border-black dark:border-white text-black dark:text-white hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black rounded-full px-8 sm:px-12 py-4 sm:py-6 text-lg sm:text-xl font-medium transition-colors duration-500"
+                className="w-full sm:w-auto border-2 border-black dark:border-soft-white text-black dark:text-soft-white hover:bg-black dark:hover:bg-soft-white hover:text-white dark:hover:text-black rounded-full px-8 sm:px-12 py-4 sm:py-6 text-lg sm:text-xl font-medium transition-colors duration-500"
               >
                 Get in touch
               </Button>

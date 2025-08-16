@@ -100,12 +100,13 @@ function HomePage() {
 
   return (
     <div className="min-h-screen text-foreground bg-background relative overflow-hidden">
-      {/* Animated hue overlay */}
+      {/* Multi-layered animated hue overlays for sophisticated effect */}
       <div className="animated-hue-overlay" />
+      <div className="animated-hue-overlay-slow" />
+      <div className="animated-hue-overlay-fast" />
       {/* Subtle warm gradient with cool accent - matching other pages */}
       <div className="absolute inset-0 bg-gradient-to-tl from-orange-100/40 via-amber-50/20 to-transparent pointer-events-none dark:from-orange-900/10 dark:via-amber-900/5 dark:to-transparent transition-all duration-800 ease-in-out" />
       <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-blue-50/25 pointer-events-none dark:to-blue-900/10 transition-all duration-800 ease-in-out" />
-      <div className="absolute top-1/2 left-0 w-1/2 h-3/4 bg-gradient-to-r from-cyan-100/15 via-blue-100/10 to-transparent pointer-events-none transform -translate-y-1/4 dark:from-cyan-900/10 dark:via-blue-900/5 blur-sm transition-all duration-800 ease-in-out" />
 
       <Header />
 
@@ -249,7 +250,7 @@ function HomePage() {
                       <Link to="/projects" className="w-full sm:w-auto">
                         <Button
                           variant="outline"
-                          className="w-full sm:w-auto border-2 border-black dark:border-white text-black dark:text-white hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black rounded-full px-4 sm:px-6 md:px-8 lg:px-10 py-3 sm:py-4 md:py-5 lg:py-6 text-sm sm:text-base md:text-lg font-medium transition-colors duration-500"
+                          className="w-full sm:w-auto border-2 border-black dark:border-soft-white text-black dark:text-soft-white hover:bg-black dark:hover:bg-soft-white hover:text-white dark:hover:text-black rounded-full px-4 sm:px-6 md:px-8 lg:px-10 py-3 sm:py-4 md:py-5 lg:py-6 text-sm sm:text-base md:text-lg font-medium transition-colors duration-500"
                         >
                           Selected Projects
                         </Button>
@@ -268,7 +269,7 @@ function HomePage() {
                       <Link to="/about" className="w-full sm:w-auto">
                         <Button
                           variant="outline"
-                          className="w-full sm:w-auto border-2 border-black dark:border-white text-black dark:text-white hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black rounded-full px-4 sm:px-6 md:px-8 lg:px-10 py-3 sm:py-4 md:py-5 lg:py-6 text-sm sm:text-base md:text-lg font-medium transition-colors duration-500"
+                          className="w-full sm:w-auto border-2 border-black dark:border-soft-white text-black dark:text-soft-white hover:bg-black dark:hover:bg-soft-white hover:text-white dark:hover:text-black rounded-full px-4 sm:px-6 md:px-8 lg:px-10 py-3 sm:py-4 md:py-5 lg:py-6 text-sm sm:text-base md:text-lg font-medium transition-colors duration-500"
                         >
                           About me
                         </Button>

@@ -39,9 +39,11 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
 
       return () => clearTimeout(timer)
     } else {
+      // Wait for the last word to fully animate in, then add extra delay
+      // to ensure smooth transition before showing theme selector
       const themeTimer = setTimeout(() => {
         setShowThemeSelector(true)
-      }, 800)
+      }, 1300) // Give users time to read the last word
 
       return () => clearTimeout(themeTimer)
     }
@@ -74,19 +76,19 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
     <div className="fixed inset-0 z-[9999] bg-black flex flex-col items-center justify-center overflow-hidden">
       {/* Main Background that contracts to a circle around theme button */}
       <motion.div
-        className="fixed inset-0 z-10 bg-black"
+        className="fixed inset-0 z-20 bg-black"
         initial={{ 
           clipPath: 'circle(100% at 50% 50%)'
         }}
         animate={{ 
           clipPath: isExiting 
-            ? 'circle(0% at 85% 15%)' 
+            ? 'circle(0% at 80% 20%)' 
             : 'circle(100% at 50% 50%)'
         }}
         transition={{ 
-          duration: 1.2, 
-          ease: [0.65, 0, 0.35, 1],
-          delay: 0.1
+          duration: 1.0, 
+          ease: [0.25, 0.46, 0.45, 0.94],
+          delay: 0.2
         }}
       />
 
@@ -102,7 +104,7 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
             color: isExiting ? "#000000" : "#ffffff",
             backgroundColor: isExiting ? "#000000" : "rgba(0, 0, 0, 0)" // Use rgba instead of transparent
           }}
-          transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
+          transition={{ duration: 0.6, delay: 0.2, ease: 'easeOut' }}
         >
           <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-light text-white tracking-tight leading-none">
             {'Aaron Barlow'.split('').map((letter, index) => (
@@ -161,9 +163,9 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
                 scale: isExiting ? 0.95 : 1 
               }}
               transition={{ 
-                duration: 1.0, 
+                duration: 0.6, 
                 ease: [0.25, 0.46, 0.45, 0.94],
-                delay: 0.3
+                delay: 0.1
               }}
             >
               <motion.p 
@@ -171,6 +173,7 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.6 }}
+                style={{ marginTop: '15%' }}
               >
                 Choose your theme
               </motion.p>

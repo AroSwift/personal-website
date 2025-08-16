@@ -173,11 +173,17 @@ const Header = ({ className = '' }: HeaderProps) => {
           style={{
             backgroundColor:
               theme === 'dark'
-                ? `rgba(30, 30, 30, ${backgroundOpacity})` // Less dark black for dark mode
+                ? `rgba(5, 5, 5, ${backgroundOpacity})` // Much darker black for dark mode
                 : `rgba(248, 250, 252, ${backgroundOpacity})`, // Cool off-white for light mode
             opacity: backgroundOpacity,
           }}
         />
+      )}
+      {/* Subtle animated background for dark mode */}
+      {theme === 'dark' && (
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="animated-hue-overlay-slow" style={{ opacity: 0.03 }} />
+        </div>
       )}
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8 md:py-10 flex justify-between items-center">
         <div className="flex items-center space-x-3">
