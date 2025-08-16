@@ -3,11 +3,11 @@ import { BrowserRouter } from 'react-router-dom';
 import NotFoundPage from '../pages/NotFoundPage';
 
 // Mock the Header component to avoid complex dependencies in tests
-vi.mock('../components/layout/Header', () => {
-  return function MockHeader() {
+vi.mock('../components/layout/Header', () => ({
+  default: function MockHeader() {
     return <div data-testid="header">Header</div>;
-  };
-});
+  }
+}));
 
 const renderWithRouter = (component: React.ReactElement) => {
   return render(

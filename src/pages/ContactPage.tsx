@@ -67,7 +67,7 @@ const ContactPage = () => {
               {/* Left Column - Contact Description and Action Buttons */}
               <div className="space-y-8 lg:space-y-10">
                 <motion.p
-                  className="text-xl sm:text-2xl md:text-3xl text-black dark:text-white leading-relaxed max-w-xl transition-colors duration-800"
+                  className="text-lg sm:text-xl md:text-2xl text-black dark:text-white leading-relaxed max-w-xl transition-colors duration-800"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.5, duration: 0.6 }}
@@ -99,7 +99,7 @@ const ContactPage = () => {
 
                 {/* Action Buttons - Resume, Email Copy, and LinkedIn */}
                 <motion.div
-                  className="flex flex-col sm:flex-row gap-4 sm:gap-5"
+                  className="flex flex-col sm:flex-row gap-4 sm:gap-5 mt-8 sm:mt-12"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.7, duration: 0.6 }}
@@ -112,10 +112,10 @@ const ContactPage = () => {
                         '_blank'
                       )
                     }
-                    className="bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200 rounded-full px-7 sm:px-9 py-5 sm:py-7 text-lg sm:text-xl md:text-2xl font-medium flex items-center gap-3 transition-colors duration-500"
+                    className="bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200 rounded-full px-5 sm:px-6 py-3 sm:py-5 text-base sm:text-lg md:text-xl font-medium flex items-center gap-3 transition-colors duration-500"
                   >
                     My Resume
-                    <ExternalLink className="h-5 w-5 sm:h-6 sm:w-6" />
+                    <ExternalLink className="h-4 w-4 sm:h-5 sm:w-5" />
                   </Button>
 
                   {/* Email Copy Button with Success Animation */}
@@ -129,16 +129,16 @@ const ContactPage = () => {
                     <Button
                       onClick={copyEmail}
                       variant="outline"
-                      className={`w-full sm:w-auto border-2 ${emailCopied ? 'border-green-600/40 dark:border-green-400/60 text-green-800 dark:text-green-200 bg-green-50/80 dark:bg-green-900/40' : 'border-black dark:border-white text-black dark:text-white hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black'} rounded-full px-7 sm:px-9 py-5 sm:py-7 text-lg sm:text-xl md:text-2xl font-medium flex items-center gap-3 transition-all duration-500`}
+                      className={`w-full sm:w-auto border-2 ${emailCopied ? 'border-green-600/40 dark:border-green-400/60 text-green-800 dark:text-green-200 bg-green-50/80 dark:bg-green-900/40' : 'border-black dark:border-white text-black dark:text-white hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black'} rounded-full px-5 sm:px-6 py-3 sm:py-5 text-base sm:text-lg md:text-xl font-medium flex items-center gap-3 transition-all duration-500`}
                     >
                       <motion.div
                         animate={emailCopied ? { rotate: 360 } : { rotate: 0 }}
                         transition={{ duration: 0.3 }}
                       >
                         {emailCopied ? (
-                          <Check className="h-5 w-5 sm:h-6 sm:w-6" />
+                          <Check className="h-4 w-4 sm:h-5 sm:w-5" />
                         ) : (
-                          <Copy className="h-5 w-5 sm:h-6 sm:w-6" />
+                          <Copy className="h-4 w-4 sm:h-5 sm:w-5" />
                         )}
                       </motion.div>
                       {emailCopied ? 'Copied!' : 'Copy email'}
@@ -148,7 +148,7 @@ const ContactPage = () => {
                   {/* LinkedIn Reach Out Button */}
                   <Button
                     variant="outline"
-                    className="border-2 border-black dark:border-white text-black dark:text-white hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black rounded-full px-7 sm:px-9 py-5 sm:py-7 text-lg sm:text-xl md:text-2xl font-medium flex items-center gap-3 transition-colors duration-500"
+                    className="border-2 border-black dark:border-white text-black dark:text-white hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black rounded-full px-5 sm:px-6 py-3 sm:py-5 text-base sm:text-lg md:text-xl font-medium flex items-center gap-3 transition-colors duration-500"
                     onClick={() =>
                       window.open(
                         'https://linkedin.com/in/allaaronbarlow/',
@@ -171,12 +171,12 @@ const ContactPage = () => {
                   <h3 className="text-2xl sm:text-3xl font-medium mb-3 text-black dark:text-white transition-colors duration-800">
                     On social platforms
                   </h3>
-                  <p className="text-xl sm:text-2xl text-gray-600 dark:text-gray-400 mb-8 transition-colors duration-800">
+                  <p className="text-base sm:text-lg text-gray-600 dark:text-gray-400 mb-4 transition-colors duration-800">
                     Let's connect and get in touch 👋
                   </p>
 
                   {/* Social Links with Hover Effects */}
-                  <div className="flex gap-8">
+                  <div className="flex gap-6">
                     {socialLinks.map((social, index) => {
                       const Icon = social.icon;
                       return (
@@ -185,7 +185,7 @@ const ContactPage = () => {
                           href={social.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex items-center gap-4 p-4 rounded-lg hover:bg-gray-300/50 dark:hover:bg-gray-700/50 transition-colors group"
+                          className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-300/50 dark:hover:bg-gray-700/50 transition-colors group"
                           initial={{ opacity: 0, y: 20 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{
@@ -194,8 +194,8 @@ const ContactPage = () => {
                           }}
                           whileHover={{ scale: 1.02 }}
                         >
-                          <Icon className="h-7 w-7 text-gray-600 dark:text-gray-400 group-hover:text-black dark:group-hover:text-white transition-colors" />
-                          <span className="text-xl font-medium text-gray-600 dark:text-gray-400 group-hover:text-black dark:group-hover:text-white transition-colors">
+                          <Icon className="h-6 w-6 text-gray-600 dark:text-gray-400 group-hover:text-black dark:group-hover:text-white transition-colors" />
+                          <span className="text-lg font-medium text-gray-600 dark:text-gray-400 group-hover:text-black dark:group-hover:text-white transition-colors">
                             {social.name}
                           </span>
                         </motion.a>
