@@ -40,7 +40,8 @@ const AboutPage = () => {
     'Amber',
     'Ember.js',
     'PHP',
-    'C/C++',
+    'C',
+    'C++',
     'C#',
     'Processing',
     'Assembly',
@@ -50,8 +51,6 @@ const AboutPage = () => {
     'CSS',
     'Sass',
     'Git',
-    'FastAPI',
-    'Flask',
     'gRPC',
     'REST',
     'Redis',
@@ -62,15 +61,6 @@ const AboutPage = () => {
     'Argo CD',
     'Slurm',
     'CI/CD',
-    'Prometheus',
-    'Grafana',
-    'OpenTelemetry',
-    'ROCm',
-    'HashiCorp Vault',
-    'MinIO',
-    'KubeDB',
-    'Stash',
-    'SonarQube',
     'NVFLARE',
     'PyTorch',
     'Natural Language Processing (NLP)',
@@ -82,7 +72,7 @@ const AboutPage = () => {
     'NumPy',
     'scikit-learn',
     'AI-driven workflow automation',
-    'Embedded Systems development',
+    'Embedded systems development',
   ]
 
   // Professional experience timeline
@@ -92,12 +82,14 @@ const AboutPage = () => {
       role: 'HPC Software Engineer',
       period: 'Jun 2020 - Present',
       location: 'Oak Ridge, TN (Remote)',
+      scope: '',
       highlights: [
-        'Enabled privacy-preserving federated learning at exascale on Frontier (first U.S. exascale system; TOP500 #2)',
-        'Owned and scaled myOLCF used by thousands (~4k) across 1,000+ projects with 99.9%+ availability',
-        'Improved application responsiveness by 1320× (−99.92%) through JSON:API serializer and Redis caching optimization',
-        'Built Smart Facility metrics platform ingesting compute/data/I/O/efficiency metrics',
-        'Standardized GitOps delivery with Kustomize + Argo CD on Kubernetes',
+        'Enabled privacy-preserving federated learning on Frontier (first U.S. exascale system; TOP500 #2). Ported NVFLARE to ROCm/MI250X with PyTorch, built HIP-compatible containers, integrated with Slurm (mTLS in enclaves), and validated multi-node training rounds previously impossible.',
+        'Owned and scaled myOLCF self-service portal to ~4,000 users across 1,000+ projects with 99.9%+ uptime; shipped 12 FY2025 releases governing access, allocation, and policy across enclaves.',
+        'Replaced Jbuilder with JSON:API serializer + Redis caching; took 100k-row endpoint 272s → 178–206ms (1,320× faster, –99.92%), cut ActiveRecord 19.2s → 8.8ms, and eliminated cluster sync timeouts.',
+        'Built Crystal/Amber Smart Facility metrics platform ingesting 100k+ time-series records; served dashboards in ~87ms and benchmarked 10.4k req/sec per core. Used for procurement and to flag inefficient Slurm jobs.',
+        'Accelerated CI/CD: builds 2m → 9s (-92%), startup 30s → <200ms (-99%), tests 90s → 6s (-93%). Standardized GitOps delivery with Kustomize + Argo CD on Kubernetes.',
+        'Central policy-as-code service automating provisioning, access, and scheduler policy across SLURM/LSF enclaves. Zero post-deploy incidents in 3 years due to expanded Cypress coverage + validation.',
       ],
     },
     {
@@ -106,8 +98,7 @@ const AboutPage = () => {
       period: 'Jun 2019 - Aug 2019',
       location: 'Greater Los Angeles Area',
       highlights: [
-        'Built NLP entity extraction service achieving 96% F1 score',
-        'Resulted in over $20 million in annual savings through automation',
+        'Built NLP entity extraction service (names, phones, addresses, accounts, amounts) achieving 96% F1 score, enabling $20M+ in annual automation savings.',
       ],
     },
     {
@@ -116,9 +107,9 @@ const AboutPage = () => {
       period: 'May 2015 - May 2019',
       location: 'Oak Ridge, TN',
       highlights: [
-        'Year-round development of HPC-centric services, applications, and BI tools; shipped production features across internal portals',
-        'Automated supercomputer-access communications via a policy-aware email system; standardized messaging and reduced manual steps',
-        'Built a WordPress/REST plugin to sync and display HPC metrics on olcf.ornl.gov; improved data freshness and reduced update toil',
+        'Year-round development of HPC-centric services, applications, and BI tools for 20+ HPC clusters, ensuring uptime for $250M compute systems; shipped production features across internal portals.',
+        'Automated supercomputer-access communications via policy-aware email system; standardized messaging and reduced manual steps.',
+        'Built WordPress/REST plugin to sync and display HPC metrics on olcf.ornl.gov; improved data freshness and reduced update toil.',
       ],
     },
   ]
@@ -127,7 +118,7 @@ const AboutPage = () => {
   const education = [
     {
       school: 'East Tennessee State University',
-      degree: 'Bachelor of Science, Computer Science',
+      degree: 'B.S. in Computer Science',
       period: 'Aug 2017 - May 2020',
       gpa: '3.94/4.00',
       honors: "Dean's List",
@@ -397,9 +388,14 @@ const AboutPage = () => {
                           <p>{job.location}</p>
                         </div>
                       </div>
+                      {job.scope && (
+                        <p className="text-base text-muted-foreground mt-3 italic">
+                          {job.scope}
+                        </p>
+                      )}
                     </CardHeader>
                     <CardContent>
-                      <ul className="space-y-2">
+                      <ul className="space-y-3">
                         {job.highlights.map((highlight, idx) => (
                           <li
                             key={idx}

@@ -99,34 +99,6 @@ const ProjectsPage = () => {
     },
   ]
 
-  // Skills
-  const skills = [
-    'Ruby on Rails',
-    'Python',
-    'TypeScript',
-    'React',
-    'Go',
-    'PostgreSQL',
-    'Redis',
-    'Docker',
-    'Kubernetes',
-    'AI/ML',
-    'CrewAI',
-    'Vector Databases',
-    'WebSocket',
-    'HPC',
-    'Slurm',
-    'GitOps',
-    'Argo CD',
-    'Prometheus',
-    'Grafana',
-    'REST APIs',
-    'gRPC',
-    'Microservices',
-    'Performance Optimization',
-    'System Architecture',
-  ]
-
   return (
     <div className="min-h-screen text-foreground bg-background relative overflow-hidden">
       {/* Multi-layered animated hue overlays for sophisticated effect */}
@@ -299,51 +271,12 @@ const ProjectsPage = () => {
             </div>
           </motion.section>
 
-          {/* Technologies & Skills Section */}
-          <motion.section
-            className="mb-16 lg:mb-24"
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 2.8, duration: 0.8, ease: 'easeOut' }}
-          >
-            <motion.h2
-              className="text-2xl sm:text-3xl font-normal mb-8 text-center dark:text-enhanced"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 2.9, duration: 0.6 }}
-            >
-              Technologies & Skills
-            </motion.h2>
-            <motion.div
-              className="flex flex-wrap gap-2 justify-center"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 3.1, duration: 0.8, ease: 'easeOut' }}
-            >
-              {skills.map((skill, index) => (
-                <motion.div
-                  key={skill}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 3.2 + index * 0.02, duration: 0.4 }}
-                >
-                  <Badge
-                    variant="secondary"
-                    className="px-3 py-1 text-base hover:scale-105 transition-transform duration-200 dark:enhanced-glow"
-                  >
-                    {skill}
-                  </Badge>
-                </motion.div>
-              ))}
-            </motion.div>
-          </motion.section>
-
           {/* Call-to-Action Buttons */}
           <motion.div
             className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6 mb-16 lg:mb-24"
             initial={{ opacity: 0, y: 30, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 0.8, delay: 3.6, ease: 'easeOut' }}
+            transition={{ duration: 0.8, delay: 2.8, ease: 'easeOut' }}
           >
             <Link to="/about" className="w-full sm:w-auto">
               <Button className="w-full sm:w-auto bg-black dark:bg-soft-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-soft-white-hover rounded-full px-8 sm:px-12 py-4 sm:py-6 text-lg sm:text-xl font-medium transition-colors duration-500 dark:enhanced-glow dark:hover-enhanced">
@@ -365,7 +298,7 @@ const ProjectsPage = () => {
             className="pt-8 sm:pt-12 border-t border-border/50 transition-colors duration-600"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 3.8, duration: 0.8 }}
+            transition={{ delay: 3.0, duration: 0.8 }}
           >
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 text-base text-muted-foreground transition-colors duration-600">
               <div>
