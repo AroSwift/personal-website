@@ -2,7 +2,15 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { ExternalLink, Mail, Github } from 'lucide-react';
+import {
+  ExternalLink,
+  Mail,
+  Github,
+  Download,
+  FileText,
+  Calendar,
+  MapPin,
+} from 'lucide-react';
 
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -144,10 +152,31 @@ const AboutPage = () => {
     'Ethical Hacking - Vice President (Jan 2018 - Dec 2019)',
   ];
 
-  // Conference presentations and talks
-  const talks = [
-    "CUG 2025 - 'Employing a Software-Driven Approach to Scalable HPC System Management'",
-    "NLIT 2024 - 'Employing DevOps in HPC Operational Management'",
+  // Conference presentations and talks with PDF downloads
+  const presentations = [
+    {
+      title:
+        'Employing a Software-Driven Approach to Scalable HPC System Management',
+      conference: 'CUG 2025',
+      date: '2025',
+      location: 'Virtual/In-Person',
+      description:
+        'Presentation on implementing software-driven approaches for managing large-scale HPC systems, focusing on automation and scalability.',
+      pdfUrl: '/presentations/cug-2025-hpc-system-management.pdf',
+      category: 'HPC Management',
+      tags: ['HPC', 'System Management', 'Automation', 'Scalability'],
+    },
+    {
+      title: 'Employing DevOps in HPC Operational Management',
+      conference: 'NLIT 2024',
+      date: '2024',
+      location: 'Virtual/In-Person',
+      description:
+        'Discussion on applying DevOps principles and practices to High Performance Computing operational workflows and infrastructure management.',
+      pdfUrl: '/presentations/nlit-2024-devops-hpc.pdf',
+      category: 'DevOps',
+      tags: ['DevOps', 'HPC', 'Operations', 'Infrastructure'],
+    },
   ];
 
   return (
@@ -470,17 +499,117 @@ const AboutPage = () => {
             </div>
           </motion.section>
 
-          {/* Organizations & Community Involvement */}
+          {/* Technical Talks Section */}
           <motion.section
             className="mb-16 lg:mb-24"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 3.6, duration: 0.8, ease: 'easeOut' }}
           >
+            <motion.h2
+              className="text-2xl sm:text-3xl font-normal mb-8 text-center"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 3.7, duration: 0.6 }}
+            >
+              Technical Talks
+            </motion.h2>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {presentations.map((presentation, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    delay: 3.8 + index * 0.2,
+                    duration: 0.6,
+                    ease: 'easeOut',
+                  }}
+                >
+                  <Card className="border-border/50 hover:shadow-lg transition-all duration-300 h-full group hover:border-border">
+                    <CardHeader className="pb-4">
+                      <div className="flex items-start justify-between mb-3">
+                        <div className="flex-1">
+                          {/* Conference and Category Badges */}
+                          <div className="flex items-center gap-3 mb-3">
+                            <Badge variant="secondary" className="text-xs">
+                              {presentation.category}
+                            </Badge>
+                            <Badge variant="outline" className="text-xs">
+                              {presentation.conference}
+                            </Badge>
+                          </div>
+                          <CardTitle className="text-xl font-bold group-hover:text-muted-foreground transition-colors leading-tight">
+                            {presentation.title}
+                          </CardTitle>
+                        </div>
+                        {/* PDF Icon */}
+                        <div className="text-muted-foreground group-hover:text-foreground transition-colors p-2">
+                          <FileText className="h-6 w-6" />
+                        </div>
+                      </div>
+
+                      {/* Conference Details */}
+                      <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                        <div className="flex items-center gap-1">
+                          <Calendar className="h-4 w-4" />
+                          <span>{presentation.date}</span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <MapPin className="h-4 w-4" />
+                          <span>{presentation.location}</span>
+                        </div>
+                      </div>
+                    </CardHeader>
+
+                    <CardContent className="pt-0">
+                      <p className="text-base leading-relaxed mb-4 text-foreground/90">
+                        {presentation.description}
+                      </p>
+
+                      {/* Tags */}
+                      <div className="flex flex-wrap gap-1 mb-4">
+                        {presentation.tags.map((tag, tagIndex) => (
+                          <Badge
+                            key={tagIndex}
+                            variant="outline"
+                            className="text-xs font-normal"
+                          >
+                            {tag}
+                          </Badge>
+                        ))}
+                      </div>
+
+                      {/* Download Button */}
+                      <div className="flex justify-end">
+                        <a
+                          href={presentation.pdfUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200 rounded-full px-6 py-3 text-sm font-medium transition-colors duration-300 hover:scale-105"
+                        >
+                          <Download className="h-4 w-4" />
+                          Download Presentation
+                        </a>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              ))}
+            </div>
+          </motion.section>
+
+          {/* Organizations & Community Involvement */}
+          <motion.section
+            className="mb-16 lg:mb-24"
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 4.0, duration: 0.8, ease: 'easeOut' }}
+          >
             <h2 className="text-2xl sm:text-3xl font-normal mb-8 text-center">
               Organizations & Community
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="max-w-4xl mx-auto">
               <Card className="border-border/50">
                 <CardHeader>
                   <CardTitle className="text-xl">Leadership Roles</CardTitle>
@@ -501,29 +630,106 @@ const AboutPage = () => {
                   </ul>
                 </CardContent>
               </Card>
+            </div>
+          </motion.section>
 
-              <Card className="border-border/50">
-                <CardHeader>
-                  <CardTitle className="text-xl">
-                    Talks & Presentations
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-3">
-                    {talks.map((talk, index) => (
-                      <li
-                        key={index}
-                        className="text-base leading-relaxed flex items-start"
-                      >
-                        <span className="text-muted-foreground mr-2 mt-1.5">
-                          •
-                        </span>
-                        <span>{talk}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
+          {/* Presentations Section */}
+          <motion.section
+            className="mb-16 lg:mb-24"
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 3.8, duration: 0.8, ease: 'easeOut' }}
+          >
+            <motion.h2
+              className="text-2xl sm:text-3xl font-normal mb-8 text-center"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 3.9, duration: 0.6 }}
+            >
+              Technical Talks
+            </motion.h2>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {presentations.map((presentation, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    delay: 4.0 + index * 0.2,
+                    duration: 0.6,
+                    ease: 'easeOut',
+                  }}
+                >
+                  <Card className="border-border/50 hover:shadow-lg transition-all duration-300 h-full group hover:border-border">
+                    <CardHeader className="pb-4">
+                      <div className="flex items-start justify-between mb-3">
+                        <div className="flex-1">
+                          {/* Conference and Category Badges */}
+                          <div className="flex items-center gap-3 mb-3">
+                            <Badge variant="secondary" className="text-xs">
+                              {presentation.category}
+                            </Badge>
+                            <Badge variant="outline" className="text-xs">
+                              {presentation.conference}
+                            </Badge>
+                          </div>
+                          <CardTitle className="text-xl font-bold group-hover:text-muted-foreground transition-colors leading-tight">
+                            {presentation.title}
+                          </CardTitle>
+                        </div>
+                        {/* PDF Icon */}
+                        <div className="text-muted-foreground group-hover:text-foreground transition-colors p-2">
+                          <FileText className="h-6 w-6" />
+                        </div>
+                      </div>
+
+                      {/* Conference Details */}
+                      <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                        <div className="flex items-center gap-1">
+                          <Calendar className="h-4 w-4" />
+                          <span>{presentation.date}</span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <MapPin className="h-4 w-4" />
+                          <span>{presentation.location}</span>
+                        </div>
+                      </div>
+                    </CardHeader>
+
+                    <CardContent className="pt-0">
+                      <p className="text-base leading-relaxed mb-4 text-foreground/90">
+                        {presentation.description}
+                      </p>
+
+                      {/* Tags */}
+                      <div className="flex flex-wrap gap-1 mb-4">
+                        {presentation.tags.map((tag, tagIndex) => (
+                          <Badge
+                            key={tagIndex}
+                            variant="outline"
+                            className="text-xs font-normal"
+                          >
+                            {tag}
+                          </Badge>
+                        ))}
+                      </div>
+
+                      {/* Download Button */}
+                      <div className="flex justify-end">
+                        <a
+                          href={presentation.pdfUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200 rounded-full px-6 py-3 text-sm font-medium transition-colors duration-300 hover:scale-105"
+                        >
+                          <Download className="h-4 w-4" />
+                          Download Presentation
+                        </a>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              ))}
             </div>
           </motion.section>
 

@@ -27,6 +27,8 @@ const STATIC_FILES = [
   '/profile-aaron-800.webp',
   '/profile-guy-400.webp',
   '/profile-guy-800.webp',
+  '/presentations/cug-2025-hpc-system-management.pdf',
+  '/presentations/nlit-2024-devops-hpc.pdf',
   '/icons/favicon.ico',
   '/icons/favicon-16x16.png',
   '/icons/favicon-32x32.png',
@@ -109,6 +111,9 @@ self.addEventListener('fetch', (event) => {
     event.respondWith(cacheFirst(request, STATIC_CACHE));
   } else if (url.pathname.match(/\.(png|jpg|jpeg|gif|svg|ico|webp)$/)) {
     // Images - cache first, then network
+    event.respondWith(cacheFirst(request, STATIC_CACHE));
+  } else if (url.pathname.match(/\.pdf$/)) {
+    // PDFs - cache first, then network
     event.respondWith(cacheFirst(request, STATIC_CACHE));
   } else if (url.pathname.match(/\.(woff|woff2|ttf|eot)$/)) {
     // Fonts - cache first, then network

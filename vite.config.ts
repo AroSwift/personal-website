@@ -1,5 +1,5 @@
 import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react-swc';
+import react from '@vitejs/plugin-react';
 import path from 'path';
 
 export default defineConfig({
@@ -12,7 +12,7 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'jsdom',
-    setupFiles: ['./src/test/setup.tsx'],
+    setupFiles: ['./src/tests/setup.tsx'],
   },
   build: {
     // Optimize build for production
@@ -24,7 +24,7 @@ export default defineConfig({
     // Optimize chunk splitting to reduce duplicate modules
     rollupOptions: {
       output: {
-        manualChunks: (id) => {
+        manualChunks: id => {
           // Separate vendor chunks to avoid duplicates
           if (id.includes('node_modules')) {
             if (id.includes('react') || id.includes('react-dom')) {

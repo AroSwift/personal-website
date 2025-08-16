@@ -48,7 +48,7 @@ const ContactPage = () => {
       {/* Large Dynamic Title - Mobile-first responsive sizing */}
       <div className="absolute top-[20%] sm:top-[15%] md:top-[20%] lg:top-[25%] left-0 right-0 pointer-events-none z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <h1 className="text-[16vw] sm:text-[14vw] md:text-[16vw] lg:text-[14vw] xl:text-[12vw] 2xl:text-[10vw] font-light leading-none tracking-wide text-black dark:text-white transition-colors duration-800">
+          <h1 className="text-[16vw] sm:text-[14vw] md:text-[16vw] lg:text-[15.1vw] xl:text-[13vw] 2xl:text-[10.8vw] font-light leading-none tracking-wide text-black dark:text-white transition-colors duration-800">
             Get in touch
           </h1>
         </div>

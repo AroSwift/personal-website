@@ -14,8 +14,9 @@ const Header = ({ className = '' }: HeaderProps) => {
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrollY, setScrollY] = useState(0);
-  const [hasTriggeredPostLoadAnimation, setHasTriggeredPostLoadAnimation] = useState(false);
-  
+  const [hasTriggeredPostLoadAnimation, setHasTriggeredPostLoadAnimation] =
+    useState(false);
+
   const themeIconAnimation = useAnimation();
 
   useEffect(() => {
@@ -50,10 +51,10 @@ const Header = ({ className = '' }: HeaderProps) => {
       const shouldTrigger = localStorage.getItem('triggerPostLoadAnimation');
       if (shouldTrigger === 'true' && !hasTriggeredPostLoadAnimation) {
         setHasTriggeredPostLoadAnimation(true);
-        
+
         // Clear the flag
         localStorage.removeItem('triggerPostLoadAnimation');
-        
+
         // Run the sophisticated spinning animation
         const runAnimation = async () => {
           // Phase 1: Fast spin (3 rotations in 600ms)
@@ -62,8 +63,8 @@ const Header = ({ className = '' }: HeaderProps) => {
             scale: [1, 1.15, 1],
             transition: {
               rotate: { duration: 0.6, ease: 'linear' },
-              scale: { duration: 0.3, ease: 'easeOut' }
-            }
+              scale: { duration: 0.3, ease: 'easeOut' },
+            },
           });
 
           // Phase 2: Deceleration (1 rotation in 800ms with easing)
@@ -72,8 +73,8 @@ const Header = ({ className = '' }: HeaderProps) => {
             scale: 1,
             transition: {
               rotate: { duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }, // Smooth deceleration
-              scale: { duration: 0.2, ease: 'easeOut' }
-            }
+              scale: { duration: 0.2, ease: 'easeOut' },
+            },
           });
 
           // Phase 3: Settling (smooth stop in 400ms)
@@ -82,8 +83,8 @@ const Header = ({ className = '' }: HeaderProps) => {
             scale: 1,
             transition: {
               rotate: { duration: 0.4, ease: [0.34, 1.56, 0.64, 1] }, // Bounce-like settling
-              scale: { duration: 0.2, ease: 'easeOut' }
-            }
+              scale: { duration: 0.2, ease: 'easeOut' },
+            },
           });
         };
 
@@ -110,7 +111,7 @@ const Header = ({ className = '' }: HeaderProps) => {
       // Only apply normal theme toggle animation if post-loading animation hasn't triggered
       themeIconAnimation.set({
         rotate: theme === 'light' ? 0 : 180,
-        scale: 1
+        scale: 1,
       });
     }
   }, [theme, hasTriggeredPostLoadAnimation, themeIconAnimation]);

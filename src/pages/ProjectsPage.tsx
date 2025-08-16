@@ -2,7 +2,9 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { ExternalLink } from 'lucide-react';
+import {
+  ExternalLink,
+} from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Header from '@/components/layout/Header';
@@ -256,13 +258,13 @@ const ProjectsPage = () => {
             className="mb-16 lg:mb-24"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.4, duration: 0.8, ease: 'easeOut' }}
+            transition={{ delay: 2.0, duration: 0.8, ease: 'easeOut' }}
           >
             <motion.h2
               className="text-2xl sm:text-3xl font-normal mb-8 text-center"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.5, duration: 0.6 }}
+              transition={{ delay: 2.1, duration: 0.6 }}
             >
               Key Achievements
             </motion.h2>
@@ -273,7 +275,7 @@ const ProjectsPage = () => {
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{
-                    delay: 1.7 + index * 0.2, // Staggered animation
+                    delay: 2.3 + index * 0.2, // Staggered animation
                     duration: 0.6,
                     ease: 'easeOut',
                   }}
@@ -301,13 +303,13 @@ const ProjectsPage = () => {
             className="mb-16 lg:mb-24"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 2.2, duration: 0.8, ease: 'easeOut' }}
+            transition={{ delay: 2.8, duration: 0.8, ease: 'easeOut' }}
           >
             <motion.h2
               className="text-2xl sm:text-3xl font-normal mb-8 text-center"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 2.3, duration: 0.6 }}
+              transition={{ delay: 2.9, duration: 0.6 }}
             >
               Technologies & Skills
             </motion.h2>
@@ -315,14 +317,14 @@ const ProjectsPage = () => {
               className="flex flex-wrap gap-2 justify-center"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 2.5, duration: 0.8, ease: 'easeOut' }}
+              transition={{ delay: 3.1, duration: 0.8, ease: 'easeOut' }}
             >
               {skills.map((skill, index) => (
                 <motion.div
                   key={skill}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 2.6 + index * 0.02, duration: 0.4 }}
+                  transition={{ delay: 3.2 + index * 0.02, duration: 0.4 }}
                 >
                   <Badge
                     variant="secondary"
@@ -340,7 +342,7 @@ const ProjectsPage = () => {
             className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6 mb-16 lg:mb-24"
             initial={{ opacity: 0, y: 30, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 0.8, delay: 3.0, ease: 'easeOut' }}
+            transition={{ duration: 0.8, delay: 3.6, ease: 'easeOut' }}
           >
             <Link to="/about" className="w-full sm:w-auto">
               <Button className="w-full sm:w-auto bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200 rounded-full px-8 sm:px-12 py-4 sm:py-6 text-lg sm:text-xl font-medium transition-colors duration-500">
@@ -362,7 +364,7 @@ const ProjectsPage = () => {
             className="pt-8 sm:pt-12 border-t border-border/50 transition-colors duration-600"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 3.2, duration: 0.8 }}
+            transition={{ delay: 3.8, duration: 0.8 }}
           >
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 text-base text-muted-foreground transition-colors duration-600">
               <div>

@@ -39,7 +39,10 @@ personal-website/
 │   │   ├── AboutPage.tsx
 │   │   ├── ProjectsPage.tsx
 │   │   └── ContactPage.tsx
-│   ├── lib/                # Utility functions
+│   ├── lib/                # Utility functions and custom hooks
+│   │   ├── utils.ts        # General utility functions
+│   │   ├── usePWA.ts       # PWA functionality hook
+│   │   └── useScrollToTop.ts # Scroll behavior hook
 │   ├── types/              # TypeScript type definitions
 │   └── App.tsx             # Main application component
 ├── public/                 # Static assets
@@ -96,15 +99,13 @@ The project includes a comprehensive test suite built with Vitest and React Test
 
 ```
 src/
-├── test/
+├── tests/
 │   ├── setup.tsx          # Test configuration and mocks
-│   └── utils.tsx          # Custom test utilities
-├── components/
+│   ├── utils.tsx          # Custom test utilities
+│   ├── App.test.tsx       # Main app tests
 │   ├── home.test.tsx      # Home component tests
-│   └── LoadingScreen.test.tsx  # Loading screen tests
-├── pages/
+│   ├── LoadingScreen.test.tsx  # Loading screen tests
 │   └── HomePage.test.tsx  # Page component tests
-└── App.test.tsx           # Main app tests
 ```
 
 ### Running Tests
@@ -117,7 +118,7 @@ npm test
 npm test
 
 # Run specific test file
-npm test -- --run src/components/home.test.tsx
+npm test -- --run src/tests/home.test.tsx
 ```
 
 ### Test Coverage
