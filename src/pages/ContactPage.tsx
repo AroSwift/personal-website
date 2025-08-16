@@ -166,7 +166,7 @@ const ContactPage = () => {
                   <h3 className="text-2xl sm:text-3xl font-medium mb-3 text-black dark:text-white transition-colors duration-800">
                     On social platforms
                   </h3>
-                  <p className="text-base sm:text-lg text-gray-600 dark:text-gray-400 mb-4 transition-colors duration-800">
+                  <p className="text-base sm:text-lg text-gray-700 dark:text-gray-200 mb-4 transition-colors duration-800">
                     Let's connect and get in touch 👋
                   </p>
 
@@ -189,8 +189,8 @@ const ContactPage = () => {
                           }}
                           whileHover={{ scale: 1.02 }}
                         >
-                          <Icon className="h-6 w-6 text-gray-600 dark:text-gray-400 group-hover:text-black dark:group-hover:text-white transition-colors" />
-                          <span className="text-lg font-medium text-gray-600 dark:text-gray-400 group-hover:text-black dark:group-hover:text-white transition-colors">
+                          <Icon className="h-6 w-6 text-gray-700 dark:text-gray-300 group-hover:text-black dark:group-hover:text-white transition-colors" />
+                          <span className="text-lg font-medium text-gray-700 dark:text-gray-300 group-hover:text-black dark:group-hover:text-white transition-colors">
                             {social.name}
                           </span>
                         </motion.a>
