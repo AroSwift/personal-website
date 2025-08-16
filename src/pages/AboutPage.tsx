@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+import React, { useState, useEffect } from 'react'
+import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
+import { Button } from '@/components/ui/button'
 import {
   ExternalLink,
   Mail,
@@ -10,20 +10,20 @@ import {
   FileText,
   Calendar,
   MapPin,
-} from 'lucide-react';
+} from 'lucide-react'
 
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import Header from '../components/layout/Header';
+import { Badge } from '@/components/ui/badge'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import Header from '../components/layout/Header'
 
 // About page
 const AboutPage = () => {
-  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  const [theme, setTheme] = useState<'light' | 'dark'>('light')
 
   useEffect(() => {
-    const isDark = document.documentElement.classList.contains('dark');
-    setTheme(isDark ? 'dark' : 'light');
-  }, []);
+    const isDark = document.documentElement.classList.contains('dark')
+    setTheme(isDark ? 'dark' : 'light')
+  }, [])
 
   // Skills
   const skills = [
@@ -83,7 +83,7 @@ const AboutPage = () => {
     'scikit-learn',
     'AI-driven workflow automation',
     'Embedded Systems development',
-  ];
+  ]
 
   // Professional experience timeline
   const experience = [
@@ -121,7 +121,7 @@ const AboutPage = () => {
         'Built a WordPress/REST plugin to sync and display HPC metrics on olcf.ornl.gov; improved data freshness and reduced update toil',
       ],
     },
-  ];
+  ]
 
   // Educational background
   const education = [
@@ -142,7 +142,7 @@ const AboutPage = () => {
       honors: "Dean's List",
       activities: 'Phi Theta Kappa Honor Society, Gamma Beta Phi Society',
     },
-  ];
+  ]
 
   // Leadership and community involvement
   const organizations = [
@@ -150,7 +150,7 @@ const AboutPage = () => {
     'PEARC (Advanced Research Computing Conference) - Student Program Committee Chair (Jan 2021 - Present)',
     'ACM (Association for Computing Machinery) - President (Jan 2019 - May 2020)',
     'Ethical Hacking - Vice President (Jan 2018 - Dec 2019)',
-  ];
+  ]
 
   // Conference presentations and talks with PDF downloads
   const presentations = [
@@ -177,7 +177,7 @@ const AboutPage = () => {
       category: 'DevOps',
       tags: ['DevOps', 'HPC', 'Operations', 'Infrastructure'],
     },
-  ];
+  ]
 
   return (
     <div className="min-h-screen text-foreground bg-background relative overflow-hidden">
@@ -691,7 +691,7 @@ const AboutPage = () => {
         </div>
       </main>
     </div>
-  );
-};
+  )
+}
 
-export default AboutPage;
+export default AboutPage

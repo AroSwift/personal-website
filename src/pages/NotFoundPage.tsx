@@ -1,9 +1,9 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
-import { Home, ArrowLeft } from 'lucide-react';
-import Header from '@/components/layout/Header';
+import React from 'react'
+import { Link } from 'react-router-dom'
+import { motion } from 'framer-motion'
+import { Button } from '@/components/ui/button'
+import { Home, ArrowLeft } from 'lucide-react'
+import Header from '@/components/layout/Header'
 
 const NotFoundPage = () => {
   // Animation variants for the floating elements
@@ -12,11 +12,10 @@ const NotFoundPage = () => {
       y: [-10, 10, -10],
       transition: {
         duration: 3,
-        repeat: Infinity,
-        ease: "easeInOut"
+        repeat: Infinity
       }
     }
-  };
+  }
 
   const staggerVariants = {
     hidden: { opacity: 0, y: 20 },
@@ -28,12 +27,12 @@ const NotFoundPage = () => {
         staggerChildren: 0.1
       }
     }
-  };
+  }
 
   const itemVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0 }
-  };
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -154,7 +153,7 @@ const NotFoundPage = () => {
         </div>
       </main>
     </div>
-  );
-};
+  )
+}
 
-export default NotFoundPage;
+export default NotFoundPage

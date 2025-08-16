@@ -1,59 +1,59 @@
-import { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { Moon, Sun, Menu, X } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
-import { motion, AnimatePresence, useAnimation } from 'framer-motion';
+import React, { useState, useEffect } from 'react'
+import { Link, useLocation } from 'react-router-dom'
+import { Moon, Sun, Menu, X } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
+import { motion, AnimatePresence, useAnimation } from 'framer-motion'
 
 interface HeaderProps {
-  className?: string;
+  className?: string
 }
 
 const Header = ({ className = '' }: HeaderProps) => {
-  const location = useLocation();
-  const [theme, setTheme] = useState<'light' | 'dark'>('light');
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [scrollY, setScrollY] = useState(0);
+  const location = useLocation()
+  const [theme, setTheme] = useState<'light' | 'dark'>('light')
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [scrollY, setScrollY] = useState(0)
   const [hasTriggeredPostLoadAnimation, setHasTriggeredPostLoadAnimation] =
-    useState(false);
+    useState(false)
 
-  const themeIconAnimation = useAnimation();
+  const themeIconAnimation = useAnimation()
 
   useEffect(() => {
     // Check localStorage first, then fallback to current DOM state
-    const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null;
+    const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null
     if (savedTheme) {
-      setTheme(savedTheme);
+      setTheme(savedTheme)
       if (savedTheme === 'dark') {
-        document.documentElement.classList.add('dark');
+        document.documentElement.classList.add('dark')
       } else {
-        document.documentElement.classList.remove('dark');
+        document.documentElement.classList.remove('dark')
       }
     } else {
       // Fallback to current DOM state
-      const isDark = document.documentElement.classList.contains('dark');
-      setTheme(isDark ? 'dark' : 'light');
+      const isDark = document.documentElement.classList.contains('dark')
+      setTheme(isDark ? 'dark' : 'light')
     }
-  }, []);
+  }, [])
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrollY(window.scrollY);
-    };
+      setScrollY(window.scrollY)
+    }
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   // Check for post-loading animation trigger
   useEffect(() => {
     const checkForPostLoadAnimation = () => {
-      const shouldTrigger = localStorage.getItem('triggerPostLoadAnimation');
+      const shouldTrigger = localStorage.getItem('triggerPostLoadAnimation')
       if (shouldTrigger === 'true' && !hasTriggeredPostLoadAnimation) {
-        setHasTriggeredPostLoadAnimation(true);
+        setHasTriggeredPostLoadAnimation(true)
 
         // Clear the flag
-        localStorage.removeItem('triggerPostLoadAnimation');
+        localStorage.removeItem('triggerPostLoadAnimation')
 
         // Run the sophisticated spinning animation
         const runAnimation = async () => {
@@ -65,7 +65,7 @@ const Header = ({ className = '' }: HeaderProps) => {
               rotate: { duration: 0.6, ease: 'linear' },
               scale: { duration: 0.3, ease: 'easeOut' },
             },
-          });
+          })
 
           // Phase 2: Deceleration (1 rotation in 800ms with easing)
           await themeIconAnimation.start({
@@ -75,7 +75,7 @@ const Header = ({ className = '' }: HeaderProps) => {
               rotate: { duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }, // Smooth deceleration
               scale: { duration: 0.2, ease: 'easeOut' },
             },
-          });
+          })
 
           // Phase 3: Settling (smooth stop in 400ms)
           await themeIconAnimation.start({
@@ -85,25 +85,25 @@ const Header = ({ className = '' }: HeaderProps) => {
               rotate: { duration: 0.4, ease: [0.34, 1.56, 0.64, 1] }, // Bounce-like settling
               scale: { duration: 0.2, ease: 'easeOut' },
             },
-          });
-        };
+          })
+        }
 
         // Small delay to ensure smooth transition from loading screen
         setTimeout(() => {
-          runAnimation();
-        }, 300);
+          runAnimation()
+        }, 300)
       }
-    };
+    }
 
     // Check immediately
-    checkForPostLoadAnimation();
+    checkForPostLoadAnimation()
 
     // Also check periodically for the first few seconds
-    const interval = setInterval(checkForPostLoadAnimation, 100);
-    setTimeout(() => clearInterval(interval), 3000);
+    const interval = setInterval(checkForPostLoadAnimation, 100)
+    setTimeout(() => clearInterval(interval), 3000)
 
-    return () => clearInterval(interval);
-  }, [hasTriggeredPostLoadAnimation, themeIconAnimation]);
+    return () => clearInterval(interval)
+  }, [hasTriggeredPostLoadAnimation, themeIconAnimation])
 
   // Handle normal theme toggle animation
   useEffect(() => {
@@ -112,57 +112,57 @@ const Header = ({ className = '' }: HeaderProps) => {
       themeIconAnimation.set({
         rotate: theme === 'light' ? 0 : 180,
         scale: 1,
-      });
+      })
     }
-  }, [theme, hasTriggeredPostLoadAnimation, themeIconAnimation]);
+  }, [theme, hasTriggeredPostLoadAnimation, themeIconAnimation])
 
   const toggleTheme = () => {
-    const newTheme = theme === 'light' ? 'dark' : 'light';
-    setTheme(newTheme);
+    const newTheme = theme === 'light' ? 'dark' : 'light'
+    setTheme(newTheme)
 
     // Add a subtle delay for better visual feedback
     setTimeout(() => {
-      document.documentElement.classList.toggle('dark');
-    }, 50);
+      document.documentElement.classList.toggle('dark')
+    }, 50)
 
-    localStorage.setItem('theme', newTheme);
-  };
+    localStorage.setItem('theme', newTheme)
+  }
 
   // Navigation links
   const navLinks = [
     { name: 'About', path: '/about' },
     { name: 'Projects', path: '/projects' },
     { name: 'Contact', path: '/contact' },
-  ];
+  ]
 
   const isActive = (path: string) => {
-    return location.pathname === path;
-  };
+    return location.pathname === path
+  }
 
   const getPageSuffix = () => {
     switch (location.pathname) {
       case '/about':
-        return 'About';
+        return 'About'
       case '/projects':
-        return 'Projects';
+        return 'Projects'
       case '/contact':
-        return 'Contact';
+        return 'Contact'
       default:
-        return null;
+        return null
     }
-  };
+  }
 
-  const pageSuffix = getPageSuffix();
+  const pageSuffix = getPageSuffix()
 
   // Calculate background opacity based on scroll position
   const getBackgroundOpacity = () => {
-    if (scrollY < 150) return 0;
-    if (scrollY > 350) return 0.9;
-    return ((scrollY - 150) / 200) * 0.9;
-  };
+    if (scrollY < 150) return 0
+    if (scrollY > 350) return 0.9
+    return ((scrollY - 150) / 200) * 0.9
+  }
 
-  const backgroundOpacity = getBackgroundOpacity();
-  const shouldShowBackground = backgroundOpacity > 0;
+  const backgroundOpacity = getBackgroundOpacity()
+  const shouldShowBackground = backgroundOpacity > 0
 
   return (
     <header className={cn('fixed top-0 left-0 right-0 z-50', className)}>
@@ -188,12 +188,12 @@ const Header = ({ className = '' }: HeaderProps) => {
               onMouseEnter={() => {
                 const letters = document.querySelectorAll(
                   '.header-name-letter'
-                );
+                )
                 letters.forEach((letter, index) => {
                   setTimeout(() => {
-                    letter.classList.add('letter-wave-animation');
-                  }, index * 40);
-                });
+                    letter.classList.add('letter-wave-animation')
+                  }, index * 40)
+                })
               }}
             >
               {'Aaron Barlow'.split('').map((letter, index) => (
@@ -202,7 +202,7 @@ const Header = ({ className = '' }: HeaderProps) => {
                   className="header-name-letter inline-block transition-all duration-300 ease-out"
                   onAnimationEnd={e => {
                     if (e.target instanceof HTMLElement) {
-                      e.target.classList.remove('letter-wave-animation');
+                      e.target.classList.remove('letter-wave-animation')
                     }
                   }}
                 >
@@ -244,12 +244,12 @@ const Header = ({ className = '' }: HeaderProps) => {
                   : 'text-foreground hover:text-muted-foreground'
               )}
               onMouseEnter={e => {
-                const letters = e.currentTarget.querySelectorAll('.nav-letter');
+                const letters = e.currentTarget.querySelectorAll('.nav-letter')
                 letters.forEach((letter, index) => {
                   setTimeout(() => {
-                    letter.classList.add('letter-wave-animation');
-                  }, index * 40);
-                });
+                    letter.classList.add('letter-wave-animation')
+                  }, index * 40)
+                })
               }}
             >
               <span className="inline-block relative">
@@ -259,7 +259,7 @@ const Header = ({ className = '' }: HeaderProps) => {
                     className="nav-letter inline-block transition-all duration-300 ease-out"
                     onAnimationEnd={e => {
                       if (e.target instanceof HTMLElement) {
-                        e.target.classList.remove('letter-wave-animation');
+                        e.target.classList.remove('letter-wave-animation')
                       }
                     }}
                   >
@@ -347,7 +347,7 @@ const Header = ({ className = '' }: HeaderProps) => {
         )}
       </AnimatePresence>
     </header>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header

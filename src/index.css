@@ -2,6 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Performance optimizations */
+* {
+  box-sizing: border-box;
+}
+
+/* Optimize animations and transitions */
+.animated-hue-overlay {
+  will-change: background-color;
+}
+
+/* Optimize profile image container */
+.profile-image-container {
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
 @layer base {
   :root {
     --background: 0 0% 96%;

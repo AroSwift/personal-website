@@ -1,19 +1,30 @@
 // Test setup for React components
 // Provides global test utilities and mocks
 
-import { vi } from 'vitest';
-import '@testing-library/jest-dom';
+import { vi } from 'vitest'
+import '@testing-library/jest-dom'
 
 // Mock framer-motion to avoid animation complexity in tests
 vi.mock('framer-motion', () => ({
   motion: {
-    div: ({ children, ...props }: any) => <div {...props}>{children}</div>,
-    h1: ({ children, ...props }: any) => <h1 {...props}>{children}</h1>,
-    p: ({ children, ...props }: any) => <p {...props}>{children}</p>,
-    span: ({ children, ...props }: any) => <span {...props}>{children}</span>,
-    img: ({ ...props }: any) => <img {...props} />,
-    button: ({ children, ...props }: any) => (
+    div: ({ children, whileHover, whileTap, animate, initial, transition, exit, ...props }: any) => (
+      <div {...props}>{children}</div>
+    ),
+    h1: ({ children, whileHover, whileTap, animate, initial, transition, exit, ...props }: any) => (
+      <h1 {...props}>{children}</h1>
+    ),
+    p: ({ children, whileHover, whileTap, animate, initial, transition, exit, ...props }: any) => (
+      <p {...props}>{children}</p>
+    ),
+    span: ({ children, whileHover, whileTap, animate, initial, transition, exit, ...props }: any) => (
+      <span {...props}>{children}</span>
+    ),
+    img: ({ fetchPriority, ...props }: any) => <img {...props} />,
+    button: ({ children, whileHover, whileTap, animate, initial, transition, exit, ...props }: any) => (
       <button {...props}>{children}</button>
+    ),
+    path: ({ d, fill, initial, animate, transition, ...props }: any) => (
+      <path d={d} fill={fill} {...props} />
     ),
   },
   AnimatePresence: ({ children }: any) => children,
@@ -22,7 +33,7 @@ vi.mock('framer-motion', () => ({
     stop: vi.fn(),
     set: vi.fn(),
   }),
-}));
+}))
 
 // Mock localStorage for consistent testing
 const localStorageMock = {
@@ -30,11 +41,11 @@ const localStorageMock = {
   setItem: vi.fn(),
   removeItem: vi.fn(),
   clear: vi.fn(),
-};
+}
 Object.defineProperty(window, 'localStorage', {
   value: localStorageMock,
   writable: true,
-});
+})
 
 // Mock window.matchMedia for responsive design testing
 Object.defineProperty(window, 'matchMedia', {
@@ -49,10 +60,10 @@ Object.defineProperty(window, 'matchMedia', {
     removeEventListener: vi.fn(),
     dispatchEvent: vi.fn(),
   })),
-});
+})
 
 // Mock window.scrollTo for smooth scrolling functionality
 Object.defineProperty(window, 'scrollTo', {
   writable: true,
   value: vi.fn(),
-});
+})

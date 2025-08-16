@@ -1,93 +1,110 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 
 interface LoadingScreenProps {
-  onComplete: () => void;
+  onComplete: (theme: 'dark' | 'light') => void
 }
 
-/**
- * LoadingScreen Component
- * Displays an animated loading sequence with rotating words and progress bar
- * Shows on first visit to the site
- */
+// Simple, classy shutter that opens from the center using a hexagonal clip-path
+const HEX_CLOSED = 'polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%)'
+const HEX_OPEN = 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)'
+
 const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
-  // Track which word is currently displayed in the rotation
-  const [currentWordIndex, setCurrentWordIndex] = useState(0);
-  // Control when content becomes visible after initial delay
-  const [showContent, setShowContent] = useState(false);
-  // Control when name animation starts
-  const [showName, setShowName] = useState(false);
-  // Trigger exit animation sequence
-  const [isExiting, setIsExiting] = useState(false);
+  const [currentWordIndex, setCurrentWordIndex] = useState(0)
+  const [showContent, setShowContent] = useState(false)
+  const [showName, setShowName] = useState(false)
+  const [showThemeSelector, setShowThemeSelector] = useState(false)
+  const [isExiting, setIsExiting] = useState(false)
+  const [selectedTheme, setSelectedTheme] = useState<'dark' | 'light' | null>(null)
 
-  // Words to cycle through during loading animation
-  const words = ['Architect', 'Designer', 'Inventor', 'Engineer'];
-
-  // Timing delays between word transitions (slower for more dramatic effect)
-  const delays = [1000, 800, 650, 500]; // Slower transitions
+  const words = ['Innovator', 'Designer', 'Architect', 'Engineer']
+  const delays = [800, 800, 800, 800]
 
   useEffect(() => {
-    // Initial delay before showing content
     const showTimer = setTimeout(() => {
-      setShowContent(true);
-      setShowName(true);
-    }, 500); // Slightly longer initial delay
+      setShowContent(true)
+      setShowName(true)
+    }, 500)
 
-    return () => clearTimeout(showTimer);
-  }, []);
+    return () => clearTimeout(showTimer)
+  }, [])
 
   useEffect(() => {
-    if (!showContent) return;
+    if (!showContent) return
 
-    // Cycle through words with decreasing delays
     if (currentWordIndex < words.length - 1) {
       const timer = setTimeout(() => {
-        setCurrentWordIndex(prev => prev + 1);
-      }, delays[currentWordIndex]);
+        setCurrentWordIndex(prev => prev + 1)
+      }, delays[currentWordIndex])
 
-      return () => clearTimeout(timer);
+      return () => clearTimeout(timer)
     } else {
-      // Start exit animation after showing the last word
-      const exitTimer = setTimeout(() => {
-        setIsExiting(true);
-      }, 1000); // Slightly longer delay for smoother transition
+      const themeTimer = setTimeout(() => {
+        setShowThemeSelector(true)
+      }, 800)
 
-      return () => clearTimeout(exitTimer);
+      return () => clearTimeout(themeTimer)
     }
-  }, [currentWordIndex, showContent, words.length, delays]);
+  }, [currentWordIndex, showContent, words.length, delays])
+
+  const handleThemeSelect = (theme: 'dark' | 'light') => {
+    setSelectedTheme(theme)
+    
+    // Immediately apply the theme to the entire app
+    if (theme === 'light') {
+      document.documentElement.classList.remove('dark')
+    } else {
+      document.documentElement.classList.add('dark')
+    }
+    
+    setIsExiting(true)
+  }
 
   useEffect(() => {
     if (isExiting) {
-      // Complete loading sequence after exit animation finishes
       const completeTimer = setTimeout(() => {
-        onComplete();
-      }, 1500); // Longer duration for smoother exit
+        onComplete(selectedTheme || 'dark')
+      }, 1250) // Match the shutter animation duration
 
-      return () => clearTimeout(completeTimer);
+      return () => clearTimeout(completeTimer)
     }
-  }, [isExiting, onComplete]);
+  }, [isExiting, onComplete, selectedTheme])
 
   return (
-    <AnimatePresence mode="wait">
+    <div className="fixed inset-0 z-[9999] bg-black flex flex-col items-center justify-center overflow-hidden">
+      {/* Main Background that contracts to a circle around theme button */}
       <motion.div
-        className="fixed inset-0 z-[9999] bg-black flex flex-col items-center justify-center overflow-hidden"
-        initial={{ y: 0 }}
-        animate={{ y: isExiting ? '-100%' : 0 }}
-        exit={{ y: '-100%' }}
-        transition={{
-          duration: isExiting ? 1.5 : 0,
-          ease: [0.25, 0.46, 0.45, 0.94], // Smoother cubic-bezier for exit
+        className="fixed inset-0 z-10 bg-black"
+        initial={{ 
+          clipPath: 'circle(100% at 50% 50%)'
         }}
-      >
+        animate={{ 
+          clipPath: isExiting 
+            ? 'circle(0% at 85% 15%)' 
+            : 'circle(100% at 50% 50%)'
+        }}
+        transition={{ 
+          duration: 1.2, 
+          ease: [0.65, 0, 0.35, 1],
+          delay: 0.1
+        }}
+      />
+
+      {/* Content Container */}
+      <div className="relative z-50">
         {/* Main Name Animation */}
         <motion.div
-          className="text-center mb-8"
+          className="text-center mb-5"
           initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: showName ? 1 : 0, y: showName ? 0 : 30 }}
+          animate={{
+            opacity: showName ? (isExiting ? 0 : 1) : 0,
+            y: showName ? (isExiting ? 0 : 0) : 30,
+            color: isExiting ? "#000000" : "#ffffff",
+            backgroundColor: isExiting ? "#000000" : "rgba(0, 0, 0, 0)" // Use rgba instead of transparent
+          }}
           transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
         >
           <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-light text-white tracking-tight leading-none">
-            {/* Animate each letter individually for staggered effect */}
             {'Aaron Barlow'.split('').map((letter, index) => (
               <motion.span
                 key={index}
@@ -96,7 +113,7 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{
                   duration: 0.6,
-                  delay: 0.4 + index * 0.05, // Staggered delay for each letter
+                  delay: 0.4 + index * 0.05,
                   ease: 'easeOut',
                 }}
               >
@@ -110,7 +127,9 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
         <motion.div
           className="h-16 flex items-center justify-center"
           initial={{ opacity: 0 }}
-          animate={{ opacity: showContent ? 1 : 0 }}
+          animate={{ 
+            opacity: showContent && !showThemeSelector ? (isExiting ? 0 : 1) : 0
+          }}
           transition={{ duration: 0.6, delay: 1.2 }}
         >
           <AnimatePresence mode="wait">
@@ -130,29 +149,96 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
           </AnimatePresence>
         </motion.div>
 
-        {/* Progress Bar Animation */}
-        <motion.div
-          className="absolute bottom-12 left-1/2 transform -translate-x-1/2"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: showContent ? 0.6 : 0 }}
-          transition={{ duration: 0.6, delay: 1.6 }}
-        >
-          <div className="w-32 h-0.5 bg-white/20 rounded-full overflow-hidden">
+        {/* Theme Selector - Positioned in same area as words */}
+        <AnimatePresence>
+          {showThemeSelector && (
             <motion.div
-              className="h-full bg-white/60 rounded-full"
-              initial={{ width: '0%' }}
-              animate={{ width: '100%' }}
-              transition={{
-                duration: 4.0, // Slightly longer for smoother feel
-                ease: 'easeInOut',
-                delay: 1.8,
+              className="h-16 flex flex-col items-center justify-center"
+              initial={{ opacity: 0, y: 30, scale: 0.9 }}
+              animate={{ 
+                opacity: isExiting ? 0 : 1, 
+                y: isExiting ? -10 : 0, 
+                scale: isExiting ? 0.95 : 1 
               }}
-            />
-          </div>
-        </motion.div>
-      </motion.div>
-    </AnimatePresence>
-  );
-};
+              transition={{ 
+                duration: 1.0, 
+                ease: [0.25, 0.46, 0.45, 0.94],
+                delay: 0.3
+              }}
+            >
+              <motion.p 
+                className="text-lg text-white/70 mb-2 font-light"
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.6 }}
+              >
+                Choose your theme
+              </motion.p>
+              <div className="flex gap-4 justify-center">
+                <motion.button
+                  className="px-6 py-2 rounded-xl border border-white/20 text-white/90 hover:text-white hover:border-white/40 transition-all duration-500 font-light backdrop-blur-sm"
+                  whileHover={{ 
+                    backgroundColor: "rgb(36, 35, 36)"
+                  }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => handleThemeSelect('dark')}
+                  transition={{ 
+                    duration: 0.03,
+                    ease: "easeInOut"
+                  }}
+                >
+                  Dark Mode
+                </motion.button>
+                <motion.button
+                  className="px-6 py-2 rounded-xl border border-white/20 text-white/90 hover:text-white hover:border-white/40 transition-all duration-500 font-light backdrop-blur-sm"
+                  whileHover={{ 
+                    backgroundColor: "rgb(209, 209, 209)",
+                    color: "rgb(0, 0, 0)"
+                  }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => handleThemeSelect('light')}
+                  transition={{ 
+                    duration: 0.03,
+                    ease: "easeInOut"
+                  }}
+                >
+                  Light Mode
+                </motion.button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
 
-export default LoadingScreen;
+      {/* Clean Hexagonal Shutter Overlay */}
+      <motion.div
+        className="fixed inset-0 z-30 bg-black pointer-events-none"
+        style={{ willChange: 'clip-path' }}
+        initial={{ clipPath: HEX_OPEN }}
+        animate={{ 
+          clipPath: isExiting ? HEX_CLOSED : HEX_OPEN
+        }}
+        transition={{ 
+          duration: 1.25, 
+          ease: [0.65, 0, 0.35, 1] 
+        }}
+      />
+
+      {/* Smooth Black Background Overlay for Content Area */}
+      <motion.div
+        className="fixed inset-0 z-20 bg-black pointer-events-none"
+        initial={{ opacity: 0 }}
+        animate={{ 
+          opacity: isExiting ? 1 : 0
+        }}
+        transition={{ 
+          duration: 0.3, 
+          ease: 'easeOut',
+          delay: 0.1
+        }}
+      />
+    </div>
+  )
+}
+
+export default LoadingScreen

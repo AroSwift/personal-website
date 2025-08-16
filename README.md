@@ -12,6 +12,24 @@ A modern, responsive personal website for Aaron Barlow built with React, TypeScr
 - **Performance**: Built with Vite for fast development and optimized builds
 - **PWA Support**: Progressive Web App with offline functionality and installation capabilities
 
+## Performance & Build Metrics
+
+### Build Performance
+- **Production Deployment Time**: 32.5s (average of 8 runs)
+- **Local Build Speed**: 3.62s average (compile-only)
+
+### Page Speed Scores
+
+| Metric | Desktop | Mobile |
+|:-------|:-------:|:------:|
+| **Speed Score** | **100** | **95** |
+| **First Contentful Paint** | 0.39s | 1.57s |
+| **Largest Contentful Paint** | 0.56s | 2.79s |
+| **Time to Interactive** | 0.39s | 2.08s |
+| **Cumulative Layout Shift** | 0 | 0 |
+
+*Performance measured from Iowa, USA on 2025-08-16 by Cloudflare*
+
 ## Tech Stack
 
 - **Frontend Framework**: React 18 with TypeScript
@@ -30,28 +48,28 @@ A modern, responsive personal website for Aaron Barlow built with React, TypeScr
 ```
 personal-website/
 ├── src/
-│   ├── components/          # Reusable UI components
-│   │   ├── ui/             # shadcn/ui components
-│   │   ├── layout/         # Layout components (Header, etc.)
-│   │   └── LoadingScreen.tsx
-│   ├── pages/              # Page components
-│   │   ├── HomePage.tsx
-│   │   ├── AboutPage.tsx
-│   │   ├── ProjectsPage.tsx
-│   │   └── ContactPage.tsx
-│   ├── lib/                # Utility functions and custom hooks
-│   │   ├── utils.ts        # General utility functions
-│   │   ├── usePWA.ts       # PWA functionality hook
-│   │   └── useScrollToTop.ts # Scroll behavior hook
-│   ├── types/              # TypeScript type definitions
-│   └── App.tsx             # Main application component
-├── public/                 # Static assets
-├── dist/                   # Build output
-├── Dockerfile              # Docker configuration
-├── nginx.conf              # Nginx configuration
-├── docker-compose.yml      # Docker Compose for production (Coolify)
-├── docker-compose.local.yml # Docker Compose for local testing
-├── .dockerignore           # Docker ignore file
+│   ├── components/                    # Reusable UI components
+│   │   ├── ui/                        # shadcn/ui components
+│   │   ├── layout/                    # Layout components (Header, etc.)
+│   │   └── LoadingScreen.tsx          # Splash screen
+│   ├── pages/                         # Page components
+│   │   ├── HomePage.tsx               # Home page
+│   │   ├── AboutPage.tsx              # About page
+│   │   ├── ProjectsPage.tsx           # Projects page
+│   │   └── ContactPage.tsx            # Contact page
+│   ├── lib/                           # Utility functions and custom hooks
+│   │   ├── utils.ts                   # General utility functions
+│   │   ├── usePWA.ts                  # PWA functionality hook
+│   │   └── useScrollToTop.ts          # Scroll behavior hook
+│   ├── types/                         # TypeScript type definitions
+│   └── App.tsx                        # Main application component
+├── public/                            # Static assets
+├── dist/                              # Build output
+├── Dockerfile                         # Docker configuration
+├── nginx.conf                         # Nginx configuration
+├── docker-compose.yml                 # Docker Compose for production (Coolify)
+├── docker-compose.local.yml           # Docker Compose for local testing
+├── .dockerignore                      # Docker ignore file
 └── configuration files
 ```
 
@@ -81,7 +99,7 @@ personal-website/
    npm run dev
    ```
 
-4. Open your browser and navigate to `http://localhost:5173`
+4. Open your browser and navigate to the URL shown in your terminal (usually `http://localhost:5173` or similar)
 
 ### Available Scripts
 

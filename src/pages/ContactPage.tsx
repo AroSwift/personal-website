@@ -1,27 +1,20 @@
-import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
-import { Github, Linkedin, Copy, ExternalLink, Check } from 'lucide-react';
-import Header from '@/components/layout/Header';
+import React, { useState } from 'react'
+import { motion } from 'framer-motion'
+import { Button } from '@/components/ui/button'
+import { Github, Linkedin, Copy, ExternalLink, Check } from 'lucide-react'
+import Header from '@/components/layout/Header'
 
-/**
- * ContactPage Component
- * Contact page with email copying functionality, social links, and contact information
- * Features animated sections and interactive email copy button with visual feedback
- */
+// ContactPage Component - Contact page with email copying functionality, social links, and contact information. Features animated sections and interactive email copy button with visual feedback
 const ContactPage = () => {
   // Track email copy state for visual feedback
-  const [emailCopied, setEmailCopied] = useState(false);
+  const [emailCopied, setEmailCopied] = useState(false)
 
-  /**
-   * Copy email to clipboard and show success feedback
-   * Resets feedback after 2 seconds
-   */
+  // Copy email to clipboard and show success feedback - resets feedback after 2 seconds
   const copyEmail = () => {
-    navigator.clipboard.writeText('abarlow505@gmail.com');
-    setEmailCopied(true);
-    setTimeout(() => setEmailCopied(false), 2000);
-  };
+    navigator.clipboard.writeText('abarlow505@gmail.com')
+    setEmailCopied(true)
+    setTimeout(() => setEmailCopied(false), 2000)
+  }
 
   // Social media links with icons and URLs
   const socialLinks = [
@@ -35,7 +28,7 @@ const ContactPage = () => {
       icon: Linkedin,
       url: 'https://linkedin.com/in/allaaronbarlow/',
     },
-  ];
+  ]
 
   return (
     <div className="min-h-screen text-black dark:text-white bg-neutral-200 dark:bg-neutral-900 relative overflow-hidden transition-colors duration-800">
@@ -178,7 +171,7 @@ const ContactPage = () => {
                   {/* Social Links with Hover Effects */}
                   <div className="flex gap-6">
                     {socialLinks.map((social, index) => {
-                      const Icon = social.icon;
+                      const Icon = social.icon
                       return (
                         <motion.a
                           key={social.name}
@@ -199,7 +192,7 @@ const ContactPage = () => {
                             {social.name}
                           </span>
                         </motion.a>
-                      );
+                      )
                     })}
                   </div>
                 </motion.div>
@@ -241,7 +234,7 @@ const ContactPage = () => {
         </div>
       </main>
     </div>
-  );
-};
+  )
+}
 
-export default ContactPage;
+export default ContactPage

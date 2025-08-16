@@ -1,13 +1,13 @@
-import React from 'react';
-import { usePWA } from '../lib/usePWA';
-import { Button } from './ui/button';
-import { Badge } from './ui/badge';
+import React from 'react'
+import { usePWA } from '../lib/usePWA'
+import { Button } from './ui/button'
+import { Badge } from './ui/badge'
 
 export function PWAStatus() {
-  const { isOnline, hasUpdate, isStandalone, updateServiceWorker } = usePWA();
+  const { isOnline, hasUpdate, isStandalone, updateServiceWorker } = usePWA()
 
   if (isStandalone) {
-    return null; // Don't show PWA status when running as standalone app
+    return null // Don't show PWA status when running as standalone app
   }
 
   return (
@@ -38,5 +38,5 @@ export function PWAStatus() {
         </div>
       )}
     </div>
-  );
+  )
 }

@@ -4,29 +4,15 @@ const STATIC_CACHE = `static-cache-${CACHE_VERSION}`;
 const DYNAMIC_CACHE = `dynamic-cache-${CACHE_VERSION}`;
 const MAX_CACHE_AGE = 2 * 24 * 60 * 60 * 1000; // 2 days in milliseconds
 
-// Files to cache immediately
-const STATIC_FILES = [
+// Files to cache immediately - these will be dynamically populated from manifest
+let STATIC_FILES = [
   '/',
   '/index.html',
   '/offline.html',
-  '/src/main.tsx',
-  '/src/App.tsx',
-  '/src/index.css',
-  '/src/lib/utils.ts',
-  '/src/components/home.tsx',
-  '/src/components/LoadingScreen.tsx',
-  '/src/components/layout/Header.tsx',
-  '/src/components/ui/badge.tsx',
-  '/src/components/ui/button.tsx',
-  '/src/components/ui/card.tsx',
-  '/src/pages/AboutPage.tsx',
-  '/src/pages/ContactPage.tsx',
-  '/src/pages/HomePage.tsx',
-  '/src/pages/ProjectsPage.tsx',
+  '/manifest.json',
+  '/robots.txt',
   '/profile-aaron-400.webp',
   '/profile-aaron-800.webp',
-  '/profile-guy-400.webp',
-  '/profile-guy-800.webp',
   '/presentations/cug-2025-hpc-system-management.pdf',
   '/presentations/nlit-2024-devops-hpc.pdf',
   '/icons/favicon.ico',
@@ -42,31 +28,32 @@ const STATIC_FILES = [
   '/icons/icon-192x192.png',
   '/icons/icon-384x384.png',
   '/icons/icon-512x512.png',
-  '/manifest.json'
 ];
 
 // Install event - cache static files
 self.addEventListener('install', (event) => {
-  console.log('Service Worker: Installing...');
   event.waitUntil(
-    caches.open(STATIC_CACHE)
-      .then((cache) => {
-        console.log('Service Worker: Caching static files');
-        return cache.addAll(STATIC_FILES);
-      })
-      .then(() => {
-        console.log('Service Worker: Static files cached');
-        return self.skipWaiting();
-      })
-      .catch((error) => {
-        console.error('Service Worker: Error caching static files', error);
-      })
+    (async () => {
+      try {
+        const response = await fetch('/manifest.json');
+        const manifestPWA = await response.json();
+
+        const iconsFromPWA = manifestPWA.icons.map(icon => icon.src);
+        STATIC_FILES = STATIC_FILES.filter(file => !file.startsWith('/icons/'));
+        STATIC_FILES = [...STATIC_FILES, ...iconsFromPWA];
+
+        const cache = await caches.open(STATIC_CACHE);
+        await cache.addAll(STATIC_FILES);
+        self.skipWaiting();
+      } catch (error) {
+        // Service Worker: Error caching static files from manifest
+      }
+    })()
   );
 });
 
 // Activate event - clean up old caches
 self.addEventListener('activate', (event) => {
-  console.log('Service Worker: Activating...');
   event.waitUntil(
     caches.keys()
       .then((cacheNames) => {
@@ -74,14 +61,12 @@ self.addEventListener('activate', (event) => {
           cacheNames.map((cacheName) => {
             // Delete all old caches (not just specific ones)
             if (!cacheName.includes(CACHE_VERSION)) {
-              console.log('Service Worker: Deleting old cache', cacheName);
               return caches.delete(cacheName);
             }
           })
         );
       })
       .then(() => {
-        console.log('Service Worker: Activated with cache version', CACHE_VERSION);
         return self.clients.claim();
       })
   );
@@ -134,7 +119,6 @@ async function cacheFirst(request, cacheName) {
       if (cacheTime) {
         const age = Date.now() - parseInt(cacheTime);
         if (age > MAX_CACHE_AGE) {
-          console.log('Cache expired, fetching fresh content');
           // Cache expired, try to fetch fresh content
           try {
             const networkResponse = await fetch(request);
@@ -153,7 +137,7 @@ async function cacheFirst(request, cacheName) {
               return networkResponse;
             }
           } catch (fetchError) {
-            console.log('Network failed, using expired cache');
+            // Network failed, using expired cache
           }
         }
       }
@@ -176,7 +160,6 @@ async function cacheFirst(request, cacheName) {
     }
     return networkResponse;
   } catch (error) {
-    console.error('Cache first strategy failed:', error);
     return new Response('Network error', { status: 503 });
   }
 }
@@ -200,7 +183,6 @@ async function networkFirst(request, cacheName) {
     }
     return networkResponse;
   } catch (error) {
-    console.log('Network failed, trying cache:', error);
     const cachedResponse = await caches.match(request);
     if (cachedResponse) {
       // Check cache age for fallback
@@ -208,7 +190,7 @@ async function networkFirst(request, cacheName) {
       if (cacheTime) {
         const age = Date.now() - parseInt(cacheTime);
         if (age > MAX_CACHE_AGE) {
-          console.log('Cache expired, but using it as fallback');
+          // Cache expired, but using it as fallback
         }
       }
       return cachedResponse;
@@ -226,7 +208,6 @@ async function networkFirst(request, cacheName) {
 // Background sync for offline actions
 self.addEventListener('sync', (event) => {
   if (event.tag === 'background-sync') {
-    console.log('Service Worker: Background sync triggered');
     event.waitUntil(doBackgroundSync());
   }
 });
@@ -234,16 +215,13 @@ self.addEventListener('sync', (event) => {
 async function doBackgroundSync() {
   try {
     // Handle any pending offline actions here
-    console.log('Service Worker: Processing background sync');
   } catch (error) {
-    console.error('Service Worker: Background sync failed:', error);
+    // Service Worker: Background sync failed
   }
 }
 
 // Push notification handling
 self.addEventListener('push', (event) => {
-  console.log('Service Worker: Push notification received');
-  
      const options = {
      body: event.data ? event.data.text() : 'New notification from Aaron Barlow',
      icon: '/icons/icon-192x192.png',
@@ -274,8 +252,6 @@ self.addEventListener('push', (event) => {
 
 // Notification click handling
 self.addEventListener('notificationclick', (event) => {
-  console.log('Service Worker: Notification clicked');
-  
   event.notification.close();
 
   if (event.action === 'explore') {
@@ -320,13 +296,12 @@ async function cleanupOldCaches() {
           const daysDiff = (Date.now() - cacheDateObj.getTime()) / (1000 * 60 * 60 * 24);
           
           if (daysDiff > 2) {
-            console.log('Removing old cache:', cacheName, 'age:', daysDiff.toFixed(1), 'days');
             await caches.delete(cacheName);
           }
         }
       }
     }
   } catch (error) {
-    console.error('Cache cleanup failed:', error);
+    // Cache cleanup failed
   }
 }

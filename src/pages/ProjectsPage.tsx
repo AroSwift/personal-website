@@ -1,22 +1,22 @@
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+import React, { useState, useEffect } from 'react'
+import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
+import { Button } from '@/components/ui/button'
 import {
   ExternalLink,
-} from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import Header from '@/components/layout/Header';
+} from 'lucide-react'
+import { Badge } from '@/components/ui/badge'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import Header from '@/components/layout/Header'
 
 // Projects page
 const ProjectsPage = () => {
-  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  const [theme, setTheme] = useState<'light' | 'dark'>('light')
 
   useEffect(() => {
-    const isDark = document.documentElement.classList.contains('dark');
-    setTheme(isDark ? 'dark' : 'light');
-  }, []);
+    const isDark = document.documentElement.classList.contains('dark')
+    setTheme(isDark ? 'dark' : 'light')
+  }, [])
 
   // Projects
   const featuredProjects = [
@@ -75,7 +75,7 @@ const ProjectsPage = () => {
       year: '2023',
       status: 'Production',
     },
-  ];
+  ]
 
   // Achievements
   const achievements = [
@@ -97,7 +97,7 @@ const ProjectsPage = () => {
         'Built NLP entity extraction service achieving 96% F1 score at Bank of America',
       impact: '$20M+ annual savings through automation',
     },
-  ];
+  ]
 
   // Skills
   const skills = [
@@ -125,7 +125,7 @@ const ProjectsPage = () => {
     'Microservices',
     'Performance Optimization',
     'System Architecture',
-  ];
+  ]
 
   return (
     <div className="min-h-screen text-foreground bg-background relative overflow-hidden">
@@ -393,7 +393,7 @@ const ProjectsPage = () => {
         </div>
       </main>
     </div>
-  );
-};
+  )
+}
 
-export default ProjectsPage;
+export default ProjectsPage

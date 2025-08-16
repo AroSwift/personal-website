@@ -1,113 +1,102 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
-import Header from '@/components/layout/Header';
+import React, { useState, useEffect, useRef } from 'react'
+import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
+import { Button } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
+import Header from '@/components/layout/Header'
 
-/**
- * HomePage Component
- * Main home page with interactive profile image and content
- */
+// HomePage Component - Main home page with interactive profile image and content
 function HomePage() {
   // Interactive profile image state management
-  const [isDragging, setIsDragging] = useState(false);
-  const [dragPosition, setDragPosition] = useState({ x: 0, y: 0 });
-  const [isHovering, setIsHovering] = useState(false);
-  const [gravityOffset, setGravityOffset] = useState({ x: 0, y: 0 });
-  const profileImageRef = useRef<HTMLDivElement>(null);
+  const [isDragging, setIsDragging] = useState(false)
+  const [dragPosition, setDragPosition] = useState({ x: 0, y: 0 })
+  const [isHovering, setIsHovering] = useState(false)
+  const [gravityOffset, setGravityOffset] = useState({ x: 0, y: 0 })
+  const profileImageRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     // Initialize theme from localStorage on component mount
-    const savedTheme = localStorage.getItem('theme');
+    const savedTheme = localStorage.getItem('theme')
     if (savedTheme === 'dark') {
-      document.documentElement.classList.add('dark');
+      document.documentElement.classList.add('dark')
     } else if (savedTheme === 'light') {
-      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.remove('dark')
     }
     // If no saved theme, keep current state (don't force light mode)
-  }, []);
+  }, [])
 
-  /**
-   * Handle mouse down on profile image to start dragging
-   * Calculates initial drag position relative to image bounds
-   */
+  // Handle mouse down on profile image to start dragging - calculates initial drag position relative to image bounds
   const handleMouseDown = (e: React.MouseEvent) => {
-    setIsDragging(true);
-    const rect = profileImageRef.current?.getBoundingClientRect();
+    setIsDragging(true)
+    const rect = profileImageRef.current?.getBoundingClientRect()
     // Calculate initial drag position relative to image
     if (rect) {
       setDragPosition({
         x: e.clientX - rect.left,
         y: e.clientY - rect.top,
-      });
+      })
     }
-  };
+  }
 
-  /**
-   * Handle mouse movement during drag
-   * Updates drag position for visual feedback
-   */
+  // Handle mouse movement during drag - updates drag position for visual feedback
   const handleMouseMove = (e: React.MouseEvent) => {
     if (isDragging && profileImageRef.current) {
-      const rect = profileImageRef.current.getBoundingClientRect();
+      const rect = profileImageRef.current.getBoundingClientRect()
       // Update drag position for visual feedback
       setDragPosition({
         x: e.clientX - rect.left,
         y: e.clientY - rect.top,
-      });
+      })
     }
-  };
+  }
 
-  /**
-   * Handle mouse up to end dragging
-   */
+  // Handle mouse up to end dragging
   const handleMouseUp = () => {
-    setIsDragging(false);
-  };
+    setIsDragging(false)
+  }
 
   useEffect(() => {
     // Add global mouse event listeners when dragging
     if (isDragging) {
-      document.addEventListener('mousemove', handleMouseMove as any);
-      document.addEventListener('mouseup', handleMouseUp);
+      document.addEventListener('mousemove', handleMouseMove as any)
+      document.addEventListener('mouseup', handleMouseUp)
       return () => {
-        document.removeEventListener('mousemove', handleMouseMove as any);
-        document.removeEventListener('mouseup', handleMouseUp);
-      };
+        document.removeEventListener('mousemove', handleMouseMove as any)
+        document.removeEventListener('mouseup', handleMouseUp)
+      }
     }
-  }, [isDragging]);
+  }, [isDragging])
 
   // Gravity effect - profile image follows mouse cursor when close
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      if (!profileImageRef.current || isDragging) return;
+      if (!profileImageRef.current || isDragging) return
 
-      const rect = profileImageRef.current.getBoundingClientRect();
-      const centerX = rect.left + rect.width / 2;
-      const centerY = rect.top + rect.height / 2;
+      const rect = profileImageRef.current.getBoundingClientRect()
+      const centerX = rect.left + rect.width / 2
+      const centerY = rect.top + rect.height / 2
 
       // Calculate distance from mouse to image center
-      const deltaX = e.clientX - centerX;
-      const deltaY = e.clientY - centerY;
-      const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+      const deltaX = e.clientX - centerX
+      const deltaY = e.clientY - centerY
+      const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY)
 
       // Apply gravity effect - image moves towards mouse if within range
-      const range = window.innerWidth < 768 ? 100 : 300; // Smaller range on mobile
+      const range = window.innerWidth < 768 ? 100 : 300 // Smaller range on mobile
       if (distance < range) {
-        const strength = (range - distance) / range; // Stronger when closer
+        const strength = (range - distance) / range // Stronger when closer
         setGravityOffset({
           x: deltaX * strength * 0.3,
           y: deltaY * strength * 0.3,
-        });
+        })
       } else {
-        setGravityOffset({ x: 0, y: 0 });
+        setGravityOffset({ x: 0, y: 0 })
       }
-    };
+    }
 
-    document.addEventListener('mousemove', handleMouseMove);
-    return () => document.removeEventListener('mousemove', handleMouseMove);
-  }, [isDragging]);
+    document.addEventListener('mousemove', handleMouseMove)
+    return () => document.removeEventListener('mousemove', handleMouseMove)
+  }, [isDragging])
 
   return (
     <div className="min-h-screen text-foreground bg-background relative overflow-hidden">
@@ -131,7 +120,7 @@ function HomePage() {
                 <motion.div
                   ref={profileImageRef}
                   className={cn(
-                    'w-40 h-40 sm:w-56 sm:h-56 md:w-72 md:h-72 lg:w-96 lg:h-96 xl:w-112 xl:h-112 rounded-2xl sm:rounded-3xl overflow-hidden mb-4 sm:mb-6 md:mb-8 lg:mb-12 xl:mb-16 bg-muted dark:bg-gray-800 shadow-lg hover:shadow-2xl cursor-pointer relative select-none mx-auto lg:mx-0',
+                    'profile-image-container w-40 h-40 sm:w-56 sm:h-56 md:w-72 md:h-72 lg:w-96 lg:h-96 xl:w-112 xl:h-112 rounded-2xl sm:rounded-3xl overflow-hidden mb-4 sm:mb-6 md:mb-8 lg:mb-12 xl:mb-16 bg-muted dark:bg-gray-800 shadow-lg hover:shadow-2xl cursor-pointer relative select-none mx-auto lg:mx-0',
                     isHovering &&
                       'border-4 border-dashed border-foreground/60 shadow-2xl',
                     !isHovering &&
@@ -154,8 +143,8 @@ function HomePage() {
                   }}
                   onMouseEnter={() => setIsHovering(true)}
                   onMouseLeave={() => {
-                    setIsHovering(false);
-                    setIsDragging(false);
+                    setIsHovering(false)
+                    setIsDragging(false)
                   }}
                   onMouseDown={handleMouseDown}
                   onMouseMove={handleMouseMove}
@@ -164,7 +153,7 @@ function HomePage() {
                     userSelect: 'none',
                   }}
                 >
-                  {/* Cartoon image - shown by default */}
+                  {/* Guy profile image - shown by default with cartoon-like filters */}
                   <motion.img
                     src="/profile-guy-800.webp"
                     alt="Profile"
@@ -172,6 +161,11 @@ function HomePage() {
                     srcSet="/profile-guy-400.webp 400w, /profile-guy-800.webp 800w"
                     sizes="(max-width: 640px) 400px, 800px"
                     loading="eager"
+                    decoding="sync"
+                    style={{ 
+                      userSelect: 'none',
+                      filter: isHovering ? 'none' : 'contrast(1.2) saturate(1.3) brightness(1.1) drop-shadow(0 4px 8px rgba(0,0,0,0.3))'
+                    }}
                     animate={{
                       opacity: isHovering ? 0 : 1,
                       clipPath: isDragging
@@ -179,10 +173,9 @@ function HomePage() {
                         : 'circle(100% at 50% 50%)',
                     }}
                     transition={{ duration: isDragging ? 0.1 : 0 }}
-                    style={{ userSelect: 'none' }}
                   />
 
-                  {/* Real image underneath - revealed on hover */}
+                  {/* Real Aaron image underneath - revealed on hover */}
                   <motion.img
                     src="/profile-aaron-800.webp"
                     alt="Aaron Barlow"
@@ -335,7 +328,7 @@ function HomePage() {
         </div>
       </main>
     </div>
-  );
+  )
 }
 
-export default HomePage;
+export default HomePage

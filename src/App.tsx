@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   useLocation,
-} from 'react-router-dom';
-import LoadingScreen from './components/LoadingScreen';
-import HomePage from './pages/HomePage';
-import AboutPage from './pages/AboutPage';
-import ProjectsPage from './pages/ProjectsPage';
-import ContactPage from './pages/ContactPage';
-import NotFoundPage from './pages/NotFoundPage';
-import { PWAStatus } from './components/PWAStatus';
+} from 'react-router-dom'
+import LoadingScreen from './components/LoadingScreen'
+import HomePage from './pages/HomePage'
+import AboutPage from './pages/AboutPage'
+import ProjectsPage from './pages/ProjectsPage'
+import ContactPage from './pages/ContactPage'
+import NotFoundPage from './pages/NotFoundPage'
+import { PWAStatus } from './components/PWAStatus'
 
 // Meta tag configurations for SEO
 const metaTagsConfig = {
@@ -88,71 +88,71 @@ const metaTagsConfig = {
     twitterDescription:
       'Get in touch with Aaron Barlow. Contact information, social media links, and ways to connect for collaboration opportunities.',
   },
-};
+}
 
 // Function to update meta tags
 const updateMetaTags = (pathname: string) => {
-  const config = metaTagsConfig[pathname as keyof typeof metaTagsConfig];
-  if (!config) return;
+  const config = metaTagsConfig[pathname as keyof typeof metaTagsConfig]
+  if (!config) return
 
   // Update document title
-  document.title = config.title;
+  document.title = config.title
 
   // Update or create meta tags
   const updateMetaTag = (name: string, content: string) => {
     let meta = document.querySelector(
       `meta[name="${name}"]`
-    ) as HTMLMetaElement;
+    ) as HTMLMetaElement
     if (!meta) {
-      meta = document.createElement('meta');
-      meta.name = name;
-      document.head.appendChild(meta);
+      meta = document.createElement('meta')
+      meta.name = name
+      document.head.appendChild(meta)
     }
-    meta.content = content;
-  };
+    meta.content = content
+  }
 
   const updatePropertyMetaTag = (property: string, content: string) => {
     let meta = document.querySelector(
       `meta[property="${property}"]`
-    ) as HTMLMetaElement;
+    ) as HTMLMetaElement
     if (!meta) {
-      meta = document.createElement('meta');
-      meta.setAttribute('property', property);
-      document.head.appendChild(meta);
+      meta = document.createElement('meta')
+      meta.setAttribute('property', property)
+      document.head.appendChild(meta)
     }
-    meta.content = content;
-  };
+    meta.content = content
+  }
 
   // Update meta tags
-  updateMetaTag('description', config.description);
-  updateMetaTag('keywords', config.keywords);
-  updatePropertyMetaTag('og:title', config.ogTitle);
-  updatePropertyMetaTag('og:description', config.ogDescription);
-  updatePropertyMetaTag('og:type', config.ogType);
-  updateMetaTag('twitter:card', config.twitterCard);
-  updateMetaTag('twitter:title', config.twitterTitle);
-  updateMetaTag('twitter:description', config.twitterDescription);
-};
+  updateMetaTag('description', config.description)
+  updateMetaTag('keywords', config.keywords)
+  updatePropertyMetaTag('og:title', config.ogTitle)
+  updatePropertyMetaTag('og:description', config.ogDescription)
+  updatePropertyMetaTag('og:type', config.ogType)
+  updateMetaTag('twitter:card', config.twitterCard)
+  updateMetaTag('twitter:title', config.twitterTitle)
+  updateMetaTag('twitter:description', config.twitterDescription)
+}
 
 // Component to handle meta tag updates
 const MetaTagManager = () => {
-  const location = useLocation();
+  const location = useLocation()
 
   useEffect(() => {
-    updateMetaTags(location.pathname);
-  }, [location.pathname]);
+    updateMetaTags(location.pathname)
+  }, [location.pathname])
 
   // Initialize meta tags on first load
   useEffect(() => {
-    updateMetaTags(location.pathname);
-  }, []);
+    updateMetaTags(location.pathname)
+  }, [])
 
-  return null;
-};
+  return null
+}
 
 // Component to handle scroll to top (must be inside Router context)
 const ScrollToTopInner = () => {
-  const location = useLocation();
+  const location = useLocation()
 
   useEffect(() => {
     // Simple scroll to top with smooth behavior
@@ -160,53 +160,57 @@ const ScrollToTopInner = () => {
       window.scrollTo({
         top: 0,
         behavior: 'smooth',
-      });
+      })
     }
-  }, [location.pathname]);
+  }, [location.pathname])
 
-  return null;
-};
+  return null
+}
 
-function App() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [hasVisited, setHasVisited] = useState(false);
-  const [error, setError] = useState<Error | null>(null);
+// Main app content component that handles loading state
+const AppContent = () => {
+  const [isLoading, setIsLoading] = useState(true)
+  const [hasVisited, setHasVisited] = useState(false)
+  const [error, setError] = useState<Error | null>(null)
 
   useEffect(() => {
     try {
       // Check if user has visited before
-      const visited = localStorage.getItem('hasVisited');
+      const visited = localStorage.getItem('hasVisited')
 
       if (visited === 'true') {
         // User has visited before - skip loading screen
-        setHasVisited(true);
-        setIsLoading(false);
+        setHasVisited(true)
+        setIsLoading(false)
       } else {
         // First time visitor - show loading screen
         // Don't set hasVisited yet, let LoadingScreen handle it
       }
     } catch (err) {
       // If there's an error, just skip loading
-      setHasVisited(true);
-      setIsLoading(false);
+      setHasVisited(true)
+      setIsLoading(false)
     }
-  }, []);
+  }, [])
 
-  const handleLoadingComplete = () => {
+  const handleLoadingComplete = (theme: 'dark' | 'light') => {
     try {
       // Mark as visited and hide loading screen
-      localStorage.setItem('hasVisited', 'true');
-      setHasVisited(true);
-      setIsLoading(false);
+      localStorage.setItem('hasVisited', 'true')
+      setHasVisited(true)
+      setIsLoading(false)
+
+      // Store the selected theme - use 'theme' key to match app expectations
+      localStorage.setItem('theme', theme)
 
       // Set flag for post-loading animation
-      localStorage.setItem('triggerPostLoadAnimation', 'true');
+      localStorage.setItem('triggerPostLoadAnimation', 'true')
     } catch (err) {
       // If there's an error, just continue
-      setHasVisited(true);
-      setIsLoading(false);
+      setHasVisited(true)
+      setIsLoading(false)
     }
-  };
+  }
 
   // Error boundary - if there's an error, show a simple fallback
   if (error) {
@@ -227,34 +231,36 @@ function App() {
           </button>
         </div>
       </div>
-    );
+    )
   }
 
   // Show loading screen only for first-time visitors
   if (isLoading && !hasVisited) {
-    return (
-      <div>
-        <LoadingScreen onComplete={handleLoadingComplete} />
-      </div>
-    );
+    return <LoadingScreen onComplete={handleLoadingComplete} />
   }
 
+  return (
+    <div className="App">
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/projects" element={<ProjectsPage />} />
+        <Route path="/contact" element={<ContactPage />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+      <PWAStatus />
+    </div>
+  )
+}
+
+function App() {
   return (
     <Router>
       <MetaTagManager />
       <ScrollToTopInner />
-      <div className="App">
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/projects" element={<ProjectsPage />} />
-          <Route path="/contact" element={<ContactPage />} />
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-        <PWAStatus />
-      </div>
+      <AppContent />
     </Router>
-  );
+  )
 }
 
-export default App;
+export default App
