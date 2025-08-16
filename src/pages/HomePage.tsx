@@ -100,10 +100,6 @@ function HomePage() {
 
   return (
     <div className="min-h-screen text-foreground bg-background relative overflow-hidden">
-      {/* Multi-layered animated hue overlays for sophisticated effect */}
-      <div className="animated-hue-overlay" />
-      <div className="animated-hue-overlay-slow" />
-      <div className="animated-hue-overlay-fast" />
       {/* Subtle warm gradient with cool accent - matching other pages */}
       <div className="absolute inset-0 bg-gradient-to-tl from-orange-100/40 via-amber-50/20 to-transparent pointer-events-none dark:from-orange-900/10 dark:via-amber-900/5 dark:to-transparent transition-all duration-800 ease-in-out" />
       <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-blue-50/25 pointer-events-none dark:to-blue-900/10 transition-all duration-800 ease-in-out" />

@@ -12,6 +12,7 @@ import ProjectsPage from './pages/ProjectsPage'
 import ContactPage from './pages/ContactPage'
 import NotFoundPage from './pages/NotFoundPage'
 import { PWAStatus } from './components/PWAStatus'
+import HueOverlay from './components/HueOverlay'
 
 // Meta tag configurations for SEO
 const metaTagsConfig = {
@@ -241,6 +242,7 @@ const AppContent = () => {
 
   return (
     <div className="App">
+      <HueOverlay />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/about" element={<AboutPage />} />
