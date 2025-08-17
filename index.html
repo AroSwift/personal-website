@@ -1,6 +1,18 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <!-- Add this script BEFORE any other content to prevent FOUC -->
+    <script>
+      (function() {
+        const theme = localStorage.getItem('theme') || 'light';
+        if (theme === 'dark') {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+      })();
+    </script>
+    
     <meta charset="UTF-8" />
     <link rel="icon" type="image/x-icon" href="/icons/favicon.ico" />
     <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png" />

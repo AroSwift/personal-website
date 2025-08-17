@@ -118,13 +118,18 @@ const Header = ({ className = '' }: HeaderProps) => {
 
   const toggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light'
+    
+    // Update DOM immediately to prevent flickering
+    if (newTheme === 'dark') {
+      document.documentElement.classList.add('dark')
+    } else {
+      document.documentElement.classList.remove('dark')
+    }
+    
+    // Update React state
     setTheme(newTheme)
-
-    // Add a subtle delay for better visual feedback
-    setTimeout(() => {
-      document.documentElement.classList.toggle('dark')
-    }, 50)
-
+    
+    // Save to localStorage
     localStorage.setItem('theme', newTheme)
   }
 
