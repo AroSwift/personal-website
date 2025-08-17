@@ -6,7 +6,8 @@ interface LoadingScreenProps {
 }
 
 // Simple, classy shutter that opens from the center using a hexagonal clip-path
-const HEX_CLOSED = 'polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%)'
+const HEX_CLOSED =
+  'polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%)'
 const HEX_OPEN = 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)'
 
 const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
@@ -15,10 +16,11 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
   const [showName, setShowName] = useState(false)
   const [showThemeSelector, setShowThemeSelector] = useState(false)
   const [isExiting, setIsExiting] = useState(false)
-  const [selectedTheme, setSelectedTheme] = useState<'dark' | 'light' | null>(null)
+  const [selectedTheme, setSelectedTheme] = useState<'dark' | 'light' | null>(
+    null
+  )
 
   const words = ['Innovator', 'Designer', 'Architect', 'Engineer']
-  const delays = [800, 800, 800, 800]
 
   useEffect(() => {
     const showTimer = setTimeout(() => {
@@ -31,6 +33,8 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
 
   useEffect(() => {
     if (!showContent) return
+
+    const delays = [800, 800, 800, 800]
 
     if (currentWordIndex < words.length - 1) {
       const timer = setTimeout(() => {
@@ -47,18 +51,18 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
 
       return () => clearTimeout(themeTimer)
     }
-  }, [currentWordIndex, showContent, words.length, delays])
+  }, [currentWordIndex, showContent, words.length])
 
   const handleThemeSelect = (theme: 'dark' | 'light') => {
     setSelectedTheme(theme)
-    
+
     // Immediately apply the theme to the entire app
     if (theme === 'light') {
       document.documentElement.classList.remove('dark')
     } else {
       document.documentElement.classList.add('dark')
     }
-    
+
     setIsExiting(true)
   }
 
@@ -77,18 +81,18 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
       {/* Main Background that contracts to a circle around theme button */}
       <motion.div
         className="fixed inset-0 z-20 bg-black"
-        initial={{ 
-          clipPath: 'circle(100% at 50% 50%)'
+        initial={{
+          clipPath: 'circle(100% at 50% 50%)',
         }}
-        animate={{ 
-          clipPath: isExiting 
-            ? 'circle(0% at 80% 20%)' 
-            : 'circle(100% at 50% 50%)'
+        animate={{
+          clipPath: isExiting
+            ? 'circle(0% at 80% 20%)'
+            : 'circle(100% at 50% 50%)',
         }}
-        transition={{ 
-          duration: 1.0, 
+        transition={{
+          duration: 1.0,
           ease: [0.25, 0.46, 0.45, 0.94],
-          delay: 0.2
+          delay: 0.2,
         }}
       />
 
@@ -101,8 +105,8 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
           animate={{
             opacity: showName ? (isExiting ? 0 : 1) : 0,
             y: showName ? (isExiting ? 0 : 0) : 30,
-            color: isExiting ? "#000000" : "#ffffff",
-            backgroundColor: isExiting ? "#000000" : "rgba(0, 0, 0, 0)" // Use rgba instead of transparent
+            color: isExiting ? '#000000' : '#ffffff',
+            backgroundColor: isExiting ? '#000000' : 'rgba(0, 0, 0, 0)', // Use rgba instead of transparent
           }}
           transition={{ duration: 0.6, delay: 0.2, ease: 'easeOut' }}
         >
@@ -129,8 +133,9 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
         <motion.div
           className="h-16 flex items-center justify-center"
           initial={{ opacity: 0 }}
-          animate={{ 
-            opacity: showContent && !showThemeSelector ? (isExiting ? 0 : 1) : 0
+          animate={{
+            opacity:
+              showContent && !showThemeSelector ? (isExiting ? 0 : 1) : 0,
           }}
           transition={{ duration: 0.6, delay: 1.2 }}
         >
@@ -157,18 +162,18 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
             <motion.div
               className="h-16 flex flex-col items-center justify-center"
               initial={{ opacity: 0, y: 30, scale: 0.9 }}
-              animate={{ 
-                opacity: isExiting ? 0 : 1, 
-                y: isExiting ? -10 : 0, 
-                scale: isExiting ? 0.95 : 1 
+              animate={{
+                opacity: isExiting ? 0 : 1,
+                y: isExiting ? -10 : 0,
+                scale: isExiting ? 0.95 : 1,
               }}
-              transition={{ 
-                duration: 0.6, 
+              transition={{
+                duration: 0.6,
                 ease: [0.25, 0.46, 0.45, 0.94],
-                delay: 0.1
+                delay: 0.1,
               }}
             >
-              <motion.p 
+              <motion.p
                 className="text-lg text-white/70 mb-2 font-light"
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -180,29 +185,29 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
               <div className="flex gap-4 justify-center">
                 <motion.button
                   className="px-6 py-2 rounded-xl border border-white/20 text-white/90 hover:text-white hover:border-white/40 transition-all duration-500 font-light backdrop-blur-sm"
-                  whileHover={{ 
-                    backgroundColor: "rgb(36, 35, 36)"
+                  whileHover={{
+                    backgroundColor: 'rgb(36, 35, 36)',
                   }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => handleThemeSelect('dark')}
-                  transition={{ 
+                  transition={{
                     duration: 0.03,
-                    ease: "easeInOut"
+                    ease: 'easeInOut',
                   }}
                 >
                   Dark Mode
                 </motion.button>
                 <motion.button
                   className="px-6 py-2 rounded-xl border border-white/20 text-white/90 hover:text-white hover:border-white/40 transition-all duration-500 font-light backdrop-blur-sm"
-                  whileHover={{ 
-                    backgroundColor: "rgb(209, 209, 209)",
-                    color: "rgb(0, 0, 0)"
+                  whileHover={{
+                    backgroundColor: 'rgb(209, 209, 209)',
+                    color: 'rgb(0, 0, 0)',
                   }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => handleThemeSelect('light')}
-                  transition={{ 
+                  transition={{
                     duration: 0.03,
-                    ease: "easeInOut"
+                    ease: 'easeInOut',
                   }}
                 >
                   Light Mode
@@ -218,12 +223,12 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
         className="fixed inset-0 z-30 bg-black pointer-events-none"
         style={{ willChange: 'clip-path' }}
         initial={{ clipPath: HEX_OPEN }}
-        animate={{ 
-          clipPath: isExiting ? HEX_CLOSED : HEX_OPEN
+        animate={{
+          clipPath: isExiting ? HEX_CLOSED : HEX_OPEN,
         }}
-        transition={{ 
-          duration: 1.25, 
-          ease: [0.65, 0, 0.35, 1] 
+        transition={{
+          duration: 1.25,
+          ease: [0.65, 0, 0.35, 1],
         }}
       />
 
@@ -231,13 +236,13 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
       <motion.div
         className="fixed inset-0 z-20 bg-black pointer-events-none"
         initial={{ opacity: 0 }}
-        animate={{ 
-          opacity: isExiting ? 1 : 0
+        animate={{
+          opacity: isExiting ? 1 : 0,
         }}
-        transition={{ 
-          duration: 0.3, 
+        transition={{
+          duration: 0.3,
           ease: 'easeOut',
-          delay: 0.1
+          delay: 0.1,
         }}
       />
     </div>

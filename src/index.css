@@ -46,7 +46,7 @@
   }
 
   .dark {
-    --background: 0 0% 2%;
+    --background: 0 0% 1%;
     --foreground: 0 0% 98%;
     --card: 0 0% 4%;
     --card-foreground: 0 0% 98%;
@@ -76,15 +76,20 @@
   }
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+    font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
     font-size: 18px;
-    transition: background-color 0.2s ease-out, color 0.2s ease-out;
+    transition:
+      background-color 0.2s ease-out,
+      color 0.2s ease-out;
   }
   html {
     transition: background-color 0.2s ease-out;
   }
   button {
-    transition: background-color 0.15s ease-out, color 0.15s ease-out, border-color 0.15s ease-out;
+    transition:
+      background-color 0.15s ease-out,
+      color 0.15s ease-out,
+      border-color 0.15s ease-out;
   }
 }
 
@@ -101,7 +106,7 @@
   }
 
   .theme-transition {
-    transition: 
+    transition:
       background-color 0.2s ease-out,
       color 0.2s ease-out,
       border-color 0.2s ease-out,
@@ -109,7 +114,7 @@
   }
 
   .theme-transition-fast {
-    transition: 
+    transition:
       background-color 0.1s ease-out,
       color 0.1s ease-out,
       border-color 0.1s ease-out,
@@ -156,7 +161,7 @@
   }
 
   .underline-fade-out::after {
-    content: "";
+    content: '';
     position: absolute;
     bottom: 0;
     left: 0;
@@ -169,6 +174,99 @@
   .underline-fade-out:hover::after {
     opacity: 0;
   }
+
+  /* LinkRoll Component Styles */
+  .LinkRoll {
+    position: relative;
+    display: inline-block;
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.3s ease;
+  }
+
+  /* Fix underline positioning to be right under the text */
+  .LinkRoll::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: currentColor;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .LinkRoll.has-underline::after {
+    opacity: 1;
+  }
+
+  .LinkRoll:hover {
+    /* Empty hover rule as shown in the images */
+  }
+
+  /* Design tokens */
+  .LinkRoll {
+    --dur: 220ms;
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    --stagger: 15ms;         /* per character */
+    --skew: 8deg;            /* subtle flair */
+  }
+
+  /* Base layout */
+  .LinkRoll-text { line-height: 1 }
+  .LinkRoll-char { /* per-character box */
+    /* inline-block set in TSX */
+  }
+
+  /* Two stacked glyphs inside each char box */
+  .LinkRoll-glyph {
+    will-change: transform, opacity;
+    transition: transform var(--dur) var(--ease), opacity var(--dur) var(--ease);
+    transform: translateZ(0) /* compositor hint */
+  }
+
+  .LinkRoll-glyph-original {
+    transform: translateY(0) skewX(0);
+    opacity: 1;
+  }
+
+  .LinkRoll-glyph-new {
+    top: 100%;               /* sits just below the box */
+    transform: translateY(0) skewX(0);
+    opacity: 0;
+  }
+
+  /* Hover / focus-visible state (no gaps) */
+  .LinkRoll:hover .LinkRoll-char .LinkRoll-glyph-original,
+  .LinkRoll:focus-visible .LinkRoll-char .LinkRoll-glyph-original {
+    transform: translateY(-110%) skewX(calc(var(--skew) * -1));
+    opacity: 0;
+    transition-delay: calc(var(--idx) * var(--stagger));
+  }
+
+  .LinkRoll:hover .LinkRoll-char .LinkRoll-glyph-new,
+  .LinkRoll:focus-visible .LinkRoll-char .LinkRoll-glyph-new {
+    transform: translateY(-100%) skewX(0);
+    opacity: 1;
+    transition-delay: calc(var(--idx) * var(--stagger) + 10ms); /* tiny overlap, removes "gap" */
+  }
+
+  /* Accessibility: respect reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .LinkRoll-glyph,
+    .LinkRoll:hover .LinkRoll-glyph,
+    .LinkRoll:focus-visible .LinkRoll-glyph {
+      transition: none;
+      transform: none;
+      opacity: 1;
+    }
+  }
+
+  /* Optional: debug helpers you can toggle on/off */
+  .LinkRoll-debug .LinkRoll-char { outline: 1px dashed rgba(255,0,0,.35); }
+  .LinkRoll-debug .LinkRoll-char .LinkRoll-glyph-original { background: rgba(0,255,0,.06); }
+  .LinkRoll-debug .LinkRoll-char .LinkRoll-glyph-new { background: rgba(0,0,255,.06); }
 
   .animated-hue-overlay {
     position: fixed;
@@ -236,13 +334,13 @@
 
   /* Minimal dark theme enhancements */
   .dark .enhanced-glow {
-    box-shadow: 0 0 20px rgba(151,179,174,0.1);
+    box-shadow: 0 0 20px rgba(151, 179, 174, 0.1);
   }
   .dark .subtle-border-glow {
-    border-color: rgba(151,179,174,0.2);
+    border-color: rgba(151, 179, 174, 0.2);
   }
   .dark .text-glow {
-    text-shadow: 0 0 10px rgba(151,179,174,0.3);
+    text-shadow: 0 0 10px rgba(151, 179, 174, 0.3);
   }
 
   /* Enhanced card styling for dark mode */
@@ -265,22 +363,30 @@
   .dark .focus-enhanced:focus {
     outline: 2px solid rgba(151, 179, 174, 0.5);
     outline-offset: 2px;
-    box-shadow: 
+    box-shadow:
       0 0 0 4px rgba(151, 179, 174, 0.1),
       0 0 20px rgba(151, 179, 174, 0.2);
   }
 
   /* Sophisticated background patterns for dark mode */
   .dark .bg-pattern {
-    background-image: 
-      radial-gradient(circle at 25% 25%, rgba(151, 179, 174, 0.03) 0%, transparent 50%),
-      radial-gradient(circle at 75% 75%, rgba(210, 224, 211, 0.03) 0%, transparent 50%);
+    background-image:
+      radial-gradient(
+        circle at 25% 25%,
+        rgba(151, 179, 174, 0.03) 0%,
+        transparent 50%
+      ),
+      radial-gradient(
+        circle at 75% 75%,
+        rgba(210, 224, 211, 0.03) 0%,
+        transparent 50%
+      );
   }
 
   /* Enhanced hover effects for dark mode */
   .dark .hover-enhanced:hover {
     transform: translateY(-2px);
-    box-shadow: 
+    box-shadow:
       0 10px 25px rgba(0, 0, 0, 0.3),
       0 0 20px rgba(151, 179, 174, 0.1);
   }
@@ -300,73 +406,214 @@
 
   @keyframes hueShift {
     0% {
-      background: 
-        radial-gradient(circle at 10% 10%, hsl(200, 60%, 90%) 0%, transparent 85%),
-        radial-gradient(circle at 90% 20%, hsl(240, 50%, 92%) 0%, transparent 85%),
-        radial-gradient(circle at 30% 80%, hsl(270, 40%, 95%) 0%, transparent 85%),
-        radial-gradient(circle at 70% 90%, hsl(180, 50%, 90%) 0%, transparent 85%);
+      background:
+        radial-gradient(
+          circle at 10% 10%,
+          hsl(200, 60%, 90%) 0%,
+          transparent 85%
+        ),
+        radial-gradient(
+          circle at 90% 20%,
+          hsl(240, 50%, 92%) 0%,
+          transparent 85%
+        ),
+        radial-gradient(
+          circle at 30% 80%,
+          hsl(270, 40%, 95%) 0%,
+          transparent 85%
+        ),
+        radial-gradient(
+          circle at 70% 90%,
+          hsl(180, 50%, 90%) 0%,
+          transparent 85%
+        );
     }
     12.5% {
-      background: 
-        radial-gradient(circle at 20% 30%, hsl(240, 50%, 92%) 0%, transparent 85%),
-        radial-gradient(circle at 80% 10%, hsl(270, 40%, 95%) 0%, transparent 85%),
-        radial-gradient(circle at 10% 70%, hsl(180, 50%, 90%) 0%, transparent 85%),
-        radial-gradient(circle at 90% 80%, hsl(150, 40%, 93%) 0%, transparent 85%);
+      background:
+        radial-gradient(
+          circle at 20% 30%,
+          hsl(240, 50%, 92%) 0%,
+          transparent 85%
+        ),
+        radial-gradient(
+          circle at 80% 10%,
+          hsl(270, 40%, 95%) 0%,
+          transparent 85%
+        ),
+        radial-gradient(
+          circle at 10% 70%,
+          hsl(180, 50%, 90%) 0%,
+          transparent 85%
+        ),
+        radial-gradient(
+          circle at 90% 80%,
+          hsl(150, 40%, 93%) 0%,
+          transparent 85%
+        );
     }
     25% {
-      background: 
-        radial-gradient(circle at 30% 50%, hsl(270, 40%, 95%) 0%, transparent 85%),
-        radial-gradient(circle at 70% 30%, hsl(180, 50%, 90%) 0%, transparent 85%),
-        radial-gradient(circle at 20% 60%, hsl(150, 40%, 93%) 0%, transparent 85%),
-        radial-gradient(circle at 80% 70%, hsl(60, 80%, 95%) 0%, transparent 85%);
+      background:
+        radial-gradient(
+          circle at 30% 50%,
+          hsl(270, 40%, 95%) 0%,
+          transparent 85%
+        ),
+        radial-gradient(
+          circle at 70% 30%,
+          hsl(180, 50%, 90%) 0%,
+          transparent 85%
+        ),
+        radial-gradient(
+          circle at 20% 60%,
+          hsl(150, 40%, 93%) 0%,
+          transparent 85%
+        ),
+        radial-gradient(
+          circle at 80% 70%,
+          hsl(60, 80%, 95%) 0%,
+          transparent 85%
+        );
     }
     37.5% {
-      background: 
-        radial-gradient(circle at 40% 70%, hsl(180, 50%, 90%) 0%, transparent 85%),
-        radial-gradient(circle at 60% 50%, hsl(150, 40%, 93%) 0%, transparent 85%),
-        radial-gradient(circle at 30% 40%, hsl(60, 80%, 95%) 0%, transparent 85%),
-        radial-gradient(circle at 70% 60%, hsl(30, 80%, 95%) 0%, transparent 85%);
+      background:
+        radial-gradient(
+          circle at 40% 70%,
+          hsl(180, 50%, 90%) 0%,
+          transparent 85%
+        ),
+        radial-gradient(
+          circle at 60% 50%,
+          hsl(150, 40%, 93%) 0%,
+          transparent 85%
+        ),
+        radial-gradient(
+          circle at 30% 40%,
+          hsl(60, 80%, 95%) 0%,
+          transparent 85%
+        ),
+        radial-gradient(
+          circle at 70% 60%,
+          hsl(30, 80%, 95%) 0%,
+          transparent 85%
+        );
     }
     50% {
-      background: 
-        radial-gradient(circle at 50% 80%, hsl(150, 40%, 93%) 0%, transparent 85%),
-        radial-gradient(circle at 50% 60%, hsl(60, 80%, 95%) 0%, transparent 85%),
-        radial-gradient(circle at 40% 50%, hsl(30, 80%, 95%) 0%, transparent 85%),
-        radial-gradient(circle at 60% 40%, hsl(330, 60%, 92%) 0%, transparent 85%);
+      background:
+        radial-gradient(
+          circle at 50% 80%,
+          hsl(150, 40%, 93%) 0%,
+          transparent 85%
+        ),
+        radial-gradient(
+          circle at 50% 60%,
+          hsl(60, 80%, 95%) 0%,
+          transparent 85%
+        ),
+        radial-gradient(
+          circle at 40% 50%,
+          hsl(30, 80%, 95%) 0%,
+          transparent 85%
+        ),
+        radial-gradient(
+          circle at 60% 40%,
+          hsl(330, 60%, 92%) 0%,
+          transparent 85%
+        );
     }
     62.5% {
-      background: 
-        radial-gradient(circle at 60% 90%, hsl(60, 80%, 95%) 0%, transparent 85%),
-        radial-gradient(circle at 40% 70%, hsl(30, 80%, 95%) 0%, transparent 85%),
-        radial-gradient(circle at 50% 50%, hsl(330, 60%, 92%) 0%, transparent 85%),
+      background:
+        radial-gradient(
+          circle at 60% 90%,
+          hsl(60, 80%, 95%) 0%,
+          transparent 85%
+        ),
+        radial-gradient(
+          circle at 40% 70%,
+          hsl(30, 80%, 95%) 0%,
+          transparent 85%
+        ),
+        radial-gradient(
+          circle at 50% 50%,
+          hsl(330, 60%, 92%) 0%,
+          transparent 85%
+        ),
         radial-gradient(circle at 50% 30%, hsl(0, 70%, 95%) 0%, transparent 85%);
     }
     75% {
-      background: 
-        radial-gradient(circle at 70% 100%, hsl(30, 80%, 95%) 0%, transparent 85%),
-        radial-gradient(circle at 30% 80%, hsl(330, 60%, 92%) 0%, transparent 85%),
-        radial-gradient(circle at 60% 40%, hsl(0, 70%, 95%) 0%, transparent 85%),
-        radial-gradient(circle at 40% 20%, hsl(200, 60%, 90%) 0%, transparent 85%);
+      background:
+        radial-gradient(
+          circle at 70% 100%,
+          hsl(30, 80%, 95%) 0%,
+          transparent 85%
+        ),
+        radial-gradient(
+          circle at 30% 80%,
+          hsl(330, 60%, 92%) 0%,
+          transparent 85%
+        ),
+        radial-gradient(
+          circle at 60% 40%,
+          hsl(0, 70%, 95%) 0%,
+          transparent 85%
+        ),
+        radial-gradient(
+          circle at 40% 20%,
+          hsl(200, 60%, 90%) 0%,
+          transparent 85%
+        );
     }
     87.5% {
-      background: 
-        radial-gradient(circle at 80% 110%, hsl(330, 60%, 92%) 0%, transparent 85%),
-        radial-gradient(circle at 20% 90%, hsl(0, 70%, 95%) 0%, transparent 85%),
-        radial-gradient(circle at 70% 30%, hsl(200, 60%, 90%) 0%, transparent 85%),
-        radial-gradient(circle at 30% 10%, hsl(240, 50%, 92%) 0%, transparent 85%);
+      background:
+        radial-gradient(
+          circle at 80% 110%,
+          hsl(330, 60%, 92%) 0%,
+          transparent 85%
+        ),
+        radial-gradient(
+          circle at 20% 90%,
+          hsl(0, 70%, 95%) 0%,
+          transparent 85%
+        ),
+        radial-gradient(
+          circle at 70% 30%,
+          hsl(200, 60%, 90%) 0%,
+          transparent 85%
+        ),
+        radial-gradient(
+          circle at 30% 10%,
+          hsl(240, 50%, 92%) 0%,
+          transparent 85%
+        );
     }
     100% {
-      background: 
-        radial-gradient(circle at 10% 10%, hsl(200, 60%, 90%) 0%, transparent 85%),
-        radial-gradient(circle at 90% 20%, hsl(240, 50%, 92%) 0%, transparent 85%),
-        radial-gradient(circle at 30% 80%, hsl(270, 40%, 95%) 0%, transparent 85%),
-        radial-gradient(circle at 70% 90%, hsl(180, 50%, 90%) 0%, transparent 85%);
+      background:
+        radial-gradient(
+          circle at 10% 10%,
+          hsl(200, 60%, 90%) 0%,
+          transparent 85%
+        ),
+        radial-gradient(
+          circle at 90% 20%,
+          hsl(240, 50%, 92%) 0%,
+          transparent 85%
+        ),
+        radial-gradient(
+          circle at 30% 80%,
+          hsl(270, 40%, 95%) 0%,
+          transparent 85%
+        ),
+        radial-gradient(
+          circle at 70% 90%,
+          hsl(180, 50%, 90%) 0%,
+          transparent 85%
+        );
     }
   }
 
   @keyframes hueShiftSlow {
     0% {
-      background: radial-gradient(
+      background:
+        radial-gradient(
           circle at 15% 15%,
           rgba(151, 179, 174, 0.2) 0%,
           transparent 80%
@@ -388,7 +635,8 @@
         );
     }
     33% {
-      background: radial-gradient(
+      background:
+        radial-gradient(
           circle at 25% 25%,
           rgba(214, 203, 191, 0.2) 0%,
           transparent 80%
@@ -410,7 +658,8 @@
         );
     }
     66% {
-      background: radial-gradient(
+      background:
+        radial-gradient(
           circle at 35% 35%,
           rgba(240, 238, 234, 0.2) 0%,
           transparent 80%
@@ -432,7 +681,8 @@
         );
     }
     100% {
-      background: radial-gradient(
+      background:
+        radial-gradient(
           circle at 15% 15%,
           rgba(151, 179, 174, 0.2) 0%,
           transparent 80%
@@ -457,7 +707,8 @@
 
   @keyframes hueShiftFast {
     0% {
-      background: radial-gradient(
+      background:
+        radial-gradient(
           circle at 25% 25%,
           rgba(151, 179, 174, 0.15) 0%,
           transparent 75%
@@ -479,7 +730,8 @@
         );
     }
     50% {
-      background: radial-gradient(
+      background:
+        radial-gradient(
           circle at 35% 35%,
           rgba(242, 195, 185, 0.15) 0%,
           transparent 75%
@@ -501,7 +753,8 @@
         );
     }
     100% {
-      background: radial-gradient(
+      background:
+        radial-gradient(
           circle at 25% 25%,
           rgba(151, 179, 174, 0.15) 0%,
           transparent 75%
@@ -526,67 +779,207 @@
 
   @keyframes hueShiftUltraSlow {
     0% {
-      background: 
-        radial-gradient(circle at 5% 95%, hsl(150, 40%, 93%) 0%, transparent 85%),
-        radial-gradient(circle at 95% 5%, hsl(60, 80%, 95%) 0%, transparent 85%),
-        radial-gradient(circle at 15% 85%, hsl(30, 80%, 95%) 0%, transparent 85%),
-        radial-gradient(circle at 85% 15%, hsl(330, 60%, 92%) 0%, transparent 85%);
+      background:
+        radial-gradient(
+          circle at 5% 95%,
+          hsl(150, 40%, 93%) 0%,
+          transparent 85%
+        ),
+        radial-gradient(
+          circle at 95% 5%,
+          hsl(60, 80%, 95%) 0%,
+          transparent 85%
+        ),
+        radial-gradient(
+          circle at 15% 85%,
+          hsl(30, 80%, 95%) 0%,
+          transparent 85%
+        ),
+        radial-gradient(
+          circle at 85% 15%,
+          hsl(330, 60%, 92%) 0%,
+          transparent 85%
+        );
     }
     12.5% {
-      background: 
-        radial-gradient(circle at 15% 85%, hsl(60, 80%, 95%) 0%, transparent 85%),
-        radial-gradient(circle at 85% 15%, hsl(30, 80%, 95%) 0%, transparent 85%),
-        radial-gradient(circle at 25% 75%, hsl(330, 60%, 92%) 0%, transparent 85%),
+      background:
+        radial-gradient(
+          circle at 15% 85%,
+          hsl(60, 80%, 95%) 0%,
+          transparent 85%
+        ),
+        radial-gradient(
+          circle at 85% 15%,
+          hsl(30, 80%, 95%) 0%,
+          transparent 85%
+        ),
+        radial-gradient(
+          circle at 25% 75%,
+          hsl(330, 60%, 92%) 0%,
+          transparent 85%
+        ),
         radial-gradient(circle at 75% 25%, hsl(0, 70%, 95%) 0%, transparent 85%);
     }
     25% {
-      background: 
-        radial-gradient(circle at 25% 75%, hsl(30, 80%, 95%) 0%, transparent 85%),
-        radial-gradient(circle at 75% 25%, hsl(330, 60%, 92%) 0%, transparent 85%),
-        radial-gradient(circle at 35% 65%, hsl(0, 70%, 95%) 0%, transparent 85%),
-        radial-gradient(circle at 65% 35%, hsl(200, 60%, 90%) 0%, transparent 85%);
+      background:
+        radial-gradient(
+          circle at 25% 75%,
+          hsl(30, 80%, 95%) 0%,
+          transparent 85%
+        ),
+        radial-gradient(
+          circle at 75% 25%,
+          hsl(330, 60%, 92%) 0%,
+          transparent 85%
+        ),
+        radial-gradient(
+          circle at 35% 65%,
+          hsl(0, 70%, 95%) 0%,
+          transparent 85%
+        ),
+        radial-gradient(
+          circle at 65% 35%,
+          hsl(200, 60%, 90%) 0%,
+          transparent 85%
+        );
     }
     37.5% {
-      background: 
-        radial-gradient(circle at 35% 65%, hsl(330, 60%, 92%) 0%, transparent 85%),
-        radial-gradient(circle at 65% 35%, hsl(0, 70%, 95%) 0%, transparent 85%),
-        radial-gradient(circle at 45% 55%, hsl(200, 60%, 90%) 0%, transparent 85%),
-        radial-gradient(circle at 55% 45%, hsl(240, 50%, 92%) 0%, transparent 85%);
+      background:
+        radial-gradient(
+          circle at 35% 65%,
+          hsl(330, 60%, 92%) 0%,
+          transparent 85%
+        ),
+        radial-gradient(
+          circle at 65% 35%,
+          hsl(0, 70%, 95%) 0%,
+          transparent 85%
+        ),
+        radial-gradient(
+          circle at 45% 55%,
+          hsl(200, 60%, 90%) 0%,
+          transparent 85%
+        ),
+        radial-gradient(
+          circle at 55% 45%,
+          hsl(240, 50%, 92%) 0%,
+          transparent 85%
+        );
     }
     50% {
-      background: 
-        radial-gradient(circle at 45% 55%, hsl(0, 70%, 95%) 0%, transparent 85%),
-        radial-gradient(circle at 55% 45%, hsl(200, 60%, 90%) 0%, transparent 85%),
-        radial-gradient(circle at 55% 35%, hsl(240, 50%, 92%) 0%, transparent 85%),
-        radial-gradient(circle at 45% 65%, hsl(270, 40%, 95%) 0%, transparent 85%);
+      background:
+        radial-gradient(
+          circle at 45% 55%,
+          hsl(0, 70%, 95%) 0%,
+          transparent 85%
+        ),
+        radial-gradient(
+          circle at 55% 45%,
+          hsl(200, 60%, 90%) 0%,
+          transparent 85%
+        ),
+        radial-gradient(
+          circle at 55% 35%,
+          hsl(240, 50%, 92%) 0%,
+          transparent 85%
+        ),
+        radial-gradient(
+          circle at 45% 65%,
+          hsl(270, 40%, 95%) 0%,
+          transparent 85%
+        );
     }
     62.5% {
-      background: 
-        radial-gradient(circle at 55% 45%, hsl(200, 60%, 90%) 0%, transparent 85%),
-        radial-gradient(circle at 45% 55%, hsl(240, 50%, 92%) 0%, transparent 85%),
-        radial-gradient(circle at 65% 25%, hsl(270, 40%, 95%) 0%, transparent 85%),
-        radial-gradient(circle at 35% 75%, hsl(180, 50%, 90%) 0%, transparent 85%);
+      background:
+        radial-gradient(
+          circle at 55% 45%,
+          hsl(200, 60%, 90%) 0%,
+          transparent 85%
+        ),
+        radial-gradient(
+          circle at 45% 55%,
+          hsl(240, 50%, 92%) 0%,
+          transparent 85%
+        ),
+        radial-gradient(
+          circle at 65% 25%,
+          hsl(270, 40%, 95%) 0%,
+          transparent 85%
+        ),
+        radial-gradient(
+          circle at 35% 75%,
+          hsl(180, 50%, 90%) 0%,
+          transparent 85%
+        );
     }
     75% {
-      background: 
-        radial-gradient(circle at 65% 35%, hsl(240, 50%, 92%) 0%, transparent 85%),
-        radial-gradient(circle at 35% 65%, hsl(270, 40%, 95%) 0%, transparent 85%),
-        radial-gradient(circle at 75% 15%, hsl(180, 50%, 90%) 0%, transparent 85%),
-        radial-gradient(circle at 25% 85%, hsl(150, 40%, 93%) 0%, transparent 85%);
+      background:
+        radial-gradient(
+          circle at 65% 35%,
+          hsl(240, 50%, 92%) 0%,
+          transparent 85%
+        ),
+        radial-gradient(
+          circle at 35% 65%,
+          hsl(270, 40%, 95%) 0%,
+          transparent 85%
+        ),
+        radial-gradient(
+          circle at 75% 15%,
+          hsl(180, 50%, 90%) 0%,
+          transparent 85%
+        ),
+        radial-gradient(
+          circle at 25% 85%,
+          hsl(150, 40%, 93%) 0%,
+          transparent 85%
+        );
     }
     87.5% {
-      background: 
-        radial-gradient(circle at 75% 25%, hsl(270, 40%, 95%) 0%, transparent 85%),
-        radial-gradient(circle at 25% 75%, hsl(180, 50%, 90%) 0%, transparent 85%),
-        radial-gradient(circle at 85% 5%, hsl(150, 40%, 93%) 0%, transparent 85%),
-        radial-gradient(circle at 15% 95%, hsl(60, 80%, 95%) 0%, transparent 85%);
+      background:
+        radial-gradient(
+          circle at 75% 25%,
+          hsl(270, 40%, 95%) 0%,
+          transparent 85%
+        ),
+        radial-gradient(
+          circle at 25% 75%,
+          hsl(180, 50%, 90%) 0%,
+          transparent 85%
+        ),
+        radial-gradient(
+          circle at 85% 5%,
+          hsl(150, 40%, 93%) 0%,
+          transparent 85%
+        ),
+        radial-gradient(
+          circle at 15% 95%,
+          hsl(60, 80%, 95%) 0%,
+          transparent 85%
+        );
     }
     100% {
-      background: 
-        radial-gradient(circle at 5% 95%, hsl(150, 40%, 93%) 0%, transparent 85%),
-        radial-gradient(circle at 95% 5%, hsl(60, 80%, 95%) 0%, transparent 85%),
-        radial-gradient(circle at 15% 85%, hsl(30, 80%, 95%) 0%, transparent 85%),
-        radial-gradient(circle at 85% 15%, hsl(330, 60%, 92%) 0%, transparent 85%);
+      background:
+        radial-gradient(
+          circle at 5% 95%,
+          hsl(150, 40%, 93%) 0%,
+          transparent 85%
+        ),
+        radial-gradient(
+          circle at 95% 5%,
+          hsl(60, 80%, 95%) 0%,
+          transparent 85%
+        ),
+        radial-gradient(
+          circle at 15% 85%,
+          hsl(30, 80%, 95%) 0%,
+          transparent 85%
+        ),
+        radial-gradient(
+          circle at 85% 15%,
+          hsl(330, 60%, 92%) 0%,
+          transparent 85%
+        );
     }
   }
 }

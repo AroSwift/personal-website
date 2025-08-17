@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
-import {
-  ExternalLink,
-} from 'lucide-react'
+import { ExternalLink } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import Header from '@/components/layout/Header'
@@ -12,13 +10,6 @@ import Footer from '@/components/layout/Footer'
 
 // Projects page
 const ProjectsPage = () => {
-  const [theme, setTheme] = useState<'light' | 'dark'>('light')
-
-  useEffect(() => {
-    const isDark = document.documentElement.classList.contains('dark')
-    setTheme(isDark ? 'dark' : 'light')
-  }, [])
-
   // Projects
   const featuredProjects = [
     {
@@ -168,7 +159,10 @@ const ProjectsPage = () => {
                         <div className="flex-1">
                           {/* Project Category and Status Badges */}
                           <div className="flex items-center gap-3 mb-2">
-                            <Badge variant="secondary" className="text-xs dark:enhanced-glow">
+                            <Badge
+                              variant="secondary"
+                              className="text-xs dark:enhanced-glow"
+                            >
                               {project.category}
                             </Badge>
                             <Badge
@@ -295,7 +289,7 @@ const ProjectsPage = () => {
           </motion.div>
 
           {/* Footer Information Section */}
-          <Footer 
+          <Footer
             animationDelay={3.0}
             textColor="text-muted-foreground"
             borderColor="border-border/50"

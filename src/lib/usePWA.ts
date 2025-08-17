@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 
 interface PWAState {
   isOnline: boolean
@@ -6,11 +6,6 @@ interface PWAState {
   canInstall: boolean
   hasUpdate: boolean
   isStandalone: boolean
-}
-
-interface BeforeInstallPromptEvent extends Event {
-  prompt(): Promise<void>
-  userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>
 }
 
 export function usePWA() {
@@ -39,11 +34,6 @@ export function usePWA() {
       setPwaState(prev => ({ ...prev, isOnline: true }))
     const handleOffline = () =>
       setPwaState(prev => ({ ...prev, isOnline: false }))
-
-    // Service worker updates
-    const handleServiceWorkerUpdate = () => {
-      setPwaState(prev => ({ ...prev, hasUpdate: true }))
-    }
 
     // Event listeners
     window.addEventListener('online', handleOnline)

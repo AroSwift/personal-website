@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
@@ -19,13 +19,6 @@ import Footer from '../components/layout/Footer'
 
 // About page
 const AboutPage = () => {
-  const [theme, setTheme] = useState<'light' | 'dark'>('light')
-
-  useEffect(() => {
-    const isDark = document.documentElement.classList.contains('dark')
-    setTheme(isDark ? 'dark' : 'light')
-  }, [])
-
   // Skills
   const skills = [
     'Ruby',
@@ -467,7 +460,10 @@ const AboutPage = () => {
             </h2>
             <div className="space-y-6">
               {education.map((edu, index) => (
-                <Card key={index} className="border-border/50 dark:card-enhanced dark:hover-enhanced">
+                <Card
+                  key={index}
+                  className="border-border/50 dark:card-enhanced dark:hover-enhanced"
+                >
                   <CardHeader>
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                       <div>
@@ -530,10 +526,16 @@ const AboutPage = () => {
                         <div className="flex-1">
                           {/* Conference and Category Badges */}
                           <div className="flex items-center gap-3 mb-3">
-                            <Badge variant="secondary" className="text-xs dark:enhanced-glow">
+                            <Badge
+                              variant="secondary"
+                              className="text-xs dark:enhanced-glow"
+                            >
                               {presentation.category}
                             </Badge>
-                            <Badge variant="outline" className="text-xs dark:enhanced-glow">
+                            <Badge
+                              variant="outline"
+                              className="text-xs dark:enhanced-glow"
+                            >
                               {presentation.conference}
                             </Badge>
                           </div>
@@ -580,15 +582,15 @@ const AboutPage = () => {
 
                       {/* Download Button */}
                       <div className="flex justify-end">
-                                                  <a
-                            href={presentation.pdfUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 bg-black dark:bg-soft-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-soft-white-hover rounded-full px-6 py-3 text-sm font-medium transition-colors duration-300 hover:scale-105 dark:enhanced-glow dark:hover-enhanced"
-                          >
-                            <Download className="h-4 w-4" />
-                            Download Presentation
-                          </a>
+                        <a
+                          href={presentation.pdfUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 bg-black dark:bg-soft-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-soft-white-hover rounded-full px-6 py-3 text-sm font-medium transition-colors duration-300 hover:scale-105 dark:enhanced-glow dark:hover-enhanced"
+                        >
+                          <Download className="h-4 w-4" />
+                          Download Presentation
+                        </a>
                       </div>
                     </CardContent>
                   </Card>
@@ -631,8 +633,6 @@ const AboutPage = () => {
             </div>
           </motion.section>
 
-
-
           {/* Call-to-Action Buttons */}
           <motion.div
             className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6 mb-16 lg:mb-24"
@@ -656,7 +656,7 @@ const AboutPage = () => {
           </motion.div>
 
           {/* Footer Information Section */}
-          <Footer 
+          <Footer
             animationDelay={4.0}
             textColor="text-muted-foreground"
             borderColor="border-border/50"

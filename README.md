@@ -17,33 +17,52 @@ A modern, responsive personal website for Aaron Barlow built with React, TypeScr
 ## Performance & Build Metrics
 
 ### Build Performance
+
 - **Production Deployment Time**: 18s (average of 5 runs)
 - **Local Build Speed**: 1.51s average (compile-only)
 
+### Bundle Size
+
+- **Main Bundle**: 193 kB (61 kB gzipped)
+- **Total Initial Load**: ~130 kB gzipped
+- **Lazy Loading**: Pages load on-demand (~3-19 kB each)
+
 ### Page Speed Scores
 
-| Metric | Desktop | Mobile |
-|:-------|:-------:|:------:|
-| **Speed Score** | **100** | **95** |
-| **First Contentful Paint** | 0.39s | 1.57s |
-| **Largest Contentful Paint** | 0.56s | 2.79s |
-| **Time to Interactive** | 0.39s | 2.08s |
-| **Cumulative Layout Shift** | 0 | 0 |
+| Metric                       | Desktop | Mobile |
+| :--------------------------- | :-----: | :----: |
+| **Speed Score**              | **100** | **99** |
+| **Time To First Byte**       |  0.01s  | 0.01s  |
+| **First Contentful Paint**   |  0.39s  | 1.72s  |
+| **Largest Contentful Paint** |  0.39s  | 1.72s  |
+| **Time to Interactive**      |  0.39s  | 1.86s  |
+| **Total Blocking Time**      |   0ms   |  23ms  |
+| **Speed Index**              |  0.43s  | 1.72s  |
+| **Cumulative Layout Shift**  |    0    |   0    |
 
-*Performance measured from Iowa, USA on 2025-08-16 by Cloudflare*
+_Performance measured from Iowa, USA on 2025-08-17 by Cloudflare_
 
 ## Tech Stack
 
 - **Frontend Framework**: React 18 with TypeScript
 - **Build Tool**: Vite
 - **Styling**: Tailwind CSS with shadcn/ui components
-- **Routing**: React Router DOM
+- **Routing**: React Router DOM with lazy loading
 - **UI Components**: Radix UI primitives with custom styling
 - **Animations**: Framer Motion
 - **Icons**: Lucide React
 - **Testing**: Vitest + React Testing Library
 - **Forms**: React Hook Form
 - **Database**: Supabase (configured for future use)
+
+### Build Optimizations
+
+- **Code Splitting**: Manual chunk configuration for optimal caching
+- **Lazy Loading**: Route-based component loading for faster initial page loads
+- **Tree Shaking**: Automatic dead code elimination
+- **Bundle Analysis**: Rollup plugin visualizer for ongoing optimization monitoring
+- **Minification**: ESBuild for fast and efficient code compression
+- **Asset Optimization**: Optimized images and CSS compression
 
 ## Project Structure
 
@@ -52,7 +71,7 @@ personal-website/
 ├── src/
 │   ├── components/                    # Reusable UI components
 │   │   ├── ui/                        # shadcn/ui components
-│   │   ├── layout/                    # Layout components (Header, etc.)
+│   │   ├── layout/                    # Layout components
 │   │   └── LoadingScreen.tsx          # Splash screen
 │   ├── pages/                         # Page components
 │   │   ├── HomePage.tsx               # Home page
@@ -69,9 +88,8 @@ personal-website/
 ├── dist/                              # Build output
 ├── Dockerfile                         # Docker configuration
 ├── nginx.conf                         # Nginx configuration
-├── docker-compose.yml                 # Docker Compose for production (Coolify)
+├── docker-compose.yml                 # Docker Compose for production
 ├── docker-compose.local.yml           # Docker Compose for local testing
-├── .dockerignore                      # Docker ignore file
 └── configuration files
 ```
 
@@ -86,17 +104,20 @@ personal-website/
 ### Installation
 
 1. Clone the repository:
+
    ```bash
    git clone https://github.com/yourusername/personal-website.git
    cd personal-website
    ```
 
 2. Install dependencies:
+
    ```bash
    npm install
    ```
 
 3. Start the development server:
+
    ```bash
    npm run dev
    ```
@@ -115,19 +136,6 @@ personal-website/
 
 The project includes a comprehensive test suite built with Vitest and React Testing Library.
 
-### Test Structure
-
-```
-src/
-├── tests/
-│   ├── setup.tsx          # Test configuration and mocks
-│   ├── utils.tsx          # Custom test utilities
-│   ├── App.test.tsx       # Main app tests
-│   ├── home.test.tsx      # Home component tests
-│   ├── LoadingScreen.test.tsx  # Loading screen tests
-│   └── HomePage.test.tsx  # Page component tests
-```
-
 ### Running Tests
 
 ```bash
@@ -144,30 +152,12 @@ npm test -- --run src/tests/home.test.tsx
 ### Test Coverage
 
 The test suite covers:
+
 - **Component Rendering**: Verifies components render correctly
 - **User Interactions**: Tests button clicks and navigation
 - **Routing Logic**: Ensures proper page routing
 - **Loading States**: Tests loading screen functionality
 - **Content Validation**: Checks for expected text and elements
-
-### Writing Tests
-
-Tests follow React Testing Library best practices:
-- Test behavior, not implementation
-- Use semantic queries (getByText, getByRole)
-- Keep tests simple and focused
-- Mock external dependencies appropriately
-
-## Customization
-
-### Styling
-The project uses Tailwind CSS with a custom configuration. The base color scheme is set to "slate" and can be modified in `tailwind.config.js`.
-
-### Components
-UI components are built using shadcn/ui, which provides a collection of reusable, accessible components. New components can be added using the shadcn/ui CLI.
-
-### Pages
-Each page is located in the `src/pages/` directory. You can modify the content, styling, and functionality of each page to match your personal brand.
 
 ## Pages
 
@@ -176,26 +166,11 @@ Each page is located in the `src/pages/` directory. You can modify the content, 
 - **Projects**: Portfolio of work and projects
 - **Contact**: Contact information and form
 
-## Configuration
-
-### Environment Variables
-If you plan to use Supabase or other external services, create a `.env` file in the root directory and add your configuration variables.
-
-### Build Configuration
-The project uses Vite for building. Configuration can be modified in `vite.config.ts`.
-
 ## Deployment
 
 ### Coolify Deployment (Recommended)
 
 This project is configured for deployment on Coolify with a fully code-owned Docker setup using docker-compose.yml for proper Traefik integration.
-
-#### Coolify Configuration:
-
-1. **App Type**: Select "Dockerfile" (not Buildpack/Static)
-2. **Expose Port**: 80 (HTTP only - no port publishing needed)
-3. **Domain**: Attach your domain (e.g., `aaronbarlow.dev`) to this app only
-4. **SSL**: Handled automatically by Traefik with Let's Encrypt certificates
 
 #### Coolify Setup Steps:
 
@@ -204,16 +179,7 @@ This project is configured for deployment on Coolify with a fully code-owned Doc
 3. Set **Application Type** to "Dockerfile"
 4. Set **Port** to "80" (HTTP only)
 5. Add your domain(s): `aaronbarlow.dev` and `www.aaronbarlow.dev`
-6. **Important**: The docker-compose.yml file handles Traefik integration automatically
-7. Deploy!
-
-#### How It Works:
-
-The docker-compose.yml file includes:
-- **Traefik labels** for automatic routing and SSL termination
-- **Coolify network** integration for proper container communication
-- **No port publishing** - Traefik communicates directly over Docker network
-- **Health checks** for container monitoring
+6. Deploy!
 
 ### Local Docker Testing
 
@@ -230,42 +196,6 @@ docker run -p 3000:80 personal-website
 
 Then visit `http://localhost:3000`
 
-**Note**: 
-- The main `docker-compose.yml` includes Traefik labels for production deployment with Coolify
-- Use `docker-compose.local.yml` for local testing (includes port publishing and health checks)
-- The health check endpoint is available at `http://localhost:3000/health`
-
-### SSL Certificate Options
-
-For production deployment, you have several SSL certificate options:
-
-**Option A: Origin Certificate (Recommended)**
-- Generate a certificate from your domain provider
-- Mount the certificate and private key in your Docker container
-- Provides long-term validity and optimal performance
-
-**Option B: Let's Encrypt (Automatic)**
-- Let your reverse proxy handle automatic certificate generation
-- Certificates auto-renew every 90 days
-- Works well with Traefik and similar tools
-
-**Option C: Self-Signed (Development Only)**
-- The container generates self-signed certificates automatically
-- Suitable for local development and testing
-- Not recommended for production use
-
-### Manual Deployment
-
-If you prefer to deploy manually:
-
-```bash
-# Build the Docker image
-docker build -t personal-website .
-
-# Run the container
-docker run -d -p 80:80 -p 443:443 --name personal-website-site personal-website
-```
-
 ### Alternative Static Hosting
 
 The project can also be deployed to various static hosting platforms:
@@ -280,53 +210,23 @@ The project can also be deployed to various static hosting platforms:
 ## Configuration
 
 ### Environment Variables
+
 If you plan to use Supabase or other external services, create a `.env` file in the root directory and add your configuration variables.
 
 ### Build Configuration
+
 The project uses Vite for building. Configuration can be modified in `vite.config.ts`.
 
 ### Nginx Configuration
+
 The `nginx.conf` file handles:
+
 - HTTPS/SSL configuration with automatic HTTP to HTTPS redirect
 - SPA routing (React Router support)
 - Static asset caching
 - Security headers (including HSTS)
 - Gzip compression
 - Proxy headers for CDN/reverse proxy compatibility
-
-## Troubleshooting
-
-### 404 Errors on Subpages
-If you're getting 404 errors on routes like `/projects`, ensure:
-1. You're using the Dockerfile deployment (not static hosting)
-2. The nginx.conf file is properly configured with `try_files $uri $uri/ /index.html;`
-3. Only one app is bound to your domain in Coolify
-
-### 502 Bad Gateway Errors
-If you're getting 502 errors in Coolify:
-1. **Check docker-compose.yml**: Ensure it includes the `coolify` external network
-2. **Verify Traefik labels**: Make sure all required Traefik labels are present
-3. **No port publishing**: The docker-compose.yml should NOT publish ports to the host
-4. **Single domain binding**: Ensure only this app is bound to your domain in Coolify
-5. **Check container logs**: Look for access logs when visiting the site
-
-### Container Health Checks
-To verify the container is running properly:
-```bash
-# Check if container is listening on port 80
-docker exec <container-name> ss -lntp
-
-# Check nginx logs
-docker logs <container-name>
-```
-
-### Build Issues
-If you encounter build issues:
-```bash
-# Clean and rebuild
-docker system prune -f
-docker build --no-cache -t personal-website .
-```
 
 ## Contributing
 

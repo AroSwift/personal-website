@@ -7,29 +7,82 @@ import React from 'react'
 
 // Mock framer-motion to avoid animation complexity in tests
 // Use React.forwardRef to properly handle refs and eliminate warnings
+const motionDiv = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ children, ...props }, ref) => (
+  <div ref={ref} {...props}>
+    {children}
+  </div>
+))
+motionDiv.displayName = 'motion.div'
+
+const motionH1 = React.forwardRef<
+  HTMLHeadingElement,
+  React.HTMLAttributes<HTMLHeadingElement>
+>(({ children, ...props }, ref) => (
+  <h1 ref={ref} {...props}>
+    {children}
+  </h1>
+))
+motionH1.displayName = 'motion.h1'
+
+const motionP = React.forwardRef<
+  HTMLParagraphElement,
+  React.HTMLAttributes<HTMLParagraphElement>
+>(({ children, ...props }, ref) => (
+  <p ref={ref} {...props}>
+    {children}
+  </p>
+))
+motionP.displayName = 'motion.p'
+
+const motionSpan = React.forwardRef<
+  HTMLSpanElement,
+  React.HTMLAttributes<HTMLSpanElement>
+>(({ children, ...props }, ref) => (
+  <span ref={ref} {...props}>
+    {children}
+  </span>
+))
+motionSpan.displayName = 'motion.span'
+
+const motionImg = React.forwardRef<
+  HTMLImageElement,
+  React.ImgHTMLAttributes<HTMLImageElement>
+>((props, ref) => <img ref={ref} {...props} />)
+motionImg.displayName = 'motion.img'
+
+const motionButton = React.forwardRef<
+  HTMLButtonElement,
+  React.ButtonHTMLAttributes<HTMLButtonElement>
+>(({ children, ...props }, ref) => (
+  <button ref={ref} {...props}>
+    {children}
+  </button>
+))
+motionButton.displayName = 'motion.button'
+
+const motionPath = React.forwardRef<
+  SVGPathElement,
+  React.SVGProps<SVGPathElement>
+>(({ d, fill, ...props }, ref) => (
+  <path ref={ref} d={d} fill={fill} {...props} />
+))
+motionPath.displayName = 'motion.path'
+
+// Mock framer-motion with proper display names
 vi.mock('framer-motion', () => ({
   motion: {
-    div: React.forwardRef<HTMLDivElement, any>(({ children, whileHover, whileTap, animate, initial, transition, exit, ...props }, ref) => (
-      <div ref={ref} {...props}>{children}</div>
-    )),
-    h1: React.forwardRef<HTMLHeadingElement, any>(({ children, whileHover, whileTap, animate, initial, transition, exit, ...props }, ref) => (
-      <h1 ref={ref} {...props}>{children}</h1>
-    )),
-    p: React.forwardRef<HTMLParagraphElement, any>(({ children, whileHover, whileTap, animate, initial, transition, exit, ...props }, ref) => (
-      <p ref={ref} {...props}>{children}</p>
-    )),
-    span: React.forwardRef<HTMLSpanElement, any>(({ children, whileHover, whileTap, animate, initial, transition, exit, ...props }, ref) => (
-      <span ref={ref} {...props}>{children}</span>
-    )),
-    img: React.forwardRef<HTMLImageElement, any>(({ fetchPriority, ...props }, ref) => <img ref={ref} {...props} />),
-    button: React.forwardRef<HTMLButtonElement, any>(({ children, whileHover, whileTap, animate, initial, transition, exit, ...props }, ref) => (
-      <button ref={ref} {...props}>{children}</button>
-    )),
-    path: React.forwardRef<SVGPathElement, any>(({ d, fill, initial, animate, transition, ...props }, ref) => (
-      <path ref={ref} d={d} fill={fill} {...props} />
-    )),
+    div: motionDiv,
+    h1: motionH1,
+    p: motionP,
+    span: motionSpan,
+    img: motionImg,
+    button: motionButton,
+    path: motionPath,
   },
-  AnimatePresence: ({ children }: any) => children,
+  AnimatePresence: ({ children }: { children: React.ReactNode }) => children,
   useAnimation: () => ({
     start: vi.fn(),
     stop: vi.fn(),

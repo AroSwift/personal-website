@@ -20,11 +20,14 @@ describe('LoadingScreen', () => {
 
     // The component starts with "Innovator" (index 0)
     expect(screen.getByText('Innovator')).toBeInTheDocument()
-    
+
     // Wait for the word to change to "Designer" (index 1)
-    await waitFor(() => {
-      expect(screen.getByText('Designer')).toBeInTheDocument()
-    }, { timeout: 2000 })
+    await waitFor(
+      () => {
+        expect(screen.getByText('Designer')).toBeInTheDocument()
+      },
+      { timeout: 2000 }
+    )
   })
 
   it('renders rotating words section', () => {
@@ -32,7 +35,9 @@ describe('LoadingScreen', () => {
     render(<LoadingScreen onComplete={mockOnComplete} />)
 
     // Check that the rotating words container is present
-    const wordsContainer = document.querySelector('.h-16.flex.items-center.justify-center')
+    const wordsContainer = document.querySelector(
+      '.h-16.flex.items-center.justify-center'
+    )
     expect(wordsContainer).toBeInTheDocument()
   })
 

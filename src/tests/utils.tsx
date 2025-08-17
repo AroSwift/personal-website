@@ -2,19 +2,29 @@
 // Provides custom render function with router context
 
 import React from 'react'
-import { render, RenderOptions } from '@testing-library/react'
+import {
+  render,
+  RenderOptions,
+  screen,
+  waitFor,
+  within,
+  fireEvent,
+  act,
+} from '@testing-library/react'
 import { BrowserRouter } from 'react-router-dom'
 
 // Custom render function that includes router context
-const AllTheProviders = ({ children }: { children: React.ReactNode }) => {
-  return <BrowserRouter>{children}</BrowserRouter>
-}
-
 const customRender = (
   ui: React.ReactElement,
   options?: Omit<RenderOptions, 'wrapper'>
-) => render(ui, { wrapper: AllTheProviders, ...options })
+) => {
+  const AllTheProviders = ({ children }: { children: React.ReactNode }) => {
+    return <BrowserRouter>{children}</BrowserRouter>
+  }
 
-// Re-export everything from testing library
-export * from '@testing-library/react'
-export { customRender as render }
+  return render(ui, { wrapper: AllTheProviders, ...options })
+}
+
+// Export only the specific functions we need
+export { customRender as render, screen, waitFor, within, fireEvent, act }
+export type { RenderOptions }

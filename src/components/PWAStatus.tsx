@@ -15,7 +15,10 @@ export function PWAStatus() {
       {/* Offline Status */}
       {!isOnline && (
         <div className="bg-muted text-muted-foreground px-3 py-2 rounded-lg shadow-lg border border-border">
-          <Badge variant="secondary" className="bg-secondary text-secondary-foreground">
+          <Badge
+            variant="secondary"
+            className="bg-secondary text-secondary-foreground"
+          >
             Offline Mode
           </Badge>
         </div>
@@ -28,11 +31,7 @@ export function PWAStatus() {
           <p className="text-sm mb-3 text-muted-foreground">
             A new version is available. Update to get the latest features.
           </p>
-          <Button
-            onClick={updateServiceWorker}
-            size="sm"
-            variant="default"
-          >
+          <Button onClick={updateServiceWorker} size="sm" variant="default">
             Update Now
           </Button>
         </div>

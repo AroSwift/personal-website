@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react'
 
-declare module "react" {
+declare module 'react' {
   interface ImgHTMLAttributes<T> extends React.HTMLAttributes<T> {
-    fetchpriority?: 'high' | 'low' | 'auto';
+    fetchpriority?: 'high' | 'low' | 'auto'
   }
 }

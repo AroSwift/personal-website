@@ -4,6 +4,7 @@ import { Moon, Sun, Menu, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { motion, AnimatePresence, useAnimation } from 'framer-motion'
+import LinkRoll from '@/components/LinkRoll'
 
 interface HeaderProps {
   className?: string
@@ -118,17 +119,17 @@ const Header = ({ className = '' }: HeaderProps) => {
 
   const toggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light'
-    
+
     // Update DOM immediately to prevent flickering
     if (newTheme === 'dark') {
       document.documentElement.classList.add('dark')
     } else {
       document.documentElement.classList.remove('dark')
     }
-    
+
     // Update React state
     setTheme(newTheme)
-    
+
     // Save to localStorage
     localStorage.setItem('theme', newTheme)
   }
@@ -187,7 +188,10 @@ const Header = ({ className = '' }: HeaderProps) => {
       {/* Subtle animated background for dark mode */}
       {theme === 'dark' && (
         <div className="absolute inset-0 pointer-events-none">
-          <div className="animated-hue-overlay-slow" style={{ opacity: 0.03 }} />
+          <div
+            className="animated-hue-overlay-slow"
+            style={{ opacity: 0.03 }}
+          />
         </div>
       )}
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8 md:py-10 flex justify-between items-center">
@@ -197,9 +201,7 @@ const Header = ({ className = '' }: HeaderProps) => {
             <h1
               className="font-px-grotesk font-medium tracking-tight hover:text-muted-foreground transition-colors text-xl sm:text-2xl md:text-3xl"
               onMouseEnter={() => {
-                const letters = document.querySelectorAll(
-                  '.header-name-letter'
-                )
+                const letters = document.querySelectorAll('.header-name-letter')
                 letters.forEach((letter, index) => {
                   setTimeout(() => {
                     letter.classList.add('letter-wave-animation')
@@ -245,40 +247,18 @@ const Header = ({ className = '' }: HeaderProps) => {
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-8 lg:space-x-12 ml-auto">
           {navLinks.map(link => (
-            <Link
+            <LinkRoll
               key={link.name}
               to={link.path}
               className={cn(
-                'relative py-1 text-base lg:text-lg xl:text-xl transition-colors group overflow-hidden font-px-grotesk font-medium',
+                'relative py-1 text-base lg:text-lg xl:text-xl font-px-grotesk font-medium',
                 isActive(link.path)
-                  ? 'text-foreground after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-full after:bg-foreground'
+                  ? 'text-foreground has-underline'
                   : 'text-foreground hover:text-muted-foreground'
               )}
-              onMouseEnter={e => {
-                const letters = e.currentTarget.querySelectorAll('.nav-letter')
-                letters.forEach((letter, index) => {
-                  setTimeout(() => {
-                    letter.classList.add('letter-wave-animation')
-                  }, index * 40)
-                })
-              }}
             >
-              <span className="inline-block relative">
-                {link.name.split('').map((letter, index) => (
-                  <span
-                    key={index}
-                    className="nav-letter inline-block transition-all duration-300 ease-out"
-                    onAnimationEnd={e => {
-                      if (e.target instanceof HTMLElement) {
-                        e.target.classList.remove('letter-wave-animation')
-                      }
-                    }}
-                  >
-                    {letter === ' ' ? '\u00A0' : letter}
-                  </span>
-                ))}
-              </span>
-            </Link>
+              {link.name}
+            </LinkRoll>
           ))}
         </nav>
 
@@ -338,19 +318,19 @@ const Header = ({ className = '' }: HeaderProps) => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4">
               <nav className="flex flex-col space-y-4">
                 {navLinks.map(link => (
-                  <Link
+                  <LinkRoll
                     key={link.name}
                     to={link.path}
                     className={cn(
-                      'block py-3 text-lg transition-colors border-b border-border/10 last:border-b-0',
+                      'block py-3 text-lg border-b border-border/10 last:border-b-0',
                       isActive(link.path)
-                        ? 'text-foreground font-medium'
+                        ? 'text-foreground font-medium has-underline'
                         : 'text-muted-foreground hover:text-foreground'
                     )}
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     {link.name}
-                  </Link>
+                  </LinkRoll>
                 ))}
               </nav>
             </div>

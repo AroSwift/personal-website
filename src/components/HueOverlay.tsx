@@ -7,7 +7,7 @@ const HueOverlay: React.FC = () => {
       { className: 'animated-hue-overlay', id: 'hue-overlay-1' },
       { className: 'animated-hue-overlay-slow', id: 'hue-overlay-2' },
       { className: 'animated-hue-overlay-fast', id: 'hue-overlay-3' },
-      { className: 'animated-hue-overlay-ultra-slow', id: 'hue-overlay-4' }
+      { className: 'animated-hue-overlay-ultra-slow', id: 'hue-overlay-4' },
     ]
 
     overlays.forEach(({ className, id }) => {

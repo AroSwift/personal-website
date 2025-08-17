@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, lazy, Suspense } from 'react'
 import {
   BrowserRouter as Router,
   Routes,
@@ -6,13 +6,25 @@ import {
   useLocation,
 } from 'react-router-dom'
 import LoadingScreen from './components/LoadingScreen'
-import HomePage from './pages/HomePage'
-import AboutPage from './pages/AboutPage'
-import ProjectsPage from './pages/ProjectsPage'
-import ContactPage from './pages/ContactPage'
-import NotFoundPage from './pages/NotFoundPage'
 import { PWAStatus } from './components/PWAStatus'
 import HueOverlay from './components/HueOverlay'
+
+// Lazy load page components for route-based code splitting
+const HomePage = lazy(() => import('./pages/HomePage'))
+const AboutPage = lazy(() => import('./pages/AboutPage'))
+const ProjectsPage = lazy(() => import('./pages/ProjectsPage'))
+const ContactPage = lazy(() => import('./pages/ContactPage'))
+const NotFoundPage = lazy(() => import('./pages/NotFoundPage'))
+
+// Loading component for lazy-loaded routes
+const PageLoader = () => (
+  <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900">
+    <div className="text-center">
+      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto"></div>
+      <p className="mt-4 text-gray-600 dark:text-gray-300">Loading...</p>
+    </div>
+  </div>
+)
 
 // Meta tag configurations for SEO
 const metaTagsConfig = {
@@ -34,16 +46,16 @@ const metaTagsConfig = {
   '/404': {
     title: 'Page Not Found - Aaron Barlow',
     description:
-      'The page you are looking for could not be found. Navigate back to Aaron Barlow\'s portfolio or explore other sections.',
+      "The page you are looking for could not be found. Navigate back to Aaron Barlow's portfolio or explore other sections.",
     keywords: '404, page not found, Aaron Barlow, portfolio',
     ogTitle: 'Page Not Found - Aaron Barlow',
     ogDescription:
-      'The page you are looking for could not be found. Navigate back to Aaron Barlow\'s portfolio or explore other sections.',
+      "The page you are looking for could not be found. Navigate back to Aaron Barlow's portfolio or explore other sections.",
     ogType: 'website',
     twitterCard: 'summary',
     twitterTitle: 'Page Not Found - Aaron Barlow',
     twitterDescription:
-      'The page you are looking for could not be found. Navigate back to Aaron Barlow\'s portfolio or explore other sections.',
+      "The page you are looking for could not be found. Navigate back to Aaron Barlow's portfolio or explore other sections.",
   },
   '/about': {
     title: 'About Aaron Barlow - HPC Software Engineer',
@@ -101,9 +113,7 @@ const updateMetaTags = (pathname: string) => {
 
   // Update or create meta tags
   const updateMetaTag = (name: string, content: string) => {
-    let meta = document.querySelector(
-      `meta[name="${name}"]`
-    ) as HTMLMetaElement
+    let meta = document.querySelector(`meta[name="${name}"]`) as HTMLMetaElement
     if (!meta) {
       meta = document.createElement('meta')
       meta.name = name
@@ -146,7 +156,7 @@ const MetaTagManager = () => {
   // Initialize meta tags on first load
   useEffect(() => {
     updateMetaTags(location.pathname)
-  }, [])
+  }, [location.pathname])
 
   return null
 }
@@ -172,7 +182,6 @@ const ScrollToTopInner = () => {
 const AppContent = () => {
   const [isLoading, setIsLoading] = useState(true)
   const [hasVisited, setHasVisited] = useState(false)
-  const [error, setError] = useState<Error | null>(null)
 
   useEffect(() => {
     try {
@@ -187,7 +196,7 @@ const AppContent = () => {
         // First time visitor - show loading screen
         // Don't set hasVisited yet, let LoadingScreen handle it
       }
-    } catch (err) {
+    } catch {
       // If there's an error, just skip loading
       setHasVisited(true)
       setIsLoading(false)
@@ -206,33 +215,11 @@ const AppContent = () => {
 
       // Set flag for post-loading animation
       localStorage.setItem('triggerPostLoadAnimation', 'true')
-    } catch (err) {
+    } catch {
       // If there's an error, just continue
       setHasVisited(true)
       setIsLoading(false)
     }
-  }
-
-  // Error boundary - if there's an error, show a simple fallback
-  if (error) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900">
-        <div className="text-center p-8">
-          <h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">
-            Something went wrong
-          </h1>
-          <p className="text-gray-600 dark:text-gray-300 mb-4">
-            Please refresh the page to try again.
-          </p>
-          <button
-            onClick={() => window.location.reload()}
-            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-          >
-            Refresh Page
-          </button>
-        </div>
-      </div>
-    )
   }
 
   // Show loading screen only for first-time visitors
@@ -243,13 +230,15 @@ const AppContent = () => {
   return (
     <div className="App">
       <HueOverlay />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/about" element={<AboutPage />} />
-        <Route path="/projects" element={<ProjectsPage />} />
-        <Route path="/contact" element={<ContactPage />} />
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
+      <Suspense fallback={<PageLoader />}>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/projects" element={<ProjectsPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </Suspense>
       <PWAStatus />
     </div>
   )

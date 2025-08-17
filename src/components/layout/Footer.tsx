@@ -9,16 +9,16 @@ interface FooterProps {
   borderColor?: string
 }
 
-const Footer = ({ 
-  className = '', 
-  animationDelay = 1.2, 
+const Footer = ({
+  className = '',
+  animationDelay = 1.2,
   textColor = 'text-gray-600 dark:text-gray-400',
-  borderColor = 'border-gray-300/50 dark:border-gray-600/50'
+  borderColor = 'border-gray-300/50 dark:border-gray-600/50',
 }: FooterProps) => {
   return (
     <motion.div
       className={cn(
-        "pt-10 sm:pt-16 border-t transition-colors duration-800",
+        'pt-10 sm:pt-16 border-t transition-colors duration-800',
         borderColor,
         className
       )}
@@ -26,10 +26,12 @@ const Footer = ({
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: animationDelay, duration: 0.8 }}
     >
-      <div className={cn(
-        "grid grid-cols-1 md:grid-cols-4 gap-8 sm:gap-10 text-lg transition-colors duration-800",
-        textColor
-      )}>
+      <div
+        className={cn(
+          'grid grid-cols-1 md:grid-cols-4 gap-8 sm:gap-10 text-lg transition-colors duration-800',
+          textColor
+        )}
+      >
         <div>
           <h4 className="font-medium text-black dark:text-white mb-3 transition-colors duration-800">
             Location

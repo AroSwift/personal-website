@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
@@ -39,33 +39,47 @@ function HomePage() {
   }
 
   // Handle mouse movement during drag - updates drag position for visual feedback
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (isDragging && profileImageRef.current) {
-      const rect = profileImageRef.current.getBoundingClientRect()
-      // Update drag position for visual feedback
-      setDragPosition({
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top,
-      })
-    }
-  }
+  const handleMouseMove = useCallback(
+    (e: React.MouseEvent) => {
+      if (isDragging && profileImageRef.current) {
+        const rect = profileImageRef.current.getBoundingClientRect()
+        // Update drag position for visual feedback
+        setDragPosition({
+          x: e.clientX - rect.left,
+          y: e.clientY - rect.top,
+        })
+      }
+    },
+    [isDragging]
+  )
 
   // Handle mouse up to end dragging
-  const handleMouseUp = () => {
+  const handleMouseUp = useCallback(() => {
     setIsDragging(false)
-  }
+  }, [])
 
   useEffect(() => {
     // Add global mouse event listeners when dragging
     if (isDragging) {
-      document.addEventListener('mousemove', handleMouseMove as any)
+      const handleGlobalMouseMove = (e: MouseEvent) => {
+        if (isDragging && profileImageRef.current) {
+          const rect = profileImageRef.current.getBoundingClientRect()
+          // Update drag position for visual feedback
+          setDragPosition({
+            x: e.clientX - rect.left,
+            y: e.clientY - rect.top,
+          })
+        }
+      }
+
+      document.addEventListener('mousemove', handleGlobalMouseMove)
       document.addEventListener('mouseup', handleMouseUp)
       return () => {
-        document.removeEventListener('mousemove', handleMouseMove as any)
+        document.removeEventListener('mousemove', handleGlobalMouseMove)
         document.removeEventListener('mouseup', handleMouseUp)
       }
     }
-  }, [isDragging])
+  }, [isDragging, handleMouseUp])
 
   // Gravity effect - profile image follows mouse cursor when close
   useEffect(() => {
@@ -159,9 +173,11 @@ function HomePage() {
                     sizes="(max-width: 640px) 400px, 800px"
                     loading="eager"
                     decoding="sync"
-                    style={{ 
+                    style={{
                       userSelect: 'none',
-                      filter: isHovering ? 'none' : 'contrast(1.2) saturate(1.3) brightness(1.1) drop-shadow(0 4px 8px rgba(0,0,0,0.3))'
+                      filter: isHovering
+                        ? 'none'
+                        : 'contrast(1.2) saturate(1.3) brightness(1.1) drop-shadow(0 4px 8px rgba(0,0,0,0.3))',
                     }}
                     animate={{
                       opacity: isHovering ? 0 : 1,
