@@ -3,80 +3,434 @@
   <head>
     <!-- Add this script BEFORE any other content to prevent FOUC -->
     <script>
-      (function() {
-        const theme = localStorage.getItem('theme') || 'light';
+      ;(function () {
+        const theme = localStorage.getItem('theme') || 'light'
         if (theme === 'dark') {
-          document.documentElement.classList.add('dark');
+          document.documentElement.classList.add('dark')
         } else {
-          document.documentElement.classList.remove('dark');
+          document.documentElement.classList.remove('dark')
         }
-      })();
+      })()
     </script>
-    
+
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/x-icon" href="/icons/favicon.ico" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="48x48" href="/icons/favicon-48x48.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Aaron Barlow</title>
-    
-    <meta name="description" content="Personal website and portfolio of Aaron Barlow" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/icons/favicon-16x16.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/icons/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="48x48"
+      href="/icons/favicon-48x48.png"
+    />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>
+      Aaron Barlow — HPC Software Engineer & Agentic Workflow Developer
+    </title>
+
+    <meta
+      name="description"
+      content="HPC software engineer at ORNL building agentic AI for exascale ops. Explore projects, talks (CUG/NLIT), and experience."
+    />
+    <meta name="author" content="Aaron Barlow" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="googlebot" content="index, follow" />
     <meta name="theme-color" content="#000000" />
-    <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <meta name="apple-mobile-web-app-title" content="Aaron Barlow" />
-    
+    <meta name="color-scheme" content="dark light" />
+
+    <link rel="canonical" href="https://aaronbarlow.dev/" />
     <link rel="manifest" href="/manifest.json" />
-    
+
+    <!-- Apple -->
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="apple-mobile-web-app-title" content="Aaron Barlow" />
     <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
-    <link rel="apple-touch-icon" sizes="152x152" href="/icons/icon-152x152.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon-192x192.png" />
-    <link rel="apple-touch-icon" sizes="167x167" href="/icons/icon-152x152.png" />
-    
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/icons/icon-192x192.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="167x167"
+      href="/icons/icon-152x152.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="152x152"
+      href="/icons/icon-152x152.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="120x120"
+      href="/icons/icon-128x128.png"
+    />
+
+    <!-- Windows -->
     <meta name="msapplication-TileColor" content="#000000" />
     <meta name="msapplication-TileImage" content="/icons/icon-144x144.png" />
-    
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://aaronbarlow.dev/" />
+    <meta
+      property="og:title"
+      content="Aaron Barlow — HPC Software Engineer & Agentic Workflow Developer"
+    />
+    <meta
+      property="og:description"
+      content="HPC software engineer at ORNL building agentic AI for exascale ops. Explore projects, talks (CUG/NLIT), and experience."
+    />
+    <meta
+      property="og:image"
+      content="https://aaronbarlow.dev/profile-aaron-1200x630.webp"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="Portrait of Aaron Barlow, HPC Software Engineer & Agentic Workflow Developer"
+    />
+    <meta property="og:site_name" content="Aaron Barlow" />
+
+    <!-- Twitter/X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://aaronbarlow.dev/" />
+    <meta
+      name="twitter:title"
+      content="Aaron Barlow — HPC Software Engineer & Agentic Workflow Developer"
+    />
+    <meta
+      name="twitter:description"
+      content="HPC software engineer at ORNL building agentic AI for exascale ops. Explore projects, talks (CUG/NLIT), and experience."
+    />
+    <meta
+      name="twitter:image"
+      content="https://aaronbarlow.dev/profile-aaron-1200x630.webp"
+    />
+
+    <!-- PWA icons for install prompts -->
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="/icons/icon-192x192.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="512x512"
+      href="/icons/icon-512x512.png"
+    />
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://aaronbarlow.dev/#website",
+            "url": "https://aaronbarlow.dev/",
+            "name": "Aaron Barlow",
+            "description": "Personal website and portfolio of Aaron Barlow, HPC Software Engineer at Oak Ridge National Laboratory",
+            "inLanguage": "en",
+            "publisher": { "@id": "https://aaronbarlow.dev/#person" }
+          },
+          {
+            "@type": "Person",
+            "@id": "https://aaronbarlow.dev/#person",
+            "name": "Aaron Barlow",
+            "givenName": "Aaron",
+            "familyName": "Barlow",
+            "jobTitle": "HPC Software Engineer",
+            "url": "https://aaronbarlow.dev/",
+            "image": "https://aaronbarlow.dev/profile-aaron-1200x630.webp",
+            "description": "HPC Software Engineer building agentic AI workflows and enabling exascale computing",
+            "worksFor": { "@id": "https://aaronbarlow.dev/#ornl" },
+            "sameAs": [
+              "https://github.com/AroSwift",
+              "https://www.linkedin.com/in/aaronbarlow"
+            ],
+            "knowsAbout": [
+              {
+                "@type": "Thing",
+                "name": "High Performance Computing",
+                "description": "Expertise in HPC systems and optimization"
+              },
+              {
+                "@type": "Thing",
+                "name": "AI Development",
+                "description": "Building artificial intelligence systems and workflows"
+              },
+              {
+                "@type": "Thing",
+                "name": "Agentic Workflows",
+                "description": "Creating autonomous AI-driven automation systems"
+              },
+              {
+                "@type": "Thing",
+                "name": "Exascale Computing",
+                "description": "Enabling computing at exascale level"
+              },
+              {
+                "@type": "Thing",
+                "name": "Software Engineering",
+                "description": "Full-stack development and system architecture"
+              },
+              {
+                "@type": "Thing",
+                "name": "Performance Optimization",
+                "description": "Achieving 1320x performance improvements"
+              }
+            ],
+            "alumniOf": [
+              {
+                "@type": "EducationalOrganization",
+                "@id": "https://aaronbarlow.dev/#etsu",
+                "name": "East Tennessee State University",
+                "url": "https://www.etsu.edu/",
+                "sameAs": [
+                  "https://en.wikipedia.org/wiki/East_Tennessee_State_University"
+                ]
+              },
+              {
+                "@type": "EducationalOrganization",
+                "@id": "https://aaronbarlow.dev/#pscc",
+                "name": "Pellissippi State Community College",
+                "url": "https://www.pstcc.edu/",
+                "sameAs": [
+                  "https://en.wikipedia.org/wiki/Pellissippi_State_Community_College"
+                ]
+              }
+            ],
+            "hasOccupation": {
+              "@type": "Occupation",
+              "name": "HPC Software Engineer",
+              "occupationalCategory": "Computer and Information Technology",
+              "responsibilities": "Building agentic AI workflows, enabling exascale computing, scaling HPC platforms"
+            },
+            "hasCredential": [
+              {
+                "@type": "EducationalOccupationalCredential",
+                "credentialCategory": "Bachelor's Degree",
+                "name": "B.S. in Computer Science",
+                "recognizedBy": { "@id": "https://aaronbarlow.dev/#etsu" }
+              },
+              {
+                "@type": "EducationalOccupationalCredential",
+                "credentialCategory": "Associate's Degree",
+                "name": "Associate of Science, Computer and Information Sciences",
+                "recognizedBy": { "@id": "https://aaronbarlow.dev/#pscc" }
+              }
+            ]
+          },
+          {
+            "@type": "Organization",
+            "@id": "https://aaronbarlow.dev/#ornl",
+            "name": "Oak Ridge National Laboratory",
+            "url": "https://www.ornl.gov/",
+            "sameAs": [
+              "https://en.wikipedia.org/wiki/Oak_Ridge_National_Laboratory"
+            ],
+            "description": "National laboratory focused on scientific discovery and clean energy",
+            "foundingDate": "1943",
+            "location": {
+              "@type": "Place",
+              "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Oak Ridge",
+                "addressRegion": "Tennessee",
+                "addressCountry": "US"
+              }
+            }
+          },
+          {
+            "@type": "CreativeWork",
+            "@id": "https://aaronbarlow.dev/#portfolio",
+            "name": "Aaron Barlow's Portfolio",
+            "description": "Collection of HPC platform engineering, agentic AI systems, and performance optimization projects",
+            "creator": { "@id": "https://aaronbarlow.dev/#person" },
+            "publisher": { "@id": "https://aaronbarlow.dev/#person" },
+            "datePublished": "2024-08-17",
+            "inLanguage": "en",
+            "hasPart": [
+              {
+                "@type": "SoftwareApplication",
+                "name": "myOLCF",
+                "description": "HPC self-service portal empowering scientists to access OLCF services",
+                "applicationCategory": "HPC Platform",
+                "operatingSystem": "Web-based",
+                "url": "https://my.olcf.ornl.gov"
+              },
+              {
+                "@type": "SoftwareApplication",
+                "name": "Automatic Movie Creation",
+                "description": "Multi-agent workflow generates script → storyboard images → 10-sec clips → stitches, QC, and auto-publishes",
+                "applicationCategory": "AI Automation",
+                "operatingSystem": "Multi-platform"
+              },
+              {
+                "@type": "SoftwareApplication",
+                "name": "Anthologia (AI Video Storytelling)",
+                "description": "Multi-agent pipeline turns concepts into 20-second videos with 4 scenes",
+                "applicationCategory": "AI Automation",
+                "operatingSystem": "Multi-platform"
+              },
+              {
+                "@type": "SoftwareApplication",
+                "name": "Project Cadenza",
+                "description": "Agentic pipeline creates artists/albums, writes lyrics, generates songs, masters audio",
+                "applicationCategory": "AI Automation",
+                "operatingSystem": "Multi-platform"
+              }
+            ]
+          },
+          {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://aaronbarlow.dev/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "About",
+                "item": "https://aaronbarlow.dev/about"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Projects",
+                "item": "https://aaronbarlow.dev/projects"
+              },
+              {
+                "@type": "ListItem",
+                "position": 4,
+                "name": "Contact",
+                "item": "https://aaronbarlow.dev/contact"
+              }
+            ]
+          }
+        ]
+      }
+    </script>
+
     <link rel="dns-prefetch" href="//fonts.googleapis.com" />
     <link rel="dns-prefetch" href="//fonts.gstatic.com" />
-    
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    
-    
+
     <style>
-      body { margin: 0; font-family: "Inter", ui-sans-serif, system-ui, sans-serif; }
-      .min-h-screen { min-height: 100vh; }
-      .text-foreground { color: rgb(2 6 23); }
-      .bg-background { background-color: rgb(250 250 250); }
-      .dark .text-foreground { color: rgb(250 250 250); }
-      .dark .bg-background { background-color: rgb(0, 0, 0); }
-      .pt-16 { padding-top: 4rem; }
-      .max-w-7xl { max-width: 80rem; }
-      .mx-auto { margin-left: auto; margin-right: auto; }
-      .px-4 { padding-left: 1rem; padding-right: 1rem; }
-      .flex { display: flex; }
-      .flex-col { flex-direction: column; }
-      .justify-center { justify-content: center; }
-      .items-center { align-items: center; }
-      .w-40 { width: 10rem; }
-      .h-40 { height: 10rem; }
-      .rounded-2xl { border-radius: 1rem; }
-      .overflow-hidden { overflow: hidden; }
-      .mb-4 { margin-bottom: 1rem; }
-      .bg-muted { background-color: rgb(245 245 245); }
-      .dark .bg-muted { background-color: rgb(38 38 38); }
-      .shadow-lg { box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1); }
-      .w-full { width: 100%; }
-      .h-full { height: 100%; }
-      .object-cover { object-fit: cover; }
-      .relative { position: relative; }
-      .z-10 { z-index: 10; }
+      body {
+        margin: 0;
+        font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+      }
+      .min-h-screen {
+        min-height: 100vh;
+      }
+      .text-foreground {
+        color: rgb(2 6 23);
+      }
+      .bg-background {
+        background-color: rgb(250 250 250);
+      }
+      .dark .text-foreground {
+        color: rgb(250 250 250);
+      }
+      .dark .bg-background {
+        background-color: rgb(0, 0, 0);
+      }
+      .pt-16 {
+        padding-top: 4rem;
+      }
+      .max-w-7xl {
+        max-width: 80rem;
+      }
+      .mx-auto {
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .px-4 {
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
+      .flex {
+        display: flex;
+      }
+      .flex-col {
+        flex-direction: column;
+      }
+      .justify-center {
+        justify-content: center;
+      }
+      .items-center {
+        align-items: center;
+      }
+      .w-40 {
+        width: 10rem;
+      }
+      .h-40 {
+        height: 10rem;
+      }
+      .rounded-2xl {
+        border-radius: 1rem;
+      }
+      .overflow-hidden {
+        overflow: hidden;
+      }
+      .mb-4 {
+        margin-bottom: 1rem;
+      }
+      .bg-muted {
+        background-color: rgb(245 245 245);
+      }
+      .dark .bg-muted {
+        background-color: rgb(38 38 38);
+      }
+      .shadow-lg {
+        box-shadow:
+          0 10px 15px -3px rgb(0 0 0 / 0.1),
+          0 4px 6px -4px rgb(0 0 0 / 0.1);
+      }
+      .w-full {
+        width: 100%;
+      }
+      .h-full {
+        height: 100%;
+      }
+      .object-cover {
+        object-fit: cover;
+      }
+      .relative {
+        position: relative;
+      }
+      .z-10 {
+        z-index: 10;
+      }
     </style>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-
   </body>
 </html>

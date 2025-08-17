@@ -1,8 +1,8 @@
 User-agent: *
 Allow: /
 
-# Sitemap location (uncomment and update when you have a sitemap)
-# Sitemap: https://yourdomain.com/sitemap.xml
+# Sitemap location
+Sitemap: https://aaronbarlow.dev/sitemap.xml
 
 # Disallow specific paths if needed
 # Disallow: /admin/
