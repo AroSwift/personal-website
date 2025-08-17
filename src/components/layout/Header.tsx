@@ -15,6 +15,7 @@ const Header = ({ className = '' }: HeaderProps) => {
   const [theme, setTheme] = useState<'light' | 'dark'>('light')
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [scrollY, setScrollY] = useState(0)
+  const [isMobile, setIsMobile] = useState(false)
   const [hasTriggeredPostLoadAnimation, setHasTriggeredPostLoadAnimation] =
     useState(false)
 
@@ -42,8 +43,19 @@ const Header = ({ className = '' }: HeaderProps) => {
       setScrollY(window.scrollY)
     }
 
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+
+    // Set initial mobile state
+    handleResize()
+
     window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
+    window.addEventListener('resize', handleResize)
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      window.removeEventListener('resize', handleResize)
+    }
   }, [])
 
   // Check for post-loading animation trigger
@@ -160,15 +172,9 @@ const Header = ({ className = '' }: HeaderProps) => {
 
   const pageSuffix = getPageSuffix()
 
-  // Calculate background opacity based on scroll position
-  const getBackgroundOpacity = () => {
-    if (scrollY < 150) return 0
-    if (scrollY > 350) return 0.9
-    return ((scrollY - 150) / 200) * 0.9
-  }
-
-  const backgroundOpacity = getBackgroundOpacity()
-  const shouldShowBackground = backgroundOpacity > 0
+  // Always show background with full opacity on mobile only
+  const backgroundOpacity = 0.9
+  const shouldShowBackground = isMobile
 
   return (
     <header className={cn('fixed top-0 left-0 right-0 z-50', className)}>
@@ -181,7 +187,6 @@ const Header = ({ className = '' }: HeaderProps) => {
               theme === 'dark'
                 ? `rgba(5, 5, 5, ${backgroundOpacity})` // Much darker black for dark mode
                 : `rgba(248, 250, 252, ${backgroundOpacity})`, // Cool off-white for light mode
-            opacity: backgroundOpacity,
           }}
         />
       )}
@@ -200,28 +205,23 @@ const Header = ({ className = '' }: HeaderProps) => {
           <Link to="/" className="cursor-pointer">
             <h1
               className="font-px-grotesk font-medium tracking-tight hover:text-muted-foreground transition-colors text-xl sm:text-2xl md:text-3xl"
-              onMouseEnter={() => {
-                const letters = document.querySelectorAll('.header-name-letter')
-                letters.forEach((letter, index) => {
-                  setTimeout(() => {
-                    letter.classList.add('letter-wave-animation')
-                  }, index * 40)
-                })
-              }}
             >
-              {'Aaron Barlow'.split('').map((letter, index) => (
-                <span
-                  key={index}
-                  className="header-name-letter inline-block transition-all duration-300 ease-out"
-                  onAnimationEnd={e => {
-                    if (e.target instanceof HTMLElement) {
-                      e.target.classList.remove('letter-wave-animation')
-                    }
-                  }}
-                >
-                  {letter === ' ' ? '\u00A0' : letter}
-                </span>
-              ))}
+              <span className='header-name-text inline-block align-top'>
+                {'Aaron Barlow'.split('').map((letter, index) => (
+                  <span
+                    key={index}
+                    className='header-name-char inline-block relative overflow-hidden align-top'
+                    style={{ ['--idx' as any]: index }}
+                  >
+                    <span className='header-name-glyph header-name-glyph-original block'>
+                      {letter === ' ' ? '\u00A0' : letter}
+                    </span>
+                    <span className='header-name-glyph header-name-glyph-new block absolute left-0'>
+                      {letter === ' ' ? '\u00A0' : letter}
+                    </span>
+                  </span>
+                ))}
+              </span>
             </h1>
           </Link>
           {/* Page suffix indicator */}
@@ -313,7 +313,12 @@ const Header = ({ className = '' }: HeaderProps) => {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3, ease: 'easeInOut' }}
-            className="md:hidden border-t border-border/20 bg-background/95 backdrop-blur-sm"
+            className="md:hidden border-t border-border/20 backdrop-blur-xl"
+            style={{
+              backgroundColor: theme === 'dark'
+                ? 'rgba(5, 5, 5, 0.9) !important'
+                : 'rgba(248, 250, 252, 0.9) !important'
+            }}
           >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4">
               <nav className="flex flex-col space-y-4">
