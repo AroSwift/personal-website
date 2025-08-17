@@ -2,6 +2,8 @@
 
 A modern, responsive personal website for Aaron Barlow built with React, TypeScript, and Tailwind CSS. This website showcases my work, accomplishments, and provides a professional online presence.
 
+**Live Site:** [aaronbarlow.dev](https://aaronbarlow.dev/)
+
 ## Features
 
 - **Modern UI/UX**: Built with shadcn/ui components and Tailwind CSS for a beautiful, responsive design
@@ -15,7 +17,7 @@ A modern, responsive personal website for Aaron Barlow built with React, TypeScr
 ## Performance & Build Metrics
 
 ### Build Performance
-- **Production Deployment Time**: 32.5s (average of 8 runs)
+- **Production Deployment Time**: 18s (average of 5 runs)
 - **Local Build Speed**: 1.51s average (compile-only)
 
 ### Page Speed Scores

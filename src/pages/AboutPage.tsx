@@ -15,6 +15,7 @@ import {
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import Header from '../components/layout/Header'
+import Footer from '../components/layout/Footer'
 
 // About page
 const AboutPage = () => {
@@ -655,36 +656,11 @@ const AboutPage = () => {
           </motion.div>
 
           {/* Footer Information Section */}
-          <motion.div
-            className="pt-8 sm:pt-12 border-t border-border/50 transition-colors duration-600"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 4.0, duration: 0.8 }}
-          >
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 text-base text-muted-foreground transition-colors duration-600">
-              <div>
-                <h4 className="font-medium text-foreground mb-2 transition-colors duration-600">
-                  Location
-                </h4>
-                <p>Charlotte, NC (EST)</p>
-                <p>Open to remote</p>
-              </div>
-              <div>
-                <h4 className="font-medium text-foreground mb-2 transition-colors duration-600">
-                  Currently
-                </h4>
-                <p>HPC Software Engineer @ ORNL</p>
-                <p>Building agentic AI workflows</p>
-              </div>
-              <div>
-                <h4 className="font-medium text-foreground mb-2 transition-colors duration-600">
-                  Principles
-                </h4>
-                <p>Ship fast, then make it faster</p>
-                <p>Automate the boring stuff</p>
-              </div>
-            </div>
-          </motion.div>
+          <Footer 
+            animationDelay={4.0}
+            textColor="text-muted-foreground"
+            borderColor="border-border/50"
+          />
         </div>
       </main>
     </div>

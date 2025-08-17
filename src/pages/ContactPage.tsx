@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { Github, Linkedin, Copy, ExternalLink, Check } from 'lucide-react'
 import Header from '@/components/layout/Header'
+import Footer from '@/components/layout/Footer'
 
 // ContactPage Component - Contact page with email copying functionality, social links, and contact information. Features animated sections and interactive email copy button with visual feedback
 const ContactPage = () => {
@@ -202,36 +203,7 @@ const ContactPage = () => {
             </motion.div>
 
             {/* Footer Information Section */}
-            <motion.div
-              className="pt-10 sm:pt-16 border-t border-gray-300/50 dark:border-gray-600/50 transition-colors duration-800"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.2, duration: 0.8 }}
-            >
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 sm:gap-10 text-lg text-gray-600 dark:text-gray-400 transition-colors duration-800">
-                <div>
-                  <h4 className="font-medium text-black dark:text-white mb-3 transition-colors duration-800">
-                    Location
-                  </h4>
-                  <p>Charlotte, NC (EST)</p>
-                  <p>Open to remote</p>
-                </div>
-                <div>
-                  <h4 className="font-medium text-black dark:text-white mb-3 transition-colors duration-800">
-                    Currently
-                  </h4>
-                  <p>HPC Software Engineer @ ORNL</p>
-                  <p>Building agentic AI workflows</p>
-                </div>
-                <div>
-                  <h4 className="font-medium text-black dark:text-white mb-3 transition-colors duration-800">
-                    Principles
-                  </h4>
-                  <p>Ship fast, then make it faster</p>
-                  <p>Automate the boring stuff</p>
-                </div>
-              </div>
-            </motion.div>
+            <Footer />
           </div>
         </div>
       </main>
