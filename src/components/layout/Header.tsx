@@ -172,24 +172,22 @@ const Header = ({ className = '' }: HeaderProps) => {
 
   const pageSuffix = getPageSuffix()
 
-  // Always show background with full opacity on mobile only
+  // Show background on mobile always, or on desktop after 200px scroll
   const backgroundOpacity = 0.9
-  const shouldShowBackground = isMobile
+  const shouldShowBackground = isMobile || (!isMobile && scrollY > 200)
 
   return (
     <header className={cn('fixed top-0 left-0 right-0 z-50', className)}>
       {/* Background overlay with cool hue */}
-      {shouldShowBackground && (
-        <div
-          className="absolute inset-0 backdrop-blur-xl transition-all duration-500 ease-out"
-          style={{
-            backgroundColor:
-              theme === 'dark'
-                ? `rgba(5, 5, 5, ${backgroundOpacity})` // Much darker black for dark mode
-                : `rgba(248, 250, 252, ${backgroundOpacity})`, // Cool off-white for light mode
-          }}
-        />
-      )}
+      <div
+        className="absolute inset-0 backdrop-blur-xl transition-all duration-500 ease-out"
+        style={{
+          backgroundColor:
+            theme === 'dark'
+              ? `rgba(5, 5, 5, ${shouldShowBackground ? backgroundOpacity : 0})` // Much darker black for dark mode
+              : `rgba(248, 250, 252, ${shouldShowBackground ? backgroundOpacity : 0})`, // Cool off-white for light mode
+        }}
+      />
       {/* Subtle animated background for dark mode */}
       {theme === 'dark' && (
         <div className="absolute inset-0 pointer-events-none">
@@ -265,26 +263,29 @@ const Header = ({ className = '' }: HeaderProps) => {
         {/* Mobile Menu Button */}
         <div className="flex items-center gap-2 ml-16 lg:ml-24 xl:ml-32">
           {/* Dark / light switch icon with enhanced animation */}
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={toggleTheme}
-            aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
-            className="rounded-full transition-all duration-500 ease-in-out w-12 h-12 hover:scale-110 active:scale-95"
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
-            <motion.div
-              animate={themeIconAnimation}
-              initial={{ rotate: 0, scale: 1 }}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={toggleTheme}
+              aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+              className="rounded-full transition-all duration-500 ease-in-out w-12 h-12 hover:scale-110 active:scale-95"
             >
-              {theme === 'light' ? (
-                <Moon className="h-5 w-5" />
-              ) : (
-                <Sun className="h-5 w-5" />
-              )}
-            </motion.div>
-          </Button>
+              <motion.div
+                animate={themeIconAnimation}
+                initial={{ rotate: 0, scale: 1 }}
+              >
+                {theme === 'light' ? (
+                  <Moon className="h-5 w-5" />
+                ) : (
+                  <Sun className="h-5 w-5" />
+                )}
+              </motion.div>
+            </Button>
+          </motion.div>
 
           {/* Mobile menu toggle button */}
           <Button

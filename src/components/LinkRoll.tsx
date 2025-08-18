@@ -7,6 +7,8 @@ type LinkRollProps = {
   className?: string
   'data-testid'?: string
   onClick?: () => void
+  onMouseEnter?: () => void
+  isActive?: boolean
 }
 
 function splitGraphemes(text: string) {
@@ -18,16 +20,17 @@ function splitGraphemes(text: string) {
   return Array.from(text)
 }
 
-export default function LinkRoll({ to, children, className = '', onClick, ...rest }: LinkRollProps) {
+export default function LinkRoll({ to, children, className = '', onClick, onMouseEnter, isActive = false, ...rest }: LinkRollProps) {
   const text = String(children ?? '')
   const chars = splitGraphemes(text)
 
   return (
     <Link
       to={to}
-      className={`LinkRoll relative inline-block align-top ${className}`}
+      className={`LinkRoll relative inline-block align-top ${isActive ? 'has-underline' : ''} ${className}`}
       aria-label={text}
       onClick={onClick}
+      onMouseEnter={onMouseEnter}
       {...rest}
     >
       <span className='LinkRoll-text inline-block align-top'>

@@ -18,10 +18,10 @@ const NotFoundPage = lazy(() => import('./pages/NotFoundPage'))
 
 // Loading component for lazy-loaded routes
 const PageLoader = () => (
-  <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900">
+  <div className="min-h-screen flex items-center justify-center">
     <div className="text-center">
-      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto"></div>
-      <p className="mt-4 text-gray-600 dark:text-gray-300">Loading...</p>
+      <div className="animate-spin rounded-full h-8 w-8 border-2 border-transparent border-t-gray-800 border-r-gray-800 dark:border-t-white dark:border-r-white mx-auto"></div>
+      <p className="mt-3 text-sm text-gray-500 dark:text-gray-400 font-medium tracking-wide">Loading...</p>
     </div>
   </div>
 )

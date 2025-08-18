@@ -15,7 +15,7 @@ describe('LinkRoll', () => {
     const link = screen.getByRole('link')
     expect(link).toBeInTheDocument()
     expect(link).toHaveAttribute('href', '/test')
-    expect(link).toHaveTextContent('Test Link')
+    expect(link).toHaveAttribute('aria-label', 'Test Link')
   })
 
   it('applies active class when isActive is true', () => {
