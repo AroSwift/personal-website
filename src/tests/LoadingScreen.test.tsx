@@ -6,10 +6,7 @@ import { render, screen, fireEvent } from '@testing-library/react'
 // Mock the LoadingScreen component to skip animations for testing
 vi.mock('../components/LoadingScreen', () => ({
   default: ({ onComplete }: { onComplete: (theme: 'dark' | 'light') => void }) => {
-    const [selectedTheme, setSelectedTheme] = React.useState<'dark' | 'light' | null>(null)
-
     const handleThemeSelect = (theme: 'dark' | 'light') => {
-      setSelectedTheme(theme)
       // Simulate the completion after a short delay
       setTimeout(() => {
         onComplete(theme)
@@ -55,26 +52,26 @@ describe('LoadingScreen', () => {
   it('calls onComplete with dark theme when dark mode is selected', async () => {
     const mockOnComplete = vi.fn()
     render(<LoadingScreen onComplete={mockOnComplete} />)
-    
+
     const darkButton = screen.getByText('Dark Mode')
     fireEvent.click(darkButton)
 
     // Wait for the onComplete callback to be called
     await new Promise(resolve => setTimeout(resolve, 200))
-    
+
     expect(mockOnComplete).toHaveBeenCalledWith('dark')
   })
 
   it('calls onComplete with light theme when light mode is selected', async () => {
     const mockOnComplete = vi.fn()
     render(<LoadingScreen onComplete={mockOnComplete} />)
-    
+
     const lightButton = screen.getByText('Light Mode')
     fireEvent.click(lightButton)
 
     // Wait for the onComplete callback to be called
     await new Promise(resolve => setTimeout(resolve, 200))
-    
+
     expect(mockOnComplete).toHaveBeenCalledWith('light')
   })
 })

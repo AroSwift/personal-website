@@ -12,7 +12,8 @@ type LinkRollProps = {
 }
 
 function splitGraphemes(text: string) {
-  if (typeof (Intl as any).Segmenter === 'function') {
+  // Check if Intl.Segmenter is available
+  if ('Segmenter' in Intl) {
     const seg = new (Intl as any).Segmenter('en', { granularity: 'grapheme' })
     return Array.from(seg.segment(text), (s: any) => s.segment)
   }
@@ -20,7 +21,15 @@ function splitGraphemes(text: string) {
   return Array.from(text)
 }
 
-export default function LinkRoll({ to, children, className = '', onClick, onMouseEnter, isActive = false, ...rest }: LinkRollProps) {
+export default function LinkRoll({
+  to,
+  children,
+  className = '',
+  onClick,
+  onMouseEnter,
+  isActive = false,
+  ...rest
+}: LinkRollProps) {
   const text = String(children ?? '')
   const chars = splitGraphemes(text)
 
@@ -33,18 +42,18 @@ export default function LinkRoll({ to, children, className = '', onClick, onMous
       onMouseEnter={onMouseEnter}
       {...rest}
     >
-      <span className='LinkRoll-text inline-block align-top'>
+      <span className="LinkRoll-text inline-block align-top">
         {chars.map((ch, i) => (
           <span
             key={`${ch}-${i}`}
-            className='LinkRoll-char inline-block relative overflow-hidden align-top'
-            style={{ ['--idx' as any]: i }}
-            aria-hidden='true'
+            className="LinkRoll-char inline-block relative overflow-hidden align-top"
+            style={{ ['--idx' as string]: i }}
+            aria-hidden="true"
           >
-            <span className='LinkRoll-glyph LinkRoll-glyph-original block'>
+            <span className="LinkRoll-glyph LinkRoll-glyph-original block">
               {ch}
             </span>
-            <span className='LinkRoll-glyph LinkRoll-glyph-new block absolute left-0'>
+            <span className="LinkRoll-glyph LinkRoll-glyph-new block absolute left-0">
               {ch}
             </span>
           </span>

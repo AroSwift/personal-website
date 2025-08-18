@@ -201,20 +201,18 @@ const Header = ({ className = '' }: HeaderProps) => {
         <div className="flex items-center space-x-3">
           {/* Logo/Name with letter wave animation */}
           <Link to="/" className="cursor-pointer">
-            <h1
-              className="font-px-grotesk font-medium tracking-tight hover:text-muted-foreground transition-colors text-xl sm:text-2xl md:text-3xl"
-            >
-              <span className='header-name-text inline-block align-top'>
+            <h1 className="font-px-grotesk font-medium tracking-tight hover:text-muted-foreground transition-colors text-xl sm:text-2xl md:text-3xl">
+              <span className="header-name-text inline-block align-top">
                 {'Aaron Barlow'.split('').map((letter, index) => (
                   <span
                     key={index}
-                    className='header-name-char inline-block relative overflow-hidden align-top'
-                    style={{ ['--idx' as any]: index }}
+                    className="header-name-char inline-block relative overflow-hidden align-top"
+                    style={{ ['--idx' as string]: index }}
                   >
-                    <span className='header-name-glyph header-name-glyph-original block'>
+                    <span className="header-name-glyph header-name-glyph-original block">
                       {letter === ' ' ? '\u00A0' : letter}
                     </span>
-                    <span className='header-name-glyph header-name-glyph-new block absolute left-0'>
+                    <span className="header-name-glyph header-name-glyph-new block absolute left-0">
                       {letter === ' ' ? '\u00A0' : letter}
                     </span>
                   </span>
@@ -263,29 +261,24 @@ const Header = ({ className = '' }: HeaderProps) => {
         {/* Mobile Menu Button */}
         <div className="flex items-center gap-2 ml-16 lg:ml-24 xl:ml-32">
           {/* Dark / light switch icon with enhanced animation */}
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={toggleTheme}
+            aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+            className="rounded-full transition-all duration-500 ease-in-out w-12 h-12 hover:scale-110 active:scale-95"
           >
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={toggleTheme}
-              aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
-              className="rounded-full transition-all duration-500 ease-in-out w-12 h-12 hover:scale-110 active:scale-95"
+            <motion.div
+              animate={themeIconAnimation}
+              initial={{ rotate: 0, scale: 1 }}
             >
-              <motion.div
-                animate={themeIconAnimation}
-                initial={{ rotate: 0, scale: 1 }}
-              >
-                {theme === 'light' ? (
-                  <Moon className="h-5 w-5" />
-                ) : (
-                  <Sun className="h-5 w-5" />
-                )}
-              </motion.div>
-            </Button>
-          </motion.div>
+              {theme === 'light' ? (
+                <Moon className="h-5 w-5" />
+              ) : (
+                <Sun className="h-5 w-5" />
+              )}
+            </motion.div>
+          </Button>
 
           {/* Mobile menu toggle button */}
           <Button
@@ -316,9 +309,10 @@ const Header = ({ className = '' }: HeaderProps) => {
             transition={{ duration: 0.3, ease: 'easeInOut' }}
             className="md:hidden border-t border-border/20 backdrop-blur-xl"
             style={{
-              backgroundColor: theme === 'dark'
-                ? 'rgba(5, 5, 5, 0.9) !important'
-                : 'rgba(248, 250, 252, 0.9) !important'
+              backgroundColor:
+                theme === 'dark'
+                  ? 'rgba(5, 5, 5, 0.9) !important'
+                  : 'rgba(248, 250, 252, 0.9) !important',
             }}
           >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4">
