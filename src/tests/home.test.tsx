@@ -29,8 +29,8 @@ describe('HomePage', () => {
   it('renders current status information', () => {
     renderWithRouter(<HomePage />)
 
-    expect(screen.getByText('Now')).toBeInTheDocument()
     expect(screen.getByText(/Developing agentic workflows/)).toBeInTheDocument()
+    expect(screen.getByText(/Visit projects/)).toBeInTheDocument()
   })
 
   it('renders profile image', () => {

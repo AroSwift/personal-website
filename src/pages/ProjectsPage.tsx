@@ -199,7 +199,7 @@ const ProjectsPage = () => {
                       </div>
                     </CardHeader>
                     <CardContent>
-                      <p className="text-base leading-relaxed mb-4 text-foreground/90">
+                      <p className="text-base leading-relaxed mb-4 text-foreground">
                         {project.description}
                       </p>
                       {/* Technology Stack Badges */}
@@ -248,12 +248,12 @@ const ProjectsPage = () => {
                     ease: 'easeOut',
                   }}
                 >
-                  <Card className="border-border/50 h-full dark:card-enhanced dark:hover-enhanced">
+                  <Card className="border-border/50 hover:shadow-lg transition-all duration-300 h-full group hover:border-border dark:card-enhanced dark:hover-enhanced">
                     <CardContent className="p-6">
                       <h3 className="text-xl font-semibold mb-3">
                         {achievement.title}
                       </h3>
-                      <p className="text-base text-foreground/90 mb-3 leading-relaxed">
+                      <p className="text-base text-foreground mb-3 leading-relaxed">
                         {achievement.description}
                       </p>
                       <p className="text-sm text-muted-foreground font-medium">

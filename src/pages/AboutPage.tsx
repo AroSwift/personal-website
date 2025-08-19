@@ -288,7 +288,7 @@ const AboutPage = () => {
                 transition={{ duration: 0.8, delay: 0.5, ease: 'easeOut' }}
               >
                 <motion.p
-                  className="text-base sm:text-lg leading-relaxed mb-6 text-foreground/90"
+                  className="text-base sm:text-lg leading-relaxed mb-6 text-foreground"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.7 }}
@@ -300,7 +300,7 @@ const AboutPage = () => {
                 </motion.p>
 
                 <motion.p
-                  className="text-base sm:text-lg leading-relaxed mb-6 text-foreground/90"
+                  className="text-base sm:text-lg leading-relaxed mb-6 text-foreground"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.9 }}
@@ -312,7 +312,7 @@ const AboutPage = () => {
                 </motion.p>
 
                 <motion.p
-                  className="text-base sm:text-lg leading-relaxed mb-6 text-foreground/90"
+                  className="text-base sm:text-lg leading-relaxed mb-6 text-foreground"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 1.1 }}
@@ -325,7 +325,7 @@ const AboutPage = () => {
                 </motion.p>
 
                 <motion.p
-                  className="text-base sm:text-lg leading-relaxed mb-8 text-foreground/90"
+                  className="text-base sm:text-lg leading-relaxed mb-8 text-foreground"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 1.3 }}
@@ -366,7 +366,7 @@ const AboutPage = () => {
                     ease: 'easeOut',
                   }}
                 >
-                  <Card className="border-border/50 hover:shadow-lg transition-shadow duration-300 dark:card-enhanced dark:hover-enhanced">
+                  <Card className="border-border/50 hover:shadow-lg transition-all duration-300 group hover:border-border dark:card-enhanced dark:hover-enhanced">
                     <CardHeader>
                       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                         <div>
@@ -462,7 +462,7 @@ const AboutPage = () => {
               {education.map((edu, index) => (
                 <Card
                   key={index}
-                  className="border-border/50 dark:card-enhanced dark:hover-enhanced"
+                  className="border-border/50 hover:shadow-lg transition-all duration-300 group hover:border-border dark:card-enhanced dark:hover-enhanced"
                 >
                   <CardHeader>
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
@@ -563,7 +563,7 @@ const AboutPage = () => {
                     </CardHeader>
 
                     <CardContent className="pt-0">
-                      <p className="text-base leading-relaxed mb-4 text-foreground/90">
+                      <p className="text-base leading-relaxed mb-4 text-foreground">
                         {presentation.description}
                       </p>
 
@@ -610,7 +610,7 @@ const AboutPage = () => {
               Organizations & Community
             </h2>
             <div className="max-w-4xl mx-auto">
-              <Card className="border-border/50 dark:card-enhanced dark:hover-enhanced">
+              <Card className="border-border/50 hover:shadow-lg transition-all duration-300 group hover:border-border dark:card-enhanced dark:hover-enhanced">
                 <CardHeader>
                   <CardTitle className="text-xl">Leadership Roles</CardTitle>
                 </CardHeader>

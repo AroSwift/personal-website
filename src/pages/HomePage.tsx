@@ -299,24 +299,7 @@ function HomePage() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.8, delay: 0.3 }}
                 >
-                  {/* Current status badge */}
-                  <motion.div
-                    className="inline-flex items-center px-3 sm:px-4 py-2 sm:py-2.5 rounded-full bg-gradient-to-r from-orange-100 to-amber-100 text-orange-800 text-sm sm:text-base font-medium mb-4 sm:mb-5 border border-orange-200/50 dark:from-orange-900/40 dark:to-amber-900/40 dark:text-orange-200 dark:border-orange-800/40 transition-all duration-300 ease-in-out shadow-sm hover:shadow-md backdrop-blur-sm"
-                    initial={{ scale: 0.9, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ duration: 0.5, delay: 0.4 }}
-                  >
-                    <motion.div
-                      className="w-2 h-2 sm:w-2.5 sm:h-2.5 bg-orange-500 rounded-full mr-2 sm:mr-2.5 dark:bg-orange-400 transition-colors duration-300 ease-in-out"
-                      animate={{ scale: [1, 1.2, 1] }}
-                      transition={{
-                        duration: 2,
-                        repeat: Infinity,
-                        ease: 'easeInOut',
-                      }}
-                    />
-                    Now
-                  </motion.div>
+
 
                   {/* Current work description */}
                   <p className="text-base sm:text-lg md:text-xl leading-relaxed mb-3 sm:mb-4 relative z-10">
