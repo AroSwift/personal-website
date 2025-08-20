@@ -299,8 +299,6 @@ function HomePage() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.8, delay: 0.3 }}
                 >
-
-
                   {/* Current work description */}
                   <p className="text-base sm:text-lg md:text-xl leading-relaxed mb-3 sm:mb-4 relative z-10">
                     Developing agentic workflows that autonomously create and

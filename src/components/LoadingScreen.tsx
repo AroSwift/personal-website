@@ -1,62 +1,59 @@
 import React, { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence, useAnimationControls } from 'framer-motion'
 
 interface LoadingScreenProps {
   onComplete: (theme: 'dark' | 'light') => void
 }
 
-// Simple, classy shutter that opens from the center using a hexagonal clip-path
-const HEX_CLOSED =
-  'polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%)'
-const HEX_OPEN = 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)'
-
 const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
-  const [currentWordIndex, setCurrentWordIndex] = useState(0)
-  const [showContent, setShowContent] = useState(false)
-  const [showName, setShowName] = useState(false)
   const [showThemeSelector, setShowThemeSelector] = useState(false)
   const [isExiting, setIsExiting] = useState(false)
-  const [selectedTheme, setSelectedTheme] = useState<'dark' | 'light' | null>(
-    null
-  )
+  const [selectedTheme, setSelectedTheme] = useState<'dark' | 'light' | null>(null)
 
-  const words = ['Innovator', 'Designer', 'Architect', 'Engineer']
+  const line = useAnimationControls()
+  const topText = useAnimationControls()
+  const botText = useAnimationControls()
+  const buttons = useAnimationControls()
 
-  useEffect(() => {
-    const showTimer = setTimeout(() => {
-      setShowContent(true)
-      setShowName(true)
-    }, 500)
-
-    return () => clearTimeout(showTimer)
-  }, [])
+  const ease: [number, number, number, number] = [0.4, 0, 0.2, 1]
 
   useEffect(() => {
-    if (!showContent) return
-
-    const delays = [800, 800, 800, 800]
-
-    if (currentWordIndex < words.length - 1) {
-      const timer = setTimeout(() => {
-        setCurrentWordIndex(prev => prev + 1)
-      }, delays[currentWordIndex])
-
-      return () => clearTimeout(timer)
-    } else {
-      // Wait for the last word to fully animate in, then add extra delay
-      // to ensure smooth transition before showing theme selector
-      const themeTimer = setTimeout(() => {
+    const run = async () => {
+      // Show theme selector after half a second
+      setTimeout(() => {
         setShowThemeSelector(true)
-      }, 1300) // Give users time to read the last word
+      }, 500)
 
-      return () => clearTimeout(themeTimer)
+      // Phase 1: Line grows and text starts emerging simultaneously
+      await Promise.all([
+        line.start({
+          scaleX: [0, 1],
+          transition: { duration: 0.9, ease }
+        }),
+        // Text starts appearing while line grows
+        topText.start({
+          y: [0, -20], opacity: [0, 1],
+          transition: { duration: 0.37, ease, delay: 0.7 }
+        }),
+        botText.start({
+          y: [0, 10], opacity: [0, 1],
+          transition: { duration: 0.37, ease, delay: 0.7 }
+        })
+      ])
+
+      // Phase 3: Line shrinks
+      await line.start({
+        scaleX: 0.17,
+        transition: { duration: 0.45, ease }
+      })
     }
-  }, [currentWordIndex, showContent, words.length])
+
+    run()
+  }, [])
 
   const handleThemeSelect = (theme: 'dark' | 'light') => {
     setSelectedTheme(theme)
 
-    // Immediately apply the theme to the entire app
     if (theme === 'light') {
       document.documentElement.classList.remove('dark')
     } else {
@@ -70,7 +67,7 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
     if (isExiting) {
       const completeTimer = setTimeout(() => {
         onComplete(selectedTheme || 'dark')
-      }, 1250) // Match the shutter animation duration
+      }, 1250)
 
       return () => clearTimeout(completeTimer)
     }
@@ -78,171 +75,96 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
 
   return (
     <div className="fixed inset-0 z-[9999] bg-black flex flex-col items-center justify-center overflow-hidden">
-      {/* Main Background that contracts to a circle around theme button */}
-      <motion.div
-        className="fixed inset-0 z-20 bg-black"
-        initial={{
-          clipPath: 'circle(100% at 50% 50%)',
-        }}
-        animate={{
-          clipPath: isExiting
-            ? 'circle(0% at 80% 20%)'
-            : 'circle(100% at 50% 50%)',
-        }}
-        transition={{
-          duration: 1.0,
-          ease: [0.25, 0.46, 0.45, 0.94],
-          delay: 0.2,
-        }}
-      />
-
-      {/* Content Container */}
-      <div className="relative z-50">
-        {/* Main Name Animation */}
+      {/* Simple container for line and text */}
+      <div className="relative z-50 mx-auto w-[min(92vw,1100px)] h-[60vh] min-h-[480px] flex flex-col items-center justify-center">
+        {/* PORTFOLIO OF - emerges above the line */}
         <motion.div
-          className="text-center mb-5"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{
-            opacity: showName ? (isExiting ? 0 : 1) : 0,
-            y: showName ? (isExiting ? 0 : 0) : 30,
-            color: isExiting ? '#000000' : '#ffffff',
-            backgroundColor: isExiting ? '#000000' : 'rgba(0, 0, 0, 0)', // Use rgba instead of transparent
-          }}
-          transition={{ duration: 0.6, delay: 0.2, ease: 'easeOut' }}
+          className="text-center -mb-2"
+          initial={{ y: 0, opacity: 0 }}
+          animate={topText}
         >
-          <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-light text-white tracking-tight leading-none">
-            {'Aaron Barlow'.split('').map((letter, index) => (
-              <motion.span
-                key={index}
-                className="inline-block"
-                initial={{ opacity: 0, y: 50 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  duration: 0.6,
-                  delay: 0.4 + index * 0.05,
-                  ease: 'easeOut',
-                }}
-              >
-                {letter === ' ' ? '\u00A0' : letter}
-              </motion.span>
-            ))}
+          <p className="text-3xl md:text-4xl text-white tracking-[0.1em]">
+            Portfolio of
+          </p>
+        </motion.div>
+
+        {/* THE LINE - grows from center dot, positioned between texts */}
+        <motion.div
+          className="h-px w-full max-w-[763px] bg-white/80"
+          style={{ transformOrigin: '50% 50%' }}
+          initial={{ scaleX: 0, opacity: 1 }}
+          animate={line}
+        />
+
+        {/* AARON BARLOW - emerges below the line */}
+        <motion.div
+          className="text-center -mt-4"
+          initial={{ y: 0, opacity: 0 }}
+          animate={botText}
+        >
+          <h1 className="font-light tracking-tight text-white text-[min(12vw,140px)] leading-none">
+            Aaron Barlow
           </h1>
         </motion.div>
 
-        {/* Rotating Words Section */}
-        <motion.div
-          className="h-16 flex items-center justify-center"
-          initial={{ opacity: 0 }}
-          animate={{
-            opacity:
-              showContent && !showThemeSelector ? (isExiting ? 0 : 1) : 0,
-          }}
-          transition={{ duration: 0.6, delay: 1.2 }}
-        >
-          <AnimatePresence mode="wait">
-            <motion.p
-              key={currentWordIndex}
-              className="text-2xl sm:text-3xl md:text-4xl font-light text-white/80 tracking-wide"
-              initial={{ opacity: 0, y: 20, scale: 0.9 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -20, scale: 1.1 }}
-              transition={{
-                duration: 0.4,
-                ease: 'easeInOut',
-              }}
-            >
-              {words[currentWordIndex]}
-            </motion.p>
-          </AnimatePresence>
-        </motion.div>
-
-        {/* Theme Selector - Positioned in same area as words */}
-        <AnimatePresence>
-          {showThemeSelector && (
-            <motion.div
-              className="h-16 flex flex-col items-center justify-center"
-              initial={{ opacity: 0, y: 30, scale: 0.9 }}
-              animate={{
-                opacity: isExiting ? 0 : 1,
-                y: isExiting ? -10 : 0,
-                scale: isExiting ? 0.95 : 1,
-              }}
-              transition={{
-                duration: 0.6,
-                ease: [0.25, 0.46, 0.45, 0.94],
-                delay: 0.1,
-              }}
-            >
-              <motion.p
-                className="text-lg text-white/70 mb-2 font-light"
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.6 }}
-                style={{ marginTop: '15%' }}
+        {/* Reserved space for buttons to prevent layout shifts */}
+        <div className="h-36 flex items-center justify-center">
+          <AnimatePresence>
+            {showThemeSelector && (
+              <motion.div
+                className="flex flex-col items-center gap-4"
+                initial={{ opacity: 0, y: 15, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{
+                  duration: 0.8,
+                  ease: [0.4, 0, 0.2, 1],
+                  opacity: { duration: 0.9, ease: [0.4, 0, 0.2, 1] },
+                  y: { duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] },
+                  scale: { duration: 0.7, ease: [0.34, 1.56, 0.64, 1] }
+                }}
               >
-                Choose your theme
-              </motion.p>
-              <div className="flex gap-4 justify-center">
-                <motion.button
-                  className="px-6 py-2 rounded-xl border border-white/20 text-white/90 hover:text-white hover:border-white/40 transition-all duration-500 font-light backdrop-blur-sm"
-                  whileHover={{
-                    backgroundColor: 'rgb(36, 35, 36)',
-                  }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={() => handleThemeSelect('dark')}
-                  transition={{
-                    duration: 0.03,
-                    ease: 'easeInOut',
-                  }}
-                >
-                  Dark Mode
-                </motion.button>
-                <motion.button
-                  className="px-6 py-2 rounded-xl border border-white/20 text-white/90 hover:text-white hover:border-white/40 transition-all duration-500 font-light backdrop-blur-sm"
-                  whileHover={{
-                    backgroundColor: 'rgb(209, 209, 209)',
-                    color: 'rgb(0, 0, 0)',
-                  }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={() => handleThemeSelect('light')}
-                  transition={{
-                    duration: 0.03,
-                    ease: 'easeInOut',
-                  }}
-                >
-                  Light Mode
-                </motion.button>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+                <p className="text-sm text-white/60">Choose your theme</p>
+                <div className="flex gap-4">
+                  <motion.button
+                    className="px-5 py-3 rounded-xl border border-white/30 text-white hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 transition-all duration-200"
+                    whileHover={{ 
+                      scale: 1.02,
+                      boxShadow: "0 0 8px rgba(255, 255, 255, 0.15)"
+                    }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={() => handleThemeSelect('dark')}
+                  >
+                    Dark Mode
+                  </motion.button>
+                  <motion.button
+                    className="px-5 py-3 rounded-xl border border-black/10 bg-white/85 text-black shadow-sm hover:bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-black/60 transition-all duration-200"
+                    whileHover={{ 
+                      scale: 1.02,
+                      boxShadow: "0 0 8px rgba(0, 0, 0, 0.1)"
+                    }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={() => handleThemeSelect('light')}
+                  >
+                    Light Mode
+                  </motion.button>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
       </div>
 
-      {/* Clean Hexagonal Shutter Overlay */}
+      {/* Hexagonal Shutter Overlay - below stage */}
       <motion.div
-        className="fixed inset-0 z-30 bg-black pointer-events-none"
+        className="fixed inset-0 z-0 bg-black pointer-events-none"
         style={{ willChange: 'clip-path' }}
-        initial={{ clipPath: HEX_OPEN }}
+        initial={{ clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)' }}
         animate={{
-          clipPath: isExiting ? HEX_CLOSED : HEX_OPEN,
+          clipPath: isExiting ? 'polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%)' : 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
         }}
         transition={{
           duration: 1.25,
           ease: [0.65, 0, 0.35, 1],
-        }}
-      />
-
-      {/* Smooth Black Background Overlay for Content Area */}
-      <motion.div
-        className="fixed inset-0 z-20 bg-black pointer-events-none"
-        initial={{ opacity: 0 }}
-        animate={{
-          opacity: isExiting ? 1 : 0,
-        }}
-        transition={{
-          duration: 0.3,
-          ease: 'easeOut',
-          delay: 0.1,
         }}
       />
     </div>

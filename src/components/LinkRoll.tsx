@@ -14,8 +14,9 @@ type LinkRollProps = {
 function splitGraphemes(text: string) {
   // Check if Intl.Segmenter is available
   if ('Segmenter' in Intl) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const seg = new (Intl as any).Segmenter('en', { granularity: 'grapheme' })
-    return Array.from(seg.segment(text), (s: any) => s.segment)
+    return Array.from(seg.segment(text), (s: { segment: string }) => s.segment)
   }
   // Fallback – not perfect for all scripts but OK if Segmenter missing
   return Array.from(text)

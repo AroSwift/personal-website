@@ -5,7 +5,11 @@ import { render, screen, fireEvent } from '@testing-library/react'
 
 // Mock the LoadingScreen component to skip animations for testing
 vi.mock('../components/LoadingScreen', () => ({
-  default: ({ onComplete }: { onComplete: (theme: 'dark' | 'light') => void }) => {
+  default: ({
+    onComplete,
+  }: {
+    onComplete: (theme: 'dark' | 'light') => void
+  }) => {
     const handleThemeSelect = (theme: 'dark' | 'light') => {
       // Simulate the completion after a short delay
       setTimeout(() => {
@@ -21,12 +25,14 @@ vi.mock('../components/LoadingScreen', () => ({
           <p>Choose your theme</p>
           <div>
             <button onClick={() => handleThemeSelect('dark')}>Dark Mode</button>
-            <button onClick={() => handleThemeSelect('light')}>Light Mode</button>
+            <button onClick={() => handleThemeSelect('light')}>
+              Light Mode
+            </button>
           </div>
         </div>
       </div>
     )
-  }
+  },
 }))
 
 // Import the mocked component

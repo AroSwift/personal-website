@@ -293,6 +293,51 @@
     }
   }
 
+  /* LoadingScreen mask classes for progressive reveal */
+  .mask-top {
+    -webkit-mask-image: linear-gradient(to bottom, #000 50%, transparent 50%);
+    mask-image: linear-gradient(to bottom, #000 50%, transparent 50%);
+    will-change: transform, opacity;
+  }
+
+  .mask-bottom {
+    -webkit-mask-image: linear-gradient(to top, #000 50%, transparent 50%);
+    mask-image: linear-gradient(to top, #000 50%, transparent 50%);
+    will-change: transform, opacity;
+  }
+
+  /* Intersection halves (no missing semicolons, no banding) */
+  .reveal-half-top { 
+    clip-path: inset(0 0 50% 0); 
+  }
+  
+  .reveal-half-bottom { 
+    clip-path: inset(50% 0 0 0); 
+  }
+
+  /* Helper to center absolutely along X with natural line at 50% Y */
+  .abs-center-x {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  /* Safari subpixel crispness */
+  @supports (-webkit-touch-callout: none) {
+    .reveal-half-top,
+    .reveal-half-bottom { 
+      -webkit-backface-visibility: hidden; 
+    }
+  }
+
+  /* Optional: visual baseline while debugging */
+  .debug-stage::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0; top: 50%;
+    height: 1px; background: rgba(255,255,255,.25)
+  }
+
   /* Optional: debug helpers you can toggle on/off */
   .LinkRoll-debug .LinkRoll-char { outline: 1px dashed rgba(255,0,0,.35); }
   .LinkRoll-debug .LinkRoll-char .LinkRoll-glyph-original { background: rgba(0,255,0,.06); }
