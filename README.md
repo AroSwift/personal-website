@@ -170,7 +170,7 @@ The test suite covers:
 
 ### Coolify Deployment (Recommended)
 
-This project is configured for deployment on Coolify with a fully code-owned Docker setup using docker-compose.yml for proper Traefik integration.
+This project is configured for deployment on Coolify with a fully code-owned Docker setup using docker-compose.yml for proper Traefik integration. I configured for zero-downtime rolling updates enabled.
 
 #### Coolify Setup Steps:
 
