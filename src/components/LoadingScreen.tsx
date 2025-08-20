@@ -8,16 +8,17 @@ interface LoadingScreenProps {
 const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
   const [showThemeSelector, setShowThemeSelector] = useState(false)
   const [isExiting, setIsExiting] = useState(false)
-  const [selectedTheme, setSelectedTheme] = useState<'dark' | 'light' | null>(null)
+  const [selectedTheme, setSelectedTheme] = useState<'dark' | 'light' | null>(
+    null
+  )
 
   const line = useAnimationControls()
   const topText = useAnimationControls()
   const botText = useAnimationControls()
-  const buttons = useAnimationControls()
-
-  const ease: [number, number, number, number] = [0.4, 0, 0.2, 1]
 
   useEffect(() => {
+    const ease: [number, number, number, number] = [0.4, 0, 0.2, 1]
+
     const run = async () => {
       // Show theme selector after half a second
       setTimeout(() => {
@@ -28,28 +29,30 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
       await Promise.all([
         line.start({
           scaleX: [0, 1],
-          transition: { duration: 0.9, ease }
+          transition: { duration: 0.9, ease },
         }),
         // Text starts appearing while line grows
         topText.start({
-          y: [0, -20], opacity: [0, 1],
-          transition: { duration: 0.37, ease, delay: 0.7 }
+          y: [0, -20],
+          opacity: [0, 1],
+          transition: { duration: 0.37, ease, delay: 0.7 },
         }),
         botText.start({
-          y: [0, 10], opacity: [0, 1],
-          transition: { duration: 0.37, ease, delay: 0.7 }
-        })
+          y: [0, 10],
+          opacity: [0, 1],
+          transition: { duration: 0.37, ease, delay: 0.7 },
+        }),
       ])
 
       // Phase 3: Line shrinks
       await line.start({
         scaleX: 0.17,
-        transition: { duration: 0.45, ease }
+        transition: { duration: 0.45, ease },
       })
     }
 
     run()
-  }, [])
+  }, [line, topText, botText])
 
   const handleThemeSelect = (theme: 'dark' | 'light') => {
     setSelectedTheme(theme)
@@ -120,16 +123,16 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
                   ease: [0.4, 0, 0.2, 1],
                   opacity: { duration: 0.9, ease: [0.4, 0, 0.2, 1] },
                   y: { duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] },
-                  scale: { duration: 0.7, ease: [0.34, 1.56, 0.64, 1] }
+                  scale: { duration: 0.7, ease: [0.34, 1.56, 0.64, 1] },
                 }}
               >
                 <p className="text-sm text-white/60">Choose your theme</p>
                 <div className="flex gap-4">
                   <motion.button
                     className="px-5 py-3 rounded-xl border border-white/30 text-white hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 transition-all duration-200"
-                    whileHover={{ 
+                    whileHover={{
                       scale: 1.02,
-                      boxShadow: "0 0 8px rgba(255, 255, 255, 0.15)"
+                      boxShadow: '0 0 8px rgba(255, 255, 255, 0.15)',
                     }}
                     whileTap={{ scale: 0.98 }}
                     onClick={() => handleThemeSelect('dark')}
@@ -138,9 +141,9 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
                   </motion.button>
                   <motion.button
                     className="px-5 py-3 rounded-xl border border-black/10 bg-white/85 text-black shadow-sm hover:bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-black/60 transition-all duration-200"
-                    whileHover={{ 
+                    whileHover={{
                       scale: 1.02,
-                      boxShadow: "0 0 8px rgba(0, 0, 0, 0.1)"
+                      boxShadow: '0 0 8px rgba(0, 0, 0, 0.1)',
                     }}
                     whileTap={{ scale: 0.98 }}
                     onClick={() => handleThemeSelect('light')}
@@ -160,7 +163,9 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
         style={{ willChange: 'clip-path' }}
         initial={{ clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)' }}
         animate={{
-          clipPath: isExiting ? 'polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%)' : 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
+          clipPath: isExiting
+            ? 'polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%)'
+            : 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
         }}
         transition={{
           duration: 1.25,
