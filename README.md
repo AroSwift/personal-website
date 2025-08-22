@@ -50,15 +50,15 @@ This granular approach ensures:
 | Metric                       | Desktop | Mobile |
 | :--------------------------- | :-----: | :----: |
 | **Speed Score**              | **100** | **99** |
-| **Time To First Byte**       |  0.01s  | 0.01s  |
-| **First Contentful Paint**   |  0.39s  | 1.72s  |
-| **Largest Contentful Paint** |  0.39s  | 1.72s  |
-| **Time to Interactive**      |  0.39s  | 1.86s  |
-| **Total Blocking Time**      |   0ms   |  23ms  |
-| **Speed Index**              |  0.43s  | 1.72s  |
-| **Cumulative Layout Shift**  |    0    |   0    |
+| **Time To First Byte**       | 0.01s   | 0.01s  |
+| **First Contentful Paint**   | 0.38s   | 1.66s  |
+| **Largest Contentful Paint** | 0.42s   | 1.81s  |
+| **Time to Interactive**      | 0.38s   | 1.67s  |
+| **Total Blocking Time**      | 0s      | 0s     |
+| **Speed Index**              | 0.38s   | 1.66s  |
+| **Cumulative Layout Shift**  | 0s      | 0s     |
 
-_Performance measured from Iowa, USA on 2025-08-17 by Cloudflare_
+_Performance measured from Iowa, USA on 2025-08-22 by Cloudflare Observatory_
 
 ## Tech Stack
 
