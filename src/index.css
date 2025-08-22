@@ -226,21 +226,26 @@
   .LinkRoll {
     --dur: 400ms;
     --ease: cubic-bezier(0.22, 1, 0.36, 1);
-    --stagger: 25ms;         /* per character */
-    --skew: 8deg;            /* subtle flair */
+    --stagger: 25ms; /* per character */
+    --skew: 8deg; /* subtle flair */
   }
 
   /* Base layout */
-  .LinkRoll-text { line-height: 1 }
-  .LinkRoll-char { /* per-character box */
+  .LinkRoll-text {
+    line-height: 1;
+  }
+  .LinkRoll-char {
+    /* per-character box */
     /* inline-block set in TSX */
   }
 
   /* Two stacked glyphs inside each char box */
   .LinkRoll-glyph {
     will-change: transform, opacity;
-    transition: transform var(--dur) var(--ease), opacity var(--dur) var(--ease);
-    transform: translateZ(0) /* compositor hint */
+    transition:
+      transform var(--dur) var(--ease),
+      opacity var(--dur) var(--ease);
+    transform: translateZ(0); /* compositor hint */
   }
 
   .LinkRoll-glyph-original {
@@ -249,7 +254,7 @@
   }
 
   .LinkRoll-glyph-new {
-    top: 100%;               /* sits just below the box */
+    top: 100%; /* sits just below the box */
     transform: translateY(0) skewX(0);
     opacity: 0;
   }
@@ -266,20 +271,26 @@
   .LinkRoll:focus-visible .LinkRoll-char .LinkRoll-glyph-new {
     transform: translateY(-100%) skewX(0);
     opacity: 1;
-    transition-delay: calc(var(--idx) * var(--stagger) + 10ms); /* tiny overlap, removes "gap" */
+    transition-delay: calc(
+      var(--idx) * var(--stagger) + 10ms
+    ); /* tiny overlap, removes "gap" */
   }
 
   /* Reverse animation when hover ends - smooth return to original positions */
   .LinkRoll .LinkRoll-char .LinkRoll-glyph-original {
     transform: translateY(0) skewX(0);
     opacity: 1;
-    transition-delay: calc((7 - var(--idx)) * var(--stagger) + 50ms); /* reverse stagger - right to left */
+    transition-delay: calc(
+      (7 - var(--idx)) * var(--stagger) + 50ms
+    ); /* reverse stagger - right to left */
   }
 
   .LinkRoll .LinkRoll-char .LinkRoll-glyph-new {
     transform: translateY(100%) skewX(0);
     opacity: 0;
-    transition-delay: calc((7 - var(--idx)) * var(--stagger) + 60ms); /* reverse stagger - right to left */
+    transition-delay: calc(
+      (7 - var(--idx)) * var(--stagger) + 60ms
+    ); /* reverse stagger - right to left */
   }
 
   /* Accessibility: respect reduced motion */
@@ -307,12 +318,12 @@
   }
 
   /* Intersection halves (no missing semicolons, no banding) */
-  .reveal-half-top { 
-    clip-path: inset(0 0 50% 0); 
+  .reveal-half-top {
+    clip-path: inset(0 0 50% 0);
   }
-  
-  .reveal-half-bottom { 
-    clip-path: inset(50% 0 0 0); 
+
+  .reveal-half-bottom {
+    clip-path: inset(50% 0 0 0);
   }
 
   /* Helper to center absolutely along X with natural line at 50% Y */
@@ -325,8 +336,8 @@
   /* Safari subpixel crispness */
   @supports (-webkit-touch-callout: none) {
     .reveal-half-top,
-    .reveal-half-bottom { 
-      -webkit-backface-visibility: hidden; 
+    .reveal-half-bottom {
+      -webkit-backface-visibility: hidden;
     }
   }
 
@@ -334,32 +345,44 @@
   .debug-stage::after {
     content: '';
     position: absolute;
-    left: 0; right: 0; top: 50%;
-    height: 1px; background: rgba(255,255,255,.25)
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.25);
   }
 
   /* Optional: debug helpers you can toggle on/off */
-  .LinkRoll-debug .LinkRoll-char { outline: 1px dashed rgba(255,0,0,.35); }
-  .LinkRoll-debug .LinkRoll-char .LinkRoll-glyph-original { background: rgba(0,255,0,.06); }
-  .LinkRoll-debug .LinkRoll-char .LinkRoll-glyph-new { background: rgba(0,0,255,.06); }
+  .LinkRoll-debug .LinkRoll-char {
+    outline: 1px dashed rgba(255, 0, 0, 0.35);
+  }
+  .LinkRoll-debug .LinkRoll-char .LinkRoll-glyph-original {
+    background: rgba(0, 255, 0, 0.06);
+  }
+  .LinkRoll-debug .LinkRoll-char .LinkRoll-glyph-new {
+    background: rgba(0, 0, 255, 0.06);
+  }
 
   /* Header name animation (same style as LinkRoll but no underline) */
-  .header-name-text { 
+  .header-name-text {
     line-height: 1;
     --dur: 400ms;
     --ease: cubic-bezier(0.22, 1, 0.36, 1);
-    --stagger: 25ms;         /* per character */
-    --skew: 8deg;            /* subtle flair */
+    --stagger: 25ms; /* per character */
+    --skew: 8deg; /* subtle flair */
   }
-  .header-name-char { /* per-character box */
+  .header-name-char {
+    /* per-character box */
     /* inline-block set in TSX */
   }
 
   /* Two stacked glyphs inside each char box */
   .header-name-glyph {
     will-change: transform, opacity;
-    transition: transform var(--dur) var(--ease), opacity var(--dur) var(--ease);
-    transform: translateZ(0) /* compositor hint */
+    transition:
+      transform var(--dur) var(--ease),
+      opacity var(--dur) var(--ease);
+    transform: translateZ(0); /* compositor hint */
   }
 
   .header-name-glyph-original {
@@ -368,7 +391,7 @@
   }
 
   .header-name-glyph-new {
-    top: 100%;               /* sits just below the box */
+    top: 100%; /* sits just below the box */
     transform: translateY(0) skewX(0);
     opacity: 0;
   }
@@ -383,23 +406,27 @@
   .header-name-text:hover .header-name-char .header-name-glyph-new {
     transform: translateY(-100%) skewX(0);
     opacity: 1;
-    transition-delay: calc(var(--idx) * var(--stagger) + 10ms); /* tiny overlap, removes "gap" */
+    transition-delay: calc(
+      var(--idx) * var(--stagger) + 10ms
+    ); /* tiny overlap, removes "gap" */
   }
 
   /* Reverse animation when hover ends - smooth return to original positions */
   .header-name-text .header-name-char .header-name-glyph-original {
     transform: translateY(0) skewX(0);
     opacity: 1;
-    transition-delay: calc((12 - var(--idx)) * var(--stagger) + 50ms); /* reverse stagger - right to left */
+    transition-delay: calc(
+      (12 - var(--idx)) * var(--stagger) + 50ms
+    ); /* reverse stagger - right to left */
   }
 
   .header-name-text .header-name-char .header-name-glyph-new {
     transform: translateY(100%) skewX(0);
     opacity: 0;
-    transition-delay: calc((12 - var(--idx)) * var(--stagger) + 50ms); /* reverse stagger - right to left */
+    transition-delay: calc(
+      (12 - var(--idx)) * var(--stagger) + 50ms
+    ); /* reverse stagger - right to left */
   }
-
-
 
   /* Minimal dark theme enhancements */
   .dark .enhanced-glow {
@@ -472,14 +499,6 @@
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
-
-
-
-
-
-
-
-
 }
 
 /* App content sits above the overlay */
@@ -491,11 +510,11 @@
 /* The overlay itself */
 #hue-overlay {
   position: fixed;
-  inset: -15vmax;              /* oversize to avoid blur crop & edge seams */
-  z-index: 0;                  /* behind content, above page background */
+  inset: -15vmax; /* oversize to avoid blur crop & edge seams */
+  z-index: 0; /* behind content, above page background */
   pointer-events: none;
-  isolation: isolate;          /* keeps blending local if you add it later */
-  contain: paint;              /* hint: avoid accidental repaints outside */
+  isolation: isolate; /* keeps blending local if you add it later */
+  contain: paint; /* hint: avoid accidental repaints outside */
 }
 
 /* Theme-tunable opacities via CSS variables */
@@ -518,7 +537,7 @@
   opacity: var(--hue-overlay-opacity);
   filter: blur(var(--hue-blur)) saturate(var(--hue-sat));
   will-change: transform;
-  transform: translate3d(0,0,0) scale(1.08); /* already larger than view */
+  transform: translate3d(0, 0, 0) scale(1.08); /* already larger than view */
   background-repeat: no-repeat;
   background-size: 120% 120%;
   backface-visibility: hidden;
@@ -527,36 +546,51 @@
 /* Palette #1 (warm pastels) */
 .hue-a {
   background-image:
-    radial-gradient(60vmax 60vmax at 20% 25%, #F0E2C3 0%, transparent 60%),
-    radial-gradient(70vmax 70vmax at 80% 30%, #DCECE9 0%, transparent 60%),
-    radial-gradient(65vmax 65vmax at 40% 80%, #F2EAE0 0%, transparent 60%);
+    radial-gradient(60vmax 60vmax at 20% 25%, #f0e2c3 0%, transparent 60%),
+    radial-gradient(70vmax 70vmax at 80% 30%, #dcece9 0%, transparent 60%),
+    radial-gradient(65vmax 65vmax at 40% 80%, #f2eae0 0%, transparent 60%);
   animation: hueDriftA 36s ease-in-out infinite alternate;
 }
 
 /* Palette #2 (cool pastels) */
 .hue-b {
   background-image:
-    radial-gradient(60vmax 60vmax at 15% 70%, #F6C7B3 0%, transparent 60%),
-    radial-gradient(65vmax 65vmax at 85% 75%, #C3DEDD 0%, transparent 60%),
-    radial-gradient(60vmax 60vmax at 50% 35%, #82B2C0 0%, transparent 60%);
+    radial-gradient(60vmax 60vmax at 15% 70%, #f6c7b3 0%, transparent 60%),
+    radial-gradient(65vmax 65vmax at 85% 75%, #c3dedd 0%, transparent 60%),
+    radial-gradient(60vmax 60vmax at 50% 35%, #82b2c0 0%, transparent 60%);
   animation: hueDriftB 48s ease-in-out infinite alternate;
 }
 
 @keyframes hueDriftA {
-  0%   { transform: translate3d(-3vmax, -2vmax, 0) scale(1.10) }
-  100% { transform: translate3d( 3vmax,  2vmax, 0) scale(1.14) }
+  0% {
+    transform: translate3d(-3vmax, -2vmax, 0) scale(1.1);
+  }
+  100% {
+    transform: translate3d(3vmax, 2vmax, 0) scale(1.14);
+  }
 }
 
 @keyframes hueDriftB {
-  0%   { transform: translate3d( 2vmax, -3vmax, 0) scale(1.12) }
-  100% { transform: translate3d(-2vmax,  3vmax, 0) scale(1.16) }
+  0% {
+    transform: translate3d(2vmax, -3vmax, 0) scale(1.12);
+  }
+  100% {
+    transform: translate3d(-2vmax, 3vmax, 0) scale(1.16);
+  }
 }
 
 /* Optional: Stronger "pop" in light mode only */
 @media (prefers-color-scheme: light) {
-  :root { --hue-sat: 1.2 }
+  :root {
+    --hue-sat: 1.2;
+  }
 }
 
 /* Quick debug toggle (make it obviously visible) */
-body.hue-debug .hue-layer { opacity: 0.5 !important; filter: blur(20px) saturate(1.0) }
-body.hue-border #hue-overlay { outline: 1px dashed magenta }
+body.hue-debug .hue-layer {
+  opacity: 0.5 !important;
+  filter: blur(20px) saturate(1);
+}
+body.hue-border #hue-overlay {
+  outline: 1px dashed magenta;
+}

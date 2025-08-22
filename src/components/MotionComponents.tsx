@@ -1,30 +1,25 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { motion, AnimatePresence, useAnimationControls } from 'framer-motion'
 
-interface LoadingScreenProps {
-  onComplete: (theme: 'dark' | 'light') => void
+interface MotionComponentsProps {
+  showThemeSelector: boolean
+  isExiting: boolean
+  onThemeSelect: (theme: 'dark' | 'light') => void
 }
 
-const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
-  const [showThemeSelector, setShowThemeSelector] = useState(false)
-  const [isExiting, setIsExiting] = useState(false)
-  const [selectedTheme, setSelectedTheme] = useState<'dark' | 'light' | null>(
-    null
-  )
-
+const MotionComponents = ({
+  showThemeSelector,
+  isExiting,
+  onThemeSelect,
+}: MotionComponentsProps) => {
   const line = useAnimationControls()
   const topText = useAnimationControls()
   const botText = useAnimationControls()
 
-  useEffect(() => {
+  React.useEffect(() => {
     const ease: [number, number, number, number] = [0.4, 0, 0.2, 1]
 
     const run = async () => {
-      // Show theme selector after half a second
-      setTimeout(() => {
-        setShowThemeSelector(true)
-      }, 500)
-
       // Phase 1: Line grows and text starts emerging simultaneously
       await Promise.all([
         line.start({
@@ -54,30 +49,8 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
     run()
   }, [line, topText, botText])
 
-  const handleThemeSelect = (theme: 'dark' | 'light') => {
-    setSelectedTheme(theme)
-
-    if (theme === 'light') {
-      document.documentElement.classList.remove('dark')
-    } else {
-      document.documentElement.classList.add('dark')
-    }
-
-    setIsExiting(true)
-  }
-
-  useEffect(() => {
-    if (isExiting) {
-      const completeTimer = setTimeout(() => {
-        onComplete(selectedTheme || 'dark')
-      }, 0) // Set to 0ms for immediate transition
-
-      return () => clearTimeout(completeTimer)
-    }
-  }, [isExiting, onComplete, selectedTheme])
-
   return (
-    <div className="fixed inset-0 z-[9999] bg-black flex flex-col items-center justify-center overflow-hidden">
+    <>
       {/* Simple container for line and text */}
       <div className="relative z-50 mx-auto w-[min(92vw,1100px)] h-[60vh] min-h-[480px] flex flex-col items-center justify-center">
         {/* PORTFOLIO OF - emerges above the line */}
@@ -135,7 +108,7 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
                       boxShadow: '0 0 8px rgba(255, 255, 255, 0.15)',
                     }}
                     whileTap={{ scale: 0.98 }}
-                    onClick={() => handleThemeSelect('dark')}
+                    onClick={() => onThemeSelect('dark')}
                   >
                     Dark Mode
                   </motion.button>
@@ -146,7 +119,7 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
                       boxShadow: '0 0 8px rgba(0, 0, 0, 0.1)',
                     }}
                     whileTap={{ scale: 0.98 }}
-                    onClick={() => handleThemeSelect('light')}
+                    onClick={() => onThemeSelect('light')}
                   >
                     Light Mode
                   </motion.button>
@@ -156,8 +129,24 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
           </AnimatePresence>
         </div>
       </div>
-    </div>
+
+      {/* Hexagonal Shutter Overlay - below stage */}
+      <motion.div
+        className="fixed inset-0 z-0 bg-black pointer-events-none"
+        style={{ willChange: 'clip-path' }}
+        initial={{ clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)' }}
+        animate={{
+          clipPath: isExiting
+            ? 'polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%)'
+            : 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
+        }}
+        transition={{
+          duration: 1.25,
+          ease: [0.65, 0, 0.35, 1],
+        }}
+      />
+    </>
   )
 }
 
-export default LoadingScreen
+export default MotionComponents
