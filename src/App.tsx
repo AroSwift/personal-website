@@ -113,6 +113,17 @@ const updateMetaTags = (pathname: string) => {
   // Update document title
   document.title = config.title
 
+  // Update canonical URL dynamically
+  const updateCanonical = (url: string) => {
+    let canonical = document.querySelector('link[rel="canonical"]')
+    if (!canonical) {
+      canonical = document.createElement('link')
+      canonical.setAttribute('rel', 'canonical')
+      document.head.appendChild(canonical)
+    }
+    canonical.setAttribute('href', url)
+  }
+
   // Update or create meta tags
   const updateMetaTag = (name: string, content: string) => {
     let meta = document.querySelector(`meta[name="${name}"]`) as HTMLMetaElement
@@ -136,15 +147,21 @@ const updateMetaTags = (pathname: string) => {
     meta.content = content
   }
 
+  // Update canonical URL based on current path
+  const fullUrl = `https://aaronbarlow.dev${pathname}`
+  updateCanonical(fullUrl)
+
   // Update meta tags
   updateMetaTag('description', config.description)
   updateMetaTag('keywords', config.keywords)
   updatePropertyMetaTag('og:title', config.ogTitle)
   updatePropertyMetaTag('og:description', config.ogDescription)
   updatePropertyMetaTag('og:type', config.ogType)
+  updatePropertyMetaTag('og:url', fullUrl)
   updateMetaTag('twitter:card', config.twitterCard)
   updateMetaTag('twitter:title', config.twitterTitle)
   updateMetaTag('twitter:description', config.twitterDescription)
+  updateMetaTag('twitter:url', fullUrl)
 }
 
 // Component to handle meta tag updates
