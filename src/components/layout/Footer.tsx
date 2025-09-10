@@ -37,7 +37,7 @@ const Footer = ({
             Location
           </h4>
           <p>Charlotte, NC (EST)</p>
-          <p>Open to remote</p>
+          <p>Currently remote</p>
         </div>
         <div>
           <h4 className="font-medium text-black dark:text-white mb-3 transition-colors duration-800">
