@@ -247,7 +247,7 @@ const AboutPage = () => {
                   <div className="flex items-center gap-2">
                     <ExternalLink className="h-5 w-5" />
                     <a
-                      href="https://github.com/AroSwift/resume/blob/main/resume.pdf"
+                      href="https://aroswift.github.io/resume/resume.pdf"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="hover:text-foreground transition-colors no-underline"

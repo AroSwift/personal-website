@@ -3,6 +3,19 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "author": {
+    "name": "Aaron Barlow",
+    "email": "abarlow505@gmail.com",
+    "url": "https://aaronbarlow.dev"
+  },
+  "description": "Personal website and portfolio of Aaron Barlow - HPC Software Engineer at Oak Ridge National Laboratory",
+  "homepage": "https://aaronbarlow.dev",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AroSwift/personal-website.git"
+  },
+  "license": "MIT",
+  "keywords": ["aaron-barlow", "portfolio", "hpc", "software-engineer", "ornl", "ai-developer"],
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -22,7 +35,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "framer-motion": "^12.23.12",
-    "lucide-react": "^0.541.0",
+    "lucide-react": "^0.544.0",
     "postcss": "^8.5.6",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
@@ -48,7 +61,7 @@
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
-    "jsdom": "^26.1.0",
+    "jsdom": "^27.0.0",
     "prettier": "^3.6.2",
     "rollup-plugin-visualizer": "^6.0.3",
     "typescript": "^5.8.2",

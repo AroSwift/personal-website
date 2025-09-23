@@ -104,7 +104,7 @@ const ContactPage = () => {
                   <Button
                     onClick={() =>
                       window.open(
-                        'https://github.com/AroSwift/resume/blob/main/resume.pdf',
+                        'https://aroswift.github.io/resume/resume.pdf',
                         '_blank'
                       )
                     }

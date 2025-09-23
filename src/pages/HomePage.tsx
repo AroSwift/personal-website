@@ -185,7 +185,7 @@ function HomePage() {
                         ? `circle(${Math.sqrt(dragPosition.x ** 2 + dragPosition.y ** 2)}px at ${dragPosition.x}px ${dragPosition.y}px)`
                         : 'circle(100% at 50% 50%)',
                     }}
-                    transition={{ duration: isDragging ? 0.1 : 0 }}
+                    transition={{ duration: isDragging ? 0.1 : 0.4, ease: "easeInOut" }}
                   />
 
                   {/* Real Aaron image underneath - revealed on hover */}
@@ -199,7 +199,7 @@ function HomePage() {
                     animate={{
                       opacity: isHovering ? 1 : 0,
                     }}
-                    transition={{ duration: 0 }}
+                    transition={{ duration: 0.4, ease: "easeInOut" }}
                     style={{ userSelect: 'none' }}
                   />
 

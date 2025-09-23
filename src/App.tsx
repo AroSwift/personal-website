@@ -1,3 +1,10 @@
+/*
+ * Aaron Barlow's Portfolio Website
+ * https://aaronbarlow.dev
+ * 
+ * Copyright (c) 2025 Aaron Barlow. All rights reserved.
+ */
+
 import React, { useState, useEffect, lazy, Suspense } from 'react'
 import {
   BrowserRouter as Router,
