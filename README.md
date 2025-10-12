@@ -4,6 +4,113 @@ A modern, responsive personal website for Aaron Barlow built with React, TypeScr
 
 **Live Site:** [aaronbarlow.dev](https://aaronbarlow.dev/)
 
+## Getting Started
+
+### Prerequisites
+
+- Node.js (version 16 or higher)
+- npm or yarn package manager
+- Docker (for deployment)
+
+### Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/yourusername/personal-website.git
+   cd personal-website
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+3. Start the development server:
+
+   ```bash
+   npm run dev
+   ```
+
+4. Open your browser and navigate to the URL shown in your terminal (usually `http://localhost:5173` or similar)
+
+### Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build locally
+- `npm run serve` - Serve production build locally
+- `npm test` - Run tests in watch mode
+
+## Testing
+
+The project includes a comprehensive test suite built with Vitest and React Testing Library.
+
+### Running Tests
+
+```bash
+# Run all tests
+npm test
+
+# Run tests in watch mode
+npm test
+
+# Run specific test file
+npm test -- --run src/tests/home.test.tsx
+```
+
+### Test Coverage
+
+The test suite covers:
+
+- **Component Rendering**: Verifies components render correctly
+- **User Interactions**: Tests button clicks and navigation
+- **Routing Logic**: Ensures proper page routing
+- **Loading States**: Tests loading screen functionality
+- **Content Validation**: Checks for expected text and elements
+
+## Deployment
+
+### Coolify Deployment (Recommended)
+
+This project is configured for deployment on Coolify with a fully code-owned Docker setup using docker-compose.yml for proper Traefik integration. I configured for zero-downtime rolling updates enabled.
+
+#### Coolify Setup Steps:
+
+1. In Coolify dashboard, create a new application
+2. Connect your Git repository
+3. Set **Application Type** to "Dockerfile"
+4. Set **Port** to "80" (HTTP only)
+5. Add your domain(s): `aaronbarlow.dev` and `www.aaronbarlow.dev`
+6. Deploy!
+
+### Local Docker Testing
+
+Test the Docker setup locally:
+
+```bash
+# Build and run with Docker Compose for local development
+docker-compose -f docker-compose.local.yml up --build
+
+# Or build and run manually (for local development)
+docker build -t personal-website .
+docker run -p 3000:80 personal-website
+```
+
+Then visit `http://localhost:3000`
+
+### Alternative Static Hosting
+
+The project can also be deployed to various static hosting platforms:
+
+1. **Vercel**: Connect your repository and deploy automatically
+2. **Netlify**: Drag and drop the `dist` folder or connect your repository
+3. **GitHub Pages**: Use GitHub Actions to build and deploy
+4. **Any static hosting service**: Build the project and upload the `dist` folder
+
+**Note**: For static hosting, you'll need to configure the hosting provider to handle SPA routing (similar to the nginx `try_files` directive).
+
 ## Features
 
 - **Modern UI/UX**: Built with shadcn/ui components and Tailwind CSS for a beautiful, responsive design
@@ -114,119 +221,12 @@ personal-website/
 └── configuration files
 ```
 
-## Getting Started
-
-### Prerequisites
-
-- Node.js (version 16 or higher)
-- npm or yarn package manager
-- Docker (for deployment)
-
-### Installation
-
-1. Clone the repository:
-
-   ```bash
-   git clone https://github.com/yourusername/personal-website.git
-   cd personal-website
-   ```
-
-2. Install dependencies:
-
-   ```bash
-   npm install
-   ```
-
-3. Start the development server:
-
-   ```bash
-   npm run dev
-   ```
-
-4. Open your browser and navigate to the URL shown in your terminal (usually `http://localhost:5173` or similar)
-
-### Available Scripts
-
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run preview` - Preview production build locally
-- `npm run serve` - Serve production build locally
-- `npm test` - Run tests in watch mode
-
-## Testing
-
-The project includes a comprehensive test suite built with Vitest and React Testing Library.
-
-### Running Tests
-
-```bash
-# Run all tests
-npm test
-
-# Run tests in watch mode
-npm test
-
-# Run specific test file
-npm test -- --run src/tests/home.test.tsx
-```
-
-### Test Coverage
-
-The test suite covers:
-
-- **Component Rendering**: Verifies components render correctly
-- **User Interactions**: Tests button clicks and navigation
-- **Routing Logic**: Ensures proper page routing
-- **Loading States**: Tests loading screen functionality
-- **Content Validation**: Checks for expected text and elements
-
 ## Pages
 
 - **Home**: Landing page with introduction and key highlights
 - **About**: Personal information, skills, and background
 - **Projects**: Portfolio of work and projects
 - **Contact**: Contact information and form
-
-## Deployment
-
-### Coolify Deployment (Recommended)
-
-This project is configured for deployment on Coolify with a fully code-owned Docker setup using docker-compose.yml for proper Traefik integration. I configured for zero-downtime rolling updates enabled.
-
-#### Coolify Setup Steps:
-
-1. In Coolify dashboard, create a new application
-2. Connect your Git repository
-3. Set **Application Type** to "Dockerfile"
-4. Set **Port** to "80" (HTTP only)
-5. Add your domain(s): `aaronbarlow.dev` and `www.aaronbarlow.dev`
-6. Deploy!
-
-### Local Docker Testing
-
-Test the Docker setup locally:
-
-```bash
-# Build and run with Docker Compose for local development
-docker-compose -f docker-compose.local.yml up --build
-
-# Or build and run manually (for local development)
-docker build -t personal-website .
-docker run -p 3000:80 personal-website
-```
-
-Then visit `http://localhost:3000`
-
-### Alternative Static Hosting
-
-The project can also be deployed to various static hosting platforms:
-
-1. **Vercel**: Connect your repository and deploy automatically
-2. **Netlify**: Drag and drop the `dist` folder or connect your repository
-3. **GitHub Pages**: Use GitHub Actions to build and deploy
-4. **Any static hosting service**: Build the project and upload the `dist` folder
-
-**Note**: For static hosting, you'll need to configure the hosting provider to handle SPA routing (similar to the nginx `try_files` directive).
 
 ## Configuration
 
@@ -272,7 +272,7 @@ This is a personal project, but if you find any issues or have suggestions, feel
 
 ## License
 
-This project is open source and available under the [MIT License](LICENSE).
+This project is open source and available under the [MIT License](LICENSE). If you use this code or design as inspiration for your own project, please give credit to Aaron Barlow.
 
 ---
 

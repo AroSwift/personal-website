@@ -1,7 +1,7 @@
 /*
  * Aaron Barlow's Portfolio Website
  * https://aaronbarlow.dev
- * 
+ *
  * Copyright (c) 2025 Aaron Barlow. All rights reserved.
  */
 
