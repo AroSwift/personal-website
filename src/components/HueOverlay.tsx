@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { createPortal } from 'react-dom'
 
 export default function HueOverlay() {
-  const [mounted, setMounted] = useState(false)
-
-  useEffect(() => setMounted(true), [])
+  // Initialize with client-side check to avoid hydration mismatch
+  const [mounted] = useState(() => typeof window !== 'undefined')
 
   if (!mounted) return null
 

@@ -206,28 +206,16 @@ const ScrollToTopInner = () => {
 
 // Main app content component that handles loading state
 const AppContent = () => {
-  const [isLoading, setIsLoading] = useState(true)
-  const [hasVisited, setHasVisited] = useState(false)
-
-  useEffect(() => {
+  // Check localStorage once during initialization
+  const [hasVisited, setHasVisited] = useState(() => {
     try {
-      // Check if user has visited before
-      const visited = localStorage.getItem('hasVisited')
-
-      if (visited === 'true') {
-        // User has visited before - skip loading screen
-        setHasVisited(true)
-        setIsLoading(false)
-      } else {
-        // First time visitor - show loading screen
-        // Don't set hasVisited yet, let LoadingScreen handle it
-      }
+      return localStorage.getItem('hasVisited') === 'true'
     } catch {
-      // If there's an error, just skip loading
-      setHasVisited(true)
-      setIsLoading(false)
+      return true // If error, skip loading screen
     }
-  }, [])
+  })
+
+  const [isLoading, setIsLoading] = useState(() => !hasVisited)
 
   const handleLoadingComplete = (theme: 'dark' | 'light') => {
     try {
