@@ -2,6 +2,14 @@ services:
   web:
     build: .
     restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
     ports:
       - '3000:80'
     healthcheck:

@@ -2,6 +2,14 @@ services:
   web:
     build: .
     restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
     healthcheck:
       test:
         [
@@ -27,5 +35,5 @@ services:
 
 networks:
   default:
-    name: coolify
+    name: dokploy
     external: true

@@ -72,18 +72,23 @@ The test suite covers:
 
 ## Deployment
 
-### Coolify Deployment (Recommended)
+### Dokploy Deployment
 
-This project is configured for deployment on Coolify with a fully code-owned Docker setup using docker-compose.yml for proper Traefik integration. I configured for zero-downtime rolling updates enabled.
+This project is configured for deployment on Dokploy with a fully code-owned Docker setup using docker-compose.yml for proper Traefik integration. I configured for zero-downtime rolling updates enabled.
 
-#### Coolify Setup Steps:
+#### Dokploy Setup Steps:
 
-1. In Coolify dashboard, create a new application
-2. Connect your Git repository
-3. Set **Application Type** to "Dockerfile"
-4. Set **Port** to "80" (HTTP only)
-5. Add your domain(s): `aaronbarlow.dev` and `www.aaronbarlow.dev`
-6. Deploy!
+1. Install Dokploy on your server:
+   ```bash
+   curl -sSL https://dokploy.com/install.sh | sh
+   ```
+
+2. In Dokploy dashboard, create a new application
+3. Connect your Git repository
+4. Set **Build Type** to "Dockerfile"
+5. Set **Port** to "80"
+6. Add your domain(s) e.g.: `aaronbarlow.dev` and `www.aaronbarlow.dev`
+7. Deploy!
 
 ### Local Docker Testing
 
