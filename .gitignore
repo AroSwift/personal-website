@@ -41,3 +41,6 @@ tempo.local.json
 *.key
 .env
 
+# Coverage reports
+coverage/
+
