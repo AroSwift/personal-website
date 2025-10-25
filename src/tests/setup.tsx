@@ -88,6 +88,11 @@ vi.mock('framer-motion', () => ({
     stop: vi.fn(),
     set: vi.fn(),
   }),
+  useAnimationControls: () => ({
+    start: vi.fn(),
+    stop: vi.fn(),
+    set: vi.fn(),
+  }),
 }))
 
 // Mock localStorage for consistent testing

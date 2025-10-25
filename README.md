@@ -50,25 +50,25 @@ The project includes a comprehensive test suite built with Vitest and React Test
 ### Running Tests
 
 ```bash
-# Run all tests
+# Run all tests in watch mode (default)
 npm test
 
-# Run tests in watch mode
-npm test
+# Run all tests once (CI mode)
+npm test -- --run
+
+# Run tests with coverage report
+npm test -- --coverage
 
 # Run specific test file
 npm test -- --run src/tests/home.test.tsx
+
+# Run tests matching a pattern
+npm test -- --run --grep "HomePage"
 ```
 
 ### Test Coverage
 
-The test suite covers:
-
-- **Component Rendering**: Verifies components render correctly
-- **User Interactions**: Tests button clicks and navigation
-- **Routing Logic**: Ensures proper page routing
-- **Loading States**: Tests loading screen functionality
-- **Content Validation**: Checks for expected text and elements
+The test suite covers component rendering, user interactions, routing logic, loading states, and content validation. Coverage reports are generated in multiple formats and saved to the `coverage/` directory.
 
 ## Deployment
 
