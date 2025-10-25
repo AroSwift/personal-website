@@ -6,7 +6,7 @@ import {
   ExternalLink,
   Mail,
   Github,
-  Download,
+  Eye,
   FileText,
   Calendar,
   MapPin,
@@ -588,8 +588,8 @@ const AboutPage = () => {
                           rel="noopener noreferrer"
                           className="inline-flex items-center gap-2 bg-black dark:bg-soft-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-soft-white-hover rounded-full px-6 py-3 text-sm font-medium transition-colors duration-300 hover:scale-105 dark:enhanced-glow dark:hover-enhanced"
                         >
-                          <Download className="h-4 w-4" />
-                          Download Presentation
+                          <Eye className="h-4 w-4" />
+                          View Presentation
                         </a>
                       </div>
                     </CardContent>
