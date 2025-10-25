@@ -21,6 +21,15 @@ const ProjectsPage = () => {
     link?: string
   }> = [
     {
+      title: 'American Science Cloud Hub & Portal',
+      description:
+        'Developing U.S. Department of Energy\'s AmSC Hub & Portal (AmSC = American Science Cloud). The Hub enables backend multi-HPC facility allocation requests for open science research, provider management, service management, and centralized canonical control of multiple facility management with federated authentication across HPC facilities under various security enclaves. The Portal provides centralized visualization of HPC utilization and self-management of multi-facility research.',
+      tech: 'Ruby on Rails, Hotwire, SASS, Vue.js, TypeScript, Kubernetes',
+      category: 'HPC Management',
+      year: '2025-Present @ National Center for Computational Sciences',
+      status: 'In-Development',
+    },
+    {
       title: 'RATS',
       description:
         'RATS (Resource Allocation and Tracking System) is a comprehensive HPC management and CRM application that maintains canonical state across 27+ HPC clusters including Frontier, the world\'s first exascale supercomputer. I\'ve contributed to ~35% of the current production codebase. Provisions filesystem directories, UNIX users/groups, access controls, scheduler configuration (SLURM, LSF, MOAB, & KUBE), automated policy enforcement, and more for $700M+ in compute systems.',
@@ -40,7 +49,7 @@ const ProjectsPage = () => {
       link: 'https://my.olcf.ornl.gov',
     },
     {
-      title: 'Cognitive Document Intelligence Platform',
+      title: 'Structured Bank Document Extraction Pipeline',
       description:
         'Built and productionized a natural language processing workflow for 100M+ documents in response to SEC requirements mandating digitization of Bank of America paper records. The NLP workflow processes digitized records through a pipeline that extracts entities like name components (first name, middle name, last name), routing numbers, statement numbers, record numbers, and address components with 96% F1 score, supporting $20M+ annual automation savings.',
       tech: 'Python, NLP, spaCy, Rasa, Flask, Machine Learning',
@@ -104,6 +113,15 @@ const ProjectsPage = () => {
       category: 'Web Platform',
       year: '2023',
       status: 'Production',
+    },
+    {
+      title: 'Automated e-book creation',
+      description:
+        'AI system that automatically generates story ideas, iterates and improves them, then creates structured output for chapters to produce complete e-books.',
+      tech: 'Python, Crew AI',
+      category: 'AI Automation',
+      year: '2024',
+      status: 'Development',
     },
   ]
 
