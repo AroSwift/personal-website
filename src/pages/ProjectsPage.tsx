@@ -10,8 +10,56 @@ import Footer from '@/components/layout/Footer'
 
 // Projects page
 const ProjectsPage = () => {
-  // Projects
-  const featuredProjects = [
+  // Work Projects
+  const workProjects: Array<{
+    title: string
+    description: string
+    tech: string
+    category: string
+    year: string
+    status: string
+    link?: string
+  }> = [
+    {
+      title: 'RATS',
+      description:
+        'RATS (Resource Allocation and Tracking System) is a comprehensive HPC management and CRM application that maintains canonical state across 27+ HPC clusters including Frontier, the world\'s first exascale supercomputer. I\'ve contributed to ~35% of the current production codebase. Provisions filesystem directories, UNIX users/groups, access controls, scheduler configuration (SLURM, LSF, MOAB, & KUBE), automated policy enforcement, and more for $700M+ in compute systems.',
+      tech: 'Ruby on Rails, CoffeeScript, SQL, LDAP, Kubernetes, Docker',
+      category: 'HPC Management',
+      year: '2015-Present @ National Center for Computational Sciences',
+      status: 'Production',
+    },
+    {
+      title: 'myOLCF',
+      description:
+        'HPC self-service portal that I took over and delivered to production in 4 months, empowering scientists to access HPC services, manage projects, check allocations, and update profiles. Enables allocation requests for open science research and provides comprehensive metrics including burn-down charts across research projects. Features granular reporting on filesystem usage, GPU utilization, aggregated allocation usage across research projects, HPC systems, and users. Implemented OIDC authentication.',
+      tech: 'Vue.js, TypeScript, SASS, PWA, Kubernetes, Kustomize, Docker',
+      category: 'HPC Portal',
+      year: '2020-Present @ National Center for Computational Sciences',
+      status: 'Production',
+      link: 'https://my.olcf.ornl.gov',
+    },
+    {
+      title: 'Cognitive Document Intelligence Platform',
+      description:
+        'Built and productionized a natural language processing workflow for 100M+ documents in response to SEC requirements mandating digitization of Bank of America paper records. The NLP workflow processes digitized records through a pipeline that extracts entities like name components (first name, middle name, last name), routing numbers, statement numbers, record numbers, and address components with 96% F1 score, supporting $20M+ annual automation savings.',
+      tech: 'Python, NLP, spaCy, Rasa, Flask, Machine Learning',
+      category: 'Enterprise AI Workflow',
+      year: '2019-2020 @ Bank of America',
+      status: 'Production',
+    },
+  ]
+
+  // Personal Projects
+  const personalProjects: Array<{
+    title: string
+    description: string
+    tech: string
+    category: string
+    year: string
+    status: string
+    link?: string
+  }> = [
     {
       title: 'Automatic Movie Creation',
       description:
@@ -40,16 +88,6 @@ const ProjectsPage = () => {
       status: 'Active',
     },
     {
-      title: 'myOLCF',
-      description:
-        'HPC self-service portal empowering scientists to access OLCF services, manage projects, check allocations, and update profiles.',
-      tech: 'Ruby on Rails, PostgreSQL, Redis',
-      category: 'HPC Platform',
-      year: '2020-Present',
-      status: 'Production',
-      link: 'https://my.olcf.ornl.gov',
-    },
-    {
       title: 'AI Prediction-Market Trading System',
       description:
         'Multi-agent analysis with real-time WebSocket feeds, vector DB, and Kelly sizing for automated trading decisions.',
@@ -72,10 +110,10 @@ const ProjectsPage = () => {
   // Achievements
   const achievements = [
     {
-      title: 'Performance Breakthrough',
+      title: 'Cost Savings',
       description:
-        'Achieved 1320× performance improvement (−99.92%) in myOLCF through architectural changes',
-      impact: 'Serving 4k+ users across 1,000+ projects',
+        'Built NLP entity extraction service achieving 96% F1 score at Bank of America',
+      impact: '$20M+ annual savings through automation',
     },
     {
       title: 'Exascale Computing',
@@ -84,10 +122,10 @@ const ProjectsPage = () => {
       impact: "World's first exascale system deployment",
     },
     {
-      title: 'Cost Savings',
+      title: 'Performance Optimization',
       description:
-        'Built NLP entity extraction service achieving 96% F1 score at Bank of America',
-      impact: '$20M+ annual savings through automation',
+        'Achieved 1320x performance improvement for U.S. largest lab\'s self-service portal, myOLCF',
+      impact: 'Serving 4k+ users across 1,000+ projects',
     },
   ]
 
@@ -127,22 +165,29 @@ const ProjectsPage = () => {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.4 }}
             >
-              A collection of work spanning HPC platform engineering, agentic AI
-              systems, and performance optimization at scale. Each project
-              represents a unique challenge solved through innovative
-              engineering.
+              A collection of professional work and personal projects spanning HPC systems management, 
+              software development, and agentic AI systems. These showcase both my 
+              professional contributions and personal exploration of cutting-edge technologies.
             </motion.p>
           </motion.div>
 
-          {/* Featured Projects Grid with Staggered Animation */}
+          {/* Work Projects Section */}
           <motion.section
             className="mb-16 lg:mb-24"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.8, ease: 'easeOut' }}
           >
+            <motion.h2
+              className="text-2xl sm:text-3xl font-normal mb-8 text-center dark:text-enhanced"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.7, duration: 0.6 }}
+            >
+              Work Projects
+            </motion.h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {featuredProjects.map((project, index) => (
+              {workProjects.map((project, index) => (
                 <motion.div
                   key={index}
                   initial={{ opacity: 0, y: 30 }}
@@ -191,8 +236,105 @@ const ProjectsPage = () => {
                             href={project.link}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-muted-foreground hover:text-foreground transition-colors p-1"
+                            className="text-muted-foreground hover:text-foreground transition-colors p-1 flex items-center gap-1 text-sm"
                           >
+                            <span>Visit</span>
+                            <ExternalLink className="h-4 w-4" />
+                          </a>
+                        )}
+                      </div>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-base leading-relaxed mb-4 text-foreground">
+                        {project.description}
+                      </p>
+                      {/* Technology Stack Badges */}
+                      <div className="flex flex-wrap gap-1">
+                        {project.tech.split(', ').map((tech, techIndex) => (
+                          <Badge
+                            key={techIndex}
+                            variant="outline"
+                            className="text-xs font-normal dark:enhanced-glow"
+                          >
+                            {tech}
+                          </Badge>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              ))}
+            </div>
+          </motion.section>
+
+          {/* Personal Projects Section */}
+          <motion.section
+            className="mb-16 lg:mb-24"
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.2, duration: 0.8, ease: 'easeOut' }}
+          >
+            <motion.h2
+              className="text-2xl sm:text-3xl font-normal mb-8 text-center dark:text-enhanced"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.3, duration: 0.6 }}
+            >
+              Personal Projects
+            </motion.h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {personalProjects.map((project, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    delay: 1.4 + index * 0.1, // Staggered animation delay
+                    duration: 0.6,
+                    ease: 'easeOut',
+                  }}
+                >
+                  <Card className="border-border/50 hover:shadow-lg transition-all duration-300 h-full group hover:border-border dark:card-enhanced dark:hover-enhanced">
+                    <CardHeader className="pb-4">
+                      <div className="flex items-start justify-between mb-3">
+                        <div className="flex-1">
+                          {/* Project Category and Status Badges */}
+                          <div className="flex items-center gap-3 mb-2">
+                            <Badge
+                              variant="secondary"
+                              className="text-xs dark:enhanced-glow"
+                            >
+                              {project.category}
+                            </Badge>
+                            <Badge
+                              variant={
+                                project.status === 'Active'
+                                  ? 'default'
+                                  : project.status === 'Production'
+                                    ? 'secondary'
+                                    : 'outline'
+                              }
+                              className="text-xs dark:enhanced-glow"
+                            >
+                              {project.status}
+                            </Badge>
+                          </div>
+                          <CardTitle className="text-2xl font-bold group-hover:text-muted-foreground transition-colors">
+                            {project.title}
+                          </CardTitle>
+                          <p className="text-base text-muted-foreground mt-1">
+                            {project.year}
+                          </p>
+                        </div>
+                        {/* External Link Icon for Projects with Live URLs */}
+                        {project.link && (
+                          <a
+                            href={project.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-muted-foreground hover:text-foreground transition-colors p-1 flex items-center gap-1 text-sm"
+                          >
+                            <span>Visit</span>
                             <ExternalLink className="h-4 w-4" />
                           </a>
                         )}
@@ -226,15 +368,15 @@ const ProjectsPage = () => {
             className="mb-16 lg:mb-24"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 2.0, duration: 0.8, ease: 'easeOut' }}
+            transition={{ delay: 2.2, duration: 0.8, ease: 'easeOut' }}
           >
             <motion.h2
               className="text-2xl sm:text-3xl font-normal mb-8 text-center dark:text-enhanced"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 2.1, duration: 0.6 }}
+              transition={{ delay: 2.3, duration: 0.6 }}
             >
-              Key Achievements
+              Achievement Highlights
             </motion.h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {achievements.map((achievement, index) => (
@@ -243,7 +385,7 @@ const ProjectsPage = () => {
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{
-                    delay: 2.3 + index * 0.2, // Staggered animation
+                    delay: 2.5 + index * 0.2, // Staggered animation
                     duration: 0.6,
                     ease: 'easeOut',
                   }}
@@ -271,7 +413,7 @@ const ProjectsPage = () => {
             className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6 mb-16 lg:mb-24"
             initial={{ opacity: 0, y: 30, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 0.8, delay: 2.8, ease: 'easeOut' }}
+            transition={{ duration: 0.8, delay: 3.0, ease: 'easeOut' }}
           >
             <Link to="/about" className="w-full sm:w-auto">
               <Button className="w-full sm:w-auto bg-black dark:bg-soft-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-soft-white-hover rounded-full px-8 sm:px-12 py-4 sm:py-6 text-lg sm:text-xl font-medium transition-colors duration-500 dark:enhanced-glow dark:hover-enhanced">
@@ -290,7 +432,7 @@ const ProjectsPage = () => {
 
           {/* Footer Information Section */}
           <Footer
-            animationDelay={3.0}
+            animationDelay={3.2}
             textColor="text-muted-foreground"
             borderColor="border-border/50"
           />
