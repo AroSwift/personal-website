@@ -4,6 +4,7 @@ import react from '@vitejs/plugin-react'
 import { visualizer } from 'rollup-plugin-visualizer'
 
 export default defineConfig({
+  publicDir: 'public', // Ensure service-worker.js is copied to dist
   plugins: [
     react(),
     visualizer({
