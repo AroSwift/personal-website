@@ -44,7 +44,8 @@ self.addEventListener('install', event => {
 
         const cache = await caches.open(STATIC_CACHE)
         await cache.addAll(STATIC_FILES)
-        self.skipWaiting()
+        // Skip waiting to activate immediately
+        await self.skipWaiting()
       } catch {
         // Service Worker: Error caching static files from manifest
       }
@@ -90,8 +91,8 @@ self.addEventListener('fetch', event => {
 
   // Handle different types of requests
   if (url.pathname === '/' || url.pathname.endsWith('.html')) {
-    // HTML files - cache first, then network
-    event.respondWith(cacheFirst(request, STATIC_CACHE))
+    // HTML files - network first, then cache (ensures we get latest asset hashes)
+    event.respondWith(networkFirst(request, STATIC_CACHE))
   } else if (url.pathname.match(/\.(js|css|tsx|ts)$/)) {
     // Static assets - cache first, then network
     event.respondWith(cacheFirst(request, STATIC_CACHE))
@@ -199,7 +200,10 @@ async function networkFirst(request, cacheName) {
 
     // Return offline page for navigation requests
     if (request.mode === 'navigate') {
-      return caches.match('/offline.html')
+      const offlinePage = await caches.match('/offline.html')
+      if (offlinePage) {
+        return offlinePage
+      }
     }
 
     return new Response('Network error', { status: 503 })
