@@ -182,10 +182,6 @@ export default defineConfig({
       port: 5173,
     },
   },
-})
-
-// Vitest configuration
-export const testConfig = {
   test: {
     globals: true,
     environment: 'jsdom',
@@ -196,4 +192,4 @@ export const testConfig = {
       reporter: ['text', 'json', 'html'],
     },
   },
-}
+})
