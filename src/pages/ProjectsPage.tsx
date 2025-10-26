@@ -82,7 +82,7 @@ const ProjectsPage = () => {
     {
       title: 'Automatic E-commerce Product Creation',
       description:
-        'Built workflow to automate the creation and distribution of products like t-shirts and mugs. The system handles design generation, product descriptions, pricing optimization, and inventory management through an AI-driven workflow. Generated 152 products (~$0.31/unit) with descriptions and printed designs, and auto-publish to Etsy for sale.',
+        'AI-driven workflow to automate the creation and distribution of products like t-shirts and mugs. The system handles design generation, product descriptions, pricing optimization, and inventory management through an AI-driven workflow. Generated 152 products (~$0.31/unit) with descriptions and printed designs, and auto-publish to Etsy for sale.',
       tech: 'Python, Langchain, Playwright',
       category: 'AI Automation',
       year: '2023',
@@ -91,20 +91,21 @@ const ProjectsPage = () => {
     {
       title: 'Anthologia',
       description:
-        'Multi-agent pipeline that creates rich, multi-dimensional narrative concepts and turns them into 20-second videos with 4 scenes, using DALL·E 3 + Veo 3.0, ElevenLabs narration/SFX.',
-      tech: 'Python, Crew AI, Langchain, ElevenLabs, Veo',
+        'Created agentic system that conceptualizes, refines, and scripts intricate narrative ideas, transforming them into videos to create an anthology. Features automated review and critique of video sequences, narration, and sound effects. Due to cost constraints, videos are kept below 5 minutes.',
+      tech: 'Python, Crew AI, Langchain, ElevenLabs',
       category: 'AI Automation',
-      year: '2024',
+      year: '2024-Present',
       status: 'Development',
     },
     {
       title: 'Project Cadenza',
       description:
-        'Agentic pipeline creates artists/albums, writes lyrics, generates songs, masters audio, produces thumbnails/art, and auto-uploads to YouTube.',
-      tech: 'GPT, Suno, Udio, YouTube API',
+        'AI-driven workflow creates artists, albums, writes lyrics, generates songs, masters audio, produces art, and auto-uploads to YouTube. Has published 149 music videos with high-level configuration for genre selection, artist persona development, and automated content scheduling.',
+      tech: 'Python, Langchain, Puppeteer',
       category: 'AI Automation',
-      year: '2024',
-      status: 'Active',
+      year: '2023-Present',
+      status: 'Production',
+      link: 'https://www.youtube.com/@ProjectCadenza',
     },
     {
       title: 'AI Prediction-Market Trading System',
