@@ -41,22 +41,53 @@ export function usePWA() {
 
     // Service worker update detection
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker
-        .register('/service-worker.js')
-        .then(registration => {
-          // Check for updates periodically
+      // Check if service worker is already registered to prevent duplicates
+      navigator.serviceWorker.getRegistration().then(existingRegistration => {
+        if (!existingRegistration) {
+          navigator.serviceWorker
+            .register('/service-worker.js')
+            .then(registration => {
+              // Check for updates periodically
+              const checkForUpdates = () => {
+                registration.update()
+              }
+
+              // Check immediately on mount
+              checkForUpdates()
+
+              // Then check every 5 minutes (reduced from 10 seconds)
+              const updateInterval = setInterval(checkForUpdates, 5 * 60 * 1000)
+
+              registration.addEventListener('updatefound', () => {
+                const newWorker = registration.installing
+                if (newWorker) {
+                  newWorker.addEventListener('statechange', () => {
+                    if (
+                      newWorker.state === 'installed' &&
+                      navigator.serviceWorker.controller
+                    ) {
+                      setPwaState(prev => ({ ...prev, hasUpdate: true }))
+                    }
+                  })
+                }
+              })
+
+              return () => clearInterval(updateInterval)
+            })
+        } else {
+          // Service worker already registered, just set up update checking
           const checkForUpdates = () => {
-            registration.update()
+            existingRegistration.update()
           }
 
           // Check immediately on mount
           checkForUpdates()
 
-          // Then check every 10 seconds
-          const updateInterval = setInterval(checkForUpdates, 10 * 1000)
+          // Then check every 5 minutes
+          const updateInterval = setInterval(checkForUpdates, 5 * 60 * 1000)
 
-          registration.addEventListener('updatefound', () => {
-            const newWorker = registration.installing
+          existingRegistration.addEventListener('updatefound', () => {
+            const newWorker = existingRegistration.installing
             if (newWorker) {
               newWorker.addEventListener('statechange', () => {
                 if (
@@ -70,12 +101,13 @@ export function usePWA() {
           })
 
           return () => clearInterval(updateInterval)
-        })
+        }
+      })
 
+      // Remove automatic reload - let user choose when to update
       navigator.serviceWorker.addEventListener('controllerchange', () => {
         setPwaState(prev => ({ ...prev, hasUpdate: false }))
-        // Reload the page when a new service worker takes control
-        window.location.reload()
+        // Don't automatically reload - let the user decide when to update
       })
     }
 
@@ -97,6 +129,11 @@ export function usePWA() {
         }
         // Also check if there's an available update
         await registration.update()
+        
+        // Listen for controller change and reload when user explicitly updates
+        navigator.serviceWorker.addEventListener('controllerchange', () => {
+          window.location.reload()
+        }, { once: true })
       }
     } catch (error) {
       console.error('Error updating service worker:', error)

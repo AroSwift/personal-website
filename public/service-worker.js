@@ -48,8 +48,8 @@ self.addEventListener('install', event => {
       } catch {
         // Service Worker: Error caching static files from manifest
       }
-      // Always skip waiting to activate immediately
-      self.skipWaiting()
+      // Skip waiting to activate immediately (only when explicitly requested)
+      // self.skipWaiting() // Commented out to prevent automatic activation
     })()
   )
 })
@@ -266,6 +266,7 @@ self.addEventListener('notificationclick', event => {
 // Message handling for communication with main thread
 self.addEventListener('message', event => {
   if (event.data && event.data.type === 'SKIP_WAITING') {
+    // Only skip waiting when explicitly requested by user
     self.skipWaiting()
   }
 
