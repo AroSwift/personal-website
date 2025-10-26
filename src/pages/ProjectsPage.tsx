@@ -70,6 +70,25 @@ const ProjectsPage = () => {
     link?: string
   }> = [
     {
+      title: 'AI Podcast Production Pipeline',
+      description:
+        'Automatic podcast creation system that has produced 192 engaging podcast episodes so far (1.8k downloads, 50+ hours listened) through a fully automated pipeline including research, script writing, refinement, audio creation, to scheduled distribution through high-level configuration.',
+      tech: 'Python, ElevenLabs, RSS',
+      category: 'AI Automation',
+      year: '2023',
+      status: 'Production',
+      link: 'https://podcasts.apple.com/us/podcast/understand-all/id1755823546',
+    },
+    {
+      title: 'Automatic E-commerce Product Creation',
+      description:
+        'Built workflow to automate the creation and distribution of products like t-shirts and mugs. Generated 152 products (~$0.31/unit) with descriptions and printed designs, and auto-publish to Etsy for sale.',
+      tech: 'Python, Langchain, Playwright',
+      category: 'AI Automation',
+      year: '2023',
+      status: 'Production',
+    },
+    {
       title: 'Automatic Movie Creation',
       description:
         'Multi-agent workflow generates script → storyboard images → 10-sec clips → stitches, QC, and auto-publishes.',
