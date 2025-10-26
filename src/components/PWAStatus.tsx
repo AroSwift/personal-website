@@ -13,14 +13,20 @@ export function PWAStatus() {
     <div className="fixed bottom-4 right-4 z-50 space-y-2">
       {/* Update Available - Only show for app updates */}
       {hasUpdate && (
-        <div className="bg-card text-card-foreground p-4 rounded-lg shadow-lg max-w-sm border border-border relative">
+        <div className="bg-card text-card-foreground p-4 rounded-lg shadow-lg max-w-sm border border-border relative animate-in slide-in-from-bottom">
           <h3 className="font-semibold mb-2">Update Available</h3>
           <p className="text-sm mb-3 text-muted-foreground">
-            Aaron Barlow made some updates!<br />
-            Update to get the latest features and information.
+            A new version is available! Click below to update.
           </p>
-          <Button onClick={updateServiceWorker} size="sm" variant="default">
-            Update Now
+          <Button 
+            onClick={() => {
+              updateServiceWorker()
+              // The page will reload automatically when the new service worker activates
+            }} 
+            size="sm" 
+            variant="default"
+          >
+            Update & Reload
           </Button>
         </div>
       )}

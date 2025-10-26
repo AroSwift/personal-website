@@ -1,12 +1,39 @@
 /// <reference types="vitest" />
-import { defineConfig } from 'vite'
+import { defineConfig, Plugin } from 'vite'
 import react from '@vitejs/plugin-react'
 import { visualizer } from 'rollup-plugin-visualizer'
+import { readFileSync, writeFileSync } from 'fs'
+import { join } from 'path'
+
+// Plugin to inject build version into service worker
+function swVersionPlugin(): Plugin {
+  return {
+    name: 'sw-version',
+    generateBundle() {
+      // Generate a unique version based on timestamp (format: v3-YYYYMMDD-HHMMSS)
+      const now = new Date()
+      const dateStr = now.toISOString().slice(0, 19).replace(/[:-]/g, '').replace('T', '-')
+      const version = `v3-${dateStr}`
+      
+      // Read the service worker from public directory
+      const swPath = join(process.cwd(), 'public', 'service-worker.js')
+      let swContent = readFileSync(swPath, 'utf-8')
+      
+      // Replace the BUILD_VERSION placeholder
+      swContent = swContent.replace(/BUILD_VERSION/g, version)
+      
+      // Write to dist directory
+      const distSwPath = join(process.cwd(), 'dist', 'service-worker.js')
+      writeFileSync(distSwPath, swContent, 'utf-8')
+    },
+  }
+}
 
 export default defineConfig({
   publicDir: 'public', // Ensure service-worker.js is copied to dist
   plugins: [
     react(),
+    swVersionPlugin(),
     visualizer({
       filename: 'dist/stats.html',
       open: true,

@@ -41,21 +41,38 @@ export function usePWA() {
 
     // Service worker update detection
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/service-worker.js').then(registration => {
-        registration.addEventListener('updatefound', () => {
-          const newWorker = registration.installing
-          if (newWorker) {
-            newWorker.addEventListener('statechange', () => {
-              if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                setPwaState(prev => ({ ...prev, hasUpdate: true }))
-              }
-            })
+      navigator.serviceWorker
+        .register('/service-worker.js')
+        .then(registration => {
+          // Check for updates periodically
+          const checkForUpdates = () => {
+            registration.update()
           }
+          
+          // Check immediately on mount
+          checkForUpdates()
+          
+          // Then check every 10 seconds
+          const updateInterval = setInterval(checkForUpdates, 10 * 1000)
+          
+          registration.addEventListener('updatefound', () => {
+            const newWorker = registration.installing
+            if (newWorker) {
+              newWorker.addEventListener('statechange', () => {
+                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                  setPwaState(prev => ({ ...prev, hasUpdate: true }))
+                }
+              })
+            }
+          })
+          
+          return () => clearInterval(updateInterval)
         })
-      })
       
       navigator.serviceWorker.addEventListener('controllerchange', () => {
         setPwaState(prev => ({ ...prev, hasUpdate: false }))
+        // Reload the page when a new service worker takes control
+        window.location.reload()
       })
     }
 
@@ -65,13 +82,21 @@ export function usePWA() {
     }
   }, [isBrowser])
 
-  const updateServiceWorker = () => {
-    if (
-      isBrowser &&
-      'serviceWorker' in navigator &&
-      navigator.serviceWorker.controller
-    ) {
-      navigator.serviceWorker.controller.postMessage({ type: 'SKIP_WAITING' })
+  const updateServiceWorker = async () => {
+    if (!isBrowser || !('serviceWorker' in navigator)) return
+    
+    try {
+      const registration = await navigator.serviceWorker.getRegistration()
+      if (registration) {
+        // If there's an installing service worker, send it the skip waiting message
+        if (registration.installing) {
+          registration.installing.postMessage({ type: 'SKIP_WAITING' })
+        }
+        // Also check if there's an available update
+        await registration.update()
+      }
+    } catch (error) {
+      console.error('Error updating service worker:', error)
     }
   }
 

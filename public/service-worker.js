@@ -1,4 +1,5 @@
-const CACHE_VERSION = 'v2-' + new Date().toISOString().split('T')[0] // Daily cache busting
+// Version for cache busting - automatically updated during build
+const CACHE_VERSION = 'BUILD_VERSION'
 const CACHE_NAME = `aaron-barlow-${CACHE_VERSION}`
 const STATIC_CACHE = `static-cache-${CACHE_VERSION}`
 const DYNAMIC_CACHE = `dynamic-cache-${CACHE_VERSION}`
@@ -44,11 +45,11 @@ self.addEventListener('install', event => {
 
         const cache = await caches.open(STATIC_CACHE)
         await cache.addAll(STATIC_FILES)
-        // Skip waiting to activate immediately
-        await self.skipWaiting()
       } catch {
         // Service Worker: Error caching static files from manifest
       }
+      // Always skip waiting to activate immediately
+      self.skipWaiting()
     })()
   )
 })
