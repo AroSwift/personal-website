@@ -13,9 +13,13 @@ vi.mock('framer-motion', () => ({
     h3: ({ children, ...props }: any) => <h3 {...props}>{children}</h3>,
     p: ({ children, ...props }: any) => <p {...props}>{children}</p>,
     span: ({ children, ...props }: any) => <span {...props}>{children}</span>,
-    button: ({ children, ...props }: any) => <button {...props}>{children}</button>,
+    button: ({ children, ...props }: any) => (
+      <button {...props}>{children}</button>
+    ),
     a: ({ children, ...props }: any) => <a {...props}>{children}</a>,
-    section: ({ children, ...props }: any) => <section {...props}>{children}</section>,
+    section: ({ children, ...props }: any) => (
+      <section {...props}>{children}</section>
+    ),
     main: ({ children, ...props }: any) => <main {...props}>{children}</main>,
   },
   AnimatePresence: ({ children }: { children: React.ReactNode }) => children,
@@ -26,7 +30,9 @@ vi.mock('lucide-react', () => ({
 }))
 
 vi.mock('@/components/ui/button', () => ({
-  Button: ({ children, ...props }: any) => <button {...props}>{children}</button>,
+  Button: ({ children, ...props }: any) => (
+    <button {...props}>{children}</button>
+  ),
 }))
 
 vi.mock('@/components/ui/badge', () => ({
@@ -35,7 +41,9 @@ vi.mock('@/components/ui/badge', () => ({
 
 vi.mock('@/components/ui/card', () => ({
   Card: ({ children, ...props }: any) => <div {...props}>{children}</div>,
-  CardContent: ({ children, ...props }: any) => <div {...props}>{children}</div>,
+  CardContent: ({ children, ...props }: any) => (
+    <div {...props}>{children}</div>
+  ),
   CardHeader: ({ children, ...props }: any) => <div {...props}>{children}</div>,
   CardTitle: ({ children, ...props }: any) => <h3 {...props}>{children}</h3>,
 }))
@@ -58,7 +66,11 @@ describe('ProjectsPage', () => {
 
   it('renders page description', () => {
     render(<ProjectsPage />)
-    expect(screen.getByText(/A collection of professional work and personal projects/)).toBeInTheDocument()
+    expect(
+      screen.getByText(
+        /A collection of professional work and personal projects/
+      )
+    ).toBeInTheDocument()
   })
 
   it('renders work projects section', () => {

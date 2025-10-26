@@ -12,7 +12,20 @@ interface HeaderProps {
 
 const Header = ({ className = '' }: HeaderProps) => {
   const location = useLocation()
-  const [theme, setTheme] = useState<'light' | 'dark'>('light')
+
+  // Initialize theme state properly to avoid synchronous setState in effect
+  const getInitialTheme = (): 'light' | 'dark' => {
+    if (typeof window === 'undefined') return 'light'
+    const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null
+    if (savedTheme) {
+      return savedTheme
+    }
+    return document.documentElement.classList.contains('dark')
+      ? 'dark'
+      : 'light'
+  }
+
+  const [theme, setTheme] = useState<'light' | 'dark'>(getInitialTheme)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [scrollY, setScrollY] = useState(0)
   const [isMobile, setIsMobile] = useState(false)
@@ -22,21 +35,13 @@ const Header = ({ className = '' }: HeaderProps) => {
   const themeIconAnimation = useAnimation()
 
   useEffect(() => {
-    // Check localStorage first, then fallback to current DOM state
-    const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null
-    if (savedTheme) {
-      setTheme(savedTheme)
-      if (savedTheme === 'dark') {
-        document.documentElement.classList.add('dark')
-      } else {
-        document.documentElement.classList.remove('dark')
-      }
+    // Apply theme to DOM without calling setState
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark')
     } else {
-      // Fallback to current DOM state
-      const isDark = document.documentElement.classList.contains('dark')
-      setTheme(isDark ? 'dark' : 'light')
+      document.documentElement.classList.remove('dark')
     }
-  }, [])
+  }, [theme])
 
   useEffect(() => {
     const handleScroll = () => {

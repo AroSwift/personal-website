@@ -23,20 +23,11 @@ const ProjectsPage = () => {
     {
       title: 'American Science Cloud Hub & Portal',
       description:
-        'Developing U.S. Department of Energy\'s AmSC Hub & Portal (AmSC = American Science Cloud). The Hub enables backend multi-HPC facility allocation requests for open science research, provider management, service management, and centralized canonical control of multiple facility management with federated authentication across HPC facilities under various security enclaves. The Portal provides centralized visualization of HPC utilization and self-management of multi-facility research.',
+        "Developing U.S. Department of Energy's AmSC Hub & Portal (AmSC = American Science Cloud). The Hub enables backend multi-HPC facility allocation requests for open science research, provider management, service management, and centralized canonical control of multiple facility management with federated authentication across HPC facilities under various security enclaves. The Portal provides centralized visualization of HPC utilization and self-management of multi-facility research.",
       tech: 'Ruby on Rails, Hotwire, SASS, Vue.js, TypeScript, Kubernetes',
       category: 'HPC Management',
       year: '2025-Present @ National Center for Computational Sciences',
       status: 'In-Development',
-    },
-    {
-      title: 'RATS',
-      description:
-        'RATS (Resource Allocation and Tracking System) is a comprehensive HPC management and CRM application that maintains canonical state across 27+ HPC clusters including Frontier, the world\'s first exascale supercomputer. I\'ve contributed to ~35% of the current production codebase. Provisions filesystem directories, UNIX users/groups, access controls, scheduler configuration (SLURM, LSF, MOAB, & KUBE), automated policy enforcement, and more for $700M+ in compute systems.',
-      tech: 'Ruby on Rails, CoffeeScript, SQL, LDAP, Kubernetes, Docker',
-      category: 'HPC Management',
-      year: '2015-Present @ National Center for Computational Sciences',
-      status: 'Production',
     },
     {
       title: 'myOLCF',
@@ -47,6 +38,15 @@ const ProjectsPage = () => {
       year: '2020-Present @ National Center for Computational Sciences',
       status: 'Production',
       link: 'https://my.olcf.ornl.gov',
+    },
+    {
+      title: 'RATS',
+      description:
+        "RATS (Resource Allocation and Tracking System) is a comprehensive HPC management and CRM application that maintains canonical state across 27+ HPC clusters including Frontier, the world's first exascale supercomputer. I've contributed to ~35% of the current production codebase. Provisions filesystem directories, UNIX users/groups, access controls, scheduler configuration (SLURM, LSF, MOAB, & KUBE), automated policy enforcement, and more for $700M+ in compute systems.",
+      tech: 'Ruby on Rails, CoffeeScript, SQL, LDAP, Kubernetes, Docker',
+      category: 'HPC Management',
+      year: '2015-Present @ National Center for Computational Sciences',
+      status: 'Production',
     },
     {
       title: 'Structured Bank Document Extraction Pipeline',
@@ -72,7 +72,7 @@ const ProjectsPage = () => {
     {
       title: 'AI Podcast Production Pipeline',
       description:
-        'Automatic podcast creation system that has produced 192 engaging podcast episodes so far (1.8k downloads, 50+ hours listened) through a fully automated pipeline including research, script writing, refinement, audio creation, to scheduled distribution through high-level configuration.',
+        'Automatic podcast creation system that has produced 192 engaging podcast episodes so far (1.8k downloads, 50+ hours listened) through a fully automated pipeline including research, script writing, refinement, audio creation, to scheduled distribution through high-level configuration. Built with scalability in mind to easily scale up production as needed.',
       tech: 'Python, ElevenLabs, RSS',
       category: 'AI Automation',
       year: '2023',
@@ -82,29 +82,20 @@ const ProjectsPage = () => {
     {
       title: 'Automatic E-commerce Product Creation',
       description:
-        'Built workflow to automate the creation and distribution of products like t-shirts and mugs. Generated 152 products (~$0.31/unit) with descriptions and printed designs, and auto-publish to Etsy for sale.',
+        'Built workflow to automate the creation and distribution of products like t-shirts and mugs. The system handles design generation, product descriptions, pricing optimization, and inventory management through an AI-driven workflow. Generated 152 products (~$0.31/unit) with descriptions and printed designs, and auto-publish to Etsy for sale.',
       tech: 'Python, Langchain, Playwright',
       category: 'AI Automation',
       year: '2023',
       status: 'Production',
     },
     {
-      title: 'Automatic Movie Creation',
+      title: 'Anthologia',
       description:
-        'Multi-agent workflow generates script → storyboard images → 10-sec clips → stitches, QC, and auto-publishes.',
-      tech: 'Agentic Pipeline, Runway, Cling',
+        'Multi-agent pipeline that creates rich, multi-dimensional narrative concepts and turns them into 20-second videos with 4 scenes, using DALL·E 3 + Veo 3.0, ElevenLabs narration/SFX.',
+      tech: 'Python, Crew AI, Langchain, ElevenLabs, Veo',
       category: 'AI Automation',
       year: '2024',
-      status: 'Active',
-    },
-    {
-      title: 'Anthologia (AI Video Storytelling)',
-      description:
-        'Multi-agent pipeline turns concepts into 20-second videos with 4 scenes, using DALL·E 3 + Veo 3.0, ElevenLabs narration/SFX.',
-      tech: 'CrewAI, DALL·E 3, Veo 3.0, ElevenLabs, LatentSync',
-      category: 'AI Automation',
-      year: '2024',
-      status: 'Active',
+      status: 'Development',
     },
     {
       title: 'Project Cadenza',
@@ -161,7 +152,7 @@ const ProjectsPage = () => {
     {
       title: 'Performance Optimization',
       description:
-        'Achieved 1320x performance improvement for U.S. largest lab\'s self-service portal, myOLCF',
+        "Achieved 1320x performance improvement for U.S. largest lab's self-service portal, myOLCF",
       impact: 'Serving 4k+ users across 1,000+ projects',
     },
   ]
@@ -202,9 +193,10 @@ const ProjectsPage = () => {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.4 }}
             >
-              A collection of professional work and personal projects spanning HPC systems management, 
-              software development, and agentic AI systems. These showcase both my 
-              professional contributions and personal exploration of cutting-edge technologies.
+              A collection of professional work and personal projects spanning
+              HPC systems management, software development, and agentic AI
+              systems. These showcase both my professional contributions and
+              personal exploration of cutting-edge technologies.
             </motion.p>
           </motion.div>
 

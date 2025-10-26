@@ -24,6 +24,7 @@ export default [
         window: 'readonly',
         localStorage: 'readonly',
         navigator: 'readonly',
+        console: 'readonly',
         setTimeout: 'readonly',
         clearTimeout: 'readonly',
         setInterval: 'readonly',
@@ -74,13 +75,14 @@ export default [
     },
   },
   {
-    files: ['**/*.js', '**/*.cjs', '**/*.mjs'],
+    files: ['**/*.js', '**/*.cjs', '**/*.mjs', '**/*.ts', '**/*.tsx'],
     languageOptions: {
       globals: {
         module: 'readonly',
         require: 'readonly',
         __dirname: 'readonly',
         exports: 'readonly',
+        process: 'readonly',
       },
     },
   },
@@ -130,7 +132,11 @@ export default [
         beforeAll: 'readonly',
         afterAll: 'readonly',
         jest: 'readonly',
+        React: 'readonly',
       },
+    },
+    rules: {
+      '@typescript-eslint/no-explicit-any': 'off',
     },
   },
   {

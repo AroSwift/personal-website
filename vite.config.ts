@@ -12,16 +12,20 @@ function swVersionPlugin(): Plugin {
     generateBundle() {
       // Generate a unique version based on timestamp (format: v3-YYYYMMDD-HHMMSS)
       const now = new Date()
-      const dateStr = now.toISOString().slice(0, 19).replace(/[:-]/g, '').replace('T', '-')
+      const dateStr = now
+        .toISOString()
+        .slice(0, 19)
+        .replace(/[:-]/g, '')
+        .replace('T', '-')
       const version = `v3-${dateStr}`
-      
+
       // Read the service worker from public directory
       const swPath = join(process.cwd(), 'public', 'service-worker.js')
       let swContent = readFileSync(swPath, 'utf-8')
-      
+
       // Replace the BUILD_VERSION placeholder
       swContent = swContent.replace(/BUILD_VERSION/g, version)
-      
+
       // Write to dist directory
       const distSwPath = join(process.cwd(), 'dist', 'service-worker.js')
       writeFileSync(distSwPath, swContent, 'utf-8')
@@ -136,6 +140,9 @@ export default defineConfig({
         entryFileNames: 'assets/[name]-[hash].js',
         // Optimize asset naming
         assetFileNames: assetInfo => {
+          if (!assetInfo.name) {
+            return 'assets/[name]-[hash].[ext]'
+          }
           const info = assetInfo.name.split('.')
           const ext = info[info.length - 1]
           if (/\.(css)$/.test(assetInfo.name)) {
@@ -175,6 +182,10 @@ export default defineConfig({
       port: 5173,
     },
   },
+})
+
+// Vitest configuration
+export const testConfig = {
   test: {
     globals: true,
     environment: 'jsdom',
@@ -185,4 +196,4 @@ export default defineConfig({
       reporter: ['text', 'json', 'html'],
     },
   },
-})
+}

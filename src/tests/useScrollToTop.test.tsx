@@ -55,22 +55,22 @@ describe('useScrollToTop', () => {
 
   it('calls window.scrollTo on route change', () => {
     vi.useFakeTimers()
-    
+
     // Mock scrollY to be 100 (not at top)
     Object.defineProperty(window, 'scrollY', {
       value: 100,
       writable: true,
     })
-    
+
     const wrapper = ({ children }: { children: React.ReactNode }) => (
       <BrowserRouter>{children}</BrowserRouter>
     )
-    
+
     renderHook(() => useScrollToTop(), { wrapper })
-    
+
     // Fast-forward the timeout
     vi.advanceTimersByTime(100)
-    
+
     expect(mockScrollTo).toHaveBeenCalledWith({
       top: 0,
       behavior: 'smooth',
@@ -79,21 +79,21 @@ describe('useScrollToTop', () => {
 
   it('uses smooth scroll behavior', () => {
     vi.useFakeTimers()
-    
+
     // Mock scrollY to be 100 (not at top)
     Object.defineProperty(window, 'scrollY', {
       value: 100,
       writable: true,
     })
-    
+
     const wrapper = ({ children }: { children: React.ReactNode }) => (
       <BrowserRouter>{children}</BrowserRouter>
     )
-    
+
     renderHook(() => useScrollToTop(), { wrapper })
-    
+
     vi.advanceTimersByTime(100)
-    
+
     expect(mockScrollTo).toHaveBeenCalledWith({
       top: 0,
       behavior: 'smooth',
@@ -102,41 +102,41 @@ describe('useScrollToTop', () => {
 
   it('does not scroll if already at top', () => {
     vi.useFakeTimers()
-    
+
     // Mock scrollY to be 0 (already at top)
     Object.defineProperty(window, 'scrollY', {
       value: 0,
       writable: true,
     })
-    
+
     const wrapper = ({ children }: { children: React.ReactNode }) => (
       <BrowserRouter>{children}</BrowserRouter>
     )
-    
+
     renderHook(() => useScrollToTop(), { wrapper })
-    
+
     vi.advanceTimersByTime(100)
-    
+
     expect(mockScrollTo).not.toHaveBeenCalled()
   })
 
   it('scrolls when not at top', () => {
     vi.useFakeTimers()
-    
+
     // Mock scrollY to be 100 (not at top)
     Object.defineProperty(window, 'scrollY', {
       value: 100,
       writable: true,
     })
-    
+
     const wrapper = ({ children }: { children: React.ReactNode }) => (
       <BrowserRouter>{children}</BrowserRouter>
     )
-    
+
     renderHook(() => useScrollToTop(), { wrapper })
-    
+
     vi.advanceTimersByTime(100)
-    
+
     expect(mockScrollTo).toHaveBeenCalledWith({
       top: 0,
       behavior: 'smooth',
@@ -145,26 +145,26 @@ describe('useScrollToTop', () => {
 
   it('cleans up timeout on unmount', () => {
     vi.useFakeTimers()
-    
+
     const wrapper = ({ children }: { children: React.ReactNode }) => (
       <BrowserRouter>{children}</BrowserRouter>
     )
-    
+
     const { unmount } = renderHook(() => useScrollToTop(), { wrapper })
-    
+
     // Unmount before timeout
     unmount()
-    
+
     // Fast-forward time
     vi.advanceTimersByTime(100)
-    
+
     // Should not have called scrollTo after unmount
     expect(mockScrollTo).not.toHaveBeenCalled()
   })
 
   it('handles browser without smooth scroll support', () => {
     vi.useFakeTimers()
-    
+
     // Mock CSS.supports to return false for smooth scroll
     Object.defineProperty(window, 'CSS', {
       value: {
@@ -172,21 +172,21 @@ describe('useScrollToTop', () => {
       },
       writable: true,
     })
-    
+
     // Mock scrollY to be 100
     Object.defineProperty(window, 'scrollY', {
       value: 100,
       writable: true,
     })
-    
+
     const wrapper = ({ children }: { children: React.ReactNode }) => (
       <BrowserRouter>{children}</BrowserRouter>
     )
-    
+
     renderHook(() => useScrollToTop(), { wrapper })
-    
+
     vi.advanceTimersByTime(100)
-    
+
     // Should still call scrollTo with smooth behavior
     expect(mockScrollTo).toHaveBeenCalledWith({
       top: 0,
@@ -196,7 +196,7 @@ describe('useScrollToTop', () => {
 
   it('uses custom smooth scroll implementation when needed', () => {
     vi.useFakeTimers()
-    
+
     // Mock CSS.supports to return false
     Object.defineProperty(window, 'CSS', {
       value: {
@@ -204,30 +204,30 @@ describe('useScrollToTop', () => {
       },
       writable: true,
     })
-    
+
     // Mock scrollY to be 100
     Object.defineProperty(window, 'scrollY', {
       value: 100,
       writable: true,
     })
-    
+
     // Mock performance.now to return increasing values
     let time = 0
     Object.defineProperty(window, 'performance', {
       value: {
-        now: vi.fn(() => time += 100),
+        now: vi.fn(() => (time += 100)),
       },
       writable: true,
     })
-    
+
     const wrapper = ({ children }: { children: React.ReactNode }) => (
       <BrowserRouter>{children}</BrowserRouter>
     )
-    
+
     renderHook(() => useScrollToTop(), { wrapper })
-    
+
     vi.advanceTimersByTime(100)
-    
+
     // Should call scrollTo initially
     expect(mockScrollTo).toHaveBeenCalledWith({
       top: 0,
@@ -237,61 +237,61 @@ describe('useScrollToTop', () => {
 
   it('handles multiple route changes', () => {
     vi.useFakeTimers()
-    
+
     // Mock scrollY to be 100 (not at top)
     Object.defineProperty(window, 'scrollY', {
       value: 100,
       writable: true,
     })
-    
+
     const wrapper = ({ children }: { children: React.ReactNode }) => (
       <BrowserRouter>{children}</BrowserRouter>
     )
-    
+
     const { rerender } = renderHook(() => useScrollToTop(), { wrapper })
-    
+
     // First route change
     vi.advanceTimersByTime(100)
     expect(mockScrollTo).toHaveBeenCalled()
-    
+
     // Clear the mock for the second call
     mockScrollTo.mockClear()
-    
+
     // Simulate route change by rerendering
     rerender()
-    
+
     // Second route change
     vi.advanceTimersByTime(100)
     expect(mockScrollTo).toHaveBeenCalled()
-    
+
     vi.useRealTimers()
   })
 
   it('works with different scroll positions', () => {
     vi.useFakeTimers()
-    
+
     const wrapper = ({ children }: { children: React.ReactNode }) => (
       <BrowserRouter>{children}</BrowserRouter>
     )
-    
+
     // Test with different scroll positions
     const scrollPositions = [50, 200, 500, 1000]
-    
-    scrollPositions.forEach((position, index) => {
+
+    scrollPositions.forEach(position => {
       Object.defineProperty(window, 'scrollY', {
         value: position,
         writable: true,
       })
-      
-      const { rerender } = renderHook(() => useScrollToTop(), { wrapper })
-      
+
+      renderHook(() => useScrollToTop(), { wrapper })
+
       vi.advanceTimersByTime(100)
-      
+
       expect(mockScrollTo).toHaveBeenCalledWith({
         top: 0,
         behavior: 'smooth',
       })
-      
+
       // Clear mocks for next iteration
       mockScrollTo.mockClear()
     })

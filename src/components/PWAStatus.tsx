@@ -18,12 +18,12 @@ export function PWAStatus() {
           <p className="text-sm mb-3 text-muted-foreground">
             A new version is available! Click below to update.
           </p>
-          <Button 
+          <Button
             onClick={() => {
               updateServiceWorker()
               // The page will reload automatically when the new service worker activates
-            }} 
-            size="sm" 
+            }}
+            size="sm"
             variant="default"
           >
             Update & Reload

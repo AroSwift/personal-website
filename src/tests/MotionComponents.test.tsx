@@ -20,7 +20,7 @@ describe('MotionComponents', () => {
         onThemeSelect={mockOnThemeSelect}
       />
     )
-    
+
     expect(screen.getByText('Portfolio of')).toBeInTheDocument()
     expect(screen.getByText('Aaron Barlow')).toBeInTheDocument()
   })
@@ -33,7 +33,7 @@ describe('MotionComponents', () => {
         onThemeSelect={mockOnThemeSelect}
       />
     )
-    
+
     expect(screen.getByText('Choose your theme')).toBeInTheDocument()
     expect(screen.getByText('Dark Mode')).toBeInTheDocument()
     expect(screen.getByText('Light Mode')).toBeInTheDocument()
@@ -47,7 +47,7 @@ describe('MotionComponents', () => {
         onThemeSelect={mockOnThemeSelect}
       />
     )
-    
+
     expect(screen.queryByText('Choose your theme')).not.toBeInTheDocument()
     expect(screen.queryByText('Dark Mode')).not.toBeInTheDocument()
     expect(screen.queryByText('Light Mode')).not.toBeInTheDocument()
@@ -61,10 +61,10 @@ describe('MotionComponents', () => {
         onThemeSelect={mockOnThemeSelect}
       />
     )
-    
+
     const darkModeButton = screen.getByText('Dark Mode')
     fireEvent.click(darkModeButton)
-    
+
     expect(mockOnThemeSelect).toHaveBeenCalledWith('dark')
   })
 
@@ -76,10 +76,10 @@ describe('MotionComponents', () => {
         onThemeSelect={mockOnThemeSelect}
       />
     )
-    
+
     const lightModeButton = screen.getByText('Light Mode')
     fireEvent.click(lightModeButton)
-    
+
     expect(mockOnThemeSelect).toHaveBeenCalledWith('light')
   })
 
@@ -91,7 +91,7 @@ describe('MotionComponents', () => {
         onThemeSelect={mockOnThemeSelect}
       />
     )
-    
+
     // The component should render without errors when exiting
     expect(screen.getByText('Portfolio of')).toBeInTheDocument()
     expect(screen.getByText('Aaron Barlow')).toBeInTheDocument()
@@ -105,7 +105,7 @@ describe('MotionComponents', () => {
         onThemeSelect={mockOnThemeSelect}
       />
     )
-    
+
     // The component should render without errors when not exiting
     expect(screen.getByText('Portfolio of')).toBeInTheDocument()
     expect(screen.getByText('Aaron Barlow')).toBeInTheDocument()
@@ -119,7 +119,7 @@ describe('MotionComponents', () => {
         onThemeSelect={mockOnThemeSelect}
       />
     )
-    
+
     expect(screen.getByText('Portfolio of')).toBeInTheDocument()
     expect(screen.getByText('Aaron Barlow')).toBeInTheDocument()
     expect(screen.getByText('Choose your theme')).toBeInTheDocument()
@@ -135,7 +135,7 @@ describe('MotionComponents', () => {
         onThemeSelect={mockOnThemeSelect}
       />
     )
-    
+
     expect(screen.getByText('Portfolio of')).toBeInTheDocument()
     expect(screen.getByText('Aaron Barlow')).toBeInTheDocument()
     expect(screen.queryByText('Choose your theme')).not.toBeInTheDocument()
@@ -149,14 +149,14 @@ describe('MotionComponents', () => {
         onThemeSelect={mockOnThemeSelect}
       />
     )
-    
+
     const darkModeButton = screen.getByText('Dark Mode')
     const lightModeButton = screen.getByText('Light Mode')
-    
+
     fireEvent.click(darkModeButton)
     fireEvent.click(lightModeButton)
     fireEvent.click(darkModeButton)
-    
+
     expect(mockOnThemeSelect).toHaveBeenCalledTimes(3)
     expect(mockOnThemeSelect).toHaveBeenNthCalledWith(1, 'dark')
     expect(mockOnThemeSelect).toHaveBeenNthCalledWith(2, 'light')
@@ -171,10 +171,10 @@ describe('MotionComponents', () => {
         onThemeSelect={mockOnThemeSelect}
       />
     )
-    
+
     const darkModeButton = screen.getByText('Dark Mode')
     const lightModeButton = screen.getByText('Light Mode')
-    
+
     expect(darkModeButton).toBeInTheDocument()
     expect(lightModeButton).toBeInTheDocument()
     expect(darkModeButton.tagName).toBe('BUTTON')
@@ -189,7 +189,7 @@ describe('MotionComponents', () => {
         onThemeSelect={mockOnThemeSelect}
       />
     )
-    
+
     expect(screen.getByText('Portfolio of')).toBeInTheDocument()
     expect(screen.getByText('Aaron Barlow')).toBeInTheDocument()
   })
@@ -202,7 +202,7 @@ describe('MotionComponents', () => {
         onThemeSelect={mockOnThemeSelect}
       />
     )
-    
+
     expect(screen.getByText('Choose your theme')).toBeInTheDocument()
   })
 })

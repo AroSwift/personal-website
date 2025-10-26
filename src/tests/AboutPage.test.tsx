@@ -14,9 +14,13 @@ vi.mock('framer-motion', () => ({
     p: ({ children, ...props }: any) => <p {...props}>{children}</p>,
     span: ({ children, ...props }: any) => <span {...props}>{children}</span>,
     img: ({ children, ...props }: any) => <img {...props}>{children}</img>,
-    button: ({ children, ...props }: any) => <button {...props}>{children}</button>,
+    button: ({ children, ...props }: any) => (
+      <button {...props}>{children}</button>
+    ),
     a: ({ children, ...props }: any) => <a {...props}>{children}</a>,
-    section: ({ children, ...props }: any) => <section {...props}>{children}</section>,
+    section: ({ children, ...props }: any) => (
+      <section {...props}>{children}</section>
+    ),
     main: ({ children, ...props }: any) => <main {...props}>{children}</main>,
   },
   AnimatePresence: ({ children }: { children: React.ReactNode }) => children,
@@ -33,7 +37,9 @@ vi.mock('lucide-react', () => ({
 }))
 
 vi.mock('@/components/ui/button', () => ({
-  Button: ({ children, ...props }: any) => <button {...props}>{children}</button>,
+  Button: ({ children, ...props }: any) => (
+    <button {...props}>{children}</button>
+  ),
 }))
 
 vi.mock('@/components/ui/badge', () => ({
@@ -42,7 +48,9 @@ vi.mock('@/components/ui/badge', () => ({
 
 vi.mock('@/components/ui/card', () => ({
   Card: ({ children, ...props }: any) => <div {...props}>{children}</div>,
-  CardContent: ({ children, ...props }: any) => <div {...props}>{children}</div>,
+  CardContent: ({ children, ...props }: any) => (
+    <div {...props}>{children}</div>
+  ),
   CardHeader: ({ children, ...props }: any) => <div {...props}>{children}</div>,
   CardTitle: ({ children, ...props }: any) => <h3 {...props}>{children}</h3>,
 }))
@@ -72,7 +80,9 @@ describe('AboutPage', () => {
   it('displays personal information', () => {
     render(<AboutPage />)
     expect(screen.getByText('He/Him')).toBeInTheDocument()
-    expect(screen.getByText('HPC Software Engineer @ Oak Ridge National Laboratory')).toBeInTheDocument()
+    expect(
+      screen.getByText('HPC Software Engineer @ Oak Ridge National Laboratory')
+    ).toBeInTheDocument()
   })
 
   it('renders experience section', () => {

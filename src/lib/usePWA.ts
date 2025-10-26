@@ -48,27 +48,30 @@ export function usePWA() {
           const checkForUpdates = () => {
             registration.update()
           }
-          
+
           // Check immediately on mount
           checkForUpdates()
-          
+
           // Then check every 10 seconds
           const updateInterval = setInterval(checkForUpdates, 10 * 1000)
-          
+
           registration.addEventListener('updatefound', () => {
             const newWorker = registration.installing
             if (newWorker) {
               newWorker.addEventListener('statechange', () => {
-                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                if (
+                  newWorker.state === 'installed' &&
+                  navigator.serviceWorker.controller
+                ) {
                   setPwaState(prev => ({ ...prev, hasUpdate: true }))
                 }
               })
             }
           })
-          
+
           return () => clearInterval(updateInterval)
         })
-      
+
       navigator.serviceWorker.addEventListener('controllerchange', () => {
         setPwaState(prev => ({ ...prev, hasUpdate: false }))
         // Reload the page when a new service worker takes control
@@ -84,7 +87,7 @@ export function usePWA() {
 
   const updateServiceWorker = async () => {
     if (!isBrowser || !('serviceWorker' in navigator)) return
-    
+
     try {
       const registration = await navigator.serviceWorker.getRegistration()
       if (registration) {

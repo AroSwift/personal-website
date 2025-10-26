@@ -16,10 +16,18 @@ import HueOverlay from '../components/HueOverlay'
 
 // Mock the components
 vi.mock('../components/LoadingScreen', () => ({
-  default: ({ onComplete }: { onComplete: (theme: 'dark' | 'light') => void }) => (
+  default: ({
+    onComplete,
+  }: {
+    onComplete: (theme: 'dark' | 'light') => void
+  }) => (
     <div data-testid="loading-screen">
-      <button onClick={() => onComplete('dark')}>Complete Loading (Dark)</button>
-      <button onClick={() => onComplete('light')}>Complete Loading (Light)</button>
+      <button onClick={() => onComplete('dark')}>
+        Complete Loading (Dark)
+      </button>
+      <button onClick={() => onComplete('light')}>
+        Complete Loading (Light)
+      </button>
     </div>
   ),
 }))
@@ -123,7 +131,7 @@ describe('App', () => {
     // Reset localStorage mock before each test
     vi.mocked(localStorage.getItem).mockReset()
     vi.mocked(localStorage.setItem).mockReset()
-    
+
     // Reset document class list
     document.documentElement.className = ''
   })
@@ -183,7 +191,10 @@ describe('App', () => {
     expect(screen.getByTestId('home-page')).toBeInTheDocument()
     expect(localStorage.setItem).toHaveBeenCalledWith('theme', 'dark')
     expect(localStorage.setItem).toHaveBeenCalledWith('hasVisited', 'true')
-    expect(localStorage.setItem).toHaveBeenCalledWith('triggerPostLoadAnimation', 'true')
+    expect(localStorage.setItem).toHaveBeenCalledWith(
+      'triggerPostLoadAnimation',
+      'true'
+    )
   })
 
   it('applies light theme when light mode is selected', async () => {
@@ -202,7 +213,10 @@ describe('App', () => {
     expect(screen.getByTestId('home-page')).toBeInTheDocument()
     expect(localStorage.setItem).toHaveBeenCalledWith('theme', 'light')
     expect(localStorage.setItem).toHaveBeenCalledWith('hasVisited', 'true')
-    expect(localStorage.setItem).toHaveBeenCalledWith('triggerPostLoadAnimation', 'true')
+    expect(localStorage.setItem).toHaveBeenCalledWith(
+      'triggerPostLoadAnimation',
+      'true'
+    )
   })
 
   it('renders all routes correctly', async () => {
@@ -211,7 +225,7 @@ describe('App', () => {
       return null
     })
 
-    const { rerender } = testingLibraryRender(<TestApp />)
+    testingLibraryRender(<TestApp />)
 
     await waitFor(() => {
       expect(screen.getByTestId('home-page')).toBeInTheDocument()
@@ -265,6 +279,9 @@ describe('App', () => {
       expect(screen.queryByTestId('loading-screen')).not.toBeInTheDocument()
     })
 
-    expect(localStorage.setItem).toHaveBeenCalledWith('triggerPostLoadAnimation', 'true')
+    expect(localStorage.setItem).toHaveBeenCalledWith(
+      'triggerPostLoadAnimation',
+      'true'
+    )
   })
 })

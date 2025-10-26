@@ -2,7 +2,7 @@
 // Verifies rendering, email copy functionality, social links, and user interactions
 
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { render, screen, fireEvent, waitFor } from './utils'
+import { render, screen } from './utils'
 
 // Mock external dependencies
 vi.mock('framer-motion', () => ({
@@ -13,9 +13,13 @@ vi.mock('framer-motion', () => ({
     h3: ({ children, ...props }: any) => <h3 {...props}>{children}</h3>,
     p: ({ children, ...props }: any) => <p {...props}>{children}</p>,
     span: ({ children, ...props }: any) => <span {...props}>{children}</span>,
-    button: ({ children, ...props }: any) => <button {...props}>{children}</button>,
+    button: ({ children, ...props }: any) => (
+      <button {...props}>{children}</button>
+    ),
     a: ({ children, ...props }: any) => <a {...props}>{children}</a>,
-    section: ({ children, ...props }: any) => <section {...props}>{children}</section>,
+    section: ({ children, ...props }: any) => (
+      <section {...props}>{children}</section>
+    ),
     main: ({ children, ...props }: any) => <main {...props}>{children}</main>,
   },
   AnimatePresence: ({ children }: { children: React.ReactNode }) => children,
@@ -31,7 +35,9 @@ vi.mock('lucide-react', () => ({
 }))
 
 vi.mock('@/components/ui/button', () => ({
-  Button: ({ children, ...props }: any) => <button {...props}>{children}</button>,
+  Button: ({ children, ...props }: any) => (
+    <button {...props}>{children}</button>
+  ),
 }))
 
 vi.mock('../components/layout/Header', () => ({
@@ -70,7 +76,9 @@ describe('ContactPage', () => {
   it('renders main heading and description', () => {
     render(<ContactPage />)
     expect(screen.getByText('Get in touch')).toBeInTheDocument()
-    expect(screen.getByText(/I enjoy connecting with new people/)).toBeInTheDocument()
+    expect(
+      screen.getByText(/I enjoy connecting with new people/)
+    ).toBeInTheDocument()
   })
 
   it('renders email button', () => {
@@ -82,7 +90,10 @@ describe('ContactPage', () => {
   it('renders LinkedIn link', () => {
     render(<ContactPage />)
     const linkedinLink = screen.getByRole('link', { name: 'LinkedIn' })
-    expect(linkedinLink).toHaveAttribute('href', 'https://linkedin.com/in/allaaronbarlow/')
+    expect(linkedinLink).toHaveAttribute(
+      'href',
+      'https://linkedin.com/in/allaaronbarlow/'
+    )
   })
 
   it('renders GitHub link', () => {
