@@ -108,30 +108,21 @@ const ProjectsPage = () => {
       link: 'https://www.youtube.com/@ProjectCadenza',
     },
     {
-      title: 'AI Prediction-Market Trading System',
+      title: 'AI Event Prediction Trading System',
       description:
-        'Multi-agent analysis with real-time WebSocket feeds, vector DB, and Kelly sizing for automated trading decisions.',
-      tech: 'CrewAI, WebSocket, Vector DB, Kalshi API',
+        'AI-driven trading system for prediction markets on Kalshi that identifies short-term inefficiencies, makes predictions of price movement, and places/manages event contracts (probability of an event occurring). Analyzes trends from polarizing platforms and extreme news sources to identify behavioral patterns influencing market sentiment, enabling strategic trade execution based on mass psychology. Generates profit from Kalshi trades but operates at a minor loss due to inference costs.',
+      tech: 'Python, Vector DB, WebSockets',
       category: 'AI Trading',
-      year: '2024',
-      status: 'Development',
+      year: '2024-Present',
+      status: 'Production',
     },
     {
       title: 'HOA Management Platform',
       description:
-        'Multi-tenant Rails+React application with modules for dues, violations, residents, and public sites.',
-      tech: 'Ruby on Rails, React, Vite, Inertia',
+        'Comprehensive HOA management platform serving multiple communities with centralized property management, automated payment processing, violation tracking, maintenance requests, and community communication tools. Includes financial reporting, election management, and public-facing community websites.',
+      tech: 'Ruby on Rails, React, Vite, Inertia, SASS, Redis, SQL',
       category: 'Web Platform',
-      year: '2023',
-      status: 'Production',
-    },
-    {
-      title: 'Automated e-book creation',
-      description:
-        'AI system that automatically generates story ideas, iterates and improves them, then creates structured output for chapters to produce complete e-books.',
-      tech: 'Python, Crew AI',
-      category: 'AI Automation',
-      year: '2024',
+      year: '2018-Present',
       status: 'Development',
     },
   ]
