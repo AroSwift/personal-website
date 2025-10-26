@@ -177,7 +177,7 @@ const AboutPage = () => {
       <Header />
 
       {/* Main Content */}
-      <main className="pt-48 sm:pt-56 md:pt-64 lg:pt-72 xl:pt-80 min-h-screen flex flex-col">
+      <main className="pt-36 sm:pt-42 md:pt-48 lg:pt-54 xl:pt-60 min-h-screen flex flex-col">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col flex-1 justify-start pb-16 sm:pb-24 lg:pb-32 relative z-20">
           {/* Hero Section with Profile and Bio */}
           <motion.div
