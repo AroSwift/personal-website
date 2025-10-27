@@ -129,11 +129,15 @@ export function usePWA() {
         }
         // Also check if there's an available update
         await registration.update()
-        
+
         // Listen for controller change and reload when user explicitly updates
-        navigator.serviceWorker.addEventListener('controllerchange', () => {
-          window.location.reload()
-        }, { once: true })
+        navigator.serviceWorker.addEventListener(
+          'controllerchange',
+          () => {
+            window.location.reload()
+          },
+          { once: true }
+        )
       }
     } catch (error) {
       console.error('Error updating service worker:', error)

@@ -77,6 +77,7 @@ const AboutPage = () => {
       period: 'Jun 2020 - Present',
       location: 'Oak Ridge, TN (Remote)',
       scope: '',
+      bannerImage: '/about/ornl.webp',
       highlights: [
         'Enabled privacy-preserving federated learning on Frontier (first U.S. exascale system; TOP500 #2). Ported NVFLARE to ROCm/MI250X with PyTorch, built HIP-compatible containers, integrated with Slurm (mTLS in enclaves), and validated multi-node training rounds previously impossible.',
         'Owned and scaled myOLCF self-service portal to ~4,000 users across 1,000+ projects with 99.9%+ uptime; shipped 12 FY2025 releases governing access, allocation, and policy across enclaves.',
@@ -91,6 +92,7 @@ const AboutPage = () => {
       role: 'Global Technology Summer Analyst (ML Engineer Intern)',
       period: 'Jun 2019 - Aug 2019',
       location: 'Greater Los Angeles Area',
+      bannerImage: '/about/bofa.webp',
       highlights: [
         'Built NLP entity extraction service (names, phones, addresses, accounts, amounts) achieving 96% F1 score, enabling $20M+ in annual automation savings.',
       ],
@@ -100,6 +102,7 @@ const AboutPage = () => {
       role: 'Software Developer Intern, National Center for Computational Sciences (NCCS)',
       period: 'May 2015 - May 2019',
       location: 'Oak Ridge, TN',
+      bannerImage: '/about/ornl.webp',
       highlights: [
         'Year-round development of HPC-centric services, applications, and BI tools for 20+ HPC clusters, ensuring uptime for $250M compute systems; shipped production features across internal portals.',
         'Automated supercomputer-access communications via policy-aware email system; standardized messaging and reduced manual steps.',
@@ -118,6 +121,7 @@ const AboutPage = () => {
       honors: "Dean's List",
       activities:
         'ACM (President, 2019-2020), Ethical Hacking (Vice President, 2018-2019)',
+      bannerImage: '/about/etsu.webp',
     },
     {
       school: 'Pellissippi State Community College',
@@ -126,6 +130,7 @@ const AboutPage = () => {
       gpa: '3.84/4',
       honors: "Dean's List",
       activities: 'Phi Theta Kappa Honor Society, Gamma Beta Phi Society',
+      bannerImage: '/about/pscc.webp',
     },
   ]
 
@@ -150,6 +155,7 @@ const AboutPage = () => {
       pdfUrl: '/presentations/cug-2025-hpc-system-management.pdf',
       category: 'HPC Management',
       tags: ['HPC', 'System Management', 'Automation', 'Scalability'],
+      bannerImage: null, // Could add conference logo/banner here
     },
     {
       title: 'Employing DevOps in HPC Operational Management',
@@ -161,6 +167,7 @@ const AboutPage = () => {
       pdfUrl: '/presentations/nlit-2024-devops-hpc.pdf',
       category: 'DevOps',
       tags: ['DevOps', 'HPC', 'Operations', 'Infrastructure'],
+      bannerImage: null, // Could add conference logo/banner here
     },
   ]
 
@@ -366,7 +373,18 @@ const AboutPage = () => {
                     ease: 'easeOut',
                   }}
                 >
-                  <Card className="border-border/50 hover:shadow-lg transition-all duration-300 group hover:border-border dark:card-enhanced dark:hover-enhanced">
+                  <Card className="border-border/50 hover:shadow-lg transition-all duration-300 group hover:border-border dark:card-enhanced dark:hover-enhanced overflow-hidden">
+                    {/* Banner Image */}
+                    {job.bannerImage && (
+                      <div className="w-full h-24 max-h-24 overflow-hidden">
+                        <img
+                          src={job.bannerImage}
+                          alt={`${job.company} office`}
+                          className="w-full h-full object-cover object-center"
+                          loading="lazy"
+                        />
+                      </div>
+                    )}
                     <CardHeader>
                       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                         <div>
@@ -462,8 +480,19 @@ const AboutPage = () => {
               {education.map((edu, index) => (
                 <Card
                   key={index}
-                  className="border-border/50 hover:shadow-lg transition-all duration-300 group hover:border-border dark:card-enhanced dark:hover-enhanced"
+                  className="border-border/50 hover:shadow-lg transition-all duration-300 group hover:border-border dark:card-enhanced dark:hover-enhanced overflow-hidden"
                 >
+                  {/* Banner Image */}
+                  {edu.bannerImage && (
+                    <div className="w-full h-24 max-h-24 overflow-hidden">
+                      <img
+                        src={edu.bannerImage}
+                        alt={`${edu.school} campus`}
+                        className="w-full h-full object-cover object-center"
+                        loading="lazy"
+                      />
+                    </div>
+                  )}
                   <CardHeader>
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                       <div>
