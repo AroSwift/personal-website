@@ -195,24 +195,22 @@ const AboutPage = () => {
           >
             {/* Left Column - Profile Image and Contact Info */}
             <div className="lg:col-span-7">
-              {/* Profile Image with 3D Effect */}
-              <div className="perspective-3d-moderate mb-4 sm:mb-6 md:mb-8">
-                <motion.div
-                  className="transform-3d depth-moderate w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 lg:w-48 lg:h-48 xl:w-64 xl:h-64 rounded-2xl sm:rounded-3xl md:rounded-[2rem] overflow-hidden border-2 sm:border-4 border-border/50 dark:border-border/30 bg-muted shadow-lg"
-                  initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
-                  animate={{ opacity: 1, scale: 1, rotate: 0 }}
-                  transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
-                >
-                  <img
-                    src="/profile-aaron-800.webp"
-                    alt="Aaron Barlow"
-                    className="w-full h-full object-cover"
-                    srcSet="/profile-aaron-400.webp 400w, /profile-aaron-800.webp 800w"
-                    sizes="(max-width: 640px) 400px, 800px"
-                    loading="lazy"
-                  />
-                </motion.div>
-              </div>
+              {/* Profile Image with Hover Effects */}
+              <motion.div
+                className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 lg:w-48 lg:h-48 xl:w-64 xl:h-64 rounded-2xl sm:rounded-3xl md:rounded-[2rem] overflow-hidden mb-4 sm:mb-6 md:mb-8 border-2 sm:border-4 border-border/50 dark:border-border/30 bg-muted shadow-lg hover:shadow-xl transition-all duration-500 hover:scale-105"
+                initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
+                animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
+              >
+                <img
+                  src="/profile-aaron-800.webp"
+                  alt="Aaron Barlow"
+                  className="w-full h-full object-cover hover:scale-110 transition-transform duration-700 ease-out"
+                  srcSet="/profile-aaron-400.webp 400w, /profile-aaron-800.webp 800w"
+                  sizes="(max-width: 640px) 400px, 800px"
+                  loading="lazy"
+                />
+              </motion.div>
 
               {/* Personal Information and Contact Details */}
               <motion.div
@@ -375,8 +373,7 @@ const AboutPage = () => {
                     ease: 'easeOut',
                   }}
                 >
-                  <div className="perspective-3d-subtle">
-                    <Card className="transform-3d depth-subtle border-border/50 hover:shadow-lg transition-all duration-300 group hover:border-border dark:card-enhanced dark:hover-enhanced overflow-hidden">
+                  <Card className="border-border/50 hover:shadow-lg transition-all duration-300 group hover:border-border dark:card-enhanced dark:hover-enhanced overflow-hidden">
                     {/* Banner Image */}
                     {job.bannerImage && (
                       <div className="w-full h-24 max-h-24 overflow-hidden">
@@ -425,7 +422,6 @@ const AboutPage = () => {
                       </ul>
                     </CardContent>
                   </Card>
-                  </div>
                 </motion.div>
               ))}
             </div>
@@ -482,10 +478,10 @@ const AboutPage = () => {
             </h2>
             <div className="space-y-6">
               {education.map((edu, index) => (
-                <div key={index} className="perspective-3d-subtle">
-                  <Card
-                    className="transform-3d depth-subtle border-border/50 hover:shadow-lg transition-all duration-300 group hover:border-border dark:card-enhanced dark:hover-enhanced overflow-hidden"
-                  >
+                <Card
+                  key={index}
+                  className="border-border/50 hover:shadow-lg transition-all duration-300 group hover:border-border dark:card-enhanced dark:hover-enhanced overflow-hidden"
+                >
                   {/* Banner Image */}
                   {edu.bannerImage && (
                     <div className="w-full h-24 max-h-24 overflow-hidden">
@@ -520,9 +516,8 @@ const AboutPage = () => {
                         <strong>Activities:</strong> {edu.activities}
                       </p>
                     </div>
-                    </CardContent>
-                  </Card>
-                </div>
+                  </CardContent>
+                </Card>
               ))}
             </div>
           </motion.section>
@@ -554,8 +549,7 @@ const AboutPage = () => {
                     ease: 'easeOut',
                   }}
                 >
-                  <div className="perspective-3d-subtle h-full">
-                    <Card className="transform-3d depth-subtle border-border/50 hover:shadow-lg transition-all duration-300 h-full group hover:border-border dark:card-enhanced dark:hover-enhanced">
+                  <Card className="border-border/50 hover:shadow-lg transition-all duration-300 h-full group hover:border-border dark:card-enhanced dark:hover-enhanced">
                     <CardHeader className="pb-4">
                       <div className="flex items-start justify-between mb-3">
                         <div className="flex-1">
@@ -629,7 +623,6 @@ const AboutPage = () => {
                       </div>
                     </CardContent>
                   </Card>
-                  </div>
                 </motion.div>
               ))}
             </div>
@@ -646,12 +639,11 @@ const AboutPage = () => {
               Organizations & Community
             </h2>
             <div className="max-w-4xl mx-auto">
-              <div className="perspective-3d-subtle">
-                <Card className="transform-3d depth-subtle border-border/50 hover:shadow-lg transition-all duration-300 group hover:border-border dark:card-enhanced dark:hover-enhanced">
-                  <CardHeader>
-                    <CardTitle className="text-xl">Leadership Roles</CardTitle>
-                  </CardHeader>
-                  <CardContent>
+              <Card className="border-border/50 hover:shadow-lg transition-all duration-300 group hover:border-border dark:card-enhanced dark:hover-enhanced">
+                <CardHeader>
+                  <CardTitle className="text-xl">Leadership Roles</CardTitle>
+                </CardHeader>
+                <CardContent>
                   <ul className="space-y-3">
                     {organizations.map((org, index) => (
                       <li
@@ -665,9 +657,8 @@ const AboutPage = () => {
                       </li>
                     ))}
                   </ul>
-                  </CardContent>
-                </Card>
-              </div>
+                </CardContent>
+              </Card>
             </div>
           </motion.section>
 

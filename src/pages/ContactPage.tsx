@@ -101,20 +101,18 @@ const ContactPage = () => {
                   transition={{ delay: 0.7, duration: 0.6 }}
                 >
                   {/* Resume Button */}
-                  <div className="perspective-3d-subtle">
-                    <Button
-                      onClick={() =>
-                        window.open(
-                          'https://aroswift.github.io/resume/resume.pdf',
-                          '_blank'
-                        )
-                      }
-                      className="transform-3d depth-subtle bg-black dark:bg-soft-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-soft-white-hover rounded-full px-5 sm:px-6 py-3 sm:py-4 lg:py-5 text-base sm:text-lg lg:text-xl xl:text-2xl font-medium flex items-center gap-3 transition-all duration-500"
-                    >
-                      My Resume
-                      <ExternalLink className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6" />
-                    </Button>
-                  </div>
+                  <Button
+                    onClick={() =>
+                      window.open(
+                        'https://aroswift.github.io/resume/resume.pdf',
+                        '_blank'
+                      )
+                    }
+                    className="bg-black dark:bg-soft-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-soft-white-hover rounded-full px-5 sm:px-6 py-3 sm:py-4 lg:py-5 text-base sm:text-lg lg:text-xl xl:text-2xl font-medium flex items-center gap-3 transition-colors duration-500"
+                  >
+                    My Resume
+                    <ExternalLink className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6" />
+                  </Button>
 
                   {/* Email Copy Button with Success Animation */}
                   <motion.div
@@ -124,42 +122,38 @@ const ContactPage = () => {
                     transition={{ duration: 0.3 }}
                     className="w-full sm:w-auto"
                   >
-                    <div className="perspective-3d-subtle">
-                      <Button
-                        onClick={copyEmail}
-                        variant="outline"
-                        className={`transform-3d depth-subtle w-full sm:w-auto border-2 ${emailCopied ? 'border-green-600/40 dark:border-green-400/60 text-green-800 dark:text-green-200 bg-green-50/80 dark:bg-green-900/40' : 'border-black dark:border-soft-white text-black dark:text-soft-white hover:bg-black dark:hover:bg-soft-white hover:text-white dark:hover:text-black'} rounded-full px-5 sm:px-6 py-3 sm:py-4 lg:py-5 text-base sm:text-lg lg:text-xl xl:text-2xl font-medium flex items-center gap-3 transition-all duration-500`}
+                    <Button
+                      onClick={copyEmail}
+                      variant="outline"
+                      className={`w-full sm:w-auto border-2 ${emailCopied ? 'border-green-600/40 dark:border-green-400/60 text-green-800 dark:text-green-200 bg-green-50/80 dark:bg-green-900/40' : 'border-black dark:border-soft-white text-black dark:text-soft-white hover:bg-black dark:hover:bg-soft-white hover:text-white dark:hover:text-black'} rounded-full px-5 sm:px-6 py-3 sm:py-4 lg:py-5 text-base sm:text-lg lg:text-xl xl:text-2xl font-medium flex items-center gap-3 transition-all duration-500`}
+                    >
+                      <motion.div
+                        animate={emailCopied ? { rotate: 360 } : { rotate: 0 }}
+                        transition={{ duration: 0.3 }}
                       >
-                        <motion.div
-                          animate={emailCopied ? { rotate: 360 } : { rotate: 0 }}
-                          transition={{ duration: 0.3 }}
-                        >
-                          {emailCopied ? (
-                            <Check className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6" />
-                          ) : (
-                            <Copy className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6" />
-                          )}
-                        </motion.div>
-                        {emailCopied ? 'Copied!' : 'Copy email'}
-                      </Button>
-                    </div>
+                        {emailCopied ? (
+                          <Check className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6" />
+                        ) : (
+                          <Copy className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6" />
+                        )}
+                      </motion.div>
+                      {emailCopied ? 'Copied!' : 'Copy email'}
+                    </Button>
                   </motion.div>
 
                   {/* LinkedIn Reach Out Button */}
-                  <div className="perspective-3d-subtle">
-                    <Button
-                      variant="outline"
-                      className="transform-3d depth-subtle border-2 border-black dark:border-soft-white text-black dark:text-soft-white hover:bg-black dark:hover:bg-soft-white hover:text-white dark:hover:text-black rounded-full px-5 sm:px-6 py-3 sm:py-4 lg:py-5 text-base sm:text-lg lg:text-xl xl:text-2xl font-medium flex items-center gap-3 transition-all duration-500"
-                      onClick={() =>
-                        window.open(
-                          'https://linkedin.com/in/allaaronbarlow/',
-                          '_blank'
-                        )
-                      }
-                    >
-                      Reach out
-                    </Button>
-                  </div>
+                  <Button
+                    variant="outline"
+                    className="border-2 border-black dark:border-soft-white text-black dark:text-soft-white hover:bg-black dark:hover:bg-soft-white hover:text-white dark:hover:text-black rounded-full px-5 sm:px-6 py-3 sm:py-4 lg:py-5 text-base sm:text-lg lg:text-xl xl:text-2xl font-medium flex items-center gap-3 transition-colors duration-500"
+                    onClick={() =>
+                      window.open(
+                        'https://linkedin.com/in/allaaronbarlow/',
+                        '_blank'
+                      )
+                    }
+                  >
+                    Reach out
+                  </Button>
                 </motion.div>
               </div>
 
@@ -182,29 +176,25 @@ const ContactPage = () => {
                     {socialLinks.map((social, index) => {
                       const Icon = social.icon
                       return (
-                        <motion.div
+                        <motion.a
                           key={social.name}
+                          href={social.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-300/50 dark:hover:bg-gray-700/50 transition-colors group"
                           initial={{ opacity: 0, y: 20 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{
                             delay: 0.8 + index * 0.1,
                             duration: 0.4,
                           }}
-                          className="perspective-3d-subtle"
+                          whileHover={{ scale: 1.02 }}
                         >
-                          <motion.a
-                            href={social.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="transform-3d depth-subtle flex items-center gap-3 p-3 rounded-lg hover:bg-gray-300/50 dark:hover:bg-gray-700/50 transition-all group"
-                            whileHover={{ scale: 1.02 }}
-                          >
-                            <Icon className="h-6 w-6 lg:h-7 lg:w-7 text-gray-700 dark:text-gray-300 group-hover:text-black dark:group-hover:text-white transition-colors" />
-                            <span className="text-lg lg:text-xl xl:text-2xl font-medium text-gray-700 dark:text-gray-300 group-hover:text-black dark:group-hover:text-white transition-colors">
-                              {social.name}
-                            </span>
-                          </motion.a>
-                        </motion.div>
+                          <Icon className="h-6 w-6 lg:h-7 lg:w-7 text-gray-700 dark:text-gray-300 group-hover:text-black dark:group-hover:text-white transition-colors" />
+                          <span className="text-lg lg:text-xl xl:text-2xl font-medium text-gray-700 dark:text-gray-300 group-hover:text-black dark:group-hover:text-white transition-colors">
+                            {social.name}
+                          </span>
+                        </motion.a>
                       )
                     })}
                   </div>

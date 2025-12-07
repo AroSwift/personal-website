@@ -219,8 +219,7 @@ const ProjectsPage = () => {
                     ease: 'easeOut',
                   }}
                 >
-                  <div className="perspective-3d-subtle h-full">
-                    <Card className="transform-3d depth-subtle border-border/50 hover:shadow-lg transition-all duration-300 h-full group hover:border-border dark:card-enhanced dark:hover-enhanced">
+                  <Card className="border-border/50 hover:shadow-lg transition-all duration-300 h-full group hover:border-border dark:card-enhanced dark:hover-enhanced">
                     <CardHeader className="pb-4">
                       <div className="flex items-start justify-between mb-3">
                         <div className="flex-1">
@@ -284,7 +283,6 @@ const ProjectsPage = () => {
                       </div>
                     </CardContent>
                   </Card>
-                  </div>
                 </motion.div>
               ))}
             </div>
@@ -317,72 +315,70 @@ const ProjectsPage = () => {
                     ease: 'easeOut',
                   }}
                 >
-                  <div className="perspective-3d-subtle h-full">
-                    <Card className="transform-3d depth-subtle border-border/50 hover:shadow-lg transition-all duration-300 h-full group hover:border-border dark:card-enhanced dark:hover-enhanced">
-                      <CardHeader className="pb-4">
-                        <div className="flex items-start justify-between mb-3">
-                          <div className="flex-1">
-                            {/* Project Category and Status Badges */}
-                            <div className="flex items-center gap-3 mb-2">
-                              <Badge
-                                variant="secondary"
-                                className="text-xs dark:enhanced-glow"
-                              >
-                                {project.category}
-                              </Badge>
-                              <Badge
-                                variant={
-                                  project.status === 'Active'
-                                    ? 'default'
-                                    : project.status === 'Production'
-                                      ? 'secondary'
-                                      : 'outline'
-                                }
-                                className="text-xs dark:enhanced-glow"
-                              >
-                                {project.status}
-                              </Badge>
-                            </div>
-                            <CardTitle className="text-2xl font-bold group-hover:text-muted-foreground transition-colors">
-                              {project.title}
-                            </CardTitle>
-                            <p className="text-base text-muted-foreground mt-1">
-                              {project.year}
-                            </p>
-                          </div>
-                          {/* External Link Icon for Projects with Live URLs */}
-                          {project.link && (
-                            <a
-                              href={project.link}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-muted-foreground hover:text-foreground transition-colors p-1 flex items-center gap-1 text-sm"
-                            >
-                              <span>Visit</span>
-                              <ExternalLink className="h-4 w-4" />
-                            </a>
-                          )}
-                        </div>
-                      </CardHeader>
-                      <CardContent>
-                        <p className="text-base leading-relaxed mb-4 text-foreground">
-                          {project.description}
-                        </p>
-                        {/* Technology Stack Badges */}
-                        <div className="flex flex-wrap gap-1">
-                          {project.tech.split(', ').map((tech, techIndex) => (
+                  <Card className="border-border/50 hover:shadow-lg transition-all duration-300 h-full group hover:border-border dark:card-enhanced dark:hover-enhanced">
+                    <CardHeader className="pb-4">
+                      <div className="flex items-start justify-between mb-3">
+                        <div className="flex-1">
+                          {/* Project Category and Status Badges */}
+                          <div className="flex items-center gap-3 mb-2">
                             <Badge
-                              key={techIndex}
-                              variant="outline"
-                              className="text-xs font-normal dark:enhanced-glow"
+                              variant="secondary"
+                              className="text-xs dark:enhanced-glow"
                             >
-                              {tech}
+                              {project.category}
                             </Badge>
-                          ))}
+                            <Badge
+                              variant={
+                                project.status === 'Active'
+                                  ? 'default'
+                                  : project.status === 'Production'
+                                    ? 'secondary'
+                                    : 'outline'
+                              }
+                              className="text-xs dark:enhanced-glow"
+                            >
+                              {project.status}
+                            </Badge>
+                          </div>
+                          <CardTitle className="text-2xl font-bold group-hover:text-muted-foreground transition-colors">
+                            {project.title}
+                          </CardTitle>
+                          <p className="text-base text-muted-foreground mt-1">
+                            {project.year}
+                          </p>
                         </div>
-                      </CardContent>
-                    </Card>
-                  </div>
+                        {/* External Link Icon for Projects with Live URLs */}
+                        {project.link && (
+                          <a
+                            href={project.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-muted-foreground hover:text-foreground transition-colors p-1 flex items-center gap-1 text-sm"
+                          >
+                            <span>Visit</span>
+                            <ExternalLink className="h-4 w-4" />
+                          </a>
+                        )}
+                      </div>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-base leading-relaxed mb-4 text-foreground">
+                        {project.description}
+                      </p>
+                      {/* Technology Stack Badges */}
+                      <div className="flex flex-wrap gap-1">
+                        {project.tech.split(', ').map((tech, techIndex) => (
+                          <Badge
+                            key={techIndex}
+                            variant="outline"
+                            className="text-xs font-normal dark:enhanced-glow"
+                          >
+                            {tech}
+                          </Badge>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
                 </motion.div>
               ))}
             </div>
@@ -415,8 +411,7 @@ const ProjectsPage = () => {
                     ease: 'easeOut',
                   }}
                 >
-                  <div className="perspective-3d-subtle h-full">
-                    <Card className="transform-3d depth-subtle border-border/50 hover:shadow-lg transition-all duration-300 h-full group hover:border-border dark:card-enhanced dark:hover-enhanced">
+                  <Card className="border-border/50 hover:shadow-lg transition-all duration-300 h-full group hover:border-border dark:card-enhanced dark:hover-enhanced">
                     <CardContent className="p-6">
                       <h3 className="text-xl font-semibold mb-3">
                         {achievement.title}
@@ -429,7 +424,6 @@ const ProjectsPage = () => {
                       </p>
                     </CardContent>
                   </Card>
-                  </div>
                 </motion.div>
               ))}
             </div>

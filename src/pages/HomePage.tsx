@@ -127,44 +127,43 @@ function HomePage() {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-12 mb-8 sm:mb-12 lg:mb-16">
               {/* Left Column - Main Content */}
               <div className="lg:col-span-9">
-                {/* Interactive Profile Image with 3D Effect */}
-                <div className="perspective-3d mb-4 sm:mb-6 md:mb-8 lg:mb-12 xl:mb-16 mx-auto lg:mx-0">
-                  <motion.div
-                    ref={profileImageRef}
-                    className={cn(
-                      'profile-image-container transform-3d depth-pronounced w-40 h-40 sm:w-56 sm:h-56 md:w-72 md:h-72 lg:w-96 lg:h-96 xl:w-112 xl:h-112 rounded-2xl sm:rounded-3xl overflow-hidden bg-muted dark:bg-gray-800 shadow-lg hover:shadow-2xl cursor-pointer relative select-none',
-                      isHovering &&
-                        'border-4 border-dashed border-foreground/60 shadow-2xl',
-                      !isHovering &&
-                        'border-2 border-border/50 dark:border-border/30 shadow-lg'
-                    )}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{
-                      opacity: 1,
-                      scale: isHovering ? 1.05 : 1,
-                      rotate: isDragging ? [0, -0.5, 0.5, -0.3, 0.3, 0] : 0,
-                      x: gravityOffset.x,
-                      y: gravityOffset.y,
-                    }}
-                    transition={{
-                      duration: isDragging ? 0.3 : 0.6,
-                      repeat: isDragging ? Infinity : 0,
-                      repeatType: 'reverse',
-                      x: { type: 'spring', stiffness: 150, damping: 15 },
-                      y: { type: 'spring', stiffness: 150, damping: 15 },
-                    }}
-                    onMouseEnter={() => setIsHovering(true)}
-                    onMouseLeave={() => {
-                      setIsHovering(false)
-                      setIsDragging(false)
-                    }}
-                    onMouseDown={handleMouseDown}
-                    onMouseMove={handleMouseMove}
-                    style={{
-                      transition: isDragging ? 'none' : 'transform 0.3s ease-out',
-                      userSelect: 'none',
-                    }}
-                  >
+                {/* Interactive Profile Image */}
+                <motion.div
+                  ref={profileImageRef}
+                  className={cn(
+                    'profile-image-container w-40 h-40 sm:w-56 sm:h-56 md:w-72 md:h-72 lg:w-96 lg:h-96 xl:w-112 xl:h-112 rounded-2xl sm:rounded-3xl overflow-hidden mb-4 sm:mb-6 md:mb-8 lg:mb-12 xl:mb-16 bg-muted dark:bg-gray-800 shadow-lg hover:shadow-2xl cursor-pointer relative select-none mx-auto lg:mx-0',
+                    isHovering &&
+                      'border-4 border-dashed border-foreground/60 shadow-2xl',
+                    !isHovering &&
+                      'border-2 border-border/50 dark:border-border/30 shadow-lg'
+                  )}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{
+                    opacity: 1,
+                    scale: isHovering ? 1.05 : 1,
+                    rotate: isDragging ? [0, -0.5, 0.5, -0.3, 0.3, 0] : 0,
+                    x: gravityOffset.x,
+                    y: gravityOffset.y,
+                  }}
+                  transition={{
+                    duration: isDragging ? 0.3 : 0.6,
+                    repeat: isDragging ? Infinity : 0,
+                    repeatType: 'reverse',
+                    x: { type: 'spring', stiffness: 150, damping: 15 },
+                    y: { type: 'spring', stiffness: 150, damping: 15 },
+                  }}
+                  onMouseEnter={() => setIsHovering(true)}
+                  onMouseLeave={() => {
+                    setIsHovering(false)
+                    setIsDragging(false)
+                  }}
+                  onMouseDown={handleMouseDown}
+                  onMouseMove={handleMouseMove}
+                  style={{
+                    transition: isDragging ? 'none' : 'transform 0.3s ease-out',
+                    userSelect: 'none',
+                  }}
+                >
                   {/* Guy profile image - shown by default with cartoon-like filters */}
                   <motion.img
                     src="/profile-guy-800.webp"
@@ -238,8 +237,7 @@ function HomePage() {
                       Surprise! It's really me!
                     </motion.div>
                   )}
-                  </motion.div>
-                </div>
+                </motion.div>
 
                 {/* Main Heading */}
                 <motion.h1
