@@ -9,7 +9,7 @@ A modern, responsive personal website for Aaron Barlow built with React, TypeScr
 ### Prerequisites
 
 - Node.js (version 16 or higher)
-- npm or yarn package manager
+- npm, yarn, or bun
 - Docker (for deployment)
 
 ### Installation
@@ -17,7 +17,7 @@ A modern, responsive personal website for Aaron Barlow built with React, TypeScr
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/personal-website.git
+   git clone https://github.com/AroSwift/personal-website.git
    cd personal-website
    ```
 
@@ -38,10 +38,17 @@ A modern, responsive personal website for Aaron Barlow built with React, TypeScr
 ### Available Scripts
 
 - `npm run dev` - Start development server
-- `npm run build` - Build for production
+- `npm run build` - Build for production and generate sitemap
+- `npm run build:check` - Type-check, build, and generate sitemap
+- `npm run indexnow` - Ping search engines via IndexNow
 - `npm run preview` - Preview production build locally
-- `npm run serve` - Serve production build locally
+- `npm run serve` - Serve production build locally on port 3000
 - `npm test` - Run tests in watch mode
+- `npm run lint` - Run ESLint
+- `npm run lint:fix` - Run ESLint with auto-fix
+- `npm run format` - Format with Prettier
+- `npm run format:check` - Check formatting
+- `npm run generate-favicons` - Generate favicon PNGs (uses `sharp`)
 
 ## Testing
 
@@ -74,7 +81,7 @@ The test suite covers component rendering, user interactions, routing logic, loa
 
 ### Dokploy Deployment
 
-This project is configured for deployment on Dokploy with a fully code-owned Docker setup using docker-compose.yml for proper Traefik integration. I configured for zero-downtime rolling updates enabled.
+This project is configured for deployment on Dokploy with a fully code-owned Docker setup using docker-compose.yml for proper Traefik integration and zero-downtime rolling updates.
 
 #### Dokploy Setup Steps:
 
@@ -126,6 +133,7 @@ The project can also be deployed to various static hosting platforms:
 - **TypeScript**: Full type safety and better development experience
 - **Performance**: Built with Vite for fast development and optimized builds
 - **PWA Support**: Progressive Web App with offline functionality and installation capabilities
+- **SEO**: Sitemap, robots.txt, IndexNow, llms.txt
 
 ## Performance & Build Metrics
 
@@ -137,19 +145,19 @@ The project can also be deployed to various static hosting platforms:
 
 ### Bundle Size
 
-- **Main Bundle**: 9.13 kB (2.87 kB gzipped) - optimized chunking
+- **Main Bundle**: ~9.4 kB (~3 kB gzipped) - optimized chunking
 - **Total Initial Load**: ~110 kB gzipped - efficient loading
-- **Lazy Loading**: Pages load on-demand (~1-18 kB each)
-- **Core Dependencies**: React core (72.38 kB gzipped) and vendor (16.25 kB gzipped) properly separated
+- **Lazy Loading**: Pages load on-demand (~1–20 kB each)
+- **Core Dependencies**: React core (~75 kB gzipped) and vendor (~23 kB gzipped) properly separated
 
 ### Chunking Strategy
 
-The build system now generates **15+ optimized chunks** for better performance:
+The build system generates **15+ optimized chunks** for better performance:
 
-- **Core Chunks**: `react-core` (226.74 kB, 72.38 kB gzipped), `vendor` (43.80 kB, 16.25 kB gzipped), `utils` (26.17 kB, 8.42 kB gzipped)
-- **Feature Chunks**: `animations` (80.42 kB, 26.12 kB gzipped), `components` (9.02 kB, 3.09 kB gzipped), `layout` (7.46 kB, 2.61 kB gzipped)
-- **Page Chunks**: `page-home` (7.72 kB, 2.68 kB gzipped), `page-about` (18.56 kB, 5.48 kB gzipped), `page-projects` (8.12 kB, 2.83 kB gzipped), `page-contact` (6.32 kB, 2.00 kB gzipped)
-- **Dynamic Imports**: Heavy libraries like Framer Motion are loaded on-demand to improve initial page load times
+- **Core Chunks**: `react-core` (~233 kB, ~75 kB gzipped), `vendor` (~66 kB, ~23 kB gzipped), `utils` (~27 kB, ~8.6 kB gzipped)
+- **Feature Chunks**: `animations` (~18 kB, ~7 kB gzipped) using LazyMotion + domAnimation, `components` (~9 kB, ~3.2 kB gzipped), `layout` (~7.5 kB, ~2.6 kB gzipped)
+- **Page Chunks**: `page-home` (~7.8 kB, ~2.7 kB gzipped), `page-about` (~19.5 kB, ~5.7 kB gzipped), `page-projects` (~15 kB, ~4.5 kB gzipped), `page-contact` (~6.4 kB, ~2 kB gzipped), `page-404` (~3 kB, ~1.1 kB gzipped)
+- **Animation Optimization**: Framer Motion uses `LazyMotion`, the `m` component, and `domAnimation` (~18 kB, ~7 kB gzipped)
 
 This granular approach ensures:
 
@@ -175,16 +183,14 @@ _Performance measured from Iowa, USA on 2025-08-22 by Cloudflare Observatory_
 
 ## Tech Stack
 
-- **Frontend Framework**: React 18 with TypeScript
+- **Frontend Framework**: React 19 with TypeScript
 - **Build Tool**: Vite
-- **Styling**: Tailwind CSS with shadcn/ui components
+- **Styling**: Tailwind CSS, shadcn/ui
 - **Routing**: React Router DOM with lazy loading
 - **UI Components**: Radix UI primitives with custom styling
-- **Animations**: Framer Motion
+- **Animations**: Framer Motion (LazyMotion + `m` + domAnimation)
 - **Icons**: Lucide React
 - **Testing**: Vitest + React Testing Library
-- **Forms**: React Hook Form
-- **Database**: Supabase (configured for future use)
 
 ### Build Optimizations
 
@@ -196,7 +202,7 @@ _Performance measured from Iowa, USA on 2025-08-22 by Cloudflare Observatory_
 - **Bundle Analysis**: Rollup plugin visualizer for ongoing optimization monitoring and chunk size analysis
 - **Minification**: ESBuild for fast and efficient code compression
 - **Asset Optimization**: Optimized images, CSS compression, and intelligent chunk naming
-- **Dynamic Imports**: Heavy libraries like Framer Motion loaded on-demand to improve Time to Interactive
+- **Dynamic Imports**: Route-based lazy loading for pages to improve Time to Interactive
 
 ## Project Structure
 
@@ -206,20 +212,38 @@ personal-website/
 │   ├── components/                    # Reusable UI components
 │   │   ├── ui/                        # shadcn/ui components
 │   │   ├── layout/                    # Layout components
-│   │   └── LoadingScreen.tsx          # Splash screen
+│   │   ├── HueOverlay.tsx
+│   │   ├── LinkRoll.tsx
+│   │   ├── LinkRoll.test.tsx
+│   │   ├── LoadingScreen.tsx
+│   │   ├── MotionComponents.tsx
+│   │   └── PWAStatus.tsx
 │   ├── pages/                         # Page components
+│   │   ├── about/                     # About page modules
+│   │   │   ├── aboutData.ts           # Skills, experience, education, etc.
+│   │   │   ├── AboutHero.tsx          # Profile, contact, bio
+│   │   │   ├── AboutExperience.tsx    # Work experience cards
+│   │   │   ├── AboutSkills.tsx        # Skills & technologies
+│   │   │   ├── AboutEducation.tsx     # Education cards
+│   │   │   ├── AboutPresentations.tsx # Technical talks
+│   │   │   └── AboutOrganizations.tsx # Leadership & community
 │   │   ├── HomePage.tsx               # Home page
-│   │   ├── AboutPage.tsx              # About page
+│   │   ├── AboutPage.tsx              # About page (composes about/*)
 │   │   ├── ProjectsPage.tsx           # Projects page
-│   │   └── ContactPage.tsx            # Contact page
+│   │   ├── ContactPage.tsx            # Contact page
+│   │   └── NotFoundPage.tsx           # 404 page
 │   ├── lib/                           # Utility functions and custom hooks
 │   │   ├── utils.ts                   # General utility functions
 │   │   ├── usePWA.ts                  # PWA functionality hook
 │   │   └── useScrollToTop.ts          # Scroll behavior hook
-│   ├── types/                         # TypeScript type definitions
+│   ├── tests/                         # Vitest + React Testing Library
 │   └── App.tsx                        # Main application component
-├── public/                            # Static assets
-├── dist/                              # Build output
+├── scripts/
+│   ├── generate-sitemap.js
+│   ├── indexnow-ping.js
+│   └── site-urls.js
+├── public/                            # Static assets (favicons, images, manifest, service-worker, sitemap, robots, PWA assets, presentations)
+├── dist/                              # Build output (includes stats.html for bundle analysis)
 ├── Dockerfile                         # Docker configuration
 ├── nginx.conf                         # Nginx configuration
 ├── docker-compose.yml                 # Docker Compose for production
@@ -230,7 +254,7 @@ personal-website/
 ## Pages
 
 - **Home**: Landing page with introduction and key highlights
-- **About**: Personal information, skills, and background
+- **About**: Personal information, skills, experience, education, technical talks, and community involvement
 - **Projects**: Portfolio of work and projects
 - **Contact**: Contact information and form
 
@@ -238,7 +262,7 @@ personal-website/
 
 ### Environment Variables
 
-If you plan to use Supabase or other external services, create a `.env` file in the root directory and add your configuration variables.
+For optional external services, create a `.env` file in the project root and add the required variables.
 
 ### Build Configuration
 
@@ -256,8 +280,8 @@ The build system implements several key optimizations:
 
 #### Performance Impact
 
-- **Initial Bundle**: 9.13 kB main bundle with optimized chunking strategy
 - **Animation Loading**: Deferred until user interaction, improving Time to Interactive
+- **Initial Bundle**: ~9.4 kB main bundle with optimized chunking strategy
 - **Caching Efficiency**: 15+ chunks enable better browser caching strategies
 - **Update Performance**: Users only download changed chunks on subsequent visits
 
@@ -265,7 +289,6 @@ The build system implements several key optimizations:
 
 The `nginx.conf` file handles:
 
-- HTTPS/SSL configuration with automatic HTTP to HTTPS redirect
 - SPA routing (React Router support)
 - Static asset caching
 - Security headers (including HSTS)
@@ -282,4 +305,4 @@ This project is open source and available under the [MIT License](LICENSE). If y
 
 ---
 
-Built with using React, TypeScript, and Tailwind CSS
+Built with React, TypeScript, and Tailwind CSS
