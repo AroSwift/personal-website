@@ -4,6 +4,6 @@ Allow: /
 # Sitemap location
 Sitemap: https://aaronbarlow.dev/sitemap.xml
 
-# Disallow specific paths if needed
-# Disallow: /admin/
-# Disallow: /private/
+# llms.txt (LLM-friendly overview): https://aaronbarlow.dev/llms.txt
+
+# Allow all crawlers including AI/LLM bots (no blocking).

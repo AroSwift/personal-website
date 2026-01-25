@@ -1,0 +1,22 @@
+# Aaron Barlow
+
+> HPC Software Engineer at Oak Ridge National Laboratory building agentic AI for exascale operations. Talks at CUG, NLIT; projects include myOLCF, Anthologia, Project Cadenza.
+
+- Focus: HPC platform engineering, agentic workflows, performance optimization (e.g. 1320× speedup).
+
+## About
+- [About](https://aaronbarlow.dev/about): Experience, education, skills, organizations.
+
+## Projects
+- [Projects](https://aaronbarlow.dev/projects): AI automation, HPC solutions, performance work.
+
+## Contact
+- [Contact](https://aaronbarlow.dev/contact): Email, LinkedIn, GitHub.
+
+## Presentations
+- [CUG 2025 – HPC System Management](https://aaronbarlow.dev/presentations/cug-2025-hpc-system-management.pdf): Software-driven scalable HPC management.
+- [NLIT 2024 – DevOps in HPC](https://aaronbarlow.dev/presentations/nlit-2024-devops-hpc.pdf): DevOps in HPC operations.
+
+## Optional
+- [GitHub](https://github.com/AroSwift)
+- [LinkedIn](https://www.linkedin.com/in/aaronbarlow)
