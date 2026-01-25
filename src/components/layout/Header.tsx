@@ -251,10 +251,11 @@ const Header = ({ className = '' }: HeaderProps) => {
             <LinkRoll
               key={link.name}
               to={link.path}
+              isActive={isActive(link.path)}
               className={cn(
                 'relative py-1 text-base lg:text-lg xl:text-xl font-px-grotesk font-medium',
                 isActive(link.path)
-                  ? 'text-foreground has-underline'
+                  ? 'text-foreground'
                   : 'text-foreground hover:text-muted-foreground'
               )}
             >
@@ -326,10 +327,11 @@ const Header = ({ className = '' }: HeaderProps) => {
                   <LinkRoll
                     key={link.name}
                     to={link.path}
+                    isActive={isActive(link.path)}
                     className={cn(
                       'block py-3 text-lg border-b border-border/10 last:border-b-0',
                       isActive(link.path)
-                        ? 'text-foreground font-medium has-underline'
+                        ? 'text-foreground font-medium'
                         : 'text-muted-foreground hover:text-foreground'
                     )}
                     onClick={() => setMobileMenuOpen(false)}

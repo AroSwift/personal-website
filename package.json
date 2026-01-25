@@ -34,8 +34,7 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 20",
     "lint:fix": "eslint . --ext ts,tsx --fix",
     "format": "prettier --write .",
-    "format:check": "prettier --check .",
-    "generate-favicons": "node scripts/generate-favicons-png.js"
+    "format:check": "prettier --check ."
   },
   "dependencies": {
     "@radix-ui/react-icons": "^1.3.2",
@@ -51,12 +50,6 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",
-    "node-addon-api": "^8.5.0",
-    "node-gyp": "^12.1.0",
-    "postcss": "^8.5.6",
-    "sharp": "^0.34.5",
-    "tailwindcss": "^3.4.19",
-    "tailwindcss-animate": "^1.0.7",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@types/node": "^25.0.10",
@@ -67,6 +60,7 @@
     "@vitejs/plugin-react": "^5.1.2",
     "@vitejs/plugin-react-swc": "^4.2.2",
     "@vitest/coverage-v8": "^4.0.18",
+    "baseline-browser-mapping": "^2.9.18",
     "eslint": "^9.39.2",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-jsx-a11y": "^6.10.2",
@@ -75,8 +69,14 @@
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.26",
     "jsdom": "^27.4.0",
+    "node-addon-api": "^8.5.0",
+    "node-gyp": "^12.1.0",
+    "postcss": "^8.5.6",
     "prettier": "^3.8.1",
     "rollup-plugin-visualizer": "^6.0.5",
+    "sharp": "^0.34.5",
+    "tailwindcss": "^3.4.19",
+    "tailwindcss-animate": "^1.0.7",
     "typescript": "^5.9.3",
     "vite": "^7.3.1",
     "vitest": "^4.0.18"

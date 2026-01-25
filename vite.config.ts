@@ -40,14 +40,14 @@ export default defineConfig({
     swVersionPlugin(),
     visualizer({
       filename: 'dist/stats.html',
-      open: true,
+      open: false,
       gzipSize: true,
       brotliSize: true,
     }),
   ],
   resolve: {
     alias: {
-      '@': '/src',
+      '@': join(process.cwd(), 'src'),
     },
     extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json'],
   },
@@ -120,11 +120,6 @@ export default defineConfig({
             !id.includes('/components/layout/')
           ) {
             return 'components'
-          }
-
-          // Utility functions and hooks
-          if (id.includes('/lib/')) {
-            return 'lib'
           }
 
           // Vendor chunk for other dependencies

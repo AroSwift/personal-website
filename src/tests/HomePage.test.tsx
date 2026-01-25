@@ -21,6 +21,13 @@ describe('HomePage', () => {
     expect(screen.getByText('About me')).toBeInTheDocument()
   })
 
+  it('renders current status information', () => {
+    render(<HomePage />)
+
+    expect(screen.getByText(/Developing agentic workflows/)).toBeInTheDocument()
+    expect(screen.getByText(/Visit projects/)).toBeInTheDocument()
+  })
+
   it('renders profile image', () => {
     render(<HomePage />)
 

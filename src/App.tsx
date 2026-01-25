@@ -188,13 +188,7 @@ const ScrollToTopInner = () => {
   const location = useLocation()
 
   useEffect(() => {
-    // Simple scroll to top with smooth behavior
-    if (typeof window !== 'undefined') {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth',
-      })
-    }
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }, [location.pathname])
 
   return null
@@ -232,8 +226,7 @@ const AppContent = () => {
     }
   }
 
-  // Show loading screen only for first-time visitors
-  if (isLoading && !hasVisited) {
+  if (isLoading) {
     return <LoadingScreen onComplete={handleLoadingComplete} />
   }
 

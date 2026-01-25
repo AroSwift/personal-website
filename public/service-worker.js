@@ -288,23 +288,28 @@ setInterval(
 ) // 1 hour
 
 // Cleanup function to remove old caches
+// Cache names: static-cache-v3-YYYYMMDD-HHMMSS, dynamic-cache-v3-YYYYMMDD-HHMMSS
 async function cleanupOldCaches() {
   try {
     const cacheNames = await caches.keys()
-    const currentDate = new Date().toISOString().split('T')[0]
+    const now = Date.now()
+    const twoDaysMs = 2 * 24 * 60 * 60 * 1000
 
     for (const cacheName of cacheNames) {
-      // Check if cache is older than 2 days
-      if (cacheName.includes('aaron-barlow-')) {
-        const cacheDate = cacheName.split('-').slice(-1)[0] // Get date part
-        if (cacheDate && cacheDate !== currentDate) {
-          const cacheDateObj = new Date(cacheDate)
-          const daysDiff =
-            (Date.now() - cacheDateObj.getTime()) / (1000 * 60 * 60 * 24)
-
-          if (daysDiff > 2) {
-            await caches.delete(cacheName)
-          }
+      const match = cacheName.match(
+        /(?:static-cache|dynamic-cache)-v\d+-(\d{8})-(\d{6})/
+      )
+      if (match) {
+        const [, yyyymmdd, hhmmss] = match
+        const y = parseInt(yyyymmdd.slice(0, 4), 10)
+        const m = parseInt(yyyymmdd.slice(4, 6), 10) - 1
+        const d = parseInt(yyyymmdd.slice(6, 8), 10)
+        const hh = parseInt(hhmmss.slice(0, 2), 10)
+        const mm = parseInt(hhmmss.slice(2, 4), 10)
+        const ss = parseInt(hhmmss.slice(4, 6), 10)
+        const cacheTime = new Date(y, m, d, hh, mm, ss).getTime()
+        if (now - cacheTime > twoDaysMs) {
+          await caches.delete(cacheName)
         }
       }
     }

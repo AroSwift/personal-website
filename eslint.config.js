@@ -90,6 +90,16 @@ export default [
     },
   },
   {
+    files: ['scripts/**/*.js'],
+    languageOptions: {
+      globals: {
+        console: 'readonly',
+        URL: 'readonly',
+        fetch: 'readonly',
+      },
+    },
+  },
+  {
     files: ['**/service-worker.js', '**/public/service-worker.js'],
     languageOptions: {
       globals: {

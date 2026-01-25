@@ -7,24 +7,44 @@
 import { describe, it, expect, vi } from 'vitest'
 import { render, screen } from './utils'
 
-// Shared mocks for pages that use framer-motion and UI components
+// Shared mocks for pages that use framer-motion and UI components.
+// Omit framer-motion props so they don't reach the DOM (avoids React warnings).
 vi.mock('framer-motion', () => {
+  const strip = (p: Record<string, unknown>) => {
+    const keys = [
+      'whileHover',
+      'whileTap',
+      'initial',
+      'animate',
+      'transition',
+      'exit',
+    ]
+    return Object.fromEntries(
+      Object.entries(p).filter(([k]) => !keys.includes(k))
+    )
+  }
   const motion = {
-    div: ({ children, ...props }: any) => <div {...props}>{children}</div>,
-    h1: ({ children, ...props }: any) => <h1 {...props}>{children}</h1>,
-    h2: ({ children, ...props }: any) => <h2 {...props}>{children}</h2>,
-    h3: ({ children, ...props }: any) => <h3 {...props}>{children}</h3>,
-    p: ({ children, ...props }: any) => <p {...props}>{children}</p>,
-    span: ({ children, ...props }: any) => <span {...props}>{children}</span>,
-    img: ({ alt, ...props }: any) => <img alt={alt || ''} {...props} />,
+    div: ({ children, ...props }: any) => (
+      <div {...strip(props)}>{children}</div>
+    ),
+    h1: ({ children, ...props }: any) => <h1 {...strip(props)}>{children}</h1>,
+    h2: ({ children, ...props }: any) => <h2 {...strip(props)}>{children}</h2>,
+    h3: ({ children, ...props }: any) => <h3 {...strip(props)}>{children}</h3>,
+    p: ({ children, ...props }: any) => <p {...strip(props)}>{children}</p>,
+    span: ({ children, ...props }: any) => (
+      <span {...strip(props)}>{children}</span>
+    ),
+    img: ({ alt, ...props }: any) => <img alt={alt || ''} {...strip(props)} />,
     button: ({ children, ...props }: any) => (
-      <button {...props}>{children}</button>
+      <button {...strip(props)}>{children}</button>
     ),
-    a: ({ children, ...props }: any) => <a {...props}>{children}</a>,
+    a: ({ children, ...props }: any) => <a {...strip(props)}>{children}</a>,
     section: ({ children, ...props }: any) => (
-      <section {...props}>{children}</section>
+      <section {...strip(props)}>{children}</section>
     ),
-    main: ({ children, ...props }: any) => <main {...props}>{children}</main>,
+    main: ({ children, ...props }: any) => (
+      <main {...strip(props)}>{children}</main>
+    ),
   }
   return {
     motion,
@@ -66,9 +86,7 @@ vi.mock('@/components/ui/card', () => ({
   CardContent: ({ children, ...props }: any) => (
     <div {...props}>{children}</div>
   ),
-  CardHeader: ({ children, ...props }: any) => (
-    <div {...props}>{children}</div>
-  ),
+  CardHeader: ({ children, ...props }: any) => <div {...props}>{children}</div>,
   CardTitle: ({ children, ...props }: any) => <h3 {...props}>{children}</h3>,
 }))
 
@@ -105,13 +123,13 @@ describe('Content rendering: AboutPage', () => {
     render(<AboutPage />)
     const imgs = screen.getAllByRole('img')
     const aboutImgs = imgs.filter(
-      (el) =>
+      el =>
         el.getAttribute('src')?.startsWith('/about/') &&
         el.getAttribute('alt')?.includes('office')
     )
     expect(aboutImgs.length).toBeGreaterThanOrEqual(1)
-    const ornl = imgs.find((i) => i.getAttribute('src') === '/about/ornl.webp')
-    const bofa = imgs.find((i) => i.getAttribute('src') === '/about/bofa.webp')
+    const ornl = imgs.find(i => i.getAttribute('src') === '/about/ornl.webp')
+    const bofa = imgs.find(i => i.getAttribute('src') === '/about/bofa.webp')
     expect(ornl).toBeInTheDocument()
     expect(bofa).toBeInTheDocument()
   })
@@ -126,7 +144,9 @@ describe('Content rendering: AboutPage', () => {
     ).toBeInTheDocument()
     expect(screen.getByText('B.S. in Computer Science')).toBeInTheDocument()
     expect(
-      screen.getByText(/Associate of Science, Computer and Information Sciences/)
+      screen.getByText(
+        /Associate of Science, Computer and Information Sciences/
+      )
     ).toBeInTheDocument()
   })
 
@@ -196,7 +216,9 @@ describe('Content rendering: ProjectsPage', () => {
 
   it('renders personal project titles', () => {
     render(<ProjectsPage />)
-    expect(screen.getByText('AI Podcast Production Pipeline')).toBeInTheDocument()
+    expect(
+      screen.getByText('AI Podcast Production Pipeline')
+    ).toBeInTheDocument()
     expect(screen.getByText('Anthologia')).toBeInTheDocument()
     expect(screen.getByText('Project Cadenza')).toBeInTheDocument()
   })
@@ -271,9 +293,7 @@ describe('Content rendering: HomePage', () => {
     expect(
       screen.getByText(/I build code that thinks and infrastructure that lasts/)
     ).toBeInTheDocument()
-    expect(
-      screen.getByText(/Developing agentic workflows/)
-    ).toBeInTheDocument()
+    expect(screen.getByText(/Developing agentic workflows/)).toBeInTheDocument()
   })
 
   it('renders profile image with expected alt and src', () => {
@@ -284,10 +304,9 @@ describe('Content rendering: HomePage', () => {
 
   it('renders CTA links to Projects and About', () => {
     render(<HomePage />)
-    expect(screen.getByRole('link', { name: /Selected Projects/i })).toHaveAttribute(
-      'href',
-      '/projects'
-    )
+    expect(
+      screen.getByRole('link', { name: /Selected Projects/i })
+    ).toHaveAttribute('href', '/projects')
     expect(screen.getByRole('link', { name: /About me/i })).toHaveAttribute(
       'href',
       '/about'

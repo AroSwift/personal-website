@@ -261,7 +261,10 @@ const ProjectsPage = () => {
                             className="text-muted-foreground hover:text-foreground transition-colors p-2.5 min-h-[44px] inline-flex items-center justify-center gap-1 text-sm"
                           >
                             <span>Visit</span>
-                            <ExternalLink className="h-4 w-4" aria-hidden="true" />
+                            <ExternalLink
+                              className="h-4 w-4"
+                              aria-hidden="true"
+                            />
                           </a>
                         )}
                       </div>
@@ -358,7 +361,10 @@ const ProjectsPage = () => {
                             className="text-muted-foreground hover:text-foreground transition-colors p-2.5 min-h-[44px] inline-flex items-center justify-center gap-1 text-sm"
                           >
                             <span>Visit</span>
-                            <ExternalLink className="h-4 w-4" aria-hidden="true" />
+                            <ExternalLink
+                              className="h-4 w-4"
+                              aria-hidden="true"
+                            />
                           </a>
                         )}
                       </div>

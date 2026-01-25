@@ -1,4 +1,13 @@
-import { useState, useEffect } from 'react'
+import {
+  useState,
+  useEffect,
+  useRef,
+  type Dispatch,
+  type SetStateAction,
+  type MutableRefObject,
+} from 'react'
+
+/* global ServiceWorkerRegistration */
 
 interface PWAState {
   isOnline: boolean
@@ -8,10 +17,35 @@ interface PWAState {
   isStandalone: boolean
 }
 
+function setupUpdateChecking(
+  registration: ServiceWorkerRegistration,
+  setPwaState: Dispatch<SetStateAction<PWAState>>,
+  updateIntervalRef: MutableRefObject<ReturnType<typeof setInterval> | null>
+) {
+  const checkForUpdates = () => registration.update()
+  checkForUpdates()
+  updateIntervalRef.current = setInterval(checkForUpdates, 5 * 60 * 1000)
+  registration.addEventListener('updatefound', () => {
+    const newWorker = registration.installing
+    if (newWorker) {
+      newWorker.addEventListener('statechange', () => {
+        if (
+          newWorker.state === 'installed' &&
+          navigator.serviceWorker.controller
+        ) {
+          setPwaState(prev => ({ ...prev, hasUpdate: true }))
+        }
+      })
+    }
+  })
+}
+
 export function usePWA() {
   // Check if we're in the browser environment
   const isBrowser =
     typeof window !== 'undefined' && typeof navigator !== 'undefined'
+
+  const updateIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
   const [pwaState, setPwaState] = useState<PWAState>({
     isOnline: isBrowser ? navigator.onLine : true,
@@ -47,60 +81,14 @@ export function usePWA() {
           navigator.serviceWorker
             .register('/service-worker.js')
             .then(registration => {
-              // Check for updates periodically
-              const checkForUpdates = () => {
-                registration.update()
-              }
-
-              // Check immediately on mount
-              checkForUpdates()
-
-              // Then check every 5 minutes (reduced from 10 seconds)
-              const updateInterval = setInterval(checkForUpdates, 5 * 60 * 1000)
-
-              registration.addEventListener('updatefound', () => {
-                const newWorker = registration.installing
-                if (newWorker) {
-                  newWorker.addEventListener('statechange', () => {
-                    if (
-                      newWorker.state === 'installed' &&
-                      navigator.serviceWorker.controller
-                    ) {
-                      setPwaState(prev => ({ ...prev, hasUpdate: true }))
-                    }
-                  })
-                }
-              })
-
-              return () => clearInterval(updateInterval)
+              setupUpdateChecking(registration, setPwaState, updateIntervalRef)
             })
         } else {
-          // Service worker already registered, just set up update checking
-          const checkForUpdates = () => {
-            existingRegistration.update()
-          }
-
-          // Check immediately on mount
-          checkForUpdates()
-
-          // Then check every 5 minutes
-          const updateInterval = setInterval(checkForUpdates, 5 * 60 * 1000)
-
-          existingRegistration.addEventListener('updatefound', () => {
-            const newWorker = existingRegistration.installing
-            if (newWorker) {
-              newWorker.addEventListener('statechange', () => {
-                if (
-                  newWorker.state === 'installed' &&
-                  navigator.serviceWorker.controller
-                ) {
-                  setPwaState(prev => ({ ...prev, hasUpdate: true }))
-                }
-              })
-            }
-          })
-
-          return () => clearInterval(updateInterval)
+          setupUpdateChecking(
+            existingRegistration,
+            setPwaState,
+            updateIntervalRef
+          )
         }
       })
 
@@ -114,6 +102,10 @@ export function usePWA() {
     return () => {
       window.removeEventListener('online', handleOnline)
       window.removeEventListener('offline', handleOffline)
+      if (updateIntervalRef.current) {
+        clearInterval(updateIntervalRef.current)
+        updateIntervalRef.current = null
+      }
     }
   }, [isBrowser])
 
@@ -123,14 +115,7 @@ export function usePWA() {
     try {
       const registration = await navigator.serviceWorker.getRegistration()
       if (registration) {
-        // If there's an installing service worker, send it the skip waiting message
-        if (registration.installing) {
-          registration.installing.postMessage({ type: 'SKIP_WAITING' })
-        }
-        // Also check if there's an available update
-        await registration.update()
-
-        // Listen for controller change and reload when user explicitly updates
+        // Add listener BEFORE skipWaiting so we don't miss the controllerchange event
         navigator.serviceWorker.addEventListener(
           'controllerchange',
           () => {
@@ -138,25 +123,25 @@ export function usePWA() {
           },
           { once: true }
         )
+
+        // When "Update Available" is shown, the new worker is in "waiting" state
+        // (registration.installing is null by then). Send SKIP_WAITING to the waiting worker.
+        const workerToSkip = registration.waiting ?? registration.installing
+        if (workerToSkip) {
+          workerToSkip.postMessage({ type: 'SKIP_WAITING' })
+        } else {
+          // No waiting/installing worker; check for updates and reload to be safe
+          await registration.update()
+          window.location.reload()
+        }
       }
     } catch (error) {
       console.error('Error updating service worker:', error)
     }
   }
 
-  const checkForUpdates = () => {
-    if (isBrowser && 'serviceWorker' in navigator) {
-      navigator.serviceWorker.getRegistration().then(registration => {
-        if (registration) {
-          registration.update()
-        }
-      })
-    }
-  }
-
   return {
     ...pwaState,
     updateServiceWorker,
-    checkForUpdates,
   }
 }

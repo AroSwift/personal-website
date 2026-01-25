@@ -48,7 +48,6 @@ A modern, responsive personal website for Aaron Barlow built with React, TypeScr
 - `npm run lint:fix` - Run ESLint with auto-fix
 - `npm run format` - Format with Prettier
 - `npm run format:check` - Check formatting
-- `npm run generate-favicons` - Generate favicon PNGs (uses `sharp`)
 
 ## Testing
 
@@ -216,7 +215,6 @@ personal-website/
 │   │   ├── LinkRoll.tsx
 │   │   ├── LinkRoll.test.tsx
 │   │   ├── LoadingScreen.tsx
-│   │   ├── MotionComponents.tsx
 │   │   └── PWAStatus.tsx
 │   ├── pages/                         # Page components
 │   │   ├── about/                     # About page modules
@@ -234,8 +232,7 @@ personal-website/
 │   │   └── NotFoundPage.tsx           # 404 page
 │   ├── lib/                           # Utility functions and custom hooks
 │   │   ├── utils.ts                   # General utility functions
-│   │   ├── usePWA.ts                  # PWA functionality hook
-│   │   └── useScrollToTop.ts          # Scroll behavior hook
+│   │   └── usePWA.ts                  # PWA functionality hook
 │   ├── tests/                         # Vitest + React Testing Library
 │   └── App.tsx                        # Main application component
 ├── scripts/
