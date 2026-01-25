@@ -12,6 +12,7 @@ import {
   Route,
   useLocation,
 } from 'react-router-dom'
+import { LazyMotion, domAnimation } from 'framer-motion'
 import LoadingScreen from './components/LoadingScreen'
 import { PWAStatus } from './components/PWAStatus'
 import HueOverlay from './components/HueOverlay'
@@ -179,11 +180,6 @@ const MetaTagManager = () => {
     updateMetaTags(location.pathname)
   }, [location.pathname])
 
-  // Initialize meta tags on first load
-  useEffect(() => {
-    updateMetaTags(location.pathname)
-  }, [location.pathname])
-
   return null
 }
 
@@ -261,9 +257,11 @@ const AppContent = () => {
 function App() {
   return (
     <Router>
-      <MetaTagManager />
-      <ScrollToTopInner />
-      <AppContent />
+      <LazyMotion features={domAnimation} strict>
+        <MetaTagManager />
+        <ScrollToTopInner />
+        <AppContent />
+      </LazyMotion>
     </Router>
   )
 }

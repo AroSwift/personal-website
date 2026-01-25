@@ -1,5 +1,5 @@
 import React from 'react'
-import { motion } from 'framer-motion'
+import { m } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import { ExternalLink } from 'lucide-react'
@@ -165,21 +165,21 @@ const ProjectsPage = () => {
       <main className="pt-36 sm:pt-42 md:pt-48 lg:pt-54 xl:pt-60 min-h-screen flex flex-col">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col flex-1 justify-start pb-16 sm:pb-24 lg:pb-32 relative z-20">
           {/* Hero Section with Title and Description */}
-          <motion.div
+          <m.div
             className="mb-16 lg:mb-24"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: 'easeOut' }}
           >
-            <motion.h1
+            <m.h1
               className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-normal leading-tight tracking-tight mb-8 dark:text-enhanced"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
               Selected Projects
-            </motion.h1>
-            <motion.p
+            </m.h1>
+            <m.p
               className="text-xl sm:text-2xl text-muted-foreground max-w-3xl leading-relaxed"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -189,27 +189,27 @@ const ProjectsPage = () => {
               HPC systems management, software development, and agentic AI
               systems. These showcase both my professional contributions and
               personal exploration of cutting-edge technologies.
-            </motion.p>
-          </motion.div>
+            </m.p>
+          </m.div>
 
           {/* Work Projects Section */}
-          <motion.section
+          <m.section
             className="mb-16 lg:mb-24"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.8, ease: 'easeOut' }}
           >
-            <motion.h2
+            <m.h2
               className="text-2xl sm:text-3xl font-normal mb-8 text-center dark:text-enhanced"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.7, duration: 0.6 }}
             >
               Work Projects
-            </motion.h2>
+            </m.h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {workProjects.map((project, index) => (
-                <motion.div
+                <m.div
                   key={index}
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -257,10 +257,11 @@ const ProjectsPage = () => {
                             href={project.link}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-muted-foreground hover:text-foreground transition-colors p-1 flex items-center gap-1 text-sm"
+                            aria-label={`Visit ${project.title} (opens in new tab)`}
+                            className="text-muted-foreground hover:text-foreground transition-colors p-2.5 min-h-[44px] inline-flex items-center justify-center gap-1 text-sm"
                           >
                             <span>Visit</span>
-                            <ExternalLink className="h-4 w-4" />
+                            <ExternalLink className="h-4 w-4" aria-hidden="true" />
                           </a>
                         )}
                       </div>
@@ -283,29 +284,29 @@ const ProjectsPage = () => {
                       </div>
                     </CardContent>
                   </Card>
-                </motion.div>
+                </m.div>
               ))}
             </div>
-          </motion.section>
+          </m.section>
 
           {/* Personal Projects Section */}
-          <motion.section
+          <m.section
             className="mb-16 lg:mb-24"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.2, duration: 0.8, ease: 'easeOut' }}
           >
-            <motion.h2
+            <m.h2
               className="text-2xl sm:text-3xl font-normal mb-8 text-center dark:text-enhanced"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.3, duration: 0.6 }}
             >
               Personal Projects
-            </motion.h2>
+            </m.h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {personalProjects.map((project, index) => (
-                <motion.div
+                <m.div
                   key={index}
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -353,10 +354,11 @@ const ProjectsPage = () => {
                             href={project.link}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-muted-foreground hover:text-foreground transition-colors p-1 flex items-center gap-1 text-sm"
+                            aria-label={`Visit ${project.title} (opens in new tab)`}
+                            className="text-muted-foreground hover:text-foreground transition-colors p-2.5 min-h-[44px] inline-flex items-center justify-center gap-1 text-sm"
                           >
                             <span>Visit</span>
-                            <ExternalLink className="h-4 w-4" />
+                            <ExternalLink className="h-4 w-4" aria-hidden="true" />
                           </a>
                         )}
                       </div>
@@ -379,29 +381,29 @@ const ProjectsPage = () => {
                       </div>
                     </CardContent>
                   </Card>
-                </motion.div>
+                </m.div>
               ))}
             </div>
-          </motion.section>
+          </m.section>
 
           {/* Key Achievements Section */}
-          <motion.section
+          <m.section
             className="mb-16 lg:mb-24"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 2.2, duration: 0.8, ease: 'easeOut' }}
           >
-            <motion.h2
+            <m.h2
               className="text-2xl sm:text-3xl font-normal mb-8 text-center dark:text-enhanced"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 2.3, duration: 0.6 }}
             >
               Achievement Highlights
-            </motion.h2>
+            </m.h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {achievements.map((achievement, index) => (
-                <motion.div
+                <m.div
                   key={index}
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -424,13 +426,13 @@ const ProjectsPage = () => {
                       </p>
                     </CardContent>
                   </Card>
-                </motion.div>
+                </m.div>
               ))}
             </div>
-          </motion.section>
+          </m.section>
 
           {/* Call-to-Action Buttons */}
-          <motion.div
+          <m.div
             className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6 mb-16 lg:mb-24"
             initial={{ opacity: 0, y: 30, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -449,7 +451,7 @@ const ProjectsPage = () => {
                 Get in Touch
               </Button>
             </Link>
-          </motion.div>
+          </m.div>
 
           {/* Footer Information Section */}
           <Footer

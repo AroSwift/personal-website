@@ -5,8 +5,8 @@ import { describe, it, expect, vi } from 'vitest'
 import { render, screen } from './utils'
 
 // Mock external dependencies
-vi.mock('framer-motion', () => ({
-  motion: {
+vi.mock('framer-motion', () => {
+  const motion = {
     div: ({ children, ...props }: any) => <div {...props}>{children}</div>,
     h1: ({ children, ...props }: any) => <h1 {...props}>{children}</h1>,
     h2: ({ children, ...props }: any) => <h2 {...props}>{children}</h2>,
@@ -21,9 +21,17 @@ vi.mock('framer-motion', () => ({
       <section {...props}>{children}</section>
     ),
     main: ({ children, ...props }: any) => <main {...props}>{children}</main>,
-  },
-  AnimatePresence: ({ children }: { children: React.ReactNode }) => children,
-}))
+  }
+  return {
+    motion,
+    LazyMotion: ({ children }: { children: React.ReactNode }) => (
+      <>{children}</>
+    ),
+    domAnimation: {},
+    m: { ...motion },
+    AnimatePresence: ({ children }: { children: React.ReactNode }) => children,
+  }
+})
 
 vi.mock('lucide-react', () => ({
   ExternalLink: () => <div data-testid="external-link-icon" />,

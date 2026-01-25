@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { motion } from 'framer-motion'
+import { m } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { Github, Linkedin, Copy, ExternalLink, Check } from 'lucide-react'
 import Header from '@/components/layout/Header'
@@ -41,20 +41,20 @@ const ContactPage = () => {
 
       <Header />
 
-      {/* Large Dynamic Title - Better responsive scaling for bigger screens */}
-      <div className="absolute top-[20%] sm:top-[15%] md:top-[20%] lg:top-[22%] xl:top-[24%] 2xl:top-[26%] left-0 right-0 pointer-events-none z-10">
+      {/* Large Dynamic Title - Cap size at 2xl to prevent overlap on ultra-wide viewports */}
+      <div className="absolute top-[20%] sm:top-[15%] md:top-[20%] lg:top-[22%] xl:top-[24%] 2xl:top-[22%] left-0 right-0 pointer-events-none z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-[16vw] sm:text-[14vw] md:text-[16vw] lg:text-[12vw] xl:text-[10vw] 2xl:text-[8vw] font-light leading-none tracking-wide text-black dark:text-white transition-colors duration-800">
+          <h1 className="text-[16vw] sm:text-[14vw] md:text-[16vw] lg:text-[12vw] xl:text-[10vw] 2xl:text-[min(8vw,10rem)] font-light leading-none tracking-wide text-black dark:text-white transition-colors duration-800">
             Get in touch
           </h1>
         </div>
       </div>
 
-      {/* Main Content - Better responsive padding for bigger screens */}
-      <main className="pt-[25rem] sm:pt-[32rem] md:pt-[28rem] lg:pt-[26rem] xl:pt-[28rem] 2xl:pt-[30rem] min-h-screen flex flex-col">
+      {/* Main Content - 2xl: pt scales with viewport (22vh + heading height) to avoid overlap without excess gap */}
+      <main className="pt-[25rem] sm:pt-[32rem] md:pt-[28rem] lg:pt-[26rem] xl:pt-[28rem] 2xl:pt-[max(28rem,calc(22vh+20rem))] min-h-screen flex flex-col">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col flex-1 justify-end pb-8 sm:pb-16 md:pb-20 lg:pb-24 xl:pb-28 2xl:pb-32">
           <div className="relative z-20">
-            <motion.div
+            <m.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.8 }}
@@ -62,7 +62,7 @@ const ContactPage = () => {
             >
               {/* Left Column - Contact Description and Action Buttons */}
               <div className="space-y-6 lg:space-y-8 xl:space-y-10">
-                <motion.p
+                <m.p
                   className="text-lg sm:text-xl md:text-2xl lg:text-xl xl:text-2xl 2xl:text-3xl text-black dark:text-white leading-relaxed max-w-xl lg:max-w-lg xl:max-w-xl transition-colors duration-800"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -70,31 +70,26 @@ const ContactPage = () => {
                 >
                   I enjoy connecting with new people. The easiest way to reach
                   me is via{' '}
-                  <button
-                    onClick={() =>
-                      window.open('mailto:abarlow505@gmail.com', '_blank')
-                    }
-                    className="underline-fade-out hover:text-gray-600 dark:hover:text-gray-400 transition-colors cursor-pointer bg-transparent border-none p-0 font-inherit text-inherit"
+                  <a
+                    href="mailto:abarlow505@gmail.com"
+                    className="underline-fade-out hover:text-gray-600 dark:hover:text-gray-400 transition-colors cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded"
                   >
                     email
-                  </button>{' '}
+                  </a>{' '}
                   but alternatively feel free to send me a message through{' '}
-                  <button
-                    onClick={() =>
-                      window.open(
-                        'https://linkedin.com/in/allaaronbarlow/',
-                        '_blank'
-                      )
-                    }
-                    className="underline-fade-out hover:text-gray-600 dark:hover:text-gray-400 transition-colors cursor-pointer bg-transparent border-none p-0 font-inherit text-inherit"
+                  <a
+                    href="https://linkedin.com/in/allaaronbarlow/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline-fade-out hover:text-gray-600 dark:hover:text-gray-400 transition-colors cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded"
                   >
                     LinkedIn
-                  </button>
+                  </a>
                   .
-                </motion.p>
+                </m.p>
 
                 {/* Action Buttons - Resume, Email Copy, and LinkedIn */}
-                <motion.div
+                <m.div
                   className="flex flex-col sm:flex-row gap-4 sm:gap-5 mt-6 sm:mt-8 lg:mt-10"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -102,20 +97,24 @@ const ContactPage = () => {
                 >
                   {/* Resume Button */}
                   <Button
-                    onClick={() =>
-                      window.open(
-                        'https://aroswift.github.io/resume/resume.pdf',
-                        '_blank'
-                      )
-                    }
+                    asChild
                     className="bg-black dark:bg-soft-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-soft-white-hover rounded-full px-5 sm:px-6 py-3 sm:py-4 lg:py-5 text-base sm:text-lg lg:text-xl xl:text-2xl font-medium flex items-center gap-3 transition-colors duration-500"
                   >
-                    My Resume
-                    <ExternalLink className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6" />
+                    <a
+                      href="https://aroswift.github.io/resume/resume.pdf"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      My Resume
+                      <ExternalLink
+                        className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6"
+                        aria-hidden="true"
+                      />
+                    </a>
                   </Button>
 
                   {/* Email Copy Button with Success Animation */}
-                  <motion.div
+                  <m.div
                     animate={
                       emailCopied ? { scale: [1, 1.05, 1] } : { scale: 1 }
                     }
@@ -127,7 +126,7 @@ const ContactPage = () => {
                       variant="outline"
                       className={`w-full sm:w-auto border-2 ${emailCopied ? 'border-green-600/40 dark:border-green-400/60 text-green-800 dark:text-green-200 bg-green-50/80 dark:bg-green-900/40' : 'border-black dark:border-soft-white text-black dark:text-soft-white hover:bg-black dark:hover:bg-soft-white hover:text-white dark:hover:text-black'} rounded-full px-5 sm:px-6 py-3 sm:py-4 lg:py-5 text-base sm:text-lg lg:text-xl xl:text-2xl font-medium flex items-center gap-3 transition-all duration-500`}
                     >
-                      <motion.div
+                      <m.div
                         animate={emailCopied ? { rotate: 360 } : { rotate: 0 }}
                         transition={{ duration: 0.3 }}
                       >
@@ -136,30 +135,31 @@ const ContactPage = () => {
                         ) : (
                           <Copy className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6" />
                         )}
-                      </motion.div>
+                      </m.div>
                       {emailCopied ? 'Copied!' : 'Copy email'}
                     </Button>
-                  </motion.div>
+                  </m.div>
 
                   {/* LinkedIn Reach Out Button */}
                   <Button
+                    asChild
                     variant="outline"
                     className="border-2 border-black dark:border-soft-white text-black dark:text-soft-white hover:bg-black dark:hover:bg-soft-white hover:text-white dark:hover:text-black rounded-full px-5 sm:px-6 py-3 sm:py-4 lg:py-5 text-base sm:text-lg lg:text-xl xl:text-2xl font-medium flex items-center gap-3 transition-colors duration-500"
-                    onClick={() =>
-                      window.open(
-                        'https://linkedin.com/in/allaaronbarlow/',
-                        '_blank'
-                      )
-                    }
                   >
-                    Reach out
+                    <a
+                      href="https://linkedin.com/in/allaaronbarlow/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Reach out
+                    </a>
                   </Button>
-                </motion.div>
+                </m.div>
               </div>
 
               {/* Right Column - Social Media Links */}
               <div className="space-y-6 lg:space-y-8 xl:space-y-10">
-                <motion.div
+                <m.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.6, duration: 0.6 }}
@@ -176,7 +176,7 @@ const ContactPage = () => {
                     {socialLinks.map((social, index) => {
                       const Icon = social.icon
                       return (
-                        <motion.a
+                        <m.a
                           key={social.name}
                           href={social.url}
                           target="_blank"
@@ -194,13 +194,13 @@ const ContactPage = () => {
                           <span className="text-lg lg:text-xl xl:text-2xl font-medium text-gray-700 dark:text-gray-300 group-hover:text-black dark:group-hover:text-white transition-colors">
                             {social.name}
                           </span>
-                        </motion.a>
+                        </m.a>
                       )
                     })}
                   </div>
-                </motion.div>
+                </m.div>
               </div>
-            </motion.div>
+            </m.div>
 
             {/* Footer Information Section */}
             <Footer />

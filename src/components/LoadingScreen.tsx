@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { motion, AnimatePresence, useAnimationControls } from 'framer-motion'
+import { m, AnimatePresence, useAnimationControls } from 'framer-motion'
 
 interface LoadingScreenProps {
   onComplete: (theme: 'dark' | 'light') => void
@@ -81,7 +81,7 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
       {/* Simple container for line and text */}
       <div className="relative z-50 mx-auto w-full max-w-[1100px] flex flex-col items-center justify-center sm:h-[60vh] sm:min-h-[480px]">
         {/* PORTFOLIO OF - emerges above the line */}
-        <motion.div
+        <m.div
           className="text-center -mb-1 sm:-mb-2"
           initial={{ y: 0, opacity: 0 }}
           animate={topText}
@@ -89,10 +89,10 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
           <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-white tracking-[0.1em]">
             Portfolio of
           </p>
-        </motion.div>
+        </m.div>
 
         {/* THE LINE - grows from center dot, positioned between texts */}
-        <motion.div
+        <m.div
           className="h-px w-full max-w-[763px] bg-white/80 my-2 sm:my-0"
           style={{ transformOrigin: '50% 50%' }}
           initial={{ scaleX: 0, opacity: 1 }}
@@ -100,7 +100,7 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
         />
 
         {/* AARON BARLOW - emerges below the line */}
-        <motion.div
+        <m.div
           className="text-center -mt-2 sm:-mt-4"
           initial={{ y: 0, opacity: 0 }}
           animate={botText}
@@ -108,13 +108,13 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
           <h1 className="font-light tracking-tight text-white text-[min(16vw,120px)] sm:text-[min(14vw,140px)] md:text-[min(12vw,140px)] leading-none px-2">
             Aaron Barlow
           </h1>
-        </motion.div>
+        </m.div>
 
         {/* Reserved space for buttons to prevent layout shifts */}
         <div className="h-28 sm:h-36 flex items-center justify-center w-full px-4 mt-2 sm:mt-0">
           <AnimatePresence>
             {showThemeSelector && (
-              <motion.div
+              <m.div
                 className="flex flex-col items-center gap-2 sm:gap-3 md:gap-4 w-full max-w-sm"
                 initial={{ opacity: 0, y: 15, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -130,8 +130,8 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
                   Choose your theme
                 </p>
                 <div className="flex gap-2.5 sm:gap-3 md:gap-4 w-full justify-center">
-                  <motion.button
-                    className="flex-1 sm:flex-initial px-3.5 sm:px-4 md:px-5 py-2 sm:py-2.5 md:py-3 rounded-xl border border-white/30 text-white hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 transition-all duration-200 text-xs sm:text-sm md:text-base"
+                  <m.button
+                    className="flex-1 sm:flex-initial min-h-[44px] px-3.5 sm:px-4 md:px-5 py-2 sm:py-2.5 md:py-3 rounded-xl border border-white/30 text-white hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 transition-all duration-200 text-xs sm:text-sm md:text-base"
                     whileHover={{
                       scale: 1.02,
                       boxShadow: '0 0 8px rgba(255, 255, 255, 0.15)',
@@ -140,9 +140,9 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
                     onClick={() => handleThemeSelect('dark')}
                   >
                     Dark Mode
-                  </motion.button>
-                  <motion.button
-                    className="flex-1 sm:flex-initial px-3.5 sm:px-4 md:px-5 py-2 sm:py-2.5 md:py-3 rounded-xl border border-black/10 bg-white/85 text-black shadow-sm hover:bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-black/60 transition-all duration-200 text-xs sm:text-sm md:text-base"
+                  </m.button>
+                  <m.button
+                    className="flex-1 sm:flex-initial min-h-[44px] px-3.5 sm:px-4 md:px-5 py-2 sm:py-2.5 md:py-3 rounded-xl border border-black/10 bg-white/85 text-black shadow-sm hover:bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-black/60 transition-all duration-200 text-xs sm:text-sm md:text-base"
                     whileHover={{
                       scale: 1.02,
                       boxShadow: '0 0 8px rgba(0, 0, 0, 0.1)',
@@ -151,9 +151,9 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
                     onClick={() => handleThemeSelect('light')}
                   >
                     Light Mode
-                  </motion.button>
+                  </m.button>
                 </div>
-              </motion.div>
+              </m.div>
             )}
           </AnimatePresence>
         </div>

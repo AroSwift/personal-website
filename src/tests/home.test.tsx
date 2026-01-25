@@ -36,7 +36,7 @@ describe('HomePage', () => {
   it('renders profile image', () => {
     renderWithRouter(<HomePage />)
 
-    const profileImage = screen.getByAltText('Profile')
+    const profileImage = screen.getByAltText('Profile photo of Aaron Barlow')
     expect(profileImage).toBeInTheDocument()
   })
 

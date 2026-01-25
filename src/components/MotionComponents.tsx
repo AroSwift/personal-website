@@ -1,5 +1,5 @@
 import React from 'react'
-import { motion, AnimatePresence, useAnimationControls } from 'framer-motion'
+import { m, AnimatePresence, useAnimationControls } from 'framer-motion'
 
 interface MotionComponentsProps {
   showThemeSelector: boolean
@@ -54,7 +54,7 @@ const MotionComponents = ({
       {/* Simple container for line and text */}
       <div className="relative z-50 mx-auto w-[min(92vw,1100px)] h-[60vh] min-h-[480px] flex flex-col items-center justify-center">
         {/* PORTFOLIO OF - emerges above the line */}
-        <motion.div
+        <m.div
           className="text-center -mb-2"
           initial={{ y: 0, opacity: 0 }}
           animate={topText}
@@ -62,10 +62,10 @@ const MotionComponents = ({
           <p className="text-3xl md:text-4xl text-white tracking-[0.1em]">
             Portfolio of
           </p>
-        </motion.div>
+        </m.div>
 
         {/* THE LINE - grows from center dot, positioned between texts */}
-        <motion.div
+        <m.div
           className="h-px w-full max-w-[763px] bg-white/80"
           style={{ transformOrigin: '50% 50%' }}
           initial={{ scaleX: 0, opacity: 1 }}
@@ -73,7 +73,7 @@ const MotionComponents = ({
         />
 
         {/* AARON BARLOW - emerges below the line */}
-        <motion.div
+        <m.div
           className="text-center -mt-4"
           initial={{ y: 0, opacity: 0 }}
           animate={botText}
@@ -81,13 +81,13 @@ const MotionComponents = ({
           <h1 className="font-light tracking-tight text-white text-[min(12vw,140px)] leading-none">
             Aaron Barlow
           </h1>
-        </motion.div>
+        </m.div>
 
         {/* Reserved space for buttons to prevent layout shifts */}
         <div className="h-36 flex items-center justify-center">
           <AnimatePresence>
             {showThemeSelector && (
-              <motion.div
+              <m.div
                 className="flex flex-col items-center gap-4"
                 initial={{ opacity: 0, y: 15, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -101,7 +101,7 @@ const MotionComponents = ({
               >
                 <p className="text-sm text-white/60">Choose your theme</p>
                 <div className="flex gap-4">
-                  <motion.button
+                  <m.button
                     className="px-5 py-3 rounded-xl border border-white/30 text-white hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 transition-all duration-200"
                     whileHover={{
                       scale: 1.02,
@@ -111,8 +111,8 @@ const MotionComponents = ({
                     onClick={() => onThemeSelect('dark')}
                   >
                     Dark Mode
-                  </motion.button>
-                  <motion.button
+                  </m.button>
+                  <m.button
                     className="px-5 py-3 rounded-xl border border-black/10 bg-white/85 text-black shadow-sm hover:bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-black/60 transition-all duration-200"
                     whileHover={{
                       scale: 1.02,
@@ -122,16 +122,16 @@ const MotionComponents = ({
                     onClick={() => onThemeSelect('light')}
                   >
                     Light Mode
-                  </motion.button>
+                  </m.button>
                 </div>
-              </motion.div>
+              </m.div>
             )}
           </AnimatePresence>
         </div>
       </div>
 
       {/* Hexagonal Shutter Overlay - below stage */}
-      <motion.div
+      <m.div
         className="fixed inset-0 z-0 bg-black pointer-events-none"
         style={{ willChange: 'clip-path' }}
         initial={{ clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)' }}
