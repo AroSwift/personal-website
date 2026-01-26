@@ -12,6 +12,11 @@
   will-change: background-color;
 }
 
+/* Optimize animations and transitions */
+.animated-hue-overlay {
+  will-change: background-color;
+}
+
 /* Optimize profile image container */
 .profile-image-container {
   will-change: transform;
@@ -497,7 +502,7 @@
 }
 
 /* App content sits above the overlay */
-#root {
+#app {
   position: relative;
   z-index: 1;
 }

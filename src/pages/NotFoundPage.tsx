@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { m } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { Home, ArrowLeft } from 'lucide-react'
 import Header from '@/components/layout/Header'
@@ -42,48 +42,48 @@ const NotFoundPage = () => {
       <main className="pt-32 pb-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
           {/* Animated 404 illustration */}
-          <m.div
+          <motion.div
             className="relative mb-12"
             initial="hidden"
             animate="visible"
             variants={staggerVariants}
           >
             {/* Large 404 text with gradient */}
-            <m.h1
+            <motion.h1
               className="text-8xl sm:text-9xl lg:text-[12rem] font-bold text-gradient mb-8 mt-32"
               variants={itemVariants}
             >
               404
-            </m.h1>
+            </motion.h1>
 
             {/* Floating elements around the 404 */}
-            <m.div
+            <motion.div
               className="absolute top-1/4 left-1/4 w-4 h-4 bg-muted-foreground/20 rounded-full"
               variants={floatingVariants}
               animate="float"
             />
-            <m.div
+            <motion.div
               className="absolute top-1/3 right-1/4 w-3 h-3 bg-muted-foreground/30 rounded-full"
               variants={floatingVariants}
               animate="float"
               style={{ animationDelay: '1s' }}
             />
-            <m.div
+            <motion.div
               className="absolute bottom-1/4 left-1/3 w-2 h-2 bg-muted-foreground/40 rounded-full"
               variants={floatingVariants}
               animate="float"
               style={{ animationDelay: '2s' }}
             />
-            <m.div
+            <motion.div
               className="absolute bottom-1/3 right-1/3 w-5 h-5 bg-muted-foreground/25 rounded-full"
               variants={floatingVariants}
               animate="float"
               style={{ animationDelay: '0.5s' }}
             />
-          </m.div>
+          </motion.div>
 
           {/* Main message */}
-          <m.div className="mb-12 mt-8" variants={itemVariants}>
+          <motion.div className="mb-12 mt-8" variants={itemVariants}>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
               Oops! Page Not Found
             </h2>
@@ -91,10 +91,10 @@ const NotFoundPage = () => {
               Looks like you've ventured into uncharted territory. The page
               you're looking for doesn't exist or has been moved.
             </p>
-          </m.div>
+          </motion.div>
 
           {/* Action buttons */}
-          <m.div
+          <motion.div
             className="flex flex-col sm:flex-row gap-4 justify-center items-center"
             variants={itemVariants}
           >
@@ -116,10 +116,10 @@ const NotFoundPage = () => {
                 About Me
               </Link>
             </Button>
-          </m.div>
+          </motion.div>
 
           {/* Additional helpful links */}
-          <m.div
+          <motion.div
             className="mt-12 pt-8 border-t border-border/30"
             variants={itemVariants}
           >
@@ -141,7 +141,7 @@ const NotFoundPage = () => {
                 Contact
               </Link>
             </div>
-          </m.div>
+          </motion.div>
         </div>
       </main>
     </div>

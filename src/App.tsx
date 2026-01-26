@@ -10,10 +10,8 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Navigate,
   useLocation,
 } from 'react-router-dom'
-import { LazyMotion, domAnimation } from 'framer-motion'
 import LoadingScreen from './components/LoadingScreen'
 import { PWAStatus } from './components/PWAStatus'
 import HueOverlay from './components/HueOverlay'
@@ -181,6 +179,11 @@ const MetaTagManager = () => {
     updateMetaTags(location.pathname)
   }, [location.pathname])
 
+  // Initialize meta tags on first load
+  useEffect(() => {
+    updateMetaTags(location.pathname)
+  }, [location.pathname])
+
   return null
 }
 
@@ -189,7 +192,13 @@ const ScrollToTopInner = () => {
   const location = useLocation()
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+    // Simple scroll to top with smooth behavior
+    if (typeof window !== 'undefined') {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      })
+    }
   }, [location.pathname])
 
   return null
@@ -227,7 +236,8 @@ const AppContent = () => {
     }
   }
 
-  if (isLoading) {
+  // Show loading screen only for first-time visitors
+  if (isLoading && !hasVisited) {
     return <LoadingScreen onComplete={handleLoadingComplete} />
   }
 
@@ -240,9 +250,6 @@ const AppContent = () => {
           <Route path="/about" element={<AboutPage />} />
           <Route path="/projects" element={<ProjectsPage />} />
           <Route path="/contact" element={<ContactPage />} />
-          <Route path="/about/" element={<Navigate to="/about" replace />} />
-          <Route path="/projects/" element={<Navigate to="/projects" replace />} />
-          <Route path="/contact/" element={<Navigate to="/contact" replace />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Suspense>
@@ -254,11 +261,9 @@ const AppContent = () => {
 function App() {
   return (
     <Router>
-      <LazyMotion features={domAnimation} strict>
-        <MetaTagManager />
-        <ScrollToTopInner />
-        <AppContent />
-      </LazyMotion>
+      <MetaTagManager />
+      <ScrollToTopInner />
+      <AppContent />
     </Router>
   )
 }

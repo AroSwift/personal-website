@@ -1,5 +1,5 @@
 import React from 'react'
-import { m } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
 
 interface FooterProps {
@@ -16,7 +16,7 @@ const Footer = ({
   borderColor = 'border-gray-300/50 dark:border-gray-600/50',
 }: FooterProps) => {
   return (
-    <m.div
+    <motion.div
       className={cn(
         'pt-10 sm:pt-16 border-t transition-colors duration-800',
         borderColor,
@@ -68,7 +68,7 @@ const Footer = ({
           <p className="text-sm mt-1">Open source</p>
         </div>
       </div>
-    </m.div>
+    </motion.div>
   )
 }
 

@@ -4,53 +4,26 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen } from './utils'
 
-// Mock external dependencies – omit framer-motion props so they don't reach the DOM
-vi.mock('framer-motion', () => {
-  const strip = (p: Record<string, unknown>) => {
-    const keys = [
-      'whileHover',
-      'whileTap',
-      'initial',
-      'animate',
-      'transition',
-      'exit',
-    ]
-    return Object.fromEntries(
-      Object.entries(p).filter(([k]) => !keys.includes(k))
-    )
-  }
-  const motion = {
-    div: ({ children, ...props }: any) => (
-      <div {...strip(props)}>{children}</div>
-    ),
-    h1: ({ children, ...props }: any) => <h1 {...strip(props)}>{children}</h1>,
-    h2: ({ children, ...props }: any) => <h2 {...strip(props)}>{children}</h2>,
-    h3: ({ children, ...props }: any) => <h3 {...strip(props)}>{children}</h3>,
-    p: ({ children, ...props }: any) => <p {...strip(props)}>{children}</p>,
-    span: ({ children, ...props }: any) => (
-      <span {...strip(props)}>{children}</span>
-    ),
+// Mock external dependencies
+vi.mock('framer-motion', () => ({
+  motion: {
+    div: ({ children, ...props }: any) => <div {...props}>{children}</div>,
+    h1: ({ children, ...props }: any) => <h1 {...props}>{children}</h1>,
+    h2: ({ children, ...props }: any) => <h2 {...props}>{children}</h2>,
+    h3: ({ children, ...props }: any) => <h3 {...props}>{children}</h3>,
+    p: ({ children, ...props }: any) => <p {...props}>{children}</p>,
+    span: ({ children, ...props }: any) => <span {...props}>{children}</span>,
     button: ({ children, ...props }: any) => (
-      <button {...strip(props)}>{children}</button>
+      <button {...props}>{children}</button>
     ),
-    a: ({ children, ...props }: any) => <a {...strip(props)}>{children}</a>,
+    a: ({ children, ...props }: any) => <a {...props}>{children}</a>,
     section: ({ children, ...props }: any) => (
-      <section {...strip(props)}>{children}</section>
+      <section {...props}>{children}</section>
     ),
-    main: ({ children, ...props }: any) => (
-      <main {...strip(props)}>{children}</main>
-    ),
-  }
-  return {
-    motion,
-    LazyMotion: ({ children }: { children: React.ReactNode }) => (
-      <>{children}</>
-    ),
-    domAnimation: {},
-    m: { ...motion },
-    AnimatePresence: ({ children }: { children: React.ReactNode }) => children,
-  }
-})
+    main: ({ children, ...props }: any) => <main {...props}>{children}</main>,
+  },
+  AnimatePresence: ({ children }: { children: React.ReactNode }) => children,
+}))
 
 vi.mock('lucide-react', () => ({
   Mail: () => <div data-testid="mail-icon" />,
@@ -62,8 +35,9 @@ vi.mock('lucide-react', () => ({
 }))
 
 vi.mock('@/components/ui/button', () => ({
-  Button: ({ children, asChild, ...props }: any) =>
-    asChild ? <>{children}</> : <button {...props}>{children}</button>,
+  Button: ({ children, ...props }: any) => (
+    <button {...props}>{children}</button>
+  ),
 }))
 
 vi.mock('../components/layout/Header', () => ({
@@ -107,18 +81,16 @@ describe('ContactPage', () => {
     ).toBeInTheDocument()
   })
 
-  it('renders email link', () => {
+  it('renders email button', () => {
     render(<ContactPage />)
-    const emailLink = screen.getByRole('link', { name: 'email' })
-    expect(emailLink).toBeInTheDocument()
-    expect(emailLink).toHaveAttribute('href', 'mailto:abarlow505@gmail.com')
+    const emailButton = screen.getByRole('button', { name: 'email' })
+    expect(emailButton).toBeInTheDocument()
   })
 
   it('renders LinkedIn link', () => {
     render(<ContactPage />)
-    const linkedinLinks = screen.getAllByRole('link', { name: 'LinkedIn' })
-    expect(linkedinLinks.length).toBeGreaterThanOrEqual(1)
-    expect(linkedinLinks[0]).toHaveAttribute(
+    const linkedinLink = screen.getByRole('link', { name: 'LinkedIn' })
+    expect(linkedinLink).toHaveAttribute(
       'href',
       'https://linkedin.com/in/allaaronbarlow/'
     )

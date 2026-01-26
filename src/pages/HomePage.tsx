@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react'
-import { m } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
@@ -128,7 +128,7 @@ function HomePage() {
               {/* Left Column - Main Content */}
               <div className="lg:col-span-9">
                 {/* Interactive Profile Image */}
-                <m.div
+                <motion.div
                   ref={profileImageRef}
                   className={cn(
                     'profile-image-container w-40 h-40 sm:w-56 sm:h-56 md:w-72 md:h-72 lg:w-96 lg:h-96 xl:w-112 xl:h-112 rounded-2xl sm:rounded-3xl overflow-hidden mb-4 sm:mb-6 md:mb-8 lg:mb-12 xl:mb-16 bg-muted dark:bg-gray-800 shadow-lg hover:shadow-2xl cursor-pointer relative select-none mx-auto lg:mx-0',
@@ -165,9 +165,9 @@ function HomePage() {
                   }}
                 >
                   {/* Guy profile image - shown by default with cartoon-like filters */}
-                  <m.img
+                  <motion.img
                     src="/profile-guy-800.webp"
-                    alt="Profile photo of Aaron Barlow"
+                    alt="Profile"
                     className="w-full h-full object-cover relative z-10"
                     srcSet="/profile-guy-400.webp 400w, /profile-guy-800.webp 800w"
                     sizes="(max-width: 640px) 400px, 800px"
@@ -192,7 +192,7 @@ function HomePage() {
                   />
 
                   {/* Real Aaron image underneath - revealed on hover */}
-                  <m.img
+                  <motion.img
                     src="/profile-aaron-800.webp"
                     alt="Aaron Barlow"
                     className="absolute inset-0 w-full h-full object-cover z-0"
@@ -208,19 +208,19 @@ function HomePage() {
 
                   {/* Hover hint text */}
                   {isHovering && !isDragging && (
-                    <m.div
+                    <motion.div
                       className="absolute -bottom-12 left-1/2 transform -translate-x-1/2 bg-foreground text-background px-3 py-1 rounded-full text-sm font-medium whitespace-nowrap pointer-events-none"
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
                     >
                       It's really me! 👋
-                    </m.div>
+                    </motion.div>
                   )}
 
                   {/* Dragging hint text */}
                   {isDragging && (
-                    <m.div
+                    <motion.div
                       className="absolute -bottom-12 left-1/2 transform -translate-x-1/2 bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-medium whitespace-nowrap pointer-events-none"
                       initial={{ opacity: 0, scale: 0.8 }}
                       animate={{
@@ -235,24 +235,24 @@ function HomePage() {
                       }}
                     >
                       Surprise! It's really me!
-                    </m.div>
+                    </motion.div>
                   )}
-                </m.div>
+                </motion.div>
 
                 {/* Main Heading */}
-                <m.h1
+                <motion.h1
                   className="text-xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold leading-tight tracking-tight max-w-4xl mb-4 sm:mb-6 md:mb-8 lg:mb-12 xl:mb-16 relative z-10 text-center sm:text-left"
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.2 }}
                 >
                   I build code that thinks and infrastructure that lasts.
-                </m.h1>
+                </motion.h1>
 
                 {/* Action Buttons - Moved below main heading */}
                 <div className="mb-4 sm:mb-6 md:mb-8 lg:mb-12 relative z-20">
                   <div className="flex flex-col sm:flex-row justify-center sm:justify-start gap-3 sm:gap-4 md:gap-6 relative z-20">
-                    <m.div
+                    <motion.div
                       initial={{ opacity: 0, x: -30 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{
@@ -270,8 +270,8 @@ function HomePage() {
                           Selected Projects
                         </Button>
                       </Link>
-                    </m.div>
-                    <m.div
+                    </motion.div>
+                    <motion.div
                       initial={{ opacity: 0, x: -30 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{
@@ -289,14 +289,14 @@ function HomePage() {
                           About me
                         </Button>
                       </Link>
-                    </m.div>
+                    </motion.div>
                   </div>
                 </div>
               </div>
 
               {/* Right Column - Status Text - Aligned with main text */}
               <div className="lg:col-span-3 flex items-start lg:pt-8 xl:pt-16 2xl:pt-32 relative z-10">
-                <m.div
+                <motion.div
                   className="pt-0 w-full relative z-10 text-center sm:text-left"
                   initial={{ opacity: 0, x: 30 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -318,7 +318,7 @@ function HomePage() {
                     </Link>{' '}
                     for latest work
                   </p>
-                </m.div>
+                </motion.div>
               </div>
             </div>
           </div>

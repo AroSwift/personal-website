@@ -1,13 +1,18 @@
 // Tests for HomePage component
-// Verifies basic rendering and component integration
+// Verifies main content rendering and navigation links
 
-import { describe, it, expect } from 'vitest'
-import { render, screen } from './utils'
+import React from 'react'
+import { render, screen } from '@testing-library/react'
+import { BrowserRouter } from 'react-router-dom'
 import HomePage from '../pages/HomePage'
+
+const renderWithRouter = (component: React.ReactElement) => {
+  return render(<BrowserRouter>{component}</BrowserRouter>)
+}
 
 describe('HomePage', () => {
   it('renders main heading', () => {
-    render(<HomePage />)
+    renderWithRouter(<HomePage />)
 
     expect(
       screen.getByText(/I build code that thinks and infrastructure that lasts/)
@@ -15,21 +20,28 @@ describe('HomePage', () => {
   })
 
   it('renders action buttons', () => {
-    render(<HomePage />)
+    renderWithRouter(<HomePage />)
 
     expect(screen.getByText('Selected Projects')).toBeInTheDocument()
     expect(screen.getByText('About me')).toBeInTheDocument()
   })
 
+  it('renders current status information', () => {
+    renderWithRouter(<HomePage />)
+
+    expect(screen.getByText(/Developing agentic workflows/)).toBeInTheDocument()
+    expect(screen.getByText(/Visit projects/)).toBeInTheDocument()
+  })
+
   it('renders profile image', () => {
-    render(<HomePage />)
+    renderWithRouter(<HomePage />)
 
     const profileImage = screen.getByAltText('Profile')
     expect(profileImage).toBeInTheDocument()
   })
 
   it('renders header component', () => {
-    render(<HomePage />)
+    renderWithRouter(<HomePage />)
 
     // Header should be present (it renders navigation)
     expect(document.querySelector('header')).toBeInTheDocument()

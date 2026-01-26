@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom'
 import { Moon, Sun, Menu, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
-import { m, AnimatePresence, useAnimation } from 'framer-motion'
+import { motion, AnimatePresence, useAnimation } from 'framer-motion'
 import LinkRoll from '@/components/LinkRoll'
 
 interface HeaderProps {
@@ -228,7 +228,7 @@ const Header = ({ className = '' }: HeaderProps) => {
           {/* Page suffix indicator */}
           <AnimatePresence mode="wait">
             {pageSuffix && (
-              <m.div
+              <motion.div
                 key={pageSuffix}
                 className="flex items-center space-x-3"
                 initial={{ opacity: 0, x: -20 }}
@@ -240,7 +240,7 @@ const Header = ({ className = '' }: HeaderProps) => {
                 <span className="text-muted-foreground text-sm sm:text-base">
                   {pageSuffix}
                 </span>
-              </m.div>
+              </motion.div>
             )}
           </AnimatePresence>
         </div>
@@ -251,11 +251,10 @@ const Header = ({ className = '' }: HeaderProps) => {
             <LinkRoll
               key={link.name}
               to={link.path}
-              isActive={isActive(link.path)}
               className={cn(
                 'relative py-1 text-base lg:text-lg xl:text-xl font-px-grotesk font-medium',
                 isActive(link.path)
-                  ? 'text-foreground'
+                  ? 'text-foreground has-underline'
                   : 'text-foreground hover:text-muted-foreground'
               )}
             >
@@ -274,7 +273,7 @@ const Header = ({ className = '' }: HeaderProps) => {
             aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
             className="rounded-full transition-all duration-500 ease-in-out w-12 h-12 hover:scale-110 active:scale-95"
           >
-            <m.div
+            <motion.div
               animate={themeIconAnimation}
               initial={{ rotate: 0, scale: 1 }}
             >
@@ -283,7 +282,7 @@ const Header = ({ className = '' }: HeaderProps) => {
               ) : (
                 <Sun className="h-5 w-5" />
               )}
-            </m.div>
+            </motion.div>
           </Button>
 
           {/* Mobile menu toggle button */}
@@ -308,7 +307,7 @@ const Header = ({ className = '' }: HeaderProps) => {
       {/* Mobile Menu */}
       <AnimatePresence>
         {mobileMenuOpen && (
-          <m.div
+          <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
@@ -327,11 +326,10 @@ const Header = ({ className = '' }: HeaderProps) => {
                   <LinkRoll
                     key={link.name}
                     to={link.path}
-                    isActive={isActive(link.path)}
                     className={cn(
                       'block py-3 text-lg border-b border-border/10 last:border-b-0',
                       isActive(link.path)
-                        ? 'text-foreground font-medium'
+                        ? 'text-foreground font-medium has-underline'
                         : 'text-muted-foreground hover:text-foreground'
                     )}
                     onClick={() => setMobileMenuOpen(false)}
@@ -341,7 +339,7 @@ const Header = ({ className = '' }: HeaderProps) => {
                 ))}
               </nav>
             </div>
-          </m.div>
+          </motion.div>
         )}
       </AnimatePresence>
     </header>
