@@ -13,11 +13,7 @@ vi.mock('framer-motion', () => {
     h3: ({ children, ...props }: any) => <h3 {...props}>{children}</h3>,
     p: ({ children, ...props }: any) => <p {...props}>{children}</p>,
     span: ({ children, ...props }: any) => <span {...props}>{children}</span>,
-    img: ({ children, alt, ...props }: any) => (
-      <img alt={alt || ''} {...props}>
-        {children}
-      </img>
-    ),
+    img: ({ children, ...props }: any) => <img {...props}>{children}</img>,
     button: ({ children, ...props }: any) => (
       <button {...props}>{children}</button>
     ),

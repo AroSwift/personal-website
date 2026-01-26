@@ -66,8 +66,8 @@ motionSpan.displayName = 'motion.span'
 const motionImg = React.forwardRef<
   HTMLImageElement,
   React.ImgHTMLAttributes<HTMLImageElement>
->(({ alt, ...props }, ref) => (
-  <img ref={ref} alt={alt || ''} {...stripMotionProps(props)} />
+>((props, ref) => (
+  <img ref={ref} {...stripMotionProps(props)} />
 ))
 motionImg.displayName = 'motion.img'
 
