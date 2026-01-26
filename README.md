@@ -8,8 +8,7 @@ A modern, responsive personal website for Aaron Barlow built with React, TypeScr
 
 ### Prerequisites
 
-- Node.js (version 16 or higher)
-- npm or yarn package manager
+- Bun (version 1.0 or higher)
 - Docker (for deployment)
 
 ### Installation
@@ -24,24 +23,24 @@ A modern, responsive personal website for Aaron Barlow built with React, TypeScr
 2. Install dependencies:
 
    ```bash
-   npm install
+   bun install
    ```
 
 3. Start the development server:
 
    ```bash
-   npm run dev
+   bun dev
    ```
 
 4. Open your browser and navigate to the URL shown in your terminal (usually `http://localhost:5173` or similar)
 
 ### Available Scripts
 
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run preview` - Preview production build locally
-- `npm run serve` - Serve production build locally
-- `npm test` - Run tests in watch mode
+- `bun dev` - Start development server
+- `bun run build` - Build for production
+- `bun run preview` - Preview production build locally
+- `bun run serve` - Serve production build locally
+- `bun run test` - Run tests in watch mode
 
 ## Testing
 
@@ -51,19 +50,19 @@ The project includes a comprehensive test suite built with Vitest and React Test
 
 ```bash
 # Run all tests in watch mode (default)
-npm test
+bun run test
 
 # Run all tests once (CI mode)
-npm test -- --run
+bun run test -- --run
 
 # Run tests with coverage report
-npm test -- --coverage
+bun run test -- --coverage
 
 # Run specific test file
-npm test -- --run src/tests/home.test.tsx
+bun run test -- --run src/tests/home.test.tsx
 
 # Run tests matching a pattern
-npm test -- --run --grep "HomePage"
+bun run test -- --run --grep "HomePage"
 ```
 
 ### Test Coverage
@@ -175,7 +174,7 @@ _Performance measured from Iowa, USA on 2025-08-22 by Cloudflare Observatory_
 
 ## Tech Stack
 
-- **Frontend Framework**: React 18 with TypeScript
+- **Frontend Framework**: React 19 with TypeScript
 - **Build Tool**: Vite
 - **Styling**: Tailwind CSS with shadcn/ui components
 - **Routing**: React Router DOM with lazy loading
