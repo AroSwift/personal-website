@@ -10,6 +10,7 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
+  Navigate,
   useLocation,
 } from 'react-router-dom'
 import { LazyMotion, domAnimation } from 'framer-motion'
@@ -239,6 +240,9 @@ const AppContent = () => {
           <Route path="/about" element={<AboutPage />} />
           <Route path="/projects" element={<ProjectsPage />} />
           <Route path="/contact" element={<ContactPage />} />
+          <Route path="/about/" element={<Navigate to="/about" replace />} />
+          <Route path="/projects/" element={<Navigate to="/projects" replace />} />
+          <Route path="/contact/" element={<Navigate to="/contact" replace />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Suspense>
