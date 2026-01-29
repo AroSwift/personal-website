@@ -12,7 +12,6 @@ import {
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import LoadingScreen from '../components/LoadingScreen'
 import { PWAStatus } from '../components/PWAStatus'
-import HueOverlay from '../components/HueOverlay'
 
 // Mock the components
 vi.mock('../components/LoadingScreen', () => ({
@@ -111,7 +110,6 @@ const TestApp = () => {
 
   return (
     <div className="App">
-      <HueOverlay />
       <Router>
         <Routes>
           <Route path="/" element={<HomePage />} />

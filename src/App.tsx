@@ -14,7 +14,6 @@ import {
 } from 'react-router-dom'
 import LoadingScreen from './components/LoadingScreen'
 import { PWAStatus } from './components/PWAStatus'
-import HueOverlay from './components/HueOverlay'
 
 // Lazy load page components for route-based code splitting
 const HomePage = lazy(() => import('./pages/HomePage'))
@@ -179,11 +178,6 @@ const MetaTagManager = () => {
     updateMetaTags(location.pathname)
   }, [location.pathname])
 
-  // Initialize meta tags on first load
-  useEffect(() => {
-    updateMetaTags(location.pathname)
-  }, [location.pathname])
-
   return null
 }
 
@@ -243,7 +237,6 @@ const AppContent = () => {
 
   return (
     <div className="App">
-      <HueOverlay />
       <Suspense fallback={<PageLoader />}>
         <Routes>
           <Route path="/" element={<HomePage />} />
