@@ -63,7 +63,7 @@ const ContactPage = () => {
               {/* Left Column - Contact Description and Action Buttons */}
               <div className="space-y-6 lg:space-y-8 xl:space-y-10">
                 <motion.p
-                  className="text-lg sm:text-xl md:text-2xl lg:text-xl xl:text-2xl 2xl:text-3xl text-black dark:text-white leading-relaxed max-w-xl lg:max-w-lg xl:max-w-xl transition-colors duration-800"
+                  className="text-base sm:text-lg md:text-xl lg:text-lg xl:text-xl 2xl:text-2xl text-black dark:text-white leading-relaxed max-w-xl lg:max-w-lg xl:max-w-xl transition-colors duration-800"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.5, duration: 0.6 }}
@@ -158,17 +158,18 @@ const ContactPage = () => {
               </div>
 
               {/* Right Column - Social Media Links */}
-              <div className="space-y-6 lg:space-y-8 xl:space-y-10">
+              <div className="space-y-6 lg:space-y-8 xl:space-y-10 lg:ml-auto lg:max-w-md xl:max-w-lg 2xl:max-w-xl">
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.6, duration: 0.6 }}
+                  className="space-y-3 sm:space-y-4 lg:space-y-5"
                 >
-                  <h3 className="text-2xl sm:text-3xl lg:text-2xl xl:text-3xl 2xl:text-4xl font-medium mb-3 text-black dark:text-white transition-colors duration-800">
-                    On social platforms
+                  <h3 className="text-xl sm:text-2xl lg:text-xl xl:text-2xl 2xl:text-3xl font-medium text-black dark:text-white transition-colors duration-800">
+                    Social Links
                   </h3>
-                  <p className="text-base sm:text-lg lg:text-base xl:text-lg 2xl:text-xl text-gray-700 dark:text-gray-200 mb-4 transition-colors duration-800">
-                    Let's connect and get in touch 👋
+                  <p className="text-base sm:text-lg lg:text-base xl:text-lg 2xl:text-xl text-gray-700 dark:text-gray-200 transition-colors duration-800">
+                    Reach out on these platforms
                   </p>
 
                   {/* Social Links with Hover Effects */}
@@ -191,7 +192,7 @@ const ContactPage = () => {
                           whileHover={{ scale: 1.02 }}
                         >
                           <Icon className="h-6 w-6 lg:h-7 lg:w-7 text-gray-700 dark:text-gray-300 group-hover:text-black dark:group-hover:text-white transition-colors" />
-                          <span className="text-lg lg:text-xl xl:text-2xl font-medium text-gray-700 dark:text-gray-300 group-hover:text-black dark:group-hover:text-white transition-colors">
+                          <span className="text-base lg:text-lg xl:text-xl font-medium text-gray-700 dark:text-gray-300 group-hover:text-black dark:group-hover:text-white transition-colors">
                             {social.name}
                           </span>
                         </motion.a>

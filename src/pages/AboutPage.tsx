@@ -191,7 +191,7 @@ const AboutPage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col flex-1 justify-start pb-16 sm:pb-24 lg:pb-32 relative z-20">
           {/* Hero Section with Profile and Bio */}
           <motion.div
-            className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 mb-16 lg:mb-24"
+            className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 mb-16 lg:mb-24 items-start"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: 'easeOut' }}
@@ -290,7 +290,7 @@ const AboutPage = () => {
             </div>
 
             {/* Right Column - Bio and Personal Statement */}
-            <div className="lg:col-span-5 flex items-start lg:pt-0">
+            <div className="lg:col-span-5 lg:pt-0">
               <motion.div
                 className="pt-0 w-full"
                 initial={{ opacity: 0, x: 40 }}
@@ -305,20 +305,10 @@ const AboutPage = () => {
                 >
                   Full-stack software engineer enabling the world's fastest
                   open-science supercomputers to operate at exascale. In my
-                  spare time, I build fully autonomous agentic workflows. In
-                  short: I build code that thinks and infrastructure that lasts.
-                </motion.p>
-
-                <motion.p
-                  className="text-base sm:text-lg leading-relaxed mb-6 text-foreground"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.9 }}
-                >
-                  I am an experienced full-stack software engineer with over 9
-                  years of experience delivering performant and well-tested
-                  software. I love to solve problems, learn everything, mentor,
-                  and take on high-impact projects!
+                  spare time, I build fully autonomous agentic workflows
+                  and quickly prototype MVPs for new businesses.
+                  When I'm not coding, you'll find me obsessed with volleyball,
+                  dancing, hiking, gaming, or playing piano.
                 </motion.p>
 
                 <motion.p
@@ -327,23 +317,12 @@ const AboutPage = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 1.1 }}
                 >
-                  I'm especially passionate about designing fully autonomous,
-                  AI-driven workflows that seamlessly integrate advanced machine
-                  learning models, data pipelines, and automation systems. I
-                  love creating self-sustaining systems that enable AI to make
-                  decisions and take actions autonomously.
-                </motion.p>
-
-                <motion.p
-                  className="text-base sm:text-lg leading-relaxed mb-8 text-foreground"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 1.3 }}
-                >
-                  For me, software engineering is about solving problems that
-                  make a real difference in the world. Whether it's building
-                  AI-driven workflows or enabling open science on the world's
-                  fastest supercomputer, I love tackling challenging problems!
+                  Over the past decade, I've had the opportunity to contribute at both Bank of America
+                  and the Oak Ridge National Laboratory (ORNL). Currently, my tech stack is primarily Ruby, 
+                  Ruby on Rails, Go, Python, TypeScript, Vue.js, and Kubernetes, but I always love to learn
+                  new languages, frameworks, and tools. While I love full-stack engineering, I have more recently 
+                  been enjoying architecting complex systems, working with distributed systems, 
+                  optimizing for performance at scale, and developing agentic workflows.
                 </motion.p>
               </motion.div>
             </div>
