@@ -45,6 +45,9 @@ export default defineConfig({
       brotliSize: true,
     }),
   ],
+  define: {
+    'import.meta.env.VITE_BUILD_VERSION': JSON.stringify(new Date().toISOString().replace(/[:.-]/g, '')),
+  },
   resolve: {
     alias: {
       '@': '/src',

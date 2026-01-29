@@ -17,11 +17,11 @@ export function usePWA() {
   const isUpdatingRef = useRef(false)
   const updateCleanupRef = useRef<{
     listener: (() => void) | null
-    timeout: NodeJS.Timeout | null
+    timeout: ReturnType<typeof setTimeout> | null
   }>({ listener: null, timeout: null })
   
   // Store interval IDs and event listeners for cleanup
-  const intervalRef = useRef<NodeJS.Timeout | null>(null)
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
   const controllerChangeListenerRef = useRef<(() => void) | null>(null)
 
   const [pwaState, setPwaState] = useState<PWAState>({
@@ -77,65 +77,26 @@ export function usePWA() {
       controllerChangeListenerRef.current = handleControllerChange
       navigator.serviceWorker.addEventListener('controllerchange', handleControllerChange)
       
-      // Check if service worker is already registered to prevent duplicates
-      navigator.serviceWorker.getRegistration().then(existingRegistration => {
-        if (!existingRegistration) {
-          navigator.serviceWorker
-            .register('/service-worker.js')
-            .then(registration => {
-              // Check for updates periodically
-              const checkForUpdates = () => {
-                registration.update()
-              }
+      const swVersion = import.meta.env.VITE_BUILD_VERSION || Date.now().toString()
+      const swUrl = `/service-worker.js?v=${swVersion}`
 
-              // Check immediately on mount
-              checkForUpdates()
-
-              // Then check every 5 minutes (reduced from 10 seconds)
-              // Store interval ID in ref for cleanup
-              intervalRef.current = setInterval(checkForUpdates, 5 * 60 * 1000)
-
-              registration.addEventListener('updatefound', () => {
-                const newWorker = registration.installing
-                if (newWorker) {
-                  newWorker.addEventListener('statechange', () => {
-                    if (
-                      newWorker.state === 'installed' &&
-                      navigator.serviceWorker.controller
-                    ) {
-                      setPwaState(prev => ({ ...prev, hasUpdate: true }))
-                    }
-                  })
-                }
-              })
-
-              // Check if there's already a waiting worker (page loaded after update was detected)
-              if (registration.waiting && navigator.serviceWorker.controller) {
-                setPwaState(prev => ({ ...prev, hasUpdate: true }))
-              }
-            })
-            .catch(() => {
-              // Registration failed, clean up interval if set
-              if (intervalRef.current !== null) {
-                clearInterval(intervalRef.current)
-                intervalRef.current = null
-              }
-            })
-        } else {
-          // Service worker already registered, just set up update checking
+      navigator.serviceWorker
+        .register(swUrl, { updateViaCache: 'none' })
+        .then(registration => {
+          // Check for updates periodically
           const checkForUpdates = () => {
-            existingRegistration.update()
+            registration.update()
           }
 
           // Check immediately on mount
           checkForUpdates()
 
-          // Then check every 5 minutes
+          // Then check every 1 minute
           // Store interval ID in ref for cleanup
-          intervalRef.current = setInterval(checkForUpdates, 5 * 60 * 1000)
+          intervalRef.current = setInterval(checkForUpdates, 60 * 1000)
 
-          existingRegistration.addEventListener('updatefound', () => {
-            const newWorker = existingRegistration.installing
+          registration.addEventListener('updatefound', () => {
+            const newWorker = registration.installing
             if (newWorker) {
               newWorker.addEventListener('statechange', () => {
                 if (
@@ -149,14 +110,17 @@ export function usePWA() {
           })
 
           // Check if there's already a waiting worker (page loaded after update was detected)
-          if (
-            existingRegistration.waiting &&
-            navigator.serviceWorker.controller
-          ) {
+          if (registration.waiting && navigator.serviceWorker.controller) {
             setPwaState(prev => ({ ...prev, hasUpdate: true }))
           }
-        }
-      })
+        })
+        .catch(() => {
+          // Registration failed, clean up interval if set
+          if (intervalRef.current !== null) {
+            clearInterval(intervalRef.current)
+            intervalRef.current = null
+          }
+        })
     }
 
     return () => {

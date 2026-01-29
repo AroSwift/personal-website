@@ -3,7 +3,7 @@ const CACHE_VERSION = 'BUILD_VERSION'
 const CACHE_NAME = `aaron-barlow-${CACHE_VERSION}`
 const STATIC_CACHE = `static-cache-${CACHE_VERSION}`
 const DYNAMIC_CACHE = `dynamic-cache-${CACHE_VERSION}`
-const MAX_CACHE_AGE = 2 * 24 * 60 * 60 * 1000 // 2 days in milliseconds
+const MAX_CACHE_AGE = 1 * 24 * 60 * 60 * 1000 // 1 day in milliseconds
 
 // Store interval ID for cleanup (moved to top to avoid hoisting issues)
 let cleanupIntervalId = null
@@ -85,8 +85,8 @@ self.addEventListener('install', event => {
         console.error('Service Worker: Install failed:', error)
         // Don't throw - allow service worker to install even if caching fails
       }
-      // Skip waiting to activate immediately (only when explicitly requested)
-      // self.skipWaiting() // Commented out to prevent automatic activation
+      // Skip waiting to activate immediately
+      self.skipWaiting()
     })()
   )
 })
@@ -399,7 +399,7 @@ async function cleanupOldCaches() {
 
     for (const cacheName of cacheNames) {
       try {
-        // Check if cache is older than 2 days
+        // Check if cache is older than 1 day
         // Cache name format: aaron-barlow-v3-YYYYMMDD-HHMMSS or static-cache-v3-YYYYMMDD-HHMMSS
         if (cacheName.includes('aaron-barlow-') || cacheName.includes('static-cache-') || cacheName.includes('dynamic-cache-')) {
           // Extract version part (v3-YYYYMMDD-HHMMSS)
@@ -421,7 +421,7 @@ async function cleanupOldCaches() {
             const cacheDateObj = new Date(year, month, day, hours, minutes, seconds)
             const daysDiff = (now - cacheDateObj.getTime()) / (1000 * 60 * 60 * 24)
 
-            if (!isNaN(daysDiff) && daysDiff > 2) {
+            if (!isNaN(daysDiff) && daysDiff > 1) {
               await caches.delete(cacheName)
             }
           } else if (!cacheName.includes(CACHE_VERSION)) {
