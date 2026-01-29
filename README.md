@@ -269,6 +269,7 @@ The `nginx.conf` file handles:
 - Static asset caching
 - Security headers (including HSTS)
 - Gzip compression
+- Brotli compression
 - Proxy headers for CDN/reverse proxy compatibility
 
 ## Contributing
