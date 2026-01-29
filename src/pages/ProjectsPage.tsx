@@ -186,9 +186,9 @@ const ProjectsPage = () => {
               transition={{ duration: 0.6, delay: 0.4 }}
             >
               A collection of professional work and personal projects spanning
-              HPC systems management, software development, and agentic AI
-              systems. These showcase both my professional contributions and
-              personal exploration of cutting-edge technologies.
+              high-performance computing systems management, software development, 
+              and agentic AI workflows. These showcase my professional contributions 
+              and my personal exploration of cutting-edge technologies.
             </motion.p>
           </motion.div>
 
