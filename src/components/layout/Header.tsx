@@ -16,9 +16,13 @@ const Header = ({ className = '' }: HeaderProps) => {
   // Initialize theme state properly to avoid synchronous setState in effect
   const getInitialTheme = (): 'light' | 'dark' => {
     if (typeof window === 'undefined') return 'light'
-    const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null
-    if (savedTheme) {
-      return savedTheme
+    try {
+      const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null
+      if (savedTheme) {
+        return savedTheme
+      }
+    } catch {
+      // localStorage access failed (e.g., private browsing mode), fall back to DOM check
     }
     return document.documentElement.classList.contains('dark')
       ? 'dark'
@@ -63,52 +67,77 @@ const Header = ({ className = '' }: HeaderProps) => {
     }
   }, [])
 
+  // Run the sophisticated spinning animation
+  const runSpinAnimation = async () => {
+    // Phase 1: Fast spin (3 rotations in 600ms)
+    await themeIconAnimation.start({
+      rotate: 1080, // 3 * 360 degrees
+      scale: [1, 1.15, 1],
+      transition: {
+        rotate: { duration: 0.6, ease: 'linear' },
+        scale: { duration: 0.3, ease: 'easeOut' },
+      },
+    })
+
+    // Phase 2: Deceleration (1 rotation in 800ms with easing)
+    await themeIconAnimation.start({
+      rotate: 1440, // 4 * 360 degrees
+      scale: 1,
+      transition: {
+        rotate: { duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }, // Smooth deceleration
+        scale: { duration: 0.2, ease: 'easeOut' },
+      },
+    })
+
+    // Phase 3: Settling (smooth stop in 400ms)
+    await themeIconAnimation.start({
+      rotate: 1440, // Keep final rotation
+      scale: 1,
+      transition: {
+        rotate: { duration: 0.4, ease: [0.34, 1.56, 0.64, 1] }, // Bounce-like settling
+        scale: { duration: 0.2, ease: 'easeOut' },
+      },
+    })
+  }
+
   // Check for post-loading animation trigger
   useEffect(() => {
     const checkForPostLoadAnimation = () => {
-      const shouldTrigger = localStorage.getItem('triggerPostLoadAnimation')
-      if (shouldTrigger === 'true' && !hasTriggeredPostLoadAnimation) {
+      if (hasTriggeredPostLoadAnimation) return
+
+      let shouldTrigger: string | null = null
+      let hasVisited: string | null = null
+      
+      try {
+        shouldTrigger = localStorage.getItem('triggerPostLoadAnimation')
+        hasVisited = localStorage.getItem('hasVisited')
+      } catch {
+        // localStorage access failed (e.g., private browsing mode)
+        // Skip animation trigger if we can't access storage
+        return
+      }
+
+      // Trigger animation if:
+      // 1. First-time visit: triggerPostLoadAnimation flag is set
+      // 2. Page reload: hasVisited is true (portfolio message already shown)
+      const shouldRunAnimation =
+        shouldTrigger === 'true' || hasVisited === 'true'
+
+      if (shouldRunAnimation) {
         setHasTriggeredPostLoadAnimation(true)
 
-        // Clear the flag
-        localStorage.removeItem('triggerPostLoadAnimation')
-
-        // Run the sophisticated spinning animation
-        const runAnimation = async () => {
-          // Phase 1: Fast spin (3 rotations in 600ms)
-          await themeIconAnimation.start({
-            rotate: 1080, // 3 * 360 degrees
-            scale: [1, 1.15, 1],
-            transition: {
-              rotate: { duration: 0.6, ease: 'linear' },
-              scale: { duration: 0.3, ease: 'easeOut' },
-            },
-          })
-
-          // Phase 2: Deceleration (1 rotation in 800ms with easing)
-          await themeIconAnimation.start({
-            rotate: 1440, // 4 * 360 degrees
-            scale: 1,
-            transition: {
-              rotate: { duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }, // Smooth deceleration
-              scale: { duration: 0.2, ease: 'easeOut' },
-            },
-          })
-
-          // Phase 3: Settling (smooth stop in 400ms)
-          await themeIconAnimation.start({
-            rotate: 1440, // Keep final rotation
-            scale: 1,
-            transition: {
-              rotate: { duration: 0.4, ease: [0.34, 1.56, 0.64, 1] }, // Bounce-like settling
-              scale: { duration: 0.2, ease: 'easeOut' },
-            },
-          })
+        // Clear the flag if it exists (first-time visit)
+        if (shouldTrigger === 'true') {
+          try {
+            localStorage.removeItem('triggerPostLoadAnimation')
+          } catch {
+            // Ignore errors when removing item
+          }
         }
 
-        // Small delay to ensure smooth transition from loading screen
+        // Small delay to ensure smooth transition from loading screen or page load
         setTimeout(() => {
-          runAnimation()
+          runSpinAnimation()
         }, 300)
       }
     }
@@ -116,7 +145,7 @@ const Header = ({ className = '' }: HeaderProps) => {
     // Check immediately
     checkForPostLoadAnimation()
 
-    // Also check periodically for the first few seconds
+    // Also check periodically for the first few seconds (for first-time visits)
     const interval = setInterval(checkForPostLoadAnimation, 100)
     setTimeout(() => clearInterval(interval), 3000)
 
@@ -148,7 +177,12 @@ const Header = ({ className = '' }: HeaderProps) => {
     setTheme(newTheme)
 
     // Save to localStorage
-    localStorage.setItem('theme', newTheme)
+    try {
+      localStorage.setItem('theme', newTheme)
+    } catch {
+      // localStorage access failed (e.g., private browsing mode)
+      // Theme will still work for current session, just won't persist
+    }
   }
 
   // Navigation links
