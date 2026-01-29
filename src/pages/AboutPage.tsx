@@ -29,6 +29,9 @@ const AboutPage = () => {
     'JavaScript',
     'Vue.js',
     'React',
+    'LangChain',
+    'CrewAI',
+    'PhiData',
     'CoffeeScript',
     'Crystal',
     'Amber',
@@ -73,25 +76,25 @@ const AboutPage = () => {
   const experience = [
     {
       company: 'Oak Ridge National Laboratory',
-      role: 'HPC Software Engineer',
+      role: 'HPC Software Engineer, National Center for Computational Sciences',
       period: 'Jun 2020 - Present',
-      location: 'Oak Ridge, TN (Remote)',
+      location: 'Remote',
       scope: '',
       bannerImage: '/about/ornl.webp',
       highlights: [
-        'Enabled privacy-preserving federated learning on Frontier (first U.S. exascale system; TOP500 #2). Ported NVFLARE to ROCm/MI250X with PyTorch, built HIP-compatible containers, integrated with Slurm (mTLS in enclaves), and validated multi-node training rounds previously impossible.',
-        'Owned and scaled myOLCF self-service portal to ~4,000 users across 1,000+ projects with 99.9%+ uptime; shipped 12 FY2025 releases governing access, allocation, and policy across enclaves.',
-        'Replaced Jbuilder with JSON:API serializer + Redis caching; took 100k-row endpoint 272s → 178–206ms (1,320× faster, –99.92%), cut ActiveRecord 19.2s → 8.8ms, and eliminated cluster sync timeouts.',
-        'Built Crystal/Amber Smart Facility metrics platform ingesting 100k+ time-series records; served dashboards in ~87ms and benchmarked 10.4k req/sec per core. Used for procurement and to flag inefficient Slurm jobs.',
-        'Accelerated CI/CD: builds 2m → 9s (-92%), startup 30s → <200ms (-99%), tests 90s → 6s (-93%). Standardized GitOps delivery with Kustomize + Argo CD on Kubernetes.',
-        'Central policy-as-code service automating provisioning, access, and scheduler policy across SLURM/LSF enclaves. Zero post-deploy incidents in 3 years due to expanded Cypress coverage + validation.',
+        'Actively developing the system of record for 27 HPC clusters that serves as the authoritative source for cluster state through software-driven HPC management, which provisions filesystem directories, UNIX users/groups, sets user access, and job scheduling to ensure continuous operations for $700M+ in compute systems.',
+        'Optimized a core API, initially targeting enforcement of 100k+ filesystem directories across 27 HPC clusters. Added caching and serialization to cut RTT from 272s to 0.178s (~1,528× faster). Stabilized high-performance computing facility\'s critical HPC management software, eliminating cluster workload policy sync timeouts.',
+        'Deployed and expanded myOLCF, a researcher self-service and monitoring app supporting 4,000+ users across 1,000+ large-scale high-performance computing research campaigns, achieving ~99.9% availability.',
+        'Co-architected Smart Facility System, capable of delivering 100k time-series records in 87ms. Offloaded compute to background jobs with indexes and caching. Used to guide procurement and flag inefficient computation jobs.',
+        'Optimized build processes and CI pipelines, cutting builds from 2min to 9s, startup from 30s to ~200ms, and tests from 90s to 6s, boosting developer productivity, shortening feedback loops, and speeding up deployments.',
+        'Delivered AMD-compatible NVFLARE on Frontier (TOP500 #2) by supporting ROCm on MI250X GPUs with PyTorch, enabling cross-institution healthcare training of privacy-preserving medical foundation models.',
       ],
     },
     {
       company: 'Bank of America',
-      role: 'Global Technology Summer Analyst (ML Engineer Intern)',
+      role: 'Machine Learning Engineer Intern, Consumer and Wealth Management',
       period: 'Jun 2019 - Aug 2019',
-      location: 'Greater Los Angeles Area',
+      location: 'Los Angeles, CA',
       bannerImage: '/about/bofa.webp',
       highlights: [
         'Built NLP entity extraction service (names, phones, addresses, accounts, amounts) achieving 96% F1 score, enabling $20M+ in annual automation savings.',
@@ -99,12 +102,12 @@ const AboutPage = () => {
     },
     {
       company: 'Oak Ridge National Laboratory',
-      role: 'Software Developer Intern, National Center for Computational Sciences (NCCS)',
+      role: 'Software Developer Intern, National Center for Computational Sciences',
       period: 'May 2015 - May 2019',
       location: 'Oak Ridge, TN',
       bannerImage: '/about/ornl.webp',
       highlights: [
-        'Year-round development of HPC-centric services, applications, and BI tools for 20+ HPC clusters, ensuring uptime for $250M compute systems; shipped production features across internal portals.',
+        'Developed operational software for 20+ HPC clusters that serves as the system of record for cluster state, automating provisioning and access control to ensure uptime for ~$250M in compute systems.',
         'Automated supercomputer-access communications via policy-aware email system; standardized messaging and reduced manual steps.',
         'Built WordPress/REST plugin to sync and display HPC metrics on olcf.ornl.gov; improved data freshness and reduced update toil.',
       ],
@@ -197,7 +200,7 @@ const AboutPage = () => {
             <div className="lg:col-span-7">
               {/* Profile Image with Hover Effects */}
               <motion.div
-                className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 lg:w-48 lg:h-48 xl:w-64 xl:h-64 rounded-2xl sm:rounded-3xl md:rounded-[2rem] overflow-hidden mb-4 sm:mb-6 md:mb-8 border-2 sm:border-4 border-border/50 dark:border-border/30 bg-muted shadow-lg hover:shadow-xl transition-all duration-500 hover:scale-105"
+                className="w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 lg:w-52 lg:h-52 xl:w-72 xl:h-72 rounded-2xl sm:rounded-3xl md:rounded-[2rem] overflow-hidden mb-4 sm:mb-6 md:mb-8 border-2 sm:border-4 border-border/50 dark:border-border/30 bg-muted shadow-lg hover:shadow-xl transition-all duration-500 hover:scale-105"
                 initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
                 animate={{ opacity: 1, scale: 1, rotate: 0 }}
                 transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}

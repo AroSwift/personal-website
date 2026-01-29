@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
-import { Home, ArrowLeft } from 'lucide-react'
+import { Home, UserCircle } from 'lucide-react'
 import Header from '@/components/layout/Header'
 
 const NotFoundPage = () => {
@@ -112,7 +112,7 @@ const NotFoundPage = () => {
               className="px-8 py-3 text-lg font-medium"
             >
               <Link to="/about">
-                <ArrowLeft className="w-5 h-5 mr-2" />
+                <UserCircle className="w-5 h-5 mr-2" />
                 About Me
               </Link>
             </Button>

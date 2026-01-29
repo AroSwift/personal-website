@@ -23,8 +23,8 @@ const ProjectsPage = () => {
     {
       title: 'American Science Cloud Hub & Portal',
       description:
-        "Developing U.S. Department of Energy's AmSC Hub & Portal (AmSC = American Science Cloud). The Hub enables backend multi-HPC facility allocation requests for open science research, provider management, service management, and centralized canonical control of multiple facility management with federated authentication across HPC facilities under various security enclaves. The Portal provides centralized visualization of HPC utilization and self-management of multi-facility research.",
-      tech: 'Ruby on Rails, Hotwire, SASS, Vue.js, TypeScript, Kubernetes',
+        "Developing U.S. Department of Energy's American Science Cloud Hub & Portal. The Hub enables backend multi high-performance computing (HPC) facility allocation requests for open science research, provider management, service management, and centralized authoritative control of multiple facility management with federated authentication across HPC facilities under various security enclaves. The Portal provides centralized visualization of HPC utilization and self-management of multi-facility research.",
+      tech: 'Ruby, Ruby on Rails, Hotwire, SASS, Vue.js, TypeScript, Kubernetes',
       category: 'HPC Management',
       year: '2025-Present @ National Center for Computational Sciences',
       status: 'In-Development',
@@ -100,7 +100,7 @@ const ProjectsPage = () => {
     {
       title: 'Project Cadenza',
       description:
-        'AI-driven workflow creates artists, albums, writes lyrics, generates songs, masters audio, produces art, and auto-uploads to YouTube. Has published 149 music videos with high-level configuration for genre selection, artist persona development, and automated content scheduling.',
+        'AI-driven workflow creates artists, albums, writes lyrics, generates songs, masters audio, produces art, and auto-uploads to YouTube. Has published 150 music videos with high-level configuration for genre selection, artist persona development, and automated content scheduling.',
       tech: 'Python, Langchain, Puppeteer',
       category: 'AI Automation',
       year: '2023-Present',
