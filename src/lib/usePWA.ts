@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 interface PWAState {
   isOnline: boolean
@@ -12,6 +12,17 @@ export function usePWA() {
   // Check if we're in the browser environment
   const isBrowser =
     typeof window !== 'undefined' && typeof navigator !== 'undefined'
+
+  // Guard to prevent concurrent updateServiceWorker calls
+  const isUpdatingRef = useRef(false)
+  const updateCleanupRef = useRef<{
+    listener: (() => void) | null
+    timeout: NodeJS.Timeout | null
+  }>({ listener: null, timeout: null })
+  
+  // Store interval IDs and event listeners for cleanup
+  const intervalRef = useRef<NodeJS.Timeout | null>(null)
+  const controllerChangeListenerRef = useRef<(() => void) | null>(null)
 
   const [pwaState, setPwaState] = useState<PWAState>({
     isOnline: isBrowser ? navigator.onLine : true,
@@ -41,6 +52,31 @@ export function usePWA() {
 
     // Service worker update detection
     if ('serviceWorker' in navigator) {
+      // Clean up any existing interval
+      if (intervalRef.current !== null) {
+        clearInterval(intervalRef.current)
+        intervalRef.current = null
+      }
+      
+      // Clean up any existing controllerchange listener
+      if (controllerChangeListenerRef.current !== null) {
+        navigator.serviceWorker.removeEventListener(
+          'controllerchange',
+          controllerChangeListenerRef.current
+        )
+        controllerChangeListenerRef.current = null
+      }
+      
+      // Handler for controllerchange events
+      const handleControllerChange = () => {
+        setPwaState(prev => ({ ...prev, hasUpdate: false }))
+        // Don't automatically reload - let the user decide when to update
+      }
+      
+      // Store listener reference
+      controllerChangeListenerRef.current = handleControllerChange
+      navigator.serviceWorker.addEventListener('controllerchange', handleControllerChange)
+      
       // Check if service worker is already registered to prevent duplicates
       navigator.serviceWorker.getRegistration().then(existingRegistration => {
         if (!existingRegistration) {
@@ -56,7 +92,8 @@ export function usePWA() {
               checkForUpdates()
 
               // Then check every 5 minutes (reduced from 10 seconds)
-              const updateInterval = setInterval(checkForUpdates, 5 * 60 * 1000)
+              // Store interval ID in ref for cleanup
+              intervalRef.current = setInterval(checkForUpdates, 5 * 60 * 1000)
 
               registration.addEventListener('updatefound', () => {
                 const newWorker = registration.installing
@@ -72,7 +109,17 @@ export function usePWA() {
                 }
               })
 
-              return () => clearInterval(updateInterval)
+              // Check if there's already a waiting worker (page loaded after update was detected)
+              if (registration.waiting && navigator.serviceWorker.controller) {
+                setPwaState(prev => ({ ...prev, hasUpdate: true }))
+              }
+            })
+            .catch(() => {
+              // Registration failed, clean up interval if set
+              if (intervalRef.current !== null) {
+                clearInterval(intervalRef.current)
+                intervalRef.current = null
+              }
             })
         } else {
           // Service worker already registered, just set up update checking
@@ -84,7 +131,8 @@ export function usePWA() {
           checkForUpdates()
 
           // Then check every 5 minutes
-          const updateInterval = setInterval(checkForUpdates, 5 * 60 * 1000)
+          // Store interval ID in ref for cleanup
+          intervalRef.current = setInterval(checkForUpdates, 5 * 60 * 1000)
 
           existingRegistration.addEventListener('updatefound', () => {
             const newWorker = existingRegistration.installing
@@ -100,47 +148,125 @@ export function usePWA() {
             }
           })
 
-          return () => clearInterval(updateInterval)
+          // Check if there's already a waiting worker (page loaded after update was detected)
+          if (
+            existingRegistration.waiting &&
+            navigator.serviceWorker.controller
+          ) {
+            setPwaState(prev => ({ ...prev, hasUpdate: true }))
+          }
         }
-      })
-
-      // Remove automatic reload - let user choose when to update
-      navigator.serviceWorker.addEventListener('controllerchange', () => {
-        setPwaState(prev => ({ ...prev, hasUpdate: false }))
-        // Don't automatically reload - let the user decide when to update
       })
     }
 
     return () => {
       window.removeEventListener('online', handleOnline)
       window.removeEventListener('offline', handleOffline)
+      
+      // Clean up interval
+      if (intervalRef.current !== null) {
+        clearInterval(intervalRef.current)
+        intervalRef.current = null
+      }
+      
+      // Clean up controllerchange listener
+      if (controllerChangeListenerRef.current !== null && 'serviceWorker' in navigator) {
+        navigator.serviceWorker.removeEventListener(
+          'controllerchange',
+          controllerChangeListenerRef.current
+        )
+        controllerChangeListenerRef.current = null
+      }
     }
   }, [isBrowser])
 
   const updateServiceWorker = async () => {
     if (!isBrowser || !('serviceWorker' in navigator)) return
 
+    // Prevent concurrent executions
+    if (isUpdatingRef.current) {
+      return
+    }
+
     try {
       const registration = await navigator.serviceWorker.getRegistration()
       if (registration) {
-        // If there's an installing service worker, send it the skip waiting message
-        if (registration.installing) {
-          registration.installing.postMessage({ type: 'SKIP_WAITING' })
-        }
-        // Also check if there's an available update
-        await registration.update()
+        // Check waiting FIRST (this is the state when update is available)
+        // Then fall back to installing
+        const waitingWorker = registration.waiting || registration.installing
 
-        // Listen for controller change and reload when user explicitly updates
-        navigator.serviceWorker.addEventListener(
-          'controllerchange',
-          () => {
-            window.location.reload()
-          },
-          { once: true }
-        )
+        if (waitingWorker) {
+          // Set updating flag
+          isUpdatingRef.current = true
+
+          // Clean up any existing listeners/timeouts from previous calls
+          if (updateCleanupRef.current.listener) {
+            navigator.serviceWorker.removeEventListener(
+              'controllerchange',
+              updateCleanupRef.current.listener
+            )
+            updateCleanupRef.current.listener = null
+          }
+          if (updateCleanupRef.current.timeout) {
+            clearTimeout(updateCleanupRef.current.timeout)
+            updateCleanupRef.current.timeout = null
+          }
+
+          // Hide the notification immediately
+          setPwaState(prev => ({ ...prev, hasUpdate: false }))
+
+          // Set up reload listener BEFORE sending message (avoid race condition)
+          let reloaded = false
+          const reload = () => {
+            if (!reloaded) {
+              reloaded = true
+              // Reset flag before reload (though reload will clear state anyway)
+              isUpdatingRef.current = false
+              updateCleanupRef.current.listener = null
+              updateCleanupRef.current.timeout = null
+              window.location.reload()
+            }
+          }
+
+          // Store listener reference for cleanup
+          updateCleanupRef.current.listener = reload
+
+          navigator.serviceWorker.addEventListener('controllerchange', reload, {
+            once: true,
+          })
+
+          // Send skip waiting message
+          waitingWorker.postMessage({ type: 'SKIP_WAITING' })
+
+          // Fallback: reload after 2 seconds if controllerchange doesn't fire
+          updateCleanupRef.current.timeout = setTimeout(() => {
+            updateCleanupRef.current.timeout = null
+            reload()
+          }, 2000)
+        } else {
+          // No waiting worker, reset flag
+          isUpdatingRef.current = false
+        }
+      } else {
+        // No registration, reset flag
+        isUpdatingRef.current = false
       }
     } catch (error) {
       console.error('Error updating service worker:', error)
+      // Reset flag on error
+      isUpdatingRef.current = false
+      // Clean up on error
+      if (updateCleanupRef.current.listener) {
+        navigator.serviceWorker.removeEventListener(
+          'controllerchange',
+          updateCleanupRef.current.listener
+        )
+        updateCleanupRef.current.listener = null
+      }
+      if (updateCleanupRef.current.timeout) {
+        clearTimeout(updateCleanupRef.current.timeout)
+        updateCleanupRef.current.timeout = null
+      }
     }
   }
 

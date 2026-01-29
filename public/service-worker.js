@@ -57,21 +57,35 @@ self.addEventListener('install', event => {
 // Activate event - clean up old caches
 self.addEventListener('activate', event => {
   event.waitUntil(
-    caches
-      .keys()
-      .then(cacheNames => {
-        return Promise.all(
-          cacheNames.map(cacheName => {
-            // Delete all old caches (not just specific ones)
-            if (!cacheName.includes(CACHE_VERSION)) {
-              return caches.delete(cacheName)
-            }
-          })
-        )
-      })
-      .then(() => {
-        return self.clients.claim()
-      })
+    (async () => {
+      // Clear interval if service worker is being replaced
+      if (cleanupIntervalId !== null) {
+        clearInterval(cleanupIntervalId)
+        cleanupIntervalId = null
+      }
+      
+      // Clean up old caches
+      const cacheNames = await caches.keys()
+      await Promise.all(
+        cacheNames.map(cacheName => {
+          // Delete all old caches (not just specific ones)
+          if (!cacheName.includes(CACHE_VERSION)) {
+            return caches.delete(cacheName)
+          }
+        })
+      )
+      
+      // Claim clients
+      await self.clients.claim()
+      
+      // Restart cleanup interval
+      cleanupIntervalId = setInterval(
+        () => {
+          cleanupOldCaches()
+        },
+        60 * 60 * 1000
+      ) // 1 hour
+    })()
   )
 })
 
@@ -263,6 +277,9 @@ self.addEventListener('notificationclick', event => {
   }
 })
 
+// Store interval ID for cleanup
+let cleanupIntervalId = null
+
 // Message handling for communication with main thread
 self.addEventListener('message', event => {
   if (event.data && event.data.type === 'SKIP_WAITING') {
@@ -277,34 +294,52 @@ self.addEventListener('message', event => {
   if (event.data && event.data.type === 'CLEANUP_CACHE') {
     cleanupOldCaches()
   }
+
+  if (event.data && event.data.type === 'STOP_CLEANUP_INTERVAL') {
+    if (cleanupIntervalId !== null) {
+      clearInterval(cleanupIntervalId)
+      cleanupIntervalId = null
+    }
+  }
 })
 
-// Periodic cache cleanup (runs every hour)
-setInterval(
-  () => {
-    cleanupOldCaches()
-  },
-  60 * 60 * 1000
-) // 1 hour
+// Periodic cache cleanup will be started in activate event
 
 // Cleanup function to remove old caches
 async function cleanupOldCaches() {
   try {
     const cacheNames = await caches.keys()
-    const currentDate = new Date().toISOString().split('T')[0]
+    const now = Date.now()
 
     for (const cacheName of cacheNames) {
       // Check if cache is older than 2 days
-      if (cacheName.includes('aaron-barlow-')) {
-        const cacheDate = cacheName.split('-').slice(-1)[0] // Get date part
-        if (cacheDate && cacheDate !== currentDate) {
-          const cacheDateObj = new Date(cacheDate)
-          const daysDiff =
-            (Date.now() - cacheDateObj.getTime()) / (1000 * 60 * 60 * 24)
+      // Cache name format: aaron-barlow-v3-YYYYMMDD-HHMMSS or static-cache-v3-YYYYMMDD-HHMMSS
+      if (cacheName.includes('aaron-barlow-') || cacheName.includes('static-cache-') || cacheName.includes('dynamic-cache-')) {
+        // Extract version part (v3-YYYYMMDD-HHMMSS)
+        const versionMatch = cacheName.match(/v\d+-(.{8})-(.{6})/)
+        if (versionMatch) {
+          const dateStr = versionMatch[1] // YYYYMMDD
+          const timeStr = versionMatch[2] // HHMMSS
+          
+          // Parse date: YYYYMMDD format
+          const year = parseInt(dateStr.substring(0, 4), 10)
+          const month = parseInt(dateStr.substring(4, 6), 10) - 1 // Month is 0-indexed
+          const day = parseInt(dateStr.substring(6, 8), 10)
+          
+          // Parse time: HHMMSS format
+          const hours = parseInt(timeStr.substring(0, 2), 10)
+          const minutes = parseInt(timeStr.substring(2, 4), 10)
+          const seconds = parseInt(timeStr.substring(4, 6), 10)
+          
+          const cacheDateObj = new Date(year, month, day, hours, minutes, seconds)
+          const daysDiff = (now - cacheDateObj.getTime()) / (1000 * 60 * 60 * 24)
 
           if (daysDiff > 2) {
             await caches.delete(cacheName)
           }
+        } else if (!cacheName.includes(CACHE_VERSION)) {
+          // If we can't parse the version, delete caches that don't match current version
+          await caches.delete(cacheName)
         }
       }
     }
