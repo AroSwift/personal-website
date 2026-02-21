@@ -16,7 +16,7 @@ A modern, responsive personal website for Aaron Barlow built with React, TypeScr
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/personal-website.git
+   git clone https://github.com/AroSwift/personal-website.git
    cd personal-website
    ```
 
@@ -73,7 +73,7 @@ The test suite covers component rendering, user interactions, routing logic, loa
 
 ### Dokploy Deployment
 
-This project is configured for deployment on Dokploy with a fully code-owned Docker setup using docker-compose.yml for proper Traefik integration. I configured for zero-downtime rolling updates enabled.
+This project is configured for deployment on Dokploy with a fully code-owned Docker setup using docker-compose.yml for proper Traefik integration. It is configured for zero-downtime rolling updates.
 
 #### Dokploy Setup Steps:
 
@@ -182,8 +182,6 @@ _Performance measured from Iowa, USA on 2025-08-22 by Cloudflare Observatory_
 - **Animations**: Framer Motion
 - **Icons**: Lucide React
 - **Testing**: Vitest + React Testing Library
-- **Forms**: React Hook Form
-- **Database**: Supabase (configured for future use)
 
 ### Build Optimizations
 
@@ -215,7 +213,6 @@ personal-website/
 │   │   ├── utils.ts                   # General utility functions
 │   │   ├── usePWA.ts                  # PWA functionality hook
 │   │   └── useScrollToTop.ts          # Scroll behavior hook
-│   ├── types/                         # TypeScript type definitions
 │   └── App.tsx                        # Main application component
 ├── public/                            # Static assets
 ├── dist/                              # Build output
@@ -223,7 +220,13 @@ personal-website/
 ├── nginx.conf                         # Nginx configuration
 ├── docker-compose.yml                 # Docker Compose for production
 ├── docker-compose.local.yml           # Docker Compose for local testing
-└── configuration files
+├── vite.config.ts                     # Vite build configuration
+├── tailwind.config.js                 # Tailwind CSS configuration
+├── tsconfig.json                      # TypeScript configuration
+├── tsconfig.node.json                 # TypeScript config for Node/Vite
+├── eslint.config.js                   # ESLint configuration
+├── components.json                    # shadcn/ui configuration
+└── .prettierrc                        # Prettier configuration
 ```
 
 ## Pages
@@ -237,7 +240,7 @@ personal-website/
 
 ### Environment Variables
 
-If you plan to use Supabase or other external services, create a `.env` file in the root directory and add your configuration variables.
+If you plan to use external services, create a `.env` file in the root directory and add your configuration variables.
 
 ### Build Configuration
 
@@ -282,4 +285,4 @@ This project is open source and available under the [MIT License](LICENSE). If y
 
 ---
 
-Built with using React, TypeScript, and Tailwind CSS
+Built with React, TypeScript, and Tailwind CSS
