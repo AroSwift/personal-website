@@ -83,7 +83,7 @@ const AboutPage = () => {
       bannerImage: '/about/ornl.webp',
       highlights: [
         'Actively developing the system of record for 27 HPC clusters that serves as the authoritative source for cluster state through software-driven HPC management, which provisions filesystem directories, UNIX users/groups, sets user access, and job scheduling to ensure continuous operations for $700M+ in compute systems.',
-        'Optimized a core API, initially targeting enforcement of 100k+ filesystem directories across 27 HPC clusters. Added caching and serialization to cut RTT from 272s to 0.178s (~1,528× faster). Stabilized high-performance computing facility\'s critical HPC management software, eliminating cluster workload policy sync timeouts.',
+        "Optimized a core API, initially targeting enforcement of 100k+ filesystem directories across 27 HPC clusters. Added caching and serialization to cut RTT from 272s to 0.178s (~1,528× faster). Stabilized high-performance computing facility's critical HPC management software, eliminating cluster workload policy sync timeouts.",
         'Deployed and expanded myOLCF, a researcher self-service and monitoring app supporting 4,000+ users across 1,000+ large-scale high-performance computing research campaigns, achieving ~99.9% availability.',
         'Co-architected Smart Facility System, capable of delivering 100k time-series records in 87ms. Offloaded compute to background jobs with indexes and caching. Used to guide procurement and flag inefficient computation jobs.',
         'Optimized build processes and CI pipelines, cutting builds from 2min to 9s, startup from 30s to ~200ms, and tests from 90s to 6s, boosting developer productivity, shortening feedback loops, and speeding up deployments.',
@@ -305,10 +305,10 @@ const AboutPage = () => {
                 >
                   Full-stack software engineer enabling the world's fastest
                   open-science supercomputers to operate at exascale. In my
-                  spare time, I build fully autonomous agentic workflows
-                  and quickly prototype MVPs for new businesses.
-                  When I'm not coding, you'll find me obsessed with volleyball,
-                  dancing, hiking, gaming, or playing piano.
+                  spare time, I build fully autonomous agentic workflows and
+                  quickly prototype MVPs for new businesses. When I'm not
+                  coding, you'll find me obsessed with volleyball, dancing,
+                  hiking, gaming, or playing piano.
                 </motion.p>
 
                 <motion.p
@@ -317,12 +317,15 @@ const AboutPage = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 1.1 }}
                 >
-                  Over the past decade, I've had the opportunity to contribute at both Bank of America
-                  and the Oak Ridge National Laboratory (ORNL). Currently, my tech stack is primarily Ruby, 
-                  Ruby on Rails, Go, Python, TypeScript, Vue.js, and Kubernetes, but I always love to learn
-                  new languages, frameworks, and tools. While I love full-stack engineering, I have more recently 
-                  been enjoying architecting complex systems, working with distributed systems, 
-                  optimizing for performance at scale, and developing agentic workflows.
+                  Over the past decade, I've had the opportunity to contribute
+                  at both Bank of America and the Oak Ridge National Laboratory
+                  (ORNL). Currently, my tech stack is primarily Ruby, Ruby on
+                  Rails, Go, Python, TypeScript, Vue.js, and Kubernetes, but I
+                  always love to learn new languages, frameworks, and tools.
+                  While I love full-stack engineering, I have more recently been
+                  enjoying architecting complex systems, working with
+                  distributed systems, optimizing for performance at scale, and
+                  developing agentic workflows.
                 </motion.p>
               </motion.div>
             </div>

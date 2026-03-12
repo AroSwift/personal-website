@@ -19,7 +19,7 @@ export function usePWA() {
     listener: (() => void) | null
     timeout: ReturnType<typeof setTimeout> | null
   }>({ listener: null, timeout: null })
-  
+
   // Store interval IDs and event listeners for cleanup
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
   const controllerChangeListenerRef = useRef<(() => void) | null>(null)
@@ -57,7 +57,7 @@ export function usePWA() {
         clearInterval(intervalRef.current)
         intervalRef.current = null
       }
-      
+
       // Clean up any existing controllerchange listener
       if (controllerChangeListenerRef.current !== null) {
         navigator.serviceWorker.removeEventListener(
@@ -66,18 +66,22 @@ export function usePWA() {
         )
         controllerChangeListenerRef.current = null
       }
-      
+
       // Handler for controllerchange events
       const handleControllerChange = () => {
         setPwaState(prev => ({ ...prev, hasUpdate: false }))
         // Don't automatically reload - let the user decide when to update
       }
-      
+
       // Store listener reference
       controllerChangeListenerRef.current = handleControllerChange
-      navigator.serviceWorker.addEventListener('controllerchange', handleControllerChange)
-      
-      const swVersion = import.meta.env.VITE_BUILD_VERSION || Date.now().toString()
+      navigator.serviceWorker.addEventListener(
+        'controllerchange',
+        handleControllerChange
+      )
+
+      const swVersion =
+        import.meta.env.VITE_BUILD_VERSION || Date.now().toString()
       const swUrl = `/service-worker.js?v=${swVersion}`
 
       navigator.serviceWorker
@@ -126,15 +130,18 @@ export function usePWA() {
     return () => {
       window.removeEventListener('online', handleOnline)
       window.removeEventListener('offline', handleOffline)
-      
+
       // Clean up interval
       if (intervalRef.current !== null) {
         clearInterval(intervalRef.current)
         intervalRef.current = null
       }
-      
+
       // Clean up controllerchange listener
-      if (controllerChangeListenerRef.current !== null && 'serviceWorker' in navigator) {
+      if (
+        controllerChangeListenerRef.current !== null &&
+        'serviceWorker' in navigator
+      ) {
         navigator.serviceWorker.removeEventListener(
           'controllerchange',
           controllerChangeListenerRef.current

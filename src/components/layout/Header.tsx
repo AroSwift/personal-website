@@ -17,7 +17,10 @@ const Header = ({ className = '' }: HeaderProps) => {
   const getInitialTheme = (): 'light' | 'dark' => {
     if (typeof window === 'undefined') return 'light'
     try {
-      const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null
+      const savedTheme = localStorage.getItem('theme') as
+        | 'light'
+        | 'dark'
+        | null
       if (savedTheme) {
         return savedTheme
       }
@@ -107,7 +110,7 @@ const Header = ({ className = '' }: HeaderProps) => {
 
       let shouldTrigger: string | null = null
       let hasVisited: string | null = null
-      
+
       try {
         shouldTrigger = localStorage.getItem('triggerPostLoadAnimation')
         hasVisited = localStorage.getItem('hasVisited')

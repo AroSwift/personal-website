@@ -8,7 +8,7 @@ A modern, responsive personal website for Aaron Barlow built with React, TypeScr
 
 ### Prerequisites
 
-- Bun (version 1.0 or higher)
+- Bun (version 1.3.10 or higher)
 - Docker (for deployment)
 
 ### Installation

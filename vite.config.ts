@@ -46,7 +46,9 @@ export default defineConfig({
     }),
   ],
   define: {
-    'import.meta.env.VITE_BUILD_VERSION': JSON.stringify(new Date().toISOString().replace(/[:.-]/g, '')),
+    'import.meta.env.VITE_BUILD_VERSION': JSON.stringify(
+      new Date().toISOString().replace(/[:.-]/g, '')
+    ),
   },
   resolve: {
     alias: {

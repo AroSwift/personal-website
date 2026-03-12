@@ -111,6 +111,7 @@ export default [
         add: 'readonly',
         put: 'readonly',
         match: 'readonly',
+        console: 'readonly',
       },
     },
   },
