@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { Moon, Sun, Menu, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -71,7 +71,7 @@ const Header = ({ className = '' }: HeaderProps) => {
   }, [])
 
   // Run the sophisticated spinning animation
-  const runSpinAnimation = async () => {
+  const runSpinAnimation = useCallback(async () => {
     // Phase 1: Fast spin (3 rotations in 600ms)
     await themeIconAnimation.start({
       rotate: 1080, // 3 * 360 degrees
@@ -101,7 +101,7 @@ const Header = ({ className = '' }: HeaderProps) => {
         scale: { duration: 0.2, ease: 'easeOut' },
       },
     })
-  }
+  }, [themeIconAnimation])
 
   // Check for post-loading animation trigger
   useEffect(() => {
@@ -153,7 +153,7 @@ const Header = ({ className = '' }: HeaderProps) => {
     setTimeout(() => clearInterval(interval), 3000)
 
     return () => clearInterval(interval)
-  }, [hasTriggeredPostLoadAnimation, themeIconAnimation])
+  }, [hasTriggeredPostLoadAnimation, runSpinAnimation])
 
   // Handle normal theme toggle animation
   useEffect(() => {

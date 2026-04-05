@@ -38,9 +38,10 @@ export default defineConfig({
   plugins: [
     react(),
     swVersionPlugin(),
+    // Set VITE_OPEN_BUNDLE_STATS=1 to open the bundle stats in the browser
     visualizer({
       filename: 'dist/stats.html',
-      open: true,
+      open: process.env.VITE_OPEN_BUNDLE_STATS === '1',
       gzipSize: true,
       brotliSize: true,
     }),
