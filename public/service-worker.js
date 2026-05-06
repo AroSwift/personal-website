@@ -37,15 +37,21 @@ let STATIC_FILES = [
 // Helper function to cache files individually (handles failures gracefully)
 async function cacheFilesIndividually(cache, files) {
   const results = await Promise.allSettled(
-    files.map(file => cache.add(file).catch(error => {
-      console.warn(`Service Worker: Failed to cache ${file}:`, error)
-      return null
-    }))
+    files.map(file =>
+      cache.add(file).catch(error => {
+        console.warn(`Service Worker: Failed to cache ${file}:`, error)
+        return null
+      })
+    )
   )
-  const successful = results.filter(r => r.status === 'fulfilled' && r.value !== null).length
+  const successful = results.filter(
+    r => r.status === 'fulfilled' && r.value !== null
+  ).length
   const failed = results.length - successful
   if (failed > 0) {
-    console.warn(`Service Worker: Failed to cache ${failed} of ${files.length} files`)
+    console.warn(
+      `Service Worker: Failed to cache ${failed} of ${files.length} files`
+    )
   }
   return successful
 }
@@ -61,25 +67,35 @@ self.addEventListener('install', event => {
           if (response.ok) {
             const manifestPWA = await response.json()
             if (manifestPWA.icons && Array.isArray(manifestPWA.icons)) {
-              const iconsFromPWA = manifestPWA.icons.map(icon => icon.src).filter(Boolean)
-              STATIC_FILES = STATIC_FILES.filter(file => !file.startsWith('/icons/'))
+              const iconsFromPWA = manifestPWA.icons
+                .map(icon => icon.src)
+                .filter(Boolean)
+              STATIC_FILES = STATIC_FILES.filter(
+                file => !file.startsWith('/icons/')
+              )
               STATIC_FILES = [...STATIC_FILES, ...iconsFromPWA]
             }
           }
         } catch (error) {
-          console.warn('Service Worker: Failed to fetch manifest.json, using default icons:', error)
+          console.warn(
+            'Service Worker: Failed to fetch manifest.json, using default icons:',
+            error
+          )
           // Continue with default STATIC_FILES
         }
 
         // Cache files individually to handle failures gracefully
         const cache = await caches.open(STATIC_CACHE)
         await cacheFilesIndividually(cache, STATIC_FILES)
-        
+
         // Ensure offline.html is cached (critical for offline support)
         try {
           await cache.add('/offline.html')
         } catch (error) {
-          console.error('Service Worker: Critical: Failed to cache offline.html:', error)
+          console.error(
+            'Service Worker: Critical: Failed to cache offline.html:',
+            error
+          )
         }
       } catch (error) {
         console.error('Service Worker: Install failed:', error)
@@ -101,7 +117,7 @@ self.addEventListener('activate', event => {
           clearInterval(cleanupIntervalId)
           cleanupIntervalId = null
         }
-        
+
         // Clean up old caches
         const cacheNames = await caches.keys()
         await Promise.all(
@@ -109,16 +125,19 @@ self.addEventListener('activate', event => {
             // Delete all old caches (not just specific ones)
             if (!cacheName.includes(CACHE_VERSION)) {
               return caches.delete(cacheName).catch(error => {
-                console.warn(`Service Worker: Failed to delete cache ${cacheName}:`, error)
+                console.warn(
+                  `Service Worker: Failed to delete cache ${cacheName}:`,
+                  error
+                )
               })
             }
             return Promise.resolve()
           })
         )
-        
+
         // Claim clients
         await self.clients.claim()
-        
+
         // Restart cleanup interval
         cleanupIntervalId = setInterval(
           () => {
@@ -201,7 +220,10 @@ async function cacheFirst(request, cacheName) {
             }
           } catch (error) {
             // Network failed, using expired cache
-            console.warn('Service Worker: Network fetch failed, using expired cache:', error)
+            console.warn(
+              'Service Worker: Network fetch failed, using expired cache:',
+              error
+            )
           }
         }
       }
@@ -401,25 +423,37 @@ async function cleanupOldCaches() {
       try {
         // Check if cache is older than 1 day
         // Cache name format: aaron-barlow-v3-YYYYMMDD-HHMMSS or static-cache-v3-YYYYMMDD-HHMMSS
-        if (cacheName.includes('aaron-barlow-') || cacheName.includes('static-cache-') || cacheName.includes('dynamic-cache-')) {
+        if (
+          cacheName.includes('aaron-barlow-') ||
+          cacheName.includes('static-cache-') ||
+          cacheName.includes('dynamic-cache-')
+        ) {
           // Extract version part (v3-YYYYMMDD-HHMMSS)
           const versionMatch = cacheName.match(/v\d+-(.{8})-(.{6})/)
           if (versionMatch) {
             const dateStr = versionMatch[1] // YYYYMMDD
             const timeStr = versionMatch[2] // HHMMSS
-            
+
             // Parse date: YYYYMMDD format
             const year = parseInt(dateStr.substring(0, 4), 10)
             const month = parseInt(dateStr.substring(4, 6), 10) - 1 // Month is 0-indexed
             const day = parseInt(dateStr.substring(6, 8), 10)
-            
+
             // Parse time: HHMMSS format
             const hours = parseInt(timeStr.substring(0, 2), 10)
             const minutes = parseInt(timeStr.substring(2, 4), 10)
             const seconds = parseInt(timeStr.substring(4, 6), 10)
-            
-            const cacheDateObj = new Date(year, month, day, hours, minutes, seconds)
-            const daysDiff = (now - cacheDateObj.getTime()) / (1000 * 60 * 60 * 24)
+
+            const cacheDateObj = new Date(
+              year,
+              month,
+              day,
+              hours,
+              minutes,
+              seconds
+            )
+            const daysDiff =
+              (now - cacheDateObj.getTime()) / (1000 * 60 * 60 * 24)
 
             if (!isNaN(daysDiff) && daysDiff > 1) {
               await caches.delete(cacheName)
@@ -430,7 +464,10 @@ async function cleanupOldCaches() {
           }
         }
       } catch (error) {
-        console.warn(`Service Worker: Failed to process cache ${cacheName}:`, error)
+        console.warn(
+          `Service Worker: Failed to process cache ${cacheName}:`,
+          error
+        )
         // Continue with next cache
       }
     }
