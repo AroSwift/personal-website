@@ -2,7 +2,7 @@
 // Verifies rendering, email copy functionality, social links, and user interactions
 
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { render, screen } from './utils'
+import { render, screen, fireEvent } from './utils'
 
 // Mock external dependencies
 vi.mock('framer-motion', () => ({
@@ -100,6 +100,31 @@ describe('ContactPage', () => {
     render(<ContactPage />)
     const githubLink = screen.getByRole('link', { name: 'GitHub' })
     expect(githubLink).toHaveAttribute('href', 'https://github.com/AroSwift')
+  })
+
+  it('opens button links without exposing window.opener', () => {
+    render(<ContactPage />)
+
+    fireEvent.click(screen.getByRole('button', { name: 'email' }))
+    expect(mockOpen).toHaveBeenCalledWith(
+      'mailto:abarlow505@gmail.com',
+      '_blank',
+      'noopener,noreferrer'
+    )
+
+    fireEvent.click(screen.getByRole('button', { name: 'My Resume' }))
+    expect(mockOpen).toHaveBeenCalledWith(
+      'https://aroswift.github.io/resume/resume.pdf',
+      '_blank',
+      'noopener,noreferrer'
+    )
+
+    fireEvent.click(screen.getByRole('button', { name: 'Reach out' }))
+    expect(mockOpen).toHaveBeenCalledWith(
+      'https://linkedin.com/in/allaaronbarlow/',
+      '_blank',
+      'noopener,noreferrer'
+    )
   })
 
   it('includes header and footer components', () => {

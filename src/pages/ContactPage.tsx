@@ -10,6 +10,10 @@ const ContactPage = () => {
   // Track email copy state for visual feedback
   const [emailCopied, setEmailCopied] = useState(false)
 
+  const openExternalLink = (url: string) => {
+    window.open(url, '_blank', 'noopener,noreferrer')
+  }
+
   // Copy email to clipboard and show success feedback - resets feedback after 2 seconds
   const copyEmail = () => {
     navigator.clipboard.writeText('abarlow505@gmail.com')
@@ -72,7 +76,7 @@ const ContactPage = () => {
                   me is via{' '}
                   <button
                     onClick={() =>
-                      window.open('mailto:abarlow505@gmail.com', '_blank')
+                      openExternalLink('mailto:abarlow505@gmail.com')
                     }
                     className="underline-fade-out hover:text-gray-600 dark:hover:text-gray-400 transition-colors cursor-pointer bg-transparent border-none p-0 font-inherit text-inherit"
                   >
@@ -81,9 +85,8 @@ const ContactPage = () => {
                   but alternatively feel free to send me a message through{' '}
                   <button
                     onClick={() =>
-                      window.open(
-                        'https://linkedin.com/in/allaaronbarlow/',
-                        '_blank'
+                      openExternalLink(
+                        'https://linkedin.com/in/allaaronbarlow/'
                       )
                     }
                     className="underline-fade-out hover:text-gray-600 dark:hover:text-gray-400 transition-colors cursor-pointer bg-transparent border-none p-0 font-inherit text-inherit"
@@ -103,9 +106,8 @@ const ContactPage = () => {
                   {/* Resume Button */}
                   <Button
                     onClick={() =>
-                      window.open(
-                        'https://aroswift.github.io/resume/resume.pdf',
-                        '_blank'
+                      openExternalLink(
+                        'https://aroswift.github.io/resume/resume.pdf'
                       )
                     }
                     className="bg-black dark:bg-soft-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-soft-white-hover rounded-full px-5 sm:px-6 py-3 sm:py-4 lg:py-5 text-base sm:text-lg lg:text-xl xl:text-2xl font-medium flex items-center gap-3 transition-colors duration-500"
@@ -146,9 +148,8 @@ const ContactPage = () => {
                     variant="outline"
                     className="border-2 border-black dark:border-soft-white text-black dark:text-soft-white hover:bg-black dark:hover:bg-soft-white hover:text-white dark:hover:text-black rounded-full px-5 sm:px-6 py-3 sm:py-4 lg:py-5 text-base sm:text-lg lg:text-xl xl:text-2xl font-medium flex items-center gap-3 transition-colors duration-500"
                     onClick={() =>
-                      window.open(
-                        'https://linkedin.com/in/allaaronbarlow/',
-                        '_blank'
+                      openExternalLink(
+                        'https://linkedin.com/in/allaaronbarlow/'
                       )
                     }
                   >
