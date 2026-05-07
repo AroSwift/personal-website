@@ -108,7 +108,7 @@ const ContactPage = () => {
                         '_blank'
                       )
                     }
-                    className="bg-black dark:bg-soft-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-soft-white-hover rounded-full px-5 sm:px-6 py-3 sm:py-4 lg:py-5 text-base sm:text-lg lg:text-xl xl:text-2xl font-medium flex items-center gap-3 transition-colors duration-500"
+                    className="h-auto bg-black dark:bg-soft-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-soft-white-hover rounded-full px-5 sm:px-6 py-3 sm:py-4 lg:py-5 text-base sm:text-lg lg:text-xl xl:text-2xl font-medium flex items-center gap-3 transition-colors duration-500"
                   >
                     My Resume
                     <ExternalLink className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6" />
@@ -125,7 +125,7 @@ const ContactPage = () => {
                     <Button
                       onClick={copyEmail}
                       variant="outline"
-                      className={`w-full sm:w-auto border-2 ${emailCopied ? 'border-green-600/40 dark:border-green-400/60 text-green-800 dark:text-green-200 bg-green-50/80 dark:bg-green-900/40' : 'border-black dark:border-soft-white text-black dark:text-soft-white hover:bg-black dark:hover:bg-soft-white hover:text-white dark:hover:text-black'} rounded-full px-5 sm:px-6 py-3 sm:py-4 lg:py-5 text-base sm:text-lg lg:text-xl xl:text-2xl font-medium flex items-center gap-3 transition-all duration-500`}
+                      className={`h-auto w-full sm:w-auto border-2 ${emailCopied ? 'border-green-600/40 dark:border-green-400/60 text-green-800 dark:text-green-200 bg-green-50/80 dark:bg-green-900/40' : 'border-black dark:border-soft-white text-black dark:text-soft-white hover:bg-black dark:hover:bg-soft-white hover:text-white dark:hover:text-black'} rounded-full px-5 sm:px-6 py-3 sm:py-4 lg:py-5 text-base sm:text-lg lg:text-xl xl:text-2xl font-medium flex items-center gap-3 transition-all duration-500`}
                     >
                       <motion.div
                         animate={emailCopied ? { rotate: 360 } : { rotate: 0 }}
@@ -144,7 +144,7 @@ const ContactPage = () => {
                   {/* LinkedIn Reach Out Button */}
                   <Button
                     variant="outline"
-                    className="border-2 border-black dark:border-soft-white text-black dark:text-soft-white hover:bg-black dark:hover:bg-soft-white hover:text-white dark:hover:text-black rounded-full px-5 sm:px-6 py-3 sm:py-4 lg:py-5 text-base sm:text-lg lg:text-xl xl:text-2xl font-medium flex items-center gap-3 transition-colors duration-500"
+                    className="h-auto border-2 border-black dark:border-soft-white text-black dark:text-soft-white hover:bg-black dark:hover:bg-soft-white hover:text-white dark:hover:text-black rounded-full px-5 sm:px-6 py-3 sm:py-4 lg:py-5 text-base sm:text-lg lg:text-xl xl:text-2xl font-medium flex items-center gap-3 transition-colors duration-500"
                     onClick={() =>
                       window.open(
                         'https://linkedin.com/in/allaaronbarlow/',

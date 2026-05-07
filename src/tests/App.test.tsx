@@ -61,28 +61,18 @@ import NotFoundPage from '../pages/NotFoundPage'
 
 // Create a test-specific App component that doesn't use lazy loading
 const TestApp = () => {
-  const [isLoading, setIsLoading] = React.useState(true)
-  const [hasVisited, setHasVisited] = React.useState(false)
-
-  React.useEffect(() => {
+  const [hasVisited, setHasVisited] = React.useState(() => {
     try {
       // Check if user has visited before
       const visited = localStorage.getItem('hasVisited')
 
-      if (visited === 'true') {
-        // User has visited before - skip loading screen
-        setHasVisited(true)
-        setIsLoading(false)
-      } else {
-        // First time visitor - show loading screen
-        // Don't set hasVisited yet, let LoadingScreen handle it
-      }
+      return visited === 'true'
     } catch {
       // If there's an error, just skip loading
-      setHasVisited(true)
-      setIsLoading(false)
+      return true
     }
-  }, [])
+  })
+  const [isLoading, setIsLoading] = React.useState(() => !hasVisited)
 
   const handleLoadingComplete = (theme: 'dark' | 'light') => {
     try {
