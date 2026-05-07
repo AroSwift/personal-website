@@ -17,13 +17,6 @@
   will-change: background-color;
 }
 
-/* Optimize profile image container */
-.profile-image-container {
-  will-change: transform;
-  backface-visibility: hidden;
-  transform: translateZ(0);
-}
-
 @layer base {
   :root {
     --background: 0 0% 95%; /* softened to 95% for very gentle off-white */

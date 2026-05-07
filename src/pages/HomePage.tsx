@@ -131,7 +131,7 @@ function HomePage() {
                 <motion.div
                   ref={profileImageRef}
                   className={cn(
-                    'profile-image-container w-40 h-40 sm:w-56 sm:h-56 md:w-72 md:h-72 lg:w-96 lg:h-96 xl:w-112 xl:h-112 rounded-2xl sm:rounded-3xl overflow-hidden mb-4 sm:mb-6 md:mb-8 lg:mb-12 xl:mb-16 bg-muted dark:bg-gray-800 shadow-lg hover:shadow-2xl cursor-pointer relative select-none mx-auto lg:mx-0',
+                    'w-40 h-40 sm:w-56 sm:h-56 md:w-72 md:h-72 lg:w-96 lg:h-96 xl:w-112 xl:h-112 rounded-2xl sm:rounded-3xl overflow-hidden mb-4 sm:mb-6 md:mb-8 lg:mb-12 xl:mb-16 bg-muted dark:bg-gray-800 shadow-lg hover:shadow-2xl cursor-pointer relative select-none mx-auto lg:mx-0',
                     isHovering &&
                       'border-4 border-dashed border-foreground/60 shadow-2xl',
                     !isHovering &&
@@ -265,7 +265,7 @@ function HomePage() {
                       <Link to="/projects" className="w-full sm:w-auto">
                         <Button
                           variant="outline"
-                          className="w-full sm:w-auto border-2 border-black dark:border-soft-white text-black dark:text-soft-white hover:bg-black dark:hover:bg-soft-white hover:text-white dark:hover:text-black rounded-full px-4 sm:px-6 md:px-8 lg:px-10 py-3 sm:py-4 md:py-5 lg:py-6 text-sm sm:text-base md:text-lg font-medium transition-colors duration-500"
+                          className="h-auto w-full sm:w-auto border-2 border-black dark:border-soft-white text-black dark:text-soft-white hover:bg-black dark:hover:bg-soft-white hover:text-white dark:hover:text-black rounded-full px-4 sm:px-6 md:px-8 lg:px-10 py-3 sm:py-4 md:py-5 lg:py-6 text-sm sm:text-base md:text-lg font-medium transition-colors duration-500"
                         >
                           Selected Projects
                         </Button>
@@ -284,7 +284,7 @@ function HomePage() {
                       <Link to="/about" className="w-full sm:w-auto">
                         <Button
                           variant="outline"
-                          className="w-full sm:w-auto border-2 border-black dark:border-soft-white text-black dark:text-soft-white hover:bg-black dark:hover:bg-soft-white hover:text-white dark:hover:text-black rounded-full px-4 sm:px-6 md:px-8 lg:px-10 py-3 sm:py-4 md:py-5 lg:py-6 text-sm sm:text-base md:text-lg font-medium transition-colors duration-500"
+                          className="h-auto w-full sm:w-auto border-2 border-black dark:border-soft-white text-black dark:text-soft-white hover:bg-black dark:hover:bg-soft-white hover:text-white dark:hover:text-black rounded-full px-4 sm:px-6 md:px-8 lg:px-10 py-3 sm:py-4 md:py-5 lg:py-6 text-sm sm:text-base md:text-lg font-medium transition-colors duration-500"
                         >
                           About me
                         </Button>
