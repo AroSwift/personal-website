@@ -27,11 +27,14 @@ vi.mock('framer-motion', () => ({
 
 vi.mock('lucide-react', () => ({
   Mail: () => <div data-testid="mail-icon" />,
-  Github: () => <div data-testid="github-icon" />,
-  Linkedin: () => <div data-testid="linkedin-icon" />,
   Copy: () => <div data-testid="copy-icon" />,
   Check: () => <div data-testid="check-icon" />,
   ExternalLink: () => <div data-testid="external-link-icon" />,
+}))
+
+vi.mock('@radix-ui/react-icons', () => ({
+  GitHubLogoIcon: () => <div data-testid="github-icon" />,
+  LinkedInLogoIcon: () => <div data-testid="linkedin-icon" />,
 }))
 
 vi.mock('@/components/ui/button', () => ({

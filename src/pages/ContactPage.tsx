@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
-import { Github, Linkedin, Copy, ExternalLink, Check } from 'lucide-react'
+import { Copy, ExternalLink, Check } from 'lucide-react'
+import { GitHubLogoIcon, LinkedInLogoIcon } from '@radix-ui/react-icons'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 
@@ -25,12 +26,12 @@ const ContactPage = () => {
   const socialLinks = [
     {
       name: 'GitHub',
-      icon: Github,
+      icon: GitHubLogoIcon,
       url: 'https://github.com/AroSwift',
     },
     {
       name: 'LinkedIn',
-      icon: Linkedin,
+      icon: LinkedInLogoIcon,
       url: 'https://linkedin.com/in/allaaronbarlow/',
     },
   ]

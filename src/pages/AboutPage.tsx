@@ -5,12 +5,12 @@ import { Button } from '@/components/ui/button'
 import {
   ExternalLink,
   Mail,
-  Github,
   Eye,
   FileText,
   Calendar,
   MapPin,
 } from 'lucide-react'
+import { GitHubLogoIcon } from '@radix-ui/react-icons'
 
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -275,7 +275,7 @@ const AboutPage = () => {
                     </a>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Github className="h-5 w-5" />
+                    <GitHubLogoIcon className="h-5 w-5" />
                     <a
                       href="https://github.com/aroswift"
                       target="_blank"
