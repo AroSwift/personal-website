@@ -18,9 +18,7 @@ const Header = ({ className = '' }: HeaderProps) => {
     if (typeof window === 'undefined') return 'light'
     try {
       const savedTheme = localStorage.getItem('theme') as
-        | 'light'
-        | 'dark'
-        | null
+        'light' | 'dark' | null
       if (savedTheme) {
         return savedTheme
       }
