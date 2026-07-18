@@ -169,13 +169,21 @@ const ProjectsPage = () => {
             className="mb-16 lg:mb-24"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: 'easeOut' }}
+            transition={{ duration: 0.4, ease: 'easeOut' }}
           >
+            <motion.p
+              className="font-mono text-xs sm:text-sm uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400 mb-4 sm:mb-6"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.3, delay: 0.05 }}
+            >
+              Portfolio
+            </motion.p>
             <motion.h1
               className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-normal leading-tight tracking-tight mb-8 dark:text-enhanced"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
+              transition={{ duration: 0.3, delay: 0.1 }}
             >
               Selected Projects
             </motion.h1>
@@ -183,7 +191,7 @@ const ProjectsPage = () => {
               className="text-xl sm:text-2xl text-muted-foreground max-w-3xl leading-relaxed"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
+              transition={{ duration: 0.3, delay: 0.2 }}
             >
               A collection of professional work and personal projects spanning
               high-performance computing systems management, software
@@ -198,13 +206,13 @@ const ProjectsPage = () => {
             className="mb-16 lg:mb-24"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6, duration: 0.8, ease: 'easeOut' }}
+            transition={{ delay: 0.3, duration: 0.4, ease: 'easeOut' }}
           >
             <motion.h2
-              className="text-2xl sm:text-3xl font-normal mb-8 text-center dark:text-enhanced"
+              className="font-mono text-sm sm:text-base uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400 mb-8 text-center"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.7, duration: 0.6 }}
+              transition={{ delay: 0.35, duration: 0.3 }}
             >
               Work Projects
             </motion.h2>
@@ -215,8 +223,8 @@ const ProjectsPage = () => {
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{
-                    delay: 0.8 + index * 0.1, // Staggered animation delay
-                    duration: 0.6,
+                    delay: 0.4 + index * 0.05, // Staggered animation delay
+                    duration: 0.3,
                     ease: 'easeOut',
                   }}
                 >
@@ -294,13 +302,13 @@ const ProjectsPage = () => {
             className="mb-16 lg:mb-24"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.2, duration: 0.8, ease: 'easeOut' }}
+            transition={{ delay: 0.6, duration: 0.4, ease: 'easeOut' }}
           >
             <motion.h2
-              className="text-2xl sm:text-3xl font-normal mb-8 text-center dark:text-enhanced"
+              className="font-mono text-sm sm:text-base uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400 mb-8 text-center"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.3, duration: 0.6 }}
+              transition={{ delay: 0.65, duration: 0.3 }}
             >
               Personal Projects
             </motion.h2>
@@ -311,8 +319,8 @@ const ProjectsPage = () => {
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{
-                    delay: 1.4 + index * 0.1, // Staggered animation delay
-                    duration: 0.6,
+                    delay: 0.7 + index * 0.05, // Staggered animation delay
+                    duration: 0.3,
                     ease: 'easeOut',
                   }}
                 >
@@ -390,13 +398,13 @@ const ProjectsPage = () => {
             className="mb-16 lg:mb-24"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 2.2, duration: 0.8, ease: 'easeOut' }}
+            transition={{ delay: 1.1, duration: 0.4, ease: 'easeOut' }}
           >
             <motion.h2
-              className="text-2xl sm:text-3xl font-normal mb-8 text-center dark:text-enhanced"
+              className="font-mono text-sm sm:text-base uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400 mb-8 text-center"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 2.3, duration: 0.6 }}
+              transition={{ delay: 1.15, duration: 0.3 }}
             >
               Achievement Highlights
             </motion.h2>
@@ -407,8 +415,8 @@ const ProjectsPage = () => {
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{
-                    delay: 2.5 + index * 0.2, // Staggered animation
-                    duration: 0.6,
+                    delay: 1.25 + index * 0.1, // Staggered animation
+                    duration: 0.3,
                     ease: 'easeOut',
                   }}
                 >
@@ -435,17 +443,17 @@ const ProjectsPage = () => {
             className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6 mb-16 lg:mb-24"
             initial={{ opacity: 0, y: 30, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 0.8, delay: 3.0, ease: 'easeOut' }}
+            transition={{ duration: 0.4, delay: 1.5, ease: 'easeOut' }}
           >
             <Link to="/about" className="w-full sm:w-auto">
-              <Button className="w-full sm:w-auto bg-black dark:bg-soft-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-soft-white-hover rounded-full px-8 sm:px-12 py-4 sm:py-6 text-lg sm:text-xl font-medium transition-colors duration-500 dark:enhanced-glow dark:hover-enhanced">
+              <Button className="w-full sm:w-auto bg-black dark:bg-soft-white text-white dark:text-black border-2 border-black dark:border-soft-white hover:bg-gray-800 dark:hover:bg-soft-white-hover rounded-full px-8 sm:px-12 py-4 sm:py-6 text-lg sm:text-xl font-medium transition-colors duration-500 dark:enhanced-glow dark:hover-enhanced">
                 About Me
               </Button>
             </Link>
             <Link to="/contact" className="w-full sm:w-auto">
               <Button
                 variant="outline"
-                className="w-full sm:w-auto border-2 border-black dark:border-soft-white text-black dark:text-soft-white hover:bg-black dark:hover:bg-soft-white hover:text-white dark:hover:text-black rounded-full px-8 sm:px-12 py-4 sm:py-6 text-lg sm:text-xl font-medium transition-colors duration-500 dark:enhanced-glow dark:hover-enhanced"
+                className="w-full sm:w-auto border-2 border-black dark:border-soft-white text-black dark:text-soft-white hover:bg-black dark:hover:bg-soft-white hover:text-white dark:hover:text-black rounded-full px-8 sm:px-12 py-4 sm:py-6 text-lg sm:text-xl font-medium transition-colors duration-500"
               >
                 Get in Touch
               </Button>
@@ -454,7 +462,7 @@ const ProjectsPage = () => {
 
           {/* Footer Information Section */}
           <Footer
-            animationDelay={3.2}
+            animationDelay={1.6}
             textColor="text-muted-foreground"
             borderColor="border-border/50"
           />

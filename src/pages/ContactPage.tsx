@@ -56,22 +56,30 @@ const ContactPage = () => {
       </div>
 
       {/* Main Content - Better responsive padding for bigger screens */}
-      <main className="pt-[25rem] sm:pt-[32rem] md:pt-[28rem] lg:pt-[26rem] xl:pt-[28rem] 2xl:pt-[30rem] min-h-screen flex flex-col">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col flex-1 justify-end pb-8 sm:pb-16 md:pb-20 lg:pb-24 xl:pb-28 2xl:pb-32">
+      <main className="pt-[24rem] sm:pt-[32rem] md:pt-[28rem] lg:pt-[26rem] xl:pt-[26rem] 2xl:pt-[27rem] min-h-screen flex flex-col">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col flex-1 justify-end pb-8 sm:pb-12 md:pb-12 lg:pb-14 xl:pb-16 2xl:pb-16">
           <div className="relative z-20">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 0.8 }}
-              className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 xl:gap-20 2xl:gap-24 mb-16 lg:mb-20 xl:mb-24"
+              transition={{ delay: 0.15, duration: 0.4 }}
+              className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 xl:gap-20 2xl:gap-24 mb-10 lg:mb-12 xl:mb-12"
             >
               {/* Left Column - Contact Description and Action Buttons */}
               <div className="space-y-6 lg:space-y-8 xl:space-y-10">
                 <motion.p
+                  className="font-mono text-xs sm:text-sm uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400 transition-colors duration-800"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2, duration: 0.3 }}
+                >
+                  Say hello
+                </motion.p>
+                <motion.p
                   className="text-base sm:text-lg md:text-xl lg:text-lg xl:text-xl 2xl:text-2xl text-black dark:text-white leading-relaxed max-w-xl lg:max-w-lg xl:max-w-xl transition-colors duration-800"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5, duration: 0.6 }}
+                  transition={{ delay: 0.25, duration: 0.3 }}
                 >
                   I enjoy connecting with new people. The easiest way to reach
                   me is via{' '}
@@ -102,7 +110,7 @@ const ContactPage = () => {
                   className="flex flex-col sm:flex-row gap-4 sm:gap-5 mt-6 sm:mt-8 lg:mt-10"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.7, duration: 0.6 }}
+                  transition={{ delay: 0.35, duration: 0.3 }}
                 >
                   {/* Resume Button */}
                   <Button
@@ -111,7 +119,7 @@ const ContactPage = () => {
                         'https://aroswift.github.io/resume/resume.pdf'
                       )
                     }
-                    className="bg-black dark:bg-soft-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-soft-white-hover rounded-full px-5 sm:px-6 py-3 sm:py-4 lg:py-5 text-base sm:text-lg lg:text-xl xl:text-2xl font-medium flex items-center gap-3 transition-colors duration-500"
+                    className="bg-black dark:bg-soft-white text-white dark:text-black border-2 border-black dark:border-soft-white hover:bg-gray-800 dark:hover:bg-soft-white-hover rounded-full px-5 sm:px-6 py-3 sm:py-4 lg:py-5 text-base sm:text-lg lg:text-xl xl:text-2xl font-medium flex items-center gap-3 transition-colors duration-500 dark:enhanced-glow dark:hover-enhanced"
                   >
                     My Resume
                     <ExternalLink className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6" />
@@ -164,13 +172,13 @@ const ContactPage = () => {
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.6, duration: 0.6 }}
+                  transition={{ delay: 0.3, duration: 0.3 }}
                   className="space-y-3 sm:space-y-4 lg:space-y-5"
                 >
-                  <h3 className="text-xl sm:text-2xl lg:text-xl xl:text-2xl 2xl:text-3xl font-medium text-black dark:text-white transition-colors duration-800">
+                  <h3 className="font-mono text-xs sm:text-sm uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400 transition-colors duration-800">
                     Social Links
                   </h3>
-                  <p className="text-base sm:text-lg lg:text-base xl:text-lg 2xl:text-xl text-gray-700 dark:text-gray-200 transition-colors duration-800">
+                  <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 transition-colors duration-800">
                     Reach out on these platforms
                   </p>
 
@@ -188,8 +196,8 @@ const ContactPage = () => {
                           initial={{ opacity: 0, y: 20 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{
-                            delay: 0.8 + index * 0.1,
-                            duration: 0.4,
+                            delay: 0.4 + index * 0.05,
+                            duration: 0.2,
                           }}
                           whileHover={{ scale: 1.02 }}
                         >

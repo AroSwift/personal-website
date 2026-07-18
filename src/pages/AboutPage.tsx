@@ -194,7 +194,7 @@ const AboutPage = () => {
             className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 mb-16 lg:mb-24 items-start"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: 'easeOut' }}
+            transition={{ duration: 0.4, ease: 'easeOut' }}
           >
             {/* Left Column - Profile Image and Contact Info */}
             <div className="lg:col-span-7">
@@ -203,7 +203,7 @@ const AboutPage = () => {
                 className="w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 lg:w-52 lg:h-52 xl:w-72 xl:h-72 rounded-2xl sm:rounded-3xl md:rounded-[2rem] overflow-hidden mb-4 sm:mb-6 md:mb-8 border-2 sm:border-4 border-border/50 dark:border-border/30 bg-muted shadow-lg hover:shadow-xl transition-all duration-500 hover:scale-105"
                 initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
                 animate={{ opacity: 1, scale: 1, rotate: 0 }}
-                transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
+                transition={{ duration: 0.4, delay: 0.1, ease: 'easeOut' }}
               >
                 <img
                   src="/profile-aaron-800.webp"
@@ -220,13 +220,21 @@ const AboutPage = () => {
                 className="mb-8 sm:mb-12 md:mb-16"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.4, ease: 'easeOut' }}
+                transition={{ duration: 0.4, delay: 0.2, ease: 'easeOut' }}
               >
+                <motion.p
+                  className="font-mono text-xs sm:text-sm uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400 mb-4"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.3, delay: 0.25 }}
+                >
+                  About
+                </motion.p>
                 <motion.h1
                   className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-normal leading-tight tracking-tight max-w-4xl mb-4"
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.6, delay: 0.6 }}
+                  transition={{ duration: 0.3, delay: 0.3 }}
                 >
                   Aaron Barlow
                 </motion.h1>
@@ -234,7 +242,7 @@ const AboutPage = () => {
                   className="text-lg sm:text-xl text-muted-foreground mb-2"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ duration: 0.6, delay: 0.8 }}
+                  transition={{ duration: 0.3, delay: 0.4 }}
                 >
                   He/Him
                 </motion.p>
@@ -242,7 +250,7 @@ const AboutPage = () => {
                   className="text-xl sm:text-2xl font-medium mb-6"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ duration: 0.6, delay: 1.0 }}
+                  transition={{ duration: 0.3, delay: 0.5 }}
                 >
                   HPC Software Engineer @ Oak Ridge National Laboratory
                 </motion.p>
@@ -252,7 +260,7 @@ const AboutPage = () => {
                   className="flex flex-wrap gap-4 text-base text-muted-foreground mb-6"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 1.2 }}
+                  transition={{ duration: 0.3, delay: 0.6 }}
                 >
                   <div className="flex items-center gap-2">
                     <ExternalLink className="h-5 w-5" />
@@ -295,13 +303,13 @@ const AboutPage = () => {
                 className="pt-0 w-full"
                 initial={{ opacity: 0, x: 40 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: 0.5, ease: 'easeOut' }}
+                transition={{ duration: 0.4, delay: 0.25, ease: 'easeOut' }}
               >
                 <motion.p
                   className="text-base sm:text-lg leading-relaxed mb-6 text-foreground"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.7 }}
+                  transition={{ duration: 0.3, delay: 0.35 }}
                 >
                   Full-stack software engineer enabling the world's fastest
                   open-science supercomputers to operate at exascale. In my
@@ -315,7 +323,7 @@ const AboutPage = () => {
                   className="text-base sm:text-lg leading-relaxed mb-6 text-foreground"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 1.1 }}
+                  transition={{ duration: 0.3, delay: 0.55 }}
                 >
                   Over the past decade, I've had the opportunity to contribute
                   at both Bank of America and the Oak Ridge National Laboratory
@@ -336,13 +344,13 @@ const AboutPage = () => {
             className="mb-16 lg:mb-24"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.5, duration: 0.8, ease: 'easeOut' }}
+            transition={{ delay: 0.75, duration: 0.4, ease: 'easeOut' }}
           >
             <motion.h2
-              className="text-2xl sm:text-3xl font-normal mb-8 text-center dark:text-enhanced"
+              className="font-mono text-sm sm:text-base uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400 mb-8 text-center"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.6, duration: 0.6 }}
+              transition={{ delay: 0.8, duration: 0.3 }}
             >
               Experience
             </motion.h2>
@@ -353,8 +361,8 @@ const AboutPage = () => {
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{
-                    delay: 1.8 + index * 0.2,
-                    duration: 0.6,
+                    delay: 0.9 + index * 0.1,
+                    duration: 0.3,
                     ease: 'easeOut',
                   }}
                 >
@@ -417,13 +425,13 @@ const AboutPage = () => {
             className="mb-16 lg:mb-24"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 2.4, duration: 0.8, ease: 'easeOut' }}
+            transition={{ delay: 1.2, duration: 0.4, ease: 'easeOut' }}
           >
             <motion.h2
-              className="text-2xl sm:text-3xl font-normal mb-8 text-center dark:text-enhanced"
+              className="font-mono text-sm sm:text-base uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400 mb-8 text-center"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 2.5, duration: 0.6 }}
+              transition={{ delay: 1.25, duration: 0.3 }}
             >
               Skills & Technologies
             </motion.h2>
@@ -431,14 +439,14 @@ const AboutPage = () => {
               className="flex flex-wrap gap-2 justify-center"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 2.7, duration: 0.8, ease: 'easeOut' }}
+              transition={{ delay: 1.35, duration: 0.4, ease: 'easeOut' }}
             >
               {skills.map((skill, index) => (
                 <motion.div
                   key={skill}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 2.8 + index * 0.02, duration: 0.4 }}
+                  transition={{ delay: 1.4 + index * 0.01, duration: 0.2 }}
                 >
                   <Badge
                     variant="secondary"
@@ -456,9 +464,9 @@ const AboutPage = () => {
             className="mb-16 lg:mb-24"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 3.2, duration: 0.8, ease: 'easeOut' }}
+            transition={{ delay: 1.6, duration: 0.4, ease: 'easeOut' }}
           >
-            <h2 className="text-2xl sm:text-3xl font-normal mb-8 text-center dark:text-enhanced">
+            <h2 className="font-mono text-sm sm:text-base uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400 mb-8 text-center">
               Education
             </h2>
             <div className="space-y-6">
@@ -512,13 +520,13 @@ const AboutPage = () => {
             className="mb-16 lg:mb-24"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 3.6, duration: 0.8, ease: 'easeOut' }}
+            transition={{ delay: 1.8, duration: 0.4, ease: 'easeOut' }}
           >
             <motion.h2
-              className="text-2xl sm:text-3xl font-normal mb-8 text-center dark:text-enhanced"
+              className="font-mono text-sm sm:text-base uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400 mb-8 text-center"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 3.7, duration: 0.6 }}
+              transition={{ delay: 1.85, duration: 0.3 }}
             >
               Technical Talks
             </motion.h2>
@@ -529,8 +537,8 @@ const AboutPage = () => {
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{
-                    delay: 3.8 + index * 0.2,
-                    duration: 0.6,
+                    delay: 1.9 + index * 0.1,
+                    duration: 0.3,
                     ease: 'easeOut',
                   }}
                 >
@@ -600,7 +608,7 @@ const AboutPage = () => {
                           href={presentation.pdfUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 bg-black dark:bg-soft-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-soft-white-hover rounded-full px-6 py-3 text-sm font-medium transition-colors duration-300 hover:scale-105 dark:enhanced-glow dark:hover-enhanced"
+                          className="inline-flex items-center gap-2 bg-black dark:bg-soft-white text-white dark:text-black border-2 border-black dark:border-soft-white hover:bg-gray-800 dark:hover:bg-soft-white-hover rounded-full px-6 py-3 text-sm font-medium transition-colors duration-300 hover:scale-105 dark:enhanced-glow dark:hover-enhanced"
                         >
                           <Eye className="h-4 w-4" />
                           View Presentation
@@ -618,9 +626,9 @@ const AboutPage = () => {
             className="mb-16 lg:mb-24"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 4.0, duration: 0.8, ease: 'easeOut' }}
+            transition={{ delay: 2, duration: 0.4, ease: 'easeOut' }}
           >
-            <h2 className="text-2xl sm:text-3xl font-normal mb-8 text-center dark:text-enhanced">
+            <h2 className="font-mono text-sm sm:text-base uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400 mb-8 text-center">
               Organizations & Community
             </h2>
             <div className="max-w-4xl mx-auto">
@@ -652,10 +660,10 @@ const AboutPage = () => {
             className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6 mb-16 lg:mb-24"
             initial={{ opacity: 0, y: 30, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 0.8, delay: 3.8, ease: 'easeOut' }}
+            transition={{ duration: 0.4, delay: 1.9, ease: 'easeOut' }}
           >
             <Link to="/projects" className="w-full sm:w-auto">
-              <Button className="w-full sm:w-auto bg-black dark:bg-soft-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-soft-white-hover rounded-full px-8 sm:px-12 py-4 sm:py-6 text-lg sm:text-xl font-medium transition-colors duration-500 dark:enhanced-glow dark:hover-enhanced">
+              <Button className="w-full sm:w-auto bg-black dark:bg-soft-white text-white dark:text-black border-2 border-black dark:border-soft-white hover:bg-gray-800 dark:hover:bg-soft-white-hover rounded-full px-8 sm:px-12 py-4 sm:py-6 text-lg sm:text-xl font-medium transition-colors duration-500 dark:enhanced-glow dark:hover-enhanced">
                 View Projects
               </Button>
             </Link>
@@ -671,7 +679,7 @@ const AboutPage = () => {
 
           {/* Footer Information Section */}
           <Footer
-            animationDelay={4.0}
+            animationDelay={2.0}
             textColor="text-muted-foreground"
             borderColor="border-border/50"
           />

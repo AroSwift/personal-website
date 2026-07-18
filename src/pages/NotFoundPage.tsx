@@ -23,8 +23,8 @@ const NotFoundPage = () => {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.6,
-        staggerChildren: 0.1,
+        duration: 0.3,
+        staggerChildren: 0.05,
       },
     },
   }
@@ -98,7 +98,10 @@ const NotFoundPage = () => {
             className="flex flex-col sm:flex-row gap-4 justify-center items-center"
             variants={itemVariants}
           >
-            <Button asChild size="lg" className="px-8 py-3 text-lg font-medium">
+            <Button
+              asChild
+              className="bg-black dark:bg-soft-white text-white dark:text-black border-2 border-black dark:border-soft-white hover:bg-gray-800 dark:hover:bg-soft-white-hover rounded-full px-8 py-3 text-lg font-medium transition-colors duration-500 dark:enhanced-glow dark:hover-enhanced"
+            >
               <Link to="/">
                 <Home className="w-5 h-5 mr-2" />
                 Back to Home
@@ -108,8 +111,7 @@ const NotFoundPage = () => {
             <Button
               asChild
               variant="outline"
-              size="lg"
-              className="px-8 py-3 text-lg font-medium"
+              className="border-2 border-black dark:border-soft-white text-black dark:text-soft-white hover:bg-black dark:hover:bg-soft-white hover:text-white dark:hover:text-black rounded-full px-8 py-3 text-lg font-medium transition-colors duration-500"
             >
               <Link to="/about">
                 <CircleUser className="w-5 h-5 mr-2" />

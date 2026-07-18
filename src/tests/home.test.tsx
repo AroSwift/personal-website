@@ -29,7 +29,9 @@ describe('HomePage', () => {
   it('renders current status information', () => {
     renderWithRouter(<HomePage />)
 
-    expect(screen.getByText(/Developing agentic workflows/)).toBeInTheDocument()
+    expect(
+      screen.getByText(/fully autonomous agentic workflows/)
+    ).toBeInTheDocument()
     expect(screen.getByText(/Visit projects/)).toBeInTheDocument()
   })
 

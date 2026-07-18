@@ -68,38 +68,20 @@ const Header = ({ className = '' }: HeaderProps) => {
     }
   }, [])
 
-  // Run the sophisticated spinning animation
+  // Run a single, slow rotation on page change
   const runSpinAnimation = useCallback(async () => {
-    // Phase 1: Fast spin (3 rotations in 600ms)
+    // Anchor to the icon's resting orientation so it's exactly one full
+    // turn (360deg) regardless of the current theme.
+    const base = theme === 'light' ? 0 : 180
+    themeIconAnimation.set({ rotate: base, scale: 1 })
     await themeIconAnimation.start({
-      rotate: 1080, // 3 * 360 degrees
-      scale: [1, 1.15, 1],
-      transition: {
-        rotate: { duration: 0.6, ease: 'linear' },
-        scale: { duration: 0.3, ease: 'easeOut' },
-      },
-    })
-
-    // Phase 2: Deceleration (1 rotation in 800ms with easing)
-    await themeIconAnimation.start({
-      rotate: 1440, // 4 * 360 degrees
+      rotate: base + 360,
       scale: 1,
       transition: {
-        rotate: { duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }, // Smooth deceleration
-        scale: { duration: 0.2, ease: 'easeOut' },
+        rotate: { duration: 1.2, ease: 'easeInOut' },
       },
     })
-
-    // Phase 3: Settling (smooth stop in 400ms)
-    await themeIconAnimation.start({
-      rotate: 1440, // Keep final rotation
-      scale: 1,
-      transition: {
-        rotate: { duration: 0.4, ease: [0.34, 1.56, 0.64, 1] }, // Bounce-like settling
-        scale: { duration: 0.2, ease: 'easeOut' },
-      },
-    })
-  }, [themeIconAnimation])
+  }, [themeIconAnimation, theme])
 
   // Check for post-loading animation trigger
   useEffect(() => {

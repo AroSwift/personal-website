@@ -11,7 +11,7 @@ interface FooterProps {
 
 const Footer = ({
   className = '',
-  animationDelay = 1.2,
+  animationDelay = 0.6,
   textColor = 'text-gray-600 dark:text-gray-400',
   borderColor = 'border-gray-300/50 dark:border-gray-600/50',
 }: FooterProps) => {
@@ -24,7 +24,7 @@ const Footer = ({
       )}
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: animationDelay, duration: 0.8 }}
+      transition={{ delay: animationDelay, duration: 0.4 }}
     >
       <div
         className={cn(
@@ -33,28 +33,28 @@ const Footer = ({
         )}
       >
         <div>
-          <h4 className="font-medium text-black dark:text-white mb-3 transition-colors duration-800">
+          <h4 className="font-mono text-xs uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400 mb-3 transition-colors duration-800">
             Location
           </h4>
           <p>Charlotte, NC (EST)</p>
           <p>Currently remote</p>
         </div>
         <div>
-          <h4 className="font-medium text-black dark:text-white mb-3 transition-colors duration-800">
+          <h4 className="font-mono text-xs uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400 mb-3 transition-colors duration-800">
             Currently
           </h4>
           <p>HPC Software Engineer @ ORNL</p>
           <p>Building agentic AI workflows</p>
         </div>
         <div>
-          <h4 className="font-medium text-black dark:text-white mb-3 transition-colors duration-800">
+          <h4 className="font-mono text-xs uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400 mb-3 transition-colors duration-800">
             Principles
           </h4>
           <p>Ship fast, then make it faster</p>
           <p>Automate the boring stuff</p>
         </div>
         <div>
-          <h4 className="font-medium text-black dark:text-white mb-3 transition-colors duration-800">
+          <h4 className="font-mono text-xs uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400 mb-3 transition-colors duration-800">
             Source Code
           </h4>
           <a

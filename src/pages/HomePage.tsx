@@ -121,206 +121,201 @@ function HomePage() {
       <Header />
 
       {/* Main Content */}
-      <main className="pt-16 sm:pt-20 md:pt-24 lg:pt-32 xl:pt-40 min-h-screen flex flex-col relative z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col flex-1 justify-center lg:justify-end pb-8 sm:pb-16 lg:pb-24 xl:pb-32 relative z-10">
-          <div className="flex flex-col h-full justify-center lg:justify-end">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-12 mb-8 sm:mb-12 lg:mb-16">
-              {/* Left Column - Main Content */}
-              <div className="lg:col-span-9">
-                {/* Interactive Profile Image */}
-                <motion.div
-                  ref={profileImageRef}
-                  className={cn(
-                    'profile-image-container w-40 h-40 sm:w-56 sm:h-56 md:w-72 md:h-72 lg:w-96 lg:h-96 xl:w-112 xl:h-112 rounded-2xl sm:rounded-3xl overflow-hidden mb-4 sm:mb-6 md:mb-8 lg:mb-12 xl:mb-16 bg-muted dark:bg-gray-800 shadow-lg hover:shadow-2xl cursor-pointer relative select-none mx-auto lg:mx-0',
-                    isHovering &&
-                      'border-4 border-dashed border-foreground/60 shadow-2xl',
-                    !isHovering &&
-                      'border-2 border-border/50 dark:border-border/30 shadow-lg'
-                  )}
-                  initial={{ opacity: 0, scale: 0.8 }}
+      <main className="pt-24 sm:pt-28 md:pt-28 lg:pt-32 min-h-screen flex flex-col relative z-10">
+        <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 flex flex-col flex-1 justify-center pb-8 sm:pb-12 lg:pb-14 relative z-10">
+          {/* Top row - Avatar + intro copy, side by side */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-12 items-start mb-6 sm:mb-8 lg:mb-10">
+            {/* Interactive Profile Image */}
+            <div className="lg:col-span-4 xl:col-span-3 flex justify-center lg:justify-start">
+              <motion.div
+                ref={profileImageRef}
+                className={cn(
+                  'profile-image-container w-44 h-44 sm:w-56 sm:h-56 md:w-64 md:h-64 lg:w-72 lg:h-72 xl:w-80 xl:h-80 rounded-2xl sm:rounded-3xl overflow-hidden bg-muted dark:bg-gray-800 shadow-lg hover:shadow-2xl cursor-pointer relative select-none',
+                  isHovering &&
+                    'border-4 border-dashed border-foreground/60 shadow-2xl',
+                  !isHovering &&
+                    'border-2 border-border/50 dark:border-border/30 shadow-lg'
+                )}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{
+                  opacity: 1,
+                  scale: isHovering ? 1.05 : 1,
+                  rotate: isDragging ? [0, -0.5, 0.5, -0.3, 0.3, 0] : 0,
+                  x: gravityOffset.x,
+                  y: gravityOffset.y,
+                }}
+                transition={{
+                  duration: isDragging ? 0.3 : 0.6,
+                  repeat: isDragging ? Infinity : 0,
+                  repeatType: 'reverse',
+                  x: { type: 'spring', stiffness: 150, damping: 15 },
+                  y: { type: 'spring', stiffness: 150, damping: 15 },
+                }}
+                onMouseEnter={() => setIsHovering(true)}
+                onMouseLeave={() => {
+                  setIsHovering(false)
+                  setIsDragging(false)
+                }}
+                onMouseDown={handleMouseDown}
+                onMouseMove={handleMouseMove}
+                style={{
+                  transition: isDragging ? 'none' : 'transform 0.3s ease-out',
+                  userSelect: 'none',
+                }}
+              >
+                {/* Guy profile image - shown by default with cartoon-like filters */}
+                <motion.img
+                  src="/profile-guy-800.webp"
+                  alt="Profile"
+                  className="w-full h-full object-cover relative z-10"
+                  srcSet="/profile-guy-400.webp 400w, /profile-guy-800.webp 800w"
+                  sizes="(max-width: 640px) 400px, 800px"
+                  loading="eager"
+                  decoding="sync"
+                  style={{
+                    userSelect: 'none',
+                    filter: isHovering
+                      ? 'none'
+                      : 'contrast(1.2) saturate(1.3) brightness(1.1) drop-shadow(0 4px 8px rgba(0,0,0,0.3))',
+                  }}
                   animate={{
-                    opacity: 1,
-                    scale: isHovering ? 1.05 : 1,
-                    rotate: isDragging ? [0, -0.5, 0.5, -0.3, 0.3, 0] : 0,
-                    x: gravityOffset.x,
-                    y: gravityOffset.y,
+                    opacity: isHovering ? 0 : 1,
+                    clipPath: isDragging
+                      ? `circle(${Math.sqrt(dragPosition.x ** 2 + dragPosition.y ** 2)}px at ${dragPosition.x}px ${dragPosition.y}px)`
+                      : 'circle(100% at 50% 50%)',
                   }}
                   transition={{
-                    duration: isDragging ? 0.3 : 0.6,
-                    repeat: isDragging ? Infinity : 0,
-                    repeatType: 'reverse',
-                    x: { type: 'spring', stiffness: 150, damping: 15 },
-                    y: { type: 'spring', stiffness: 150, damping: 15 },
+                    duration: isDragging ? 0.1 : 0.4,
+                    ease: 'easeInOut',
                   }}
-                  onMouseEnter={() => setIsHovering(true)}
-                  onMouseLeave={() => {
-                    setIsHovering(false)
-                    setIsDragging(false)
+                />
+
+                {/* Real Aaron image underneath - revealed on hover */}
+                <motion.img
+                  src="/profile-aaron-800.webp"
+                  alt="Aaron Barlow"
+                  className="absolute inset-0 w-full h-full object-cover z-0"
+                  srcSet="/profile-aaron-400.webp 400w, /profile-aaron-800.webp 800w"
+                  sizes="(max-width: 640px) 400px, 800px"
+                  loading="lazy"
+                  animate={{
+                    opacity: isHovering ? 1 : 0,
                   }}
-                  onMouseDown={handleMouseDown}
-                  onMouseMove={handleMouseMove}
-                  style={{
-                    transition: isDragging ? 'none' : 'transform 0.3s ease-out',
-                    userSelect: 'none',
-                  }}
-                >
-                  {/* Guy profile image - shown by default with cartoon-like filters */}
-                  <motion.img
-                    src="/profile-guy-800.webp"
-                    alt="Profile"
-                    className="w-full h-full object-cover relative z-10"
-                    srcSet="/profile-guy-400.webp 400w, /profile-guy-800.webp 800w"
-                    sizes="(max-width: 640px) 400px, 800px"
-                    loading="eager"
-                    decoding="sync"
-                    style={{
-                      userSelect: 'none',
-                      filter: isHovering
-                        ? 'none'
-                        : 'contrast(1.2) saturate(1.3) brightness(1.1) drop-shadow(0 4px 8px rgba(0,0,0,0.3))',
-                    }}
+                  transition={{ duration: 0.4, ease: 'easeInOut' }}
+                  style={{ userSelect: 'none' }}
+                />
+
+                {/* Hover hint text */}
+                {isHovering && !isDragging && (
+                  <motion.div
+                    className="absolute -bottom-12 left-1/2 transform -translate-x-1/2 bg-foreground text-background px-3 py-1 rounded-full text-sm font-medium whitespace-nowrap pointer-events-none"
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                  >
+                    It's really me! 👋
+                  </motion.div>
+                )}
+
+                {/* Dragging hint text */}
+                {isDragging && (
+                  <motion.div
+                    className="absolute -bottom-12 left-1/2 transform -translate-x-1/2 bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-medium whitespace-nowrap pointer-events-none"
+                    initial={{ opacity: 0, scale: 0.8 }}
                     animate={{
-                      opacity: isHovering ? 0 : 1,
-                      clipPath: isDragging
-                        ? `circle(${Math.sqrt(dragPosition.x ** 2 + dragPosition.y ** 2)}px at ${dragPosition.x}px ${dragPosition.y}px)`
-                        : 'circle(100% at 50% 50%)',
+                      opacity: 1,
+                      scale: [1, 1.1, 1],
+                      y: [0, -2, 0],
                     }}
                     transition={{
-                      duration: isDragging ? 0.1 : 0.4,
-                      ease: 'easeInOut',
+                      duration: 0.3,
+                      repeat: Infinity,
+                      repeatType: 'reverse',
                     }}
-                  />
-
-                  {/* Real Aaron image underneath - revealed on hover */}
-                  <motion.img
-                    src="/profile-aaron-800.webp"
-                    alt="Aaron Barlow"
-                    className="absolute inset-0 w-full h-full object-cover z-0"
-                    srcSet="/profile-aaron-400.webp 400w, /profile-aaron-800.webp 800w"
-                    sizes="(max-width: 640px) 400px, 800px"
-                    loading="lazy"
-                    animate={{
-                      opacity: isHovering ? 1 : 0,
-                    }}
-                    transition={{ duration: 0.4, ease: 'easeInOut' }}
-                    style={{ userSelect: 'none' }}
-                  />
-
-                  {/* Hover hint text */}
-                  {isHovering && !isDragging && (
-                    <motion.div
-                      className="absolute -bottom-12 left-1/2 transform -translate-x-1/2 bg-foreground text-background px-3 py-1 rounded-full text-sm font-medium whitespace-nowrap pointer-events-none"
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -10 }}
-                    >
-                      It's really me! 👋
-                    </motion.div>
-                  )}
-
-                  {/* Dragging hint text */}
-                  {isDragging && (
-                    <motion.div
-                      className="absolute -bottom-12 left-1/2 transform -translate-x-1/2 bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-medium whitespace-nowrap pointer-events-none"
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{
-                        opacity: 1,
-                        scale: [1, 1.1, 1],
-                        y: [0, -2, 0],
-                      }}
-                      transition={{
-                        duration: 0.3,
-                        repeat: Infinity,
-                        repeatType: 'reverse',
-                      }}
-                    >
-                      Surprise! It's really me!
-                    </motion.div>
-                  )}
-                </motion.div>
-
-                {/* Main Heading */}
-                <motion.h1
-                  className="text-xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold leading-tight tracking-tight max-w-4xl mb-4 sm:mb-6 md:mb-8 lg:mb-12 xl:mb-16 relative z-10 text-center sm:text-left"
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.2 }}
-                >
-                  I build code that thinks and infrastructure that lasts.
-                </motion.h1>
-
-                {/* Action Buttons - Moved below main heading */}
-                <div className="mb-4 sm:mb-6 md:mb-8 lg:mb-12 relative z-20">
-                  <div className="flex flex-col sm:flex-row justify-center sm:justify-start gap-3 sm:gap-4 md:gap-6 relative z-20">
-                    <motion.div
-                      initial={{ opacity: 0, x: -30 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{
-                        duration: 0.6,
-                        delay: 0.6,
-                        ease: 'easeOut',
-                      }}
-                      className="w-[70%] sm:w-auto mx-auto sm:mx-0"
-                    >
-                      <Link to="/projects" className="w-full sm:w-auto">
-                        <Button
-                          variant="outline"
-                          className="w-full sm:w-auto border-2 border-black dark:border-soft-white text-black dark:text-soft-white hover:bg-black dark:hover:bg-soft-white hover:text-white dark:hover:text-black rounded-full px-4 sm:px-6 md:px-8 lg:px-10 py-3 sm:py-4 md:py-5 lg:py-6 text-sm sm:text-base md:text-lg font-medium transition-colors duration-500"
-                        >
-                          Selected Projects
-                        </Button>
-                      </Link>
-                    </motion.div>
-                    <motion.div
-                      initial={{ opacity: 0, x: -30 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{
-                        duration: 0.6,
-                        delay: 0.7,
-                        ease: 'easeOut',
-                      }}
-                      className="w-[70%] sm:w-auto mx-auto sm:mx-0"
-                    >
-                      <Link to="/about" className="w-full sm:w-auto">
-                        <Button
-                          variant="outline"
-                          className="w-full sm:w-auto border-2 border-black dark:border-soft-white text-black dark:text-soft-white hover:bg-black dark:hover:bg-soft-white hover:text-white dark:hover:text-black rounded-full px-4 sm:px-6 md:px-8 lg:px-10 py-3 sm:py-4 md:py-5 lg:py-6 text-sm sm:text-base md:text-lg font-medium transition-colors duration-500"
-                        >
-                          About me
-                        </Button>
-                      </Link>
-                    </motion.div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Right Column - Status Text - Aligned with main text */}
-              <div className="lg:col-span-3 flex items-start lg:pt-8 xl:pt-16 2xl:pt-32 relative z-10">
-                <motion.div
-                  className="pt-0 w-full relative z-10 text-center sm:text-left"
-                  initial={{ opacity: 0, x: 30 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.8, delay: 0.3 }}
-                >
-                  {/* Current work description */}
-                  <p className="text-base sm:text-lg md:text-xl leading-relaxed mb-3 sm:mb-4 relative z-10">
-                    Developing agentic workflows that autonomously create and
-                    publish products, podcasts, music, and more.
-                  </p>
-
-                  {/* Projects link */}
-                  <p className="text-sm sm:text-base text-muted-foreground relative z-10">
-                    <Link
-                      to="/projects"
-                      className="font-medium text-foreground hover:text-muted-foreground transition-colors underline underline-offset-4"
-                    >
-                      Visit projects
-                    </Link>{' '}
-                    for latest work
-                  </p>
-                </motion.div>
-              </div>
+                  >
+                    Surprise! It's really me!
+                  </motion.div>
+                )}
+              </motion.div>
             </div>
+
+            {/* Intro copy - eyebrow, description, projects link */}
+            <motion.div
+              className="lg:col-span-8 xl:col-span-9 flex flex-col text-center sm:text-left"
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.4, delay: 0.15 }}
+            >
+              {/* Role eyebrow */}
+              <p className="font-mono text-xs sm:text-sm uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400 mb-4 sm:mb-6">
+                HPC Software Engineer · ORNL
+              </p>
+
+              {/* Current work description */}
+              <p className="text-lg sm:text-xl md:text-2xl leading-relaxed max-w-2xl mx-auto sm:mx-0 mb-4 sm:mb-6 text-foreground/90">
+                Full-stack software engineer enabling the world's fastest
+                open-science supercomputers to operate at exascale. In my spare
+                time, I build fully autonomous agentic workflows.
+              </p>
+
+              {/* Projects link */}
+              <p className="text-sm sm:text-base text-muted-foreground">
+                <Link
+                  to="/projects"
+                  className="font-medium text-foreground hover:text-muted-foreground transition-colors underline underline-offset-4"
+                >
+                  Visit projects
+                </Link>{' '}
+                for latest work
+              </p>
+            </motion.div>
+          </div>
+
+          {/* Kicker + Main Heading - full width */}
+          <motion.div
+            className="relative z-10"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.1 }}
+          >
+            <p className="font-mono text-xs sm:text-sm uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400 mb-3 sm:mb-4 text-center sm:text-left">
+              In short
+            </p>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold leading-[0.95] tracking-tight max-w-7xl mb-6 sm:mb-8 lg:mb-8 text-center sm:text-left">
+              I build code that thinks <br className="hidden lg:block" />
+              and infrastructure that lasts.
+            </h1>
+          </motion.div>
+
+          {/* Action Buttons */}
+          <div className="flex flex-col sm:flex-row justify-center sm:justify-start gap-3 sm:gap-4 relative z-20">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: 0.3, ease: 'easeOut' }}
+              className="w-[70%] sm:w-auto mx-auto sm:mx-0"
+            >
+              <Link to="/projects" className="w-full sm:w-auto">
+                <Button className="w-full sm:w-auto h-auto bg-black dark:bg-soft-white text-white dark:text-black border-2 border-black dark:border-soft-white hover:bg-gray-800 dark:hover:bg-soft-white-hover rounded-full px-4 sm:px-6 md:px-8 lg:px-10 py-3 sm:py-4 md:py-5 lg:py-6 text-sm sm:text-base md:text-lg font-medium transition-colors duration-500 dark:enhanced-glow dark:hover-enhanced">
+                  Selected Projects
+                </Button>
+              </Link>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: 0.35, ease: 'easeOut' }}
+              className="w-[70%] sm:w-auto mx-auto sm:mx-0"
+            >
+              <Link to="/about" className="w-full sm:w-auto">
+                <Button
+                  variant="outline"
+                  className="w-full sm:w-auto h-auto border-2 border-black dark:border-soft-white text-black dark:text-soft-white hover:bg-black dark:hover:bg-soft-white hover:text-white dark:hover:text-black rounded-full px-4 sm:px-6 md:px-8 lg:px-10 py-3 sm:py-4 md:py-5 lg:py-6 text-sm sm:text-base md:text-lg font-medium transition-colors duration-500"
+                >
+                  About me
+                </Button>
+              </Link>
+            </motion.div>
           </div>
         </div>
       </main>
