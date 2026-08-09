@@ -2,7 +2,7 @@
  * Aaron Barlow's Portfolio Website
  * https://aaronbarlow.dev
  *
- * Copyright (c) 2025 Aaron Barlow. All rights reserved.
+ * Copyright (c) 2024-2026 Aaron Barlow. Released under the MIT License.
  */
 
 import React, { useState, useEffect, lazy, Suspense } from 'react'
@@ -37,17 +37,19 @@ const PageLoader = () => (
 // Meta tag configurations for SEO
 const metaTagsConfig = {
   '/': {
-    title: 'Aaron Barlow - HPC Software Engineer & AI Developer',
+    title: 'Aaron Barlow — HPC Software Engineer & Agentic Workflow Developer',
     description:
       'Aaron Barlow is an HPC Software Engineer at Oak Ridge National Laboratory, building agentic AI workflows and enabling exascale computing. View projects and experience.',
     keywords:
-      'Aaron Barlow, HPC Software Engineer, AI Developer, Oak Ridge National Laboratory, agentic workflows, exascale computing',
-    ogTitle: 'Aaron Barlow - HPC Software Engineer & AI Developer',
+      'Aaron Barlow, HPC Software Engineer, Agentic Workflow Developer, Oak Ridge National Laboratory, agentic workflows, exascale computing',
+    ogTitle:
+      'Aaron Barlow — HPC Software Engineer & Agentic Workflow Developer',
     ogDescription:
       'Aaron Barlow is an HPC Software Engineer at Oak Ridge National Laboratory, building agentic AI workflows and enabling exascale computing.',
     ogType: 'website',
     twitterCard: 'summary_large_image',
-    twitterTitle: 'Aaron Barlow - HPC Software Engineer & AI Developer',
+    twitterTitle:
+      'Aaron Barlow — HPC Software Engineer & Agentic Workflow Developer',
     twitterDescription:
       'Aaron Barlow is an HPC Software Engineer at Oak Ridge National Laboratory, building agentic AI workflows and enabling exascale computing.',
   },
@@ -113,8 +115,13 @@ const metaTagsConfig = {
 
 // Function to update meta tags
 const updateMetaTags = (pathname: string) => {
-  const config = metaTagsConfig[pathname as keyof typeof metaTagsConfig]
-  if (!config) return
+  // Any unmatched path is rendered by the catch-all `path="*"` route, so it
+  // gets the 404 metadata. Without this fallback the previous page's title
+  // and canonical persisted on a real 404, since no config is keyed by the
+  // bogus pathname and the function bailed out early.
+  const config =
+    metaTagsConfig[pathname as keyof typeof metaTagsConfig] ??
+    metaTagsConfig['/404']
 
   // Update document title
   document.title = config.title

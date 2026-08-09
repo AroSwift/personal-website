@@ -68,6 +68,9 @@ const Footer = ({
           <p className="text-sm mt-1">Open source</p>
         </div>
       </div>
+      <p className="mt-10 font-mono text-xs tracking-[0.1em] text-gray-500 dark:text-gray-400 transition-colors duration-800">
+        © {new Date().getFullYear()} Aaron Barlow · MIT Licensed
+      </p>
     </motion.div>
   )
 }

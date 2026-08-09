@@ -87,7 +87,7 @@ const AboutPage = () => {
         'Deployed and expanded myOLCF, a researcher self-service and monitoring app supporting 4,000+ users across 1,000+ large-scale high-performance computing research campaigns, achieving ~99.9% availability.',
         'Co-architected Smart Facility System, capable of delivering 100k time-series records in 87ms. Offloaded compute to background jobs with indexes and caching. Used to guide procurement and flag inefficient computation jobs.',
         'Optimized build processes and CI pipelines, cutting builds from 2min to 9s, startup from 30s to ~200ms, and tests from 90s to 6s, boosting developer productivity, shortening feedback loops, and speeding up deployments.',
-        'Delivered AMD-compatible NVFLARE on Frontier (TOP500 #2) by supporting ROCm on MI250X GPUs with PyTorch, enabling cross-institution healthcare training of privacy-preserving medical foundation models.',
+        "Delivered AMD-compatible NVFLARE on Frontier, ORNL's exascale supercomputer, by supporting ROCm on MI250X GPUs with PyTorch, enabling cross-institution healthcare training of privacy-preserving medical foundation models.",
       ],
     },
     {
@@ -325,15 +325,15 @@ const AboutPage = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, delay: 0.55 }}
                 >
-                  Over the past decade, I've had the opportunity to contribute
-                  at both Bank of America and the Oak Ridge National Laboratory
-                  (ORNL). Currently, my tech stack is primarily Ruby, Ruby on
-                  Rails, Go, Python, TypeScript, Vue.js, and Kubernetes, but I
-                  always love to learn new languages, frameworks, and tools.
-                  While I love full-stack engineering, I have more recently been
-                  enjoying architecting complex systems, working with
-                  distributed systems, optimizing for performance at scale, and
-                  developing agentic workflows.
+                  Since 2015, I've had the opportunity to contribute at both
+                  Bank of America and the Oak Ridge National Laboratory (ORNL).
+                  Currently, my tech stack is primarily Ruby, Ruby on Rails, Go,
+                  Python, TypeScript, Vue.js, and Kubernetes, but I always love
+                  to learn new languages, frameworks, and tools. While I love
+                  full-stack engineering, I have more recently been enjoying
+                  architecting complex systems, working with distributed
+                  systems, optimizing for performance at scale, and developing
+                  agentic workflows.
                 </motion.p>
               </motion.div>
             </div>

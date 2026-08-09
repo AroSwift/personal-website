@@ -7,8 +7,13 @@ import { join } from 'path'
 
 // Plugin to inject build version into service worker
 function swVersionPlugin(): Plugin {
+  let outDir = 'dist'
   return {
     name: 'sw-version',
+    configResolved(config) {
+      // Resolve the real output directory rather than assuming `dist`.
+      outDir = config.build.outDir
+    },
     generateBundle() {
       // Generate a unique version based on timestamp (format: v3-YYYYMMDD-HHMMSS)
       const now = new Date()
@@ -26,9 +31,26 @@ function swVersionPlugin(): Plugin {
       // Replace the BUILD_VERSION placeholder
       swContent = swContent.replace(/BUILD_VERSION/g, version)
 
-      // Write to dist directory
-      const distSwPath = join(process.cwd(), 'dist', 'service-worker.js')
-      writeFileSync(distSwPath, swContent, 'utf-8')
+      // Write into the resolved output directory
+      writeFileSync(
+        join(process.cwd(), outDir, 'service-worker.js'),
+        swContent,
+        'utf-8'
+      )
+    },
+    closeBundle() {
+      // Fail the build rather than shipping the unsubstituted placeholder.
+      // This plugin writes during `generateBundle` while Vite copies publicDir
+      // at `renderStart`, so the write currently lands last. That ordering is
+      // undocumented: if it ever flips, the copy clobbers this file and
+      // production ships CACHE_VERSION = 'BUILD_VERSION', silently breaking
+      // cache busting. Checking here, after the whole build, catches that.
+      const distSwPath = join(process.cwd(), outDir, 'service-worker.js')
+      if (readFileSync(distSwPath, 'utf-8').includes('BUILD_VERSION')) {
+        throw new Error(
+          `sw-version: ${distSwPath} still contains the BUILD_VERSION placeholder`
+        )
+      }
     },
   }
 }
@@ -38,13 +60,18 @@ export default defineConfig({
   plugins: [
     react(),
     swVersionPlugin(),
-    // Set VITE_OPEN_BUNDLE_STATS=1 to open the bundle stats in the browser
-    visualizer({
-      filename: 'dist/stats.html',
-      open: process.env.VITE_OPEN_BUNDLE_STATS === '1',
-      gzipSize: true,
-      brotliSize: true,
-    }),
+    // Set VITE_OPEN_BUNDLE_STATS=1 to generate and open the bundle stats.
+    // Gated so the bundle map is never emitted into a production dist/,
+    // which nginx would otherwise serve publicly at /stats.html.
+    ...(process.env.VITE_OPEN_BUNDLE_STATS === '1'
+      ? [
+          visualizer({
+            filename: 'dist/stats.html',
+            open: true,
+            gzipSize: true,
+          }),
+        ]
+      : []),
   ],
   define: {
     'import.meta.env.VITE_BUILD_VERSION': JSON.stringify(
@@ -161,7 +188,7 @@ export default defineConfig({
     chunkSizeWarningLimit: 500, // Lower threshold for better chunk management
     minify: 'esbuild',
     sourcemap: false,
-    target: 'es2015',
+    target: 'es2020',
     // Enable CSS code splitting
     cssCodeSplit: true,
     // Optimize dependencies

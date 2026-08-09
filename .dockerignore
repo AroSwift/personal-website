@@ -3,6 +3,7 @@ npm-debug.log
 .git
 .gitignore
 README.md
+LICENSE
 .env
 .env.local
 .env.development.local
@@ -11,3 +12,11 @@ README.md
 dist
 .DS_Store
 *.log
+
+# Build/test artifacts and local tool state -- the Dockerfile does `COPY . .`,
+# so these only inflate the build context and bust the layer cache.
+coverage
+.vite
+.memsearch
+.github
+assets

@@ -144,7 +144,7 @@ const ProjectsPage = () => {
     {
       title: 'Performance Optimization',
       description:
-        "Achieved 1320x performance improvement for U.S. largest lab's self-service portal, myOLCF",
+        "Achieved 1,528x performance improvement for U.S. largest lab's self-service portal, myOLCF",
       impact: 'Serving 4k+ users across 1,000+ projects',
     },
   ]

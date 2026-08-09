@@ -17,8 +17,10 @@ let STATIC_FILES = [
   '/robots.txt',
   '/profile-aaron-400.webp',
   '/profile-aaron-800.webp',
-  '/presentations/cug-2025-hpc-system-management.pdf',
-  '/presentations/nlit-2024-devops-hpc.pdf',
+  // Conference PDFs are deliberately NOT precached: together they are ~8.6 MB
+  // and would download during install on every first visit and every deploy,
+  // competing with the actual page load. They are only reachable behind a
+  // click on the About page, so they cache on demand via the fetch handler.
   '/icons/favicon.ico',
   '/icons/favicon-16x16.png',
   '/icons/favicon-32x32.png',
@@ -85,8 +87,10 @@ self.addEventListener('install', event => {
         console.error('Service Worker: Install failed:', error)
         // Don't throw - allow service worker to install even if caching fails
       }
-      // Skip waiting to activate immediately
-      self.skipWaiting()
+      // Deliberately NOT calling self.skipWaiting() here. The app shows an
+      // update prompt (see PWAStatus.tsx / usePWA.ts) and posts SKIP_WAITING
+      // when the user accepts. Activating immediately would swap the worker
+      // out from under a page still running the previous build's chunks.
     })()
   )
 })
@@ -175,7 +179,9 @@ self.addEventListener('fetch', event => {
 // Cache first strategy with age checking
 async function cacheFirst(request, cacheName) {
   try {
-    const cachedResponse = await caches.match(request)
+    // Read from the named cache, not the global `caches.match`, so a
+    // surviving cache from an older CACHE_VERSION cannot win over this one.
+    const cachedResponse = await (await caches.open(cacheName)).match(request)
     if (cachedResponse) {
       // Check cache age
       const cacheTime = cachedResponse.headers.get('sw-cache-time')
@@ -256,8 +262,9 @@ async function networkFirst(request, cacheName) {
     }
     return networkResponse
   } catch (error) {
-    // Network failed, try cache
-    const cachedResponse = await caches.match(request)
+    // Network failed, try cache. Scoped to the named cache so an older
+    // CACHE_VERSION's leftovers cannot shadow the current build.
+    const cachedResponse = await (await caches.open(cacheName)).match(request)
     if (cachedResponse) {
       // Check cache age for fallback
       const cacheTime = cachedResponse.headers.get('sw-cache-time')
@@ -273,7 +280,11 @@ async function networkFirst(request, cacheName) {
 
     // Return offline page for navigation requests
     if (request.mode === 'navigate') {
-      const offlinePage = await caches.match('/offline.html')
+      // offline.html is precached into STATIC_CACHE, not the dynamic cache
+      // this function was called with, so open it by name explicitly.
+      const offlinePage = await (await caches.open(STATIC_CACHE)).match(
+        '/offline.html'
+      )
       if (offlinePage) {
         return offlinePage
       }
@@ -399,6 +410,14 @@ async function cleanupOldCaches() {
 
     for (const cacheName of cacheNames) {
       try {
+        // Never evict the caches belonging to the running version. Without
+        // this guard the age check below deletes the live precache (and
+        // /offline.html) about a day after deploy, and nothing repopulates
+        // it until the next deploy -- offline support dies silently.
+        if (cacheName.includes(CACHE_VERSION)) {
+          continue
+        }
+
         // Check if cache is older than 1 day
         // Cache name format: aaron-barlow-v3-YYYYMMDD-HHMMSS or static-cache-v3-YYYYMMDD-HHMMSS
         if (cacheName.includes('aaron-barlow-') || cacheName.includes('static-cache-') || cacheName.includes('dynamic-cache-')) {
@@ -407,24 +426,27 @@ async function cleanupOldCaches() {
           if (versionMatch) {
             const dateStr = versionMatch[1] // YYYYMMDD
             const timeStr = versionMatch[2] // HHMMSS
-            
+
             // Parse date: YYYYMMDD format
             const year = parseInt(dateStr.substring(0, 4), 10)
             const month = parseInt(dateStr.substring(4, 6), 10) - 1 // Month is 0-indexed
             const day = parseInt(dateStr.substring(6, 8), 10)
-            
+
             // Parse time: HHMMSS format
             const hours = parseInt(timeStr.substring(0, 2), 10)
             const minutes = parseInt(timeStr.substring(2, 4), 10)
             const seconds = parseInt(timeStr.substring(4, 6), 10)
-            
-            const cacheDateObj = new Date(year, month, day, hours, minutes, seconds)
-            const daysDiff = (now - cacheDateObj.getTime()) / (1000 * 60 * 60 * 24)
+
+            // The build stamps the version in UTC (see swVersionPlugin), so
+            // parse it as UTC. `new Date(y, m, d, ...)` would read it as local
+            // time and skew the age by the viewer's UTC offset.
+            const cacheTimeMs = Date.UTC(year, month, day, hours, minutes, seconds)
+            const daysDiff = (now - cacheTimeMs) / (1000 * 60 * 60 * 24)
 
             if (!isNaN(daysDiff) && daysDiff > 1) {
               await caches.delete(cacheName)
             }
-          } else if (!cacheName.includes(CACHE_VERSION)) {
+          } else {
             // If we can't parse the version, delete caches that don't match current version
             await caches.delete(cacheName)
           }

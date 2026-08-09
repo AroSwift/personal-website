@@ -38,9 +38,17 @@ A modern, responsive personal website for Aaron Barlow built with React, TypeScr
 
 - `bun dev` - Start development server
 - `bun run build` - Build for production
-- `bun run preview` - Preview production build locally
-- `bun run serve` - Serve production build locally
+- `bun run build:check` - Typecheck, then build
+- `bun run preview` - Serve the production build locally
+- `bun run typecheck` - Type-check without emitting
 - `bun run test` - Run tests in watch mode
+- `bun run test:run` - Run tests once (used by CI)
+- `bun run lint` / `bun run lint:fix` - Lint, optionally autofixing
+- `bun run format` / `bun run format:check` - Format with Prettier
+
+Set `VITE_OPEN_BUNDLE_STATS=1` on a build to generate and open the bundle
+size treemap. It is gated off by default so the bundle map is never emitted
+into a production `dist/`.
 
 ## Testing
 

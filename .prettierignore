@@ -1,0 +1,7 @@
+bun.lock
+dist/
+coverage/
+.vite/
+.memsearch/
+node_modules/
+public/service-worker.js

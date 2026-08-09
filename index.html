@@ -88,7 +88,12 @@
     <meta name="msapplication-TileImage" content="/icons/icon-144x144.png" />
 
     <!-- Open Graph -->
+    <!-- og:url and twitter:url are also rewritten per-route on mount by
+         updateMetaTags in src/App.tsx. They are declared statically here so
+         crawlers and link unfurlers that do not execute JS still see them. -->
     <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://aaronbarlow.dev/" />
+    <meta property="og:locale" content="en_US" />
     <meta
       property="og:title"
       content="Aaron Barlow — HPC Software Engineer & Agentic Workflow Developer"
@@ -111,6 +116,7 @@
 
     <!-- Twitter/X -->
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://aaronbarlow.dev/" />
     <meta
       name="twitter:title"
       content="Aaron Barlow — HPC Software Engineer & Agentic Workflow Developer"
@@ -165,7 +171,7 @@
             "worksFor": { "@id": "https://aaronbarlow.dev/#ornl" },
             "sameAs": [
               "https://github.com/AroSwift",
-              "https://www.linkedin.com/in/aaronbarlow"
+              "https://www.linkedin.com/in/allaaronbarlow"
             ],
             "knowsAbout": [
               {
@@ -196,7 +202,7 @@
               {
                 "@type": "Thing",
                 "name": "Performance Optimization",
-                "description": "Achieving 1320x performance improvements"
+                "description": "Achieving 1,528x performance improvements"
               }
             ],
             "alumniOf": [
@@ -263,6 +269,7 @@
             "creator": { "@id": "https://aaronbarlow.dev/#person" },
             "publisher": { "@id": "https://aaronbarlow.dev/#person" },
             "datePublished": "2024-08-17",
+            "dateModified": "2026-08-09",
             "inLanguage": "en",
             "hasPart": [
               {
@@ -276,11 +283,6 @@
                   "@type": "Offer",
                   "price": "0",
                   "priceCurrency": "USD"
-                },
-                "aggregateRating": {
-                  "@type": "AggregateRating",
-                  "ratingValue": "4.8",
-                  "reviewCount": "150"
                 }
               },
               {
@@ -293,11 +295,6 @@
                   "@type": "Offer",
                   "price": "0",
                   "priceCurrency": "USD"
-                },
-                "aggregateRating": {
-                  "@type": "AggregateRating",
-                  "ratingValue": "4.7",
-                  "reviewCount": "85"
                 }
               },
               {
@@ -310,11 +307,6 @@
                   "@type": "Offer",
                   "price": "0",
                   "priceCurrency": "USD"
-                },
-                "aggregateRating": {
-                  "@type": "AggregateRating",
-                  "ratingValue": "4.6",
-                  "reviewCount": "120"
                 }
               },
               {
@@ -327,11 +319,6 @@
                   "@type": "Offer",
                   "price": "0",
                   "priceCurrency": "USD"
-                },
-                "aggregateRating": {
-                  "@type": "AggregateRating",
-                  "ratingValue": "4.5",
-                  "reviewCount": "95"
                 }
               }
             ]
@@ -475,7 +462,7 @@
       data-website="https://aaronbarlow.dev"
       data-role="HPC Software Engineer"
       data-organization="Oak Ridge National Laboratory"
-      data-year="2025"
+      data-year="2026"
     ></div>
 
     <script type="module" src="/src/main.tsx"></script>

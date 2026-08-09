@@ -1,0 +1,65 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+# Cancel superseded runs on the same ref instead of paying for both.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: Typecheck, lint, test, build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          # Keep in step with `packageManager` in package.json and the
+          # Dockerfile base image, so CI, local, and prod resolve alike.
+          bun-version: 1.3.10
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Typecheck
+        run: bun run typecheck
+
+      - name: Lint
+        run: bun run lint
+
+      - name: Format check
+        run: bun run format:check
+
+      - name: Test
+        run: bun run test:run
+
+      - name: Build
+        run: bun run build
+
+      - name: Assert the bundle map is not in the build output
+        # rollup-plugin-visualizer is gated behind VITE_OPEN_BUNDLE_STATS, and
+        # the Dockerfile copies all of dist/ into nginx. If stats.html ever
+        # reappears here it would be served publicly at /stats.html.
+        run: |
+          if [ -e dist/stats.html ]; then
+            echo "::error::dist/stats.html was emitted into the production build"
+            exit 1
+          fi
+
+      - name: Assert the service worker version placeholder was substituted
+        run: |
+          if grep -q "BUILD_VERSION" dist/service-worker.js; then
+            echo "::error::dist/service-worker.js still contains BUILD_VERSION"
+            exit 1
+          fi
