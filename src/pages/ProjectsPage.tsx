@@ -162,7 +162,7 @@ const ProjectsPage = () => {
       <Header />
 
       {/* Main Content */}
-      <main className="pt-36 sm:pt-42 md:pt-48 lg:pt-54 xl:pt-60 min-h-screen flex flex-col">
+      <main className="pt-32 sm:pt-36 md:pt-40 lg:pt-44 min-h-screen flex flex-col">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col flex-1 justify-start pb-16 sm:pb-24 lg:pb-32 relative z-20">
           {/* Hero Section with Title and Description */}
           <motion.div
@@ -216,7 +216,7 @@ const ProjectsPage = () => {
             >
               Work Projects
             </motion.h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {workProjects.map((project, index) => (
                 <motion.div
                   key={index}
@@ -312,7 +312,7 @@ const ProjectsPage = () => {
             >
               Personal Projects
             </motion.h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {personalProjects.map((project, index) => (
                 <motion.div
                   key={index}

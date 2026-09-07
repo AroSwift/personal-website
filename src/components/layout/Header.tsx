@@ -194,24 +194,34 @@ const Header = ({ className = '' }: HeaderProps) => {
 
   const pageSuffix = getPageSuffix()
 
-  // Show background on mobile always, or on desktop after 200px scroll
-  const backgroundOpacity = 0.9
-  const shouldShowBackground = isMobile || (!isMobile && scrollY > 200)
+  // Show background when scrolled past 20px (or on mobile)
+  const isScrolled = scrollY > 20
+  const shouldShowBackground = isMobile || isScrolled
 
   return (
-    <header className={cn('fixed top-0 left-0 right-0 z-50', className)}>
+    <header
+      className={cn(
+        'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
+        className
+      )}
+    >
       {/* Background overlay with cool hue */}
       <div
-        className="absolute inset-0 backdrop-blur-xl transition-all duration-500 ease-out"
+        className={cn(
+          'absolute inset-0 transition-all duration-300 ease-out border-b border-transparent',
+          shouldShowBackground &&
+            'backdrop-blur-xl border-border/10 dark:border-border/20 shadow-sm'
+        )}
         style={{
-          backgroundColor:
-            theme === 'dark'
-              ? `rgba(5, 5, 5, ${shouldShowBackground ? backgroundOpacity : 0})` // Much darker black for dark mode
-              : `rgba(248, 250, 252, ${shouldShowBackground ? backgroundOpacity : 0})`, // Cool off-white for light mode
+          backgroundColor: shouldShowBackground
+            ? theme === 'dark'
+              ? 'rgba(5, 5, 5, 0.85)'
+              : 'rgba(248, 250, 252, 0.85)'
+            : 'transparent',
         }}
       />
       {/* Subtle animated background for dark mode */}
-      {theme === 'dark' && (
+      {theme === 'dark' && shouldShowBackground && (
         <div className="absolute inset-0 pointer-events-none">
           <div
             className="animated-hue-overlay-slow"
@@ -219,7 +229,12 @@ const Header = ({ className = '' }: HeaderProps) => {
           />
         </div>
       )}
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8 md:py-10 flex justify-between items-center">
+      <div
+        className={cn(
+          'relative max-w-7xl mx-auto px-4 sm:px-6 flex justify-between items-center transition-all duration-300',
+          isScrolled ? 'py-4 sm:py-5' : 'py-6 sm:py-8 md:py-10'
+        )}
+      >
         <div className="flex items-center space-x-3">
           {/* Logo/Name with letter wave animation */}
           <Link to="/" className="cursor-pointer">

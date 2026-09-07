@@ -187,7 +187,7 @@ const AboutPage = () => {
       <Header />
 
       {/* Main Content */}
-      <main className="pt-36 sm:pt-42 md:pt-48 lg:pt-54 xl:pt-60 min-h-screen flex flex-col">
+      <main className="pt-32 sm:pt-36 md:pt-40 lg:pt-44 min-h-screen flex flex-col">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col flex-1 justify-start pb-16 sm:pb-24 lg:pb-32 relative z-20">
           {/* Hero Section with Profile and Bio */}
           <motion.div
@@ -603,7 +603,10 @@ const AboutPage = () => {
                       </div>
 
                       {/* Download Button */}
-                      <div className="flex justify-end">
+                      <div className="flex items-center justify-end gap-3">
+                        <span className="text-xs font-mono text-muted-foreground uppercase tracking-wider">
+                          PDF · ~4.3 MB
+                        </span>
                         <a
                           href={presentation.pdfUrl}
                           target="_blank"

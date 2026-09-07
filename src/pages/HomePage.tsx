@@ -81,39 +81,51 @@ function HomePage() {
     }
   }, [isDragging, handleMouseUp])
 
-  // Gravity effect - profile image follows mouse cursor when close
+  // Gravity effect - profile image follows mouse cursor when close (throttled via requestAnimationFrame)
   useEffect(() => {
+    let rafId: number | null = null
+
     const handleMouseMove = (e: MouseEvent) => {
       if (!profileImageRef.current || isDragging) return
 
-      const rect = profileImageRef.current.getBoundingClientRect()
-      const centerX = rect.left + rect.width / 2
-      const centerY = rect.top + rect.height / 2
+      if (rafId !== null) return
 
-      // Calculate distance from mouse to image center
-      const deltaX = e.clientX - centerX
-      const deltaY = e.clientY - centerY
-      const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY)
+      rafId = window.requestAnimationFrame(() => {
+        rafId = null
+        if (!profileImageRef.current || isDragging) return
 
-      // Apply gravity effect - image moves towards mouse if within range
-      const range = window.innerWidth < 768 ? 100 : 300 // Smaller range on mobile
-      if (distance < range) {
-        const strength = (range - distance) / range // Stronger when closer
-        setGravityOffset({
-          x: deltaX * strength * 0.3,
-          y: deltaY * strength * 0.3,
-        })
-      } else {
-        setGravityOffset({ x: 0, y: 0 })
-      }
+        const rect = profileImageRef.current.getBoundingClientRect()
+        const centerX = rect.left + rect.width / 2
+        const centerY = rect.top + rect.height / 2
+
+        // Calculate distance from mouse to image center
+        const deltaX = e.clientX - centerX
+        const deltaY = e.clientY - centerY
+        const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY)
+
+        // Apply gravity effect - image moves towards mouse if within range
+        const range = window.innerWidth < 768 ? 100 : 300 // Smaller range on mobile
+        if (distance < range) {
+          const strength = (range - distance) / range // Stronger when closer
+          setGravityOffset({
+            x: deltaX * strength * 0.3,
+            y: deltaY * strength * 0.3,
+          })
+        } else {
+          setGravityOffset({ x: 0, y: 0 })
+        }
+      })
     }
 
-    document.addEventListener('mousemove', handleMouseMove)
-    return () => document.removeEventListener('mousemove', handleMouseMove)
+    document.addEventListener('mousemove', handleMouseMove, { passive: true })
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove)
+      if (rafId !== null) window.cancelAnimationFrame(rafId)
+    }
   }, [isDragging])
 
   return (
-    <div className="min-h-screen text-foreground bg-background relative overflow-hidden">
+    <div className="min-h-screen text-foreground bg-background relative overflow-x-hidden">
       {/* Subtle warm gradient with cool accent - matching other pages */}
       <div className="absolute inset-0 bg-gradient-to-tl from-orange-100/40 via-amber-50/20 to-transparent pointer-events-none dark:from-orange-900/10 dark:via-amber-900/5 dark:to-transparent transition-all duration-800 ease-in-out" />
       <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-blue-50/25 pointer-events-none dark:to-blue-900/10 transition-all duration-800 ease-in-out" />
@@ -122,7 +134,7 @@ function HomePage() {
 
       {/* Main Content */}
       <main className="pt-24 sm:pt-28 md:pt-28 lg:pt-32 min-h-screen flex flex-col relative z-10">
-        <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 flex flex-col flex-1 justify-center pb-8 sm:pb-12 lg:pb-14 relative z-10">
+        <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 flex flex-col flex-1 justify-center pb-12 sm:pb-16 lg:pb-20 relative z-10">
           {/* Top row - Avatar + intro copy, side by side */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-12 items-start mb-6 sm:mb-8 lg:mb-10">
             {/* Interactive Profile Image */}

@@ -46,18 +46,16 @@ const ContactPage = () => {
 
       <Header />
 
-      {/* Large Dynamic Title - Better responsive scaling for bigger screens */}
-      <div className="absolute top-[20%] sm:top-[15%] md:top-[20%] lg:top-[22%] xl:top-[24%] 2xl:top-[26%] left-0 right-0 pointer-events-none z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-[16vw] sm:text-[14vw] md:text-[16vw] lg:text-[12vw] xl:text-[10vw] 2xl:text-[8vw] font-light leading-none tracking-wide text-black dark:text-white transition-colors duration-800">
-            Get in touch
-          </h1>
-        </div>
-      </div>
+      {/* Main Content */}
+      <main className="pt-32 sm:pt-36 md:pt-40 lg:pt-44 min-h-screen flex flex-col justify-between">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex flex-col flex-1 justify-between pb-8 sm:pb-12 md:pb-12 lg:pb-14 xl:pb-16 2xl:pb-16">
+          {/* Large Dynamic Title in document flow */}
+          <div className="mb-10 sm:mb-14 lg:mb-16">
+            <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[9.5rem] font-light leading-none tracking-tight text-black dark:text-white transition-colors duration-800">
+              Get in touch
+            </h1>
+          </div>
 
-      {/* Main Content - Better responsive padding for bigger screens */}
-      <main className="pt-[24rem] sm:pt-[32rem] md:pt-[28rem] lg:pt-[26rem] xl:pt-[26rem] 2xl:pt-[27rem] min-h-screen flex flex-col">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col flex-1 justify-end pb-8 sm:pb-12 md:pb-12 lg:pb-14 xl:pb-16 2xl:pb-16">
           <div className="relative z-20">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
