@@ -12,6 +12,7 @@ import {
   Route,
   useLocation,
 } from 'react-router-dom'
+import { MotionConfig } from 'framer-motion'
 import LoadingScreen from './components/LoadingScreen'
 import { PWAStatus } from './components/PWAStatus'
 
@@ -260,11 +261,19 @@ const AppContent = () => {
 
 function App() {
   return (
-    <Router>
-      <MetaTagManager />
-      <ScrollToTopInner />
-      <AppContent />
-    </Router>
+    <MotionConfig reducedMotion="user">
+      <Router>
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground focus:rounded-md focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-ring"
+        >
+          Skip to main content
+        </a>
+        <MetaTagManager />
+        <ScrollToTopInner />
+        <AppContent />
+      </Router>
+    </MotionConfig>
   )
 }
 

@@ -56,6 +56,16 @@ const motionH1 = React.forwardRef<
 ))
 motionH1.displayName = 'motion.h1'
 
+const motionH2 = React.forwardRef<
+  HTMLHeadingElement,
+  React.HTMLAttributes<HTMLHeadingElement>
+>(({ children, ...props }, ref) => (
+  <h2 ref={ref} {...filterMotionProps(props)}>
+    {children}
+  </h2>
+))
+motionH2.displayName = 'motion.h2'
+
 const motionP = React.forwardRef<
   HTMLParagraphElement,
   React.HTMLAttributes<HTMLParagraphElement>
@@ -115,6 +125,7 @@ vi.mock('framer-motion', () => ({
   motion: {
     div: motionDiv,
     h1: motionH1,
+    h2: motionH2,
     p: motionP,
     span: motionSpan,
     img: motionImg,
@@ -123,6 +134,7 @@ vi.mock('framer-motion', () => ({
     path: motionPath,
   },
   AnimatePresence: ({ children }: { children: React.ReactNode }) => children,
+  MotionConfig: ({ children }: { children: React.ReactNode }) => children,
   useAnimation: () => ({
     start: vi.fn(),
     stop: vi.fn(),

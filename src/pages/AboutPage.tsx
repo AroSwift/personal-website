@@ -187,7 +187,11 @@ const AboutPage = () => {
       <Header />
 
       {/* Main Content */}
-      <main className="pt-32 sm:pt-36 md:pt-40 lg:pt-44 min-h-screen flex flex-col">
+      <main
+        id="main-content"
+        tabIndex={-1}
+        className="pt-32 sm:pt-36 md:pt-40 lg:pt-44 min-h-screen flex flex-col focus:outline-none"
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col flex-1 justify-start pb-16 sm:pb-24 lg:pb-32 relative z-20">
           {/* Hero Section with Profile and Bio */}
           <motion.div
@@ -208,10 +212,14 @@ const AboutPage = () => {
                 <img
                   src="/profile-aaron-800.webp"
                   alt="Aaron Barlow"
+                  width={800}
+                  height={800}
                   className="w-full h-full object-cover hover:scale-110 transition-transform duration-700 ease-out"
                   srcSet="/profile-aaron-400.webp 400w, /profile-aaron-800.webp 800w"
                   sizes="(max-width: 640px) 400px, 800px"
-                  loading="lazy"
+                  loading="eager"
+                  decoding="sync"
+                  fetchPriority="high"
                 />
               </motion.div>
 
@@ -223,7 +231,7 @@ const AboutPage = () => {
                 transition={{ duration: 0.4, delay: 0.2, ease: 'easeOut' }}
               >
                 <motion.p
-                  className="font-mono text-xs sm:text-sm uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400 mb-4"
+                  className="font-mono text-xs sm:text-sm uppercase tracking-[0.2em] text-gray-600 dark:text-gray-400 mb-4"
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.3, delay: 0.25 }}
@@ -268,6 +276,7 @@ const AboutPage = () => {
                       href="https://aroswift.github.io/resume/resume.pdf"
                       target="_blank"
                       rel="noopener noreferrer"
+                      aria-label="Download Aaron Barlow's resume PDF (opens in new tab)"
                       className="hover:text-foreground transition-colors no-underline"
                     >
                       My Resume
@@ -277,6 +286,7 @@ const AboutPage = () => {
                     <Mail className="h-5 w-5" />
                     <a
                       href="mailto:abarlow505@gmail.com"
+                      aria-label="Send email to abarlow505@gmail.com"
                       className="hover:text-foreground transition-colors no-underline"
                     >
                       abarlow505@gmail.com
@@ -288,6 +298,7 @@ const AboutPage = () => {
                       href="https://github.com/aroswift"
                       target="_blank"
                       rel="noopener noreferrer"
+                      aria-label="Visit Aaron's GitHub profile (opens in new tab)"
                       className="hover:text-foreground transition-colors no-underline"
                     >
                       github.com/aroswift
@@ -347,7 +358,7 @@ const AboutPage = () => {
             transition={{ delay: 0.75, duration: 0.4, ease: 'easeOut' }}
           >
             <motion.h2
-              className="font-mono text-sm sm:text-base uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400 mb-8 text-center"
+              className="font-mono text-sm sm:text-base uppercase tracking-[0.2em] text-gray-600 dark:text-gray-400 mb-8 text-center"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8, duration: 0.3 }}
@@ -428,7 +439,7 @@ const AboutPage = () => {
             transition={{ delay: 1.2, duration: 0.4, ease: 'easeOut' }}
           >
             <motion.h2
-              className="font-mono text-sm sm:text-base uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400 mb-8 text-center"
+              className="font-mono text-sm sm:text-base uppercase tracking-[0.2em] text-gray-600 dark:text-gray-400 mb-8 text-center"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.25, duration: 0.3 }}
@@ -466,7 +477,7 @@ const AboutPage = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.6, duration: 0.4, ease: 'easeOut' }}
           >
-            <h2 className="font-mono text-sm sm:text-base uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400 mb-8 text-center">
+            <h2 className="font-mono text-sm sm:text-base uppercase tracking-[0.2em] text-gray-600 dark:text-gray-400 mb-8 text-center">
               Education
             </h2>
             <div className="space-y-6">
@@ -523,7 +534,7 @@ const AboutPage = () => {
             transition={{ delay: 1.8, duration: 0.4, ease: 'easeOut' }}
           >
             <motion.h2
-              className="font-mono text-sm sm:text-base uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400 mb-8 text-center"
+              className="font-mono text-sm sm:text-base uppercase tracking-[0.2em] text-gray-600 dark:text-gray-400 mb-8 text-center"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.85, duration: 0.3 }}
@@ -611,6 +622,7 @@ const AboutPage = () => {
                           href={presentation.pdfUrl}
                           target="_blank"
                           rel="noopener noreferrer"
+                          aria-label={`View ${presentation.title} presentation PDF (opens in new tab)`}
                           className="inline-flex items-center gap-2 bg-black dark:bg-soft-white text-white dark:text-black border-2 border-black dark:border-soft-white hover:bg-gray-800 dark:hover:bg-soft-white-hover rounded-full px-6 py-3 text-sm font-medium transition-colors duration-300 hover:scale-105 dark:enhanced-glow dark:hover-enhanced"
                         >
                           <Eye className="h-4 w-4" />
@@ -631,7 +643,7 @@ const AboutPage = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 2, duration: 0.4, ease: 'easeOut' }}
           >
-            <h2 className="font-mono text-sm sm:text-base uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400 mb-8 text-center">
+            <h2 className="font-mono text-sm sm:text-base uppercase tracking-[0.2em] text-gray-600 dark:text-gray-400 mb-8 text-center">
               Organizations & Community
             </h2>
             <div className="max-w-4xl mx-auto">

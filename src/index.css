@@ -37,7 +37,7 @@
     --secondary: 0 0% 96%;
     --secondary-foreground: 0 0% 8%;
     --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 45%;
+    --muted-foreground: 0 0% 38%; /* calibrated for WCAG AA compliance (>= 4.5:1) on light backgrounds */
     --accent: 0 0% 96%;
     --accent-foreground: 0 0% 8%;
     --destructive: 0 84.2% 60.2%;

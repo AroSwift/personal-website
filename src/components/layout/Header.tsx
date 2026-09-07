@@ -32,8 +32,12 @@ const Header = ({ className = '' }: HeaderProps) => {
 
   const [theme, setTheme] = useState<'light' | 'dark'>(getInitialTheme)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [scrollY, setScrollY] = useState(0)
-  const [isMobile, setIsMobile] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(() =>
+    typeof window !== 'undefined' ? window.scrollY > 20 : false
+  )
+  const [isMobile, setIsMobile] = useState(() =>
+    typeof window !== 'undefined' ? window.innerWidth < 768 : false
+  )
   const [hasTriggeredPostLoadAnimation, setHasTriggeredPostLoadAnimation] =
     useState(false)
 
@@ -49,22 +53,27 @@ const Header = ({ className = '' }: HeaderProps) => {
   }, [theme])
 
   useEffect(() => {
+    let rafId: number | null = null
+
     const handleScroll = () => {
-      setScrollY(window.scrollY)
+      if (rafId !== null) return
+      rafId = window.requestAnimationFrame(() => {
+        rafId = null
+        const scrolled = window.scrollY > 20
+        setIsScrolled(prev => (prev !== scrolled ? scrolled : prev))
+      })
     }
 
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768)
     }
 
-    // Set initial mobile state
-    handleResize()
-
     window.addEventListener('scroll', handleScroll, { passive: true })
     window.addEventListener('resize', handleResize)
     return () => {
       window.removeEventListener('scroll', handleScroll)
       window.removeEventListener('resize', handleResize)
+      if (rafId !== null) window.cancelAnimationFrame(rafId)
     }
   }, [])
 
@@ -195,7 +204,6 @@ const Header = ({ className = '' }: HeaderProps) => {
   const pageSuffix = getPageSuffix()
 
   // Show background when scrolled past 20px (or on mobile)
-  const isScrolled = scrollY > 20
   const shouldShowBackground = isMobile || isScrolled
 
   return (
@@ -237,8 +245,12 @@ const Header = ({ className = '' }: HeaderProps) => {
       >
         <div className="flex items-center space-x-3">
           {/* Logo/Name with letter wave animation */}
-          <Link to="/" className="cursor-pointer">
-            <h1 className="font-px-grotesk font-medium tracking-tight hover:text-muted-foreground transition-colors text-xl sm:text-2xl md:text-3xl">
+          <Link
+            to="/"
+            className="cursor-pointer"
+            aria-label="Aaron Barlow - Home"
+          >
+            <span className="font-px-grotesk font-medium tracking-tight hover:text-muted-foreground transition-colors text-xl sm:text-2xl md:text-3xl inline-block">
               <span className="header-name-text inline-block align-top">
                 {'Aaron Barlow'.split('').map((letter, index) => (
                   <span
@@ -255,7 +267,7 @@ const Header = ({ className = '' }: HeaderProps) => {
                   </span>
                 ))}
               </span>
-            </h1>
+            </span>
           </Link>
           {/* Page suffix indicator */}
           <AnimatePresence mode="wait">

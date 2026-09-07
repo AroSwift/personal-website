@@ -88,14 +88,14 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: id => {
+          // Router and navigation (check before generic react)
+          if (id.includes('react-router-dom') || id.includes('react-router')) {
+            return 'router'
+          }
+
           // Core React libraries
           if (id.includes('react') || id.includes('react-dom')) {
             return 'react-core'
-          }
-
-          // Router and navigation
-          if (id.includes('react-router-dom')) {
-            return 'router'
           }
 
           // UI component libraries

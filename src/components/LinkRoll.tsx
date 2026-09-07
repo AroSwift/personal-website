@@ -37,7 +37,7 @@ export default function LinkRoll({
   return (
     <Link
       to={to}
-      className={`LinkRoll relative inline-block align-top ${isActive ? 'has-underline' : ''} ${className}`}
+      className={`LinkRoll relative inline-block align-top focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm ${isActive ? 'has-underline' : ''} ${className}`}
       aria-label={text}
       onClick={onClick}
       onMouseEnter={onMouseEnter}

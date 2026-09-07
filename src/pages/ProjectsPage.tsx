@@ -162,7 +162,11 @@ const ProjectsPage = () => {
       <Header />
 
       {/* Main Content */}
-      <main className="pt-32 sm:pt-36 md:pt-40 lg:pt-44 min-h-screen flex flex-col">
+      <main
+        id="main-content"
+        tabIndex={-1}
+        className="pt-32 sm:pt-36 md:pt-40 lg:pt-44 min-h-screen flex flex-col focus:outline-none"
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col flex-1 justify-start pb-16 sm:pb-24 lg:pb-32 relative z-20">
           {/* Hero Section with Title and Description */}
           <motion.div
@@ -172,7 +176,7 @@ const ProjectsPage = () => {
             transition={{ duration: 0.4, ease: 'easeOut' }}
           >
             <motion.p
-              className="font-mono text-xs sm:text-sm uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400 mb-4 sm:mb-6"
+              className="font-mono text-xs sm:text-sm uppercase tracking-[0.2em] text-gray-600 dark:text-gray-400 mb-4 sm:mb-6"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.3, delay: 0.05 }}
@@ -209,7 +213,7 @@ const ProjectsPage = () => {
             transition={{ delay: 0.3, duration: 0.4, ease: 'easeOut' }}
           >
             <motion.h2
-              className="font-mono text-sm sm:text-base uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400 mb-8 text-center"
+              className="font-mono text-sm sm:text-base uppercase tracking-[0.2em] text-gray-600 dark:text-gray-400 mb-8 text-center"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.35, duration: 0.3 }}
@@ -266,6 +270,7 @@ const ProjectsPage = () => {
                             href={project.link}
                             target="_blank"
                             rel="noopener noreferrer"
+                            aria-label={`Visit ${project.title} website (opens in new tab)`}
                             className="text-muted-foreground hover:text-foreground transition-colors p-1 flex items-center gap-1 text-sm"
                           >
                             <span>Visit</span>
@@ -305,7 +310,7 @@ const ProjectsPage = () => {
             transition={{ delay: 0.6, duration: 0.4, ease: 'easeOut' }}
           >
             <motion.h2
-              className="font-mono text-sm sm:text-base uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400 mb-8 text-center"
+              className="font-mono text-sm sm:text-base uppercase tracking-[0.2em] text-gray-600 dark:text-gray-400 mb-8 text-center"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.65, duration: 0.3 }}
@@ -362,6 +367,7 @@ const ProjectsPage = () => {
                             href={project.link}
                             target="_blank"
                             rel="noopener noreferrer"
+                            aria-label={`Visit ${project.title} website (opens in new tab)`}
                             className="text-muted-foreground hover:text-foreground transition-colors p-1 flex items-center gap-1 text-sm"
                           >
                             <span>Visit</span>
@@ -401,7 +407,7 @@ const ProjectsPage = () => {
             transition={{ delay: 1.1, duration: 0.4, ease: 'easeOut' }}
           >
             <motion.h2
-              className="font-mono text-sm sm:text-base uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400 mb-8 text-center"
+              className="font-mono text-sm sm:text-base uppercase tracking-[0.2em] text-gray-600 dark:text-gray-400 mb-8 text-center"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.15, duration: 0.3 }}

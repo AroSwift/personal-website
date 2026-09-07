@@ -33,28 +33,28 @@ const Footer = ({
         )}
       >
         <div>
-          <h4 className="font-mono text-xs uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400 mb-3 transition-colors duration-800">
+          <h4 className="font-mono text-xs uppercase tracking-[0.2em] text-gray-600 dark:text-gray-400 mb-3 transition-colors duration-800">
             Location
           </h4>
           <p>Charlotte, NC (EST)</p>
           <p>Currently remote</p>
         </div>
         <div>
-          <h4 className="font-mono text-xs uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400 mb-3 transition-colors duration-800">
+          <h4 className="font-mono text-xs uppercase tracking-[0.2em] text-gray-600 dark:text-gray-400 mb-3 transition-colors duration-800">
             Currently
           </h4>
           <p>HPC Software Engineer @ ORNL</p>
           <p>Building agentic AI workflows</p>
         </div>
         <div>
-          <h4 className="font-mono text-xs uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400 mb-3 transition-colors duration-800">
+          <h4 className="font-mono text-xs uppercase tracking-[0.2em] text-gray-600 dark:text-gray-400 mb-3 transition-colors duration-800">
             Principles
           </h4>
           <p>Ship fast, then make it faster</p>
           <p>Automate the boring stuff</p>
         </div>
         <div>
-          <h4 className="font-mono text-xs uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400 mb-3 transition-colors duration-800">
+          <h4 className="font-mono text-xs uppercase tracking-[0.2em] text-gray-600 dark:text-gray-400 mb-3 transition-colors duration-800">
             Source Code
           </h4>
           <a
@@ -68,7 +68,7 @@ const Footer = ({
           <p className="text-sm mt-1">Open source</p>
         </div>
       </div>
-      <p className="mt-10 font-mono text-xs tracking-[0.1em] text-gray-500 dark:text-gray-400 transition-colors duration-800">
+      <p className="mt-10 font-mono text-xs tracking-[0.1em] text-gray-600 dark:text-gray-400 transition-colors duration-800">
         © {new Date().getFullYear()} Aaron Barlow · MIT Licensed
       </p>
     </motion.div>

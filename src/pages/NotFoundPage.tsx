@@ -39,7 +39,11 @@ const NotFoundPage = () => {
       <Header />
 
       {/* Main content with proper spacing for fixed header */}
-      <main className="pt-32 pb-16 px-4 sm:px-6 lg:px-8">
+      <main
+        id="main-content"
+        tabIndex={-1}
+        className="pt-32 pb-16 px-4 sm:px-6 lg:px-8 focus:outline-none"
+      >
         <div className="max-w-4xl mx-auto text-center">
           {/* Animated 404 illustration */}
           <motion.div

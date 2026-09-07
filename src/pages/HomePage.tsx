@@ -133,7 +133,11 @@ function HomePage() {
       <Header />
 
       {/* Main Content */}
-      <main className="pt-24 sm:pt-28 md:pt-28 lg:pt-32 min-h-screen flex flex-col relative z-10">
+      <main
+        id="main-content"
+        tabIndex={-1}
+        className="pt-24 sm:pt-28 md:pt-28 lg:pt-32 min-h-screen flex flex-col relative z-10 focus:outline-none"
+      >
         <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 flex flex-col flex-1 justify-center pb-12 sm:pb-16 lg:pb-20 relative z-10">
           {/* Top row - Avatar + intro copy, side by side */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-12 items-start mb-6 sm:mb-8 lg:mb-10">
@@ -179,11 +183,14 @@ function HomePage() {
                 <motion.img
                   src="/profile-guy-800.webp"
                   alt="Profile"
+                  width={800}
+                  height={800}
                   className="w-full h-full object-cover relative z-10"
                   srcSet="/profile-guy-400.webp 400w, /profile-guy-800.webp 800w"
                   sizes="(max-width: 640px) 400px, 800px"
                   loading="eager"
                   decoding="sync"
+                  fetchPriority="high"
                   style={{
                     userSelect: 'none',
                     filter: isHovering
@@ -206,6 +213,8 @@ function HomePage() {
                 <motion.img
                   src="/profile-aaron-800.webp"
                   alt="Aaron Barlow"
+                  width={800}
+                  height={800}
                   className="absolute inset-0 w-full h-full object-cover z-0"
                   srcSet="/profile-aaron-400.webp 400w, /profile-aaron-800.webp 800w"
                   sizes="(max-width: 640px) 400px, 800px"

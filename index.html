@@ -49,6 +49,10 @@
     <meta name="theme-color" content="#000000" />
     <meta name="color-scheme" content="dark light" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: https:; connect-src 'self' ws: http: https:; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self';"
+    />
 
     <!-- Fallback canonical tag (will be updated by JavaScript) -->
     <link rel="canonical" href="https://aaronbarlow.dev/" />
@@ -356,12 +360,6 @@
         ]
       }
     </script>
-
-    <link rel="dns-prefetch" href="//fonts.googleapis.com" />
-    <link rel="dns-prefetch" href="//fonts.gstatic.com" />
-
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
     <style>
       body {

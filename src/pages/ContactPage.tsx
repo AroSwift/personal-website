@@ -47,7 +47,11 @@ const ContactPage = () => {
       <Header />
 
       {/* Main Content */}
-      <main className="pt-32 sm:pt-36 md:pt-40 lg:pt-44 min-h-screen flex flex-col justify-between">
+      <main
+        id="main-content"
+        tabIndex={-1}
+        className="pt-32 sm:pt-36 md:pt-40 lg:pt-44 min-h-screen flex flex-col justify-between focus:outline-none"
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex flex-col flex-1 justify-between pb-8 sm:pb-12 md:pb-12 lg:pb-14 xl:pb-16 2xl:pb-16">
           {/* Large Dynamic Title in document flow */}
           <div className="mb-10 sm:mb-14 lg:mb-16">
@@ -65,14 +69,14 @@ const ContactPage = () => {
             >
               {/* Left Column - Contact Description and Action Buttons */}
               <div className="space-y-6 lg:space-y-8 xl:space-y-10">
-                <motion.p
-                  className="font-mono text-xs sm:text-sm uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400 transition-colors duration-800"
+                <motion.h2
+                  className="font-mono text-xs sm:text-sm uppercase tracking-[0.2em] text-gray-600 dark:text-gray-400 transition-colors duration-800"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2, duration: 0.3 }}
                 >
                   Say hello
-                </motion.p>
+                </motion.h2>
                 <motion.p
                   className="text-base sm:text-lg md:text-xl lg:text-lg xl:text-xl 2xl:text-2xl text-black dark:text-white leading-relaxed max-w-xl lg:max-w-lg xl:max-w-xl transition-colors duration-800"
                   initial={{ opacity: 0, y: 20 }}
@@ -173,12 +177,12 @@ const ContactPage = () => {
                   transition={{ delay: 0.3, duration: 0.3 }}
                   className="space-y-3 sm:space-y-4 lg:space-y-5"
                 >
-                  <h3 className="font-mono text-xs sm:text-sm uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400 transition-colors duration-800">
+                  <h2 className="font-mono text-xs sm:text-sm uppercase tracking-[0.2em] text-gray-600 dark:text-gray-400 transition-colors duration-800">
                     Social Links
-                  </h3>
-                  <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 transition-colors duration-800">
+                  </h2>
+                  <h3 className="text-sm sm:text-base font-normal text-gray-600 dark:text-gray-300 transition-colors duration-800">
                     Reach out on these platforms
-                  </p>
+                  </h3>
 
                   {/* Social Links with Hover Effects */}
                   <div className="flex gap-6">
