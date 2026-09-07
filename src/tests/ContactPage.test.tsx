@@ -5,22 +5,63 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen, fireEvent } from './utils'
 
 // Mock external dependencies
+const MOTION_PROP_KEYS = new Set([
+  'whileHover',
+  'whileTap',
+  'whileDrag',
+  'whileFocus',
+  'whileInView',
+  'initial',
+  'animate',
+  'exit',
+  'transition',
+  'variants',
+  'layout',
+  'layoutId',
+])
+
+const filterMotionProps = (props: Record<string, any>) => {
+  const result: Record<string, any> = {}
+  for (const [key, value] of Object.entries(props)) {
+    if (!MOTION_PROP_KEYS.has(key)) {
+      result[key] = value
+    }
+  }
+  return result
+}
+
 vi.mock('framer-motion', () => ({
   motion: {
-    div: ({ children, ...props }: any) => <div {...props}>{children}</div>,
-    h1: ({ children, ...props }: any) => <h1 {...props}>{children}</h1>,
-    h2: ({ children, ...props }: any) => <h2 {...props}>{children}</h2>,
-    h3: ({ children, ...props }: any) => <h3 {...props}>{children}</h3>,
-    p: ({ children, ...props }: any) => <p {...props}>{children}</p>,
-    span: ({ children, ...props }: any) => <span {...props}>{children}</span>,
+    div: ({ children, ...props }: any) => (
+      <div {...filterMotionProps(props)}>{children}</div>
+    ),
+    h1: ({ children, ...props }: any) => (
+      <h1 {...filterMotionProps(props)}>{children}</h1>
+    ),
+    h2: ({ children, ...props }: any) => (
+      <h2 {...filterMotionProps(props)}>{children}</h2>
+    ),
+    h3: ({ children, ...props }: any) => (
+      <h3 {...filterMotionProps(props)}>{children}</h3>
+    ),
+    p: ({ children, ...props }: any) => (
+      <p {...filterMotionProps(props)}>{children}</p>
+    ),
+    span: ({ children, ...props }: any) => (
+      <span {...filterMotionProps(props)}>{children}</span>
+    ),
     button: ({ children, ...props }: any) => (
-      <button {...props}>{children}</button>
+      <button {...filterMotionProps(props)}>{children}</button>
     ),
-    a: ({ children, ...props }: any) => <a {...props}>{children}</a>,
+    a: ({ children, ...props }: any) => (
+      <a {...filterMotionProps(props)}>{children}</a>
+    ),
     section: ({ children, ...props }: any) => (
-      <section {...props}>{children}</section>
+      <section {...filterMotionProps(props)}>{children}</section>
     ),
-    main: ({ children, ...props }: any) => <main {...props}>{children}</main>,
+    main: ({ children, ...props }: any) => (
+      <main {...filterMotionProps(props)}>{children}</main>
+    ),
   },
   AnimatePresence: ({ children }: { children: React.ReactNode }) => children,
 }))

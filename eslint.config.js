@@ -37,6 +37,7 @@ export default [
         HTMLMetaElement: 'readonly',
         HTMLSpanElement: 'readonly',
         HTMLImageElement: 'readonly',
+        HTMLAnchorElement: 'readonly',
         SVGPathElement: 'readonly',
         MouseEvent: 'readonly',
         global: 'readonly',
