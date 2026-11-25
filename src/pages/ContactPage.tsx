@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
-import { motion } from 'framer-motion'
+import { useState } from 'react'
+import { m } from 'framer-motion'
 import { Button } from '@/components/ui/button'
-import { Copy, ExternalLink, Check } from 'lucide-react'
-import { GitHubLogoIcon, LinkedInLogoIcon } from '@radix-ui/react-icons'
+import { Copy, ExternalLink, Check, BookOpen } from 'lucide-react'
+import { GitHubLogoIcon, LinkedInLogoIcon } from '@/components/ui/brand-icons'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 
@@ -34,6 +34,11 @@ const ContactPage = () => {
       icon: LinkedInLogoIcon,
       url: 'https://linkedin.com/in/allaaronbarlow/',
     },
+    {
+      name: 'ORCID',
+      icon: BookOpen,
+      url: 'https://orcid.org/0000-0003-0363-209X',
+    },
   ]
 
   return (
@@ -61,7 +66,7 @@ const ContactPage = () => {
           </div>
 
           <div className="relative z-20">
-            <motion.div
+            <m.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.15, duration: 0.4 }}
@@ -69,15 +74,15 @@ const ContactPage = () => {
             >
               {/* Left Column - Contact Description and Action Buttons */}
               <div className="space-y-6 lg:space-y-8 xl:space-y-10">
-                <motion.h2
+                <m.h2
                   className="font-mono text-xs sm:text-sm uppercase tracking-[0.2em] text-gray-600 dark:text-gray-400 transition-colors duration-800"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2, duration: 0.3 }}
                 >
                   Say hello
-                </motion.h2>
-                <motion.p
+                </m.h2>
+                <m.p
                   className="text-base sm:text-lg md:text-xl lg:text-lg xl:text-xl 2xl:text-2xl text-black dark:text-white leading-relaxed max-w-xl lg:max-w-lg xl:max-w-xl transition-colors duration-800"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -105,10 +110,10 @@ const ContactPage = () => {
                     LinkedIn
                   </button>
                   .
-                </motion.p>
+                </m.p>
 
                 {/* Action Buttons - Resume, Email Copy, and LinkedIn */}
-                <motion.div
+                <m.div
                   className="flex flex-col sm:flex-row gap-4 sm:gap-5 mt-6 sm:mt-8 lg:mt-10"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -128,7 +133,7 @@ const ContactPage = () => {
                   </Button>
 
                   {/* Email Copy Button with Success Animation */}
-                  <motion.div
+                  <m.div
                     animate={
                       emailCopied ? { scale: [1, 1.05, 1] } : { scale: 1 }
                     }
@@ -140,7 +145,7 @@ const ContactPage = () => {
                       variant="outline"
                       className={`w-full sm:w-auto border-2 ${emailCopied ? 'border-green-600/40 dark:border-green-400/60 text-green-800 dark:text-green-200 bg-green-50/80 dark:bg-green-900/40' : 'border-black dark:border-soft-white text-black dark:text-soft-white hover:bg-black dark:hover:bg-soft-white hover:text-white dark:hover:text-black'} rounded-full px-5 sm:px-6 py-3 sm:py-4 lg:py-5 text-base sm:text-lg lg:text-xl xl:text-2xl font-medium flex items-center gap-3 transition-all duration-500`}
                     >
-                      <motion.div
+                      <m.div
                         animate={emailCopied ? { rotate: 360 } : { rotate: 0 }}
                         transition={{ duration: 0.3 }}
                       >
@@ -149,10 +154,10 @@ const ContactPage = () => {
                         ) : (
                           <Copy className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6" />
                         )}
-                      </motion.div>
+                      </m.div>
                       {emailCopied ? 'Copied!' : 'Copy email'}
                     </Button>
-                  </motion.div>
+                  </m.div>
 
                   {/* LinkedIn Reach Out Button */}
                   <Button
@@ -166,12 +171,12 @@ const ContactPage = () => {
                   >
                     Reach out
                   </Button>
-                </motion.div>
+                </m.div>
               </div>
 
               {/* Right Column - Social Media Links */}
               <div className="space-y-6 lg:space-y-8 xl:space-y-10 lg:ml-auto lg:max-w-md xl:max-w-lg 2xl:max-w-xl">
-                <motion.div
+                <m.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3, duration: 0.3 }}
@@ -185,11 +190,11 @@ const ContactPage = () => {
                   </h3>
 
                   {/* Social Links with Hover Effects */}
-                  <div className="flex gap-6">
+                  <div className="flex flex-wrap gap-4 sm:gap-6">
                     {socialLinks.map((social, index) => {
                       const Icon = social.icon
                       return (
-                        <motion.a
+                        <m.a
                           key={social.name}
                           href={social.url}
                           target="_blank"
@@ -207,13 +212,13 @@ const ContactPage = () => {
                           <span className="text-base lg:text-lg xl:text-xl font-medium text-gray-700 dark:text-gray-300 group-hover:text-black dark:group-hover:text-white transition-colors">
                             {social.name}
                           </span>
-                        </motion.a>
+                        </m.a>
                       )
                     })}
                   </div>
-                </motion.div>
+                </m.div>
               </div>
-            </motion.div>
+            </m.div>
 
             {/* Footer Information Section */}
             <Footer />

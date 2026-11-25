@@ -1,6 +1,7 @@
 /// <reference types="vitest" />
 import { defineConfig, Plugin } from 'vite'
 import react from '@vitejs/plugin-react'
+import tailwindcss from '@tailwindcss/vite'
 import { visualizer } from 'rollup-plugin-visualizer'
 import { readFileSync, writeFileSync } from 'fs'
 import { join } from 'path'
@@ -58,6 +59,7 @@ function swVersionPlugin(): Plugin {
 export default defineConfig({
   publicDir: 'public', // Ensure service-worker.js is copied to dist
   plugins: [
+    tailwindcss(),
     react(),
     swVersionPlugin(),
     // Set VITE_OPEN_BUNDLE_STATS=1 to generate and open the bundle stats.
@@ -73,11 +75,6 @@ export default defineConfig({
         ]
       : []),
   ],
-  define: {
-    'import.meta.env.VITE_BUILD_VERSION': JSON.stringify(
-      new Date().toISOString().replace(/[:.-]/g, '')
-    ),
-  },
   resolve: {
     alias: {
       '@': '/src',
@@ -89,74 +86,80 @@ export default defineConfig({
       output: {
         manualChunks: id => {
           // Router and navigation (check before generic react)
-          if (id.includes('react-router-dom') || id.includes('react-router')) {
+          if (
+            id.includes('/node_modules/react-router-dom/') ||
+            id.includes('/node_modules/react-router/')
+          ) {
             return 'router'
           }
 
-          // Core React libraries
-          if (id.includes('react') || id.includes('react-dom')) {
+          // Core React libraries (exact package boundaries so lucide-react / @radix-ui don't match)
+          if (
+            id.includes('/node_modules/react/') ||
+            id.includes('/node_modules/react-dom/') ||
+            id.includes('/node_modules/scheduler/')
+          ) {
             return 'react-core'
           }
 
           // UI component libraries
-          if (id.includes('@radix-ui') || id.includes('lucide-react')) {
+          if (
+            id.includes('/node_modules/@radix-ui/') ||
+            id.includes('/node_modules/lucide-react/')
+          ) {
             return 'ui-components'
           }
 
-          // Animation library - separate heavy framer-motion
-          if (id.includes('framer-motion')) {
+          // Animation library - separate framer-motion & motion-dom
+          if (
+            id.includes('/node_modules/framer-motion/') ||
+            id.includes('/node_modules/motion-dom/') ||
+            id.includes('/node_modules/motion-utils/')
+          ) {
             return 'animations'
           }
 
           // Utility libraries
           if (
-            id.includes('clsx') ||
-            id.includes('class-variance-authority') ||
-            id.includes('tailwind-merge')
+            id.includes('/node_modules/clsx/') ||
+            id.includes('/node_modules/class-variance-authority/') ||
+            id.includes('/node_modules/tailwind-merge/')
           ) {
             return 'utils'
           }
 
-          // Tailwind CSS and styling
-          if (
-            id.includes('tailwindcss') ||
-            id.includes('tailwindcss-animate')
-          ) {
-            return 'styling'
-          }
-
           // Page-specific chunks for better code splitting
-          if (id.includes('/pages/HomePage')) {
+          if (id.includes('/src/pages/HomePage')) {
             return 'page-home'
           }
-          if (id.includes('/pages/AboutPage')) {
+          if (id.includes('/src/pages/AboutPage')) {
             return 'page-about'
           }
-          if (id.includes('/pages/ProjectsPage')) {
+          if (id.includes('/src/pages/ProjectsPage')) {
             return 'page-projects'
           }
-          if (id.includes('/pages/ContactPage')) {
+          if (id.includes('/src/pages/ContactPage')) {
             return 'page-contact'
           }
-          if (id.includes('/pages/NotFoundPage')) {
+          if (id.includes('/src/pages/NotFoundPage')) {
             return 'page-404'
           }
 
           // Layout components
-          if (id.includes('/components/layout/')) {
+          if (id.includes('/src/components/layout/')) {
             return 'layout'
           }
 
           // Common components
           if (
-            id.includes('/components/') &&
-            !id.includes('/components/layout/')
+            id.includes('/src/components/') &&
+            !id.includes('/src/components/layout/')
           ) {
             return 'components'
           }
 
           // Utility functions and hooks
-          if (id.includes('/lib/')) {
+          if (id.includes('/src/lib/')) {
             return 'lib'
           }
 
@@ -186,7 +189,6 @@ export default defineConfig({
       },
     },
     chunkSizeWarningLimit: 500, // Lower threshold for better chunk management
-    minify: 'esbuild',
     sourcemap: false,
     target: 'es2020',
     // Enable CSS code splitting
@@ -202,7 +204,6 @@ export default defineConfig({
       'react-dom',
       'react-router-dom',
       'framer-motion',
-      '@radix-ui/react-icons',
       '@radix-ui/react-slot',
       'lucide-react',
     ],
@@ -217,6 +218,7 @@ export default defineConfig({
   },
   test: {
     globals: true,
+    pool: 'threads', // Vitest 5 forks pool calls child.channel.unref(), unsupported under Bun
     environment: 'jsdom',
     setupFiles: ['./src/tests/setup.tsx'],
     css: true,

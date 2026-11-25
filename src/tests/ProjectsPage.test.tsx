@@ -5,25 +5,69 @@ import { describe, it, expect, vi } from 'vitest'
 import { render, screen } from './utils'
 
 // Mock external dependencies
-vi.mock('framer-motion', () => ({
-  motion: {
-    div: ({ children, ...props }: any) => <div {...props}>{children}</div>,
-    h1: ({ children, ...props }: any) => <h1 {...props}>{children}</h1>,
-    h2: ({ children, ...props }: any) => <h2 {...props}>{children}</h2>,
-    h3: ({ children, ...props }: any) => <h3 {...props}>{children}</h3>,
-    p: ({ children, ...props }: any) => <p {...props}>{children}</p>,
-    span: ({ children, ...props }: any) => <span {...props}>{children}</span>,
-    button: ({ children, ...props }: any) => (
-      <button {...props}>{children}</button>
-    ),
-    a: ({ children, ...props }: any) => <a {...props}>{children}</a>,
-    section: ({ children, ...props }: any) => (
-      <section {...props}>{children}</section>
-    ),
-    main: ({ children, ...props }: any) => <main {...props}>{children}</main>,
-  },
-  AnimatePresence: ({ children }: { children: React.ReactNode }) => children,
-}))
+vi.mock('framer-motion', () => {
+  const MOTION_KEYS = new Set([
+    'whileInView',
+    'viewport',
+    'initial',
+    'animate',
+    'transition',
+  ])
+  const stripMotion = ({ children, ...props }: any) => {
+    const rest: Record<string, any> = {}
+    for (const [k, v] of Object.entries(props)) {
+      if (!MOTION_KEYS.has(k)) rest[k] = v
+    }
+    return { children, rest }
+  }
+  const elements = {
+    div: (props: any) => {
+      const { children, rest } = stripMotion(props)
+      return <div {...rest}>{children}</div>
+    },
+    h1: (props: any) => {
+      const { children, rest } = stripMotion(props)
+      return <h1 {...rest}>{children}</h1>
+    },
+    h2: (props: any) => {
+      const { children, rest } = stripMotion(props)
+      return <h2 {...rest}>{children}</h2>
+    },
+    h3: (props: any) => {
+      const { children, rest } = stripMotion(props)
+      return <h3 {...rest}>{children}</h3>
+    },
+    p: (props: any) => {
+      const { children, rest } = stripMotion(props)
+      return <p {...rest}>{children}</p>
+    },
+    span: (props: any) => {
+      const { children, rest } = stripMotion(props)
+      return <span {...rest}>{children}</span>
+    },
+    button: (props: any) => {
+      const { children, rest } = stripMotion(props)
+      return <button {...rest}>{children}</button>
+    },
+    a: (props: any) => {
+      const { children, rest } = stripMotion(props)
+      return <a {...rest}>{children}</a>
+    },
+    section: (props: any) => {
+      const { children, rest } = stripMotion(props)
+      return <section {...rest}>{children}</section>
+    },
+    main: (props: any) => {
+      const { children, rest } = stripMotion(props)
+      return <main {...rest}>{children}</main>
+    },
+  }
+  return {
+    motion: elements,
+    m: elements,
+    AnimatePresence: ({ children }: { children: React.ReactNode }) => children,
+  }
+})
 
 vi.mock('lucide-react', () => ({
   ExternalLink: () => <div data-testid="external-link-icon" />,
@@ -81,6 +125,9 @@ describe('ProjectsPage', () => {
   it('renders personal projects section', () => {
     render(<ProjectsPage />)
     expect(screen.getByText('Personal Projects')).toBeInTheDocument()
+    expect(
+      screen.getByText('Turio — Autonomous Hydroponics & AI Robotics')
+    ).toBeInTheDocument()
   })
 
   it('renders achievements section', () => {

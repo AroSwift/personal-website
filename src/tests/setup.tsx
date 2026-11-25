@@ -2,7 +2,7 @@
 // Provides global test utilities and mocks
 
 import { vi } from 'vitest'
-import '@testing-library/jest-dom'
+import '@testing-library/jest-dom/vitest'
 import React from 'react'
 
 const MOTION_PROP_KEYS = new Set([
@@ -120,19 +120,24 @@ const motionPath = React.forwardRef<
 ))
 motionPath.displayName = 'motion.path'
 
+const mockMotionElements = {
+  div: motionDiv,
+  h1: motionH1,
+  h2: motionH2,
+  p: motionP,
+  span: motionSpan,
+  img: motionImg,
+  button: motionButton,
+  a: motionA,
+  path: motionPath,
+}
+
 // Mock framer-motion with proper display names
 vi.mock('framer-motion', () => ({
-  motion: {
-    div: motionDiv,
-    h1: motionH1,
-    h2: motionH2,
-    p: motionP,
-    span: motionSpan,
-    img: motionImg,
-    button: motionButton,
-    a: motionA,
-    path: motionPath,
-  },
+  motion: mockMotionElements,
+  m: mockMotionElements,
+  LazyMotion: ({ children }: { children: React.ReactNode }) => children,
+  domAnimation: {},
   AnimatePresence: ({ children }: { children: React.ReactNode }) => children,
   MotionConfig: ({ children }: { children: React.ReactNode }) => children,
   useAnimation: () => ({

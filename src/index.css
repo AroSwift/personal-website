@@ -1,20 +1,46 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
-/* Performance optimizations */
-* {
-  box-sizing: border-box;
-}
+@custom-variant dark (&:where(.dark, .dark *));
 
-/* Optimize animations and transitions */
-.animated-hue-overlay {
-  will-change: background-color;
-}
+@theme inline {
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-soft-white: hsl(var(--soft-white));
+  --color-soft-white-hover: hsl(var(--soft-white-hover));
 
-/* Optimize animations and transitions */
-.animated-hue-overlay {
-  will-change: background-color;
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+
+  --animate-slide-in-from-bottom: slide-in-from-bottom 0.2s ease-out;
+
+  @keyframes slide-in-from-bottom {
+    from {
+      opacity: 0;
+      transform: translateY(1rem);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 }
 
 /* Optimize profile image container */
@@ -51,7 +77,7 @@
   }
 
   .dark {
-    --background: 0 0% 40%; /* much lighter - not harsh dark */
+    --background: 0 0% 0%;
     --foreground: 0 0% 98%;
     --card: 0 0% 12%; /* slightly lighter card background */
     --card-foreground: 0 0% 98%;
@@ -101,6 +127,10 @@
       color 0.15s ease-out,
       border-color 0.15s ease-out;
   }
+  button:not(:disabled),
+  [role='button']:not([aria-disabled='true']) {
+    cursor: pointer;
+  }
 }
 
 @layer components {
@@ -113,57 +143,6 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-  }
-
-  .theme-transition {
-    transition:
-      background-color 0.2s ease-out,
-      color 0.2s ease-out,
-      border-color 0.2s ease-out,
-      box-shadow 0.2s ease-out;
-  }
-
-  .theme-transition-fast {
-    transition:
-      background-color 0.1s ease-out,
-      color 0.1s ease-out,
-      border-color 0.1s ease-out,
-      box-shadow 0.1s ease-out;
-  }
-
-  .letter-wave-animation {
-    animation: letterWave 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-  }
-
-  @keyframes letterWave {
-    0% {
-      transform: translateY(0px);
-      opacity: 1;
-    }
-    15% {
-      transform: translateY(-2px);
-      opacity: 0.9;
-    }
-    30% {
-      transform: translateY(-8px);
-      opacity: 0.3;
-    }
-    45% {
-      transform: translateY(-12px);
-      opacity: 0;
-    }
-    60% {
-      transform: translateY(-8px);
-      opacity: 0.3;
-    }
-    75% {
-      transform: translateY(-2px);
-      opacity: 0.9;
-    }
-    100% {
-      transform: translateY(0px);
-      opacity: 1;
-    }
   }
 
   .underline-fade-out {
@@ -218,10 +197,6 @@
     }
   }
 
-  .LinkRoll:hover {
-    /* Empty hover rule as shown in the images */
-  }
-
   /* Design tokens */
   .LinkRoll {
     --dur: 400ms;
@@ -241,11 +216,14 @@
 
   /* Two stacked glyphs inside each char box */
   .LinkRoll-glyph {
-    will-change: transform, opacity;
     transition:
       transform var(--dur) var(--ease),
       opacity var(--dur) var(--ease);
-    transform: translateZ(0); /* compositor hint */
+  }
+
+  .LinkRoll:hover .LinkRoll-glyph,
+  .LinkRoll:focus-visible .LinkRoll-glyph {
+    will-change: transform, opacity;
   }
 
   .LinkRoll-glyph-original {
@@ -304,65 +282,6 @@
     }
   }
 
-  /* LoadingScreen mask classes for progressive reveal */
-  .mask-top {
-    -webkit-mask-image: linear-gradient(to bottom, #000 50%, transparent 50%);
-    mask-image: linear-gradient(to bottom, #000 50%, transparent 50%);
-    will-change: transform, opacity;
-  }
-
-  .mask-bottom {
-    -webkit-mask-image: linear-gradient(to top, #000 50%, transparent 50%);
-    mask-image: linear-gradient(to top, #000 50%, transparent 50%);
-    will-change: transform, opacity;
-  }
-
-  /* Intersection halves (no missing semicolons, no banding) */
-  .reveal-half-top {
-    clip-path: inset(0 0 50% 0);
-  }
-
-  .reveal-half-bottom {
-    clip-path: inset(50% 0 0 0);
-  }
-
-  /* Helper to center absolutely along X with natural line at 50% Y */
-  .abs-center-x {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-
-  /* Safari subpixel crispness */
-  @supports (-webkit-touch-callout: none) {
-    .reveal-half-top,
-    .reveal-half-bottom {
-      -webkit-backface-visibility: hidden;
-    }
-  }
-
-  /* Optional: visual baseline while debugging */
-  .debug-stage::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 50%;
-    height: 1px;
-    background: rgba(255, 255, 255, 0.25);
-  }
-
-  /* Optional: debug helpers you can toggle on/off */
-  .LinkRoll-debug .LinkRoll-char {
-    outline: 1px dashed rgba(255, 0, 0, 0.35);
-  }
-  .LinkRoll-debug .LinkRoll-char .LinkRoll-glyph-original {
-    background: rgba(0, 255, 0, 0.06);
-  }
-  .LinkRoll-debug .LinkRoll-char .LinkRoll-glyph-new {
-    background: rgba(0, 0, 255, 0.06);
-  }
-
   /* Header name animation (same style as LinkRoll but no underline) */
   .header-name-text {
     line-height: 1;
@@ -378,11 +297,13 @@
 
   /* Two stacked glyphs inside each char box */
   .header-name-glyph {
-    will-change: transform, opacity;
     transition:
       transform var(--dur) var(--ease),
       opacity var(--dur) var(--ease);
-    transform: translateZ(0); /* compositor hint */
+  }
+
+  .header-name-text:hover .header-name-glyph {
+    will-change: transform, opacity;
   }
 
   .header-name-glyph-original {
@@ -427,82 +348,43 @@
       (12 - var(--idx)) * var(--stagger) + 50ms
     ); /* reverse stagger - right to left */
   }
+}
 
-  /* Minimal dark theme enhancements */
-  .dark .enhanced-glow {
-    box-shadow: 0 0 20px rgba(151, 179, 174, 0.1);
-  }
-  .dark .subtle-border-glow {
-    border-color: rgba(151, 179, 174, 0.2);
-  }
-  .dark .text-glow {
-    text-shadow: 0 0 10px rgba(151, 179, 174, 0.3);
-  }
+/* Minimal dark theme enhancement utilities (registered via @utility so dark:* / hover:* variants work in Tailwind v4) */
+@utility enhanced-glow {
+  box-shadow: 0 0 6px rgba(151, 179, 174, 0.04);
+}
 
-  /* Enhanced card styling for dark mode */
-  .dark .card-enhanced {
-    background: linear-gradient(
-      135deg,
-      hsl(0 0% 12% / 0.9) 0%,
-      hsl(0 0% 17% / 0.8) 100%
-    );
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(151, 179, 174, 0.2);
-  }
+@utility subtle-border-glow {
+  border-color: rgba(151, 179, 174, 0.2);
+}
 
-  /* Remove redundant dark mode transitions */
-  .dark * {
-    /* Remove universal dark mode transitions */
-  }
+@utility card-enhanced {
+  background: linear-gradient(
+    135deg,
+    hsl(0 0% 12% / 0.96) 0%,
+    hsl(0 0% 17% / 0.92) 100%
+  );
+  border: 1px solid rgba(151, 179, 174, 0.2);
+}
 
-  /* Enhanced focus states for dark mode */
-  .dark .focus-enhanced:focus {
-    outline: 2px solid rgba(151, 179, 174, 0.5);
-    outline-offset: 2px;
-    box-shadow:
-      0 0 0 4px rgba(151, 179, 174, 0.1),
-      0 0 20px rgba(151, 179, 174, 0.2);
-  }
-
-  /* Sophisticated background patterns for dark mode */
-  .dark .bg-pattern {
-    background-image:
-      radial-gradient(
-        circle at 25% 25%,
-        rgba(151, 179, 174, 0.03) 0%,
-        transparent 50%
-      ),
-      radial-gradient(
-        circle at 75% 75%,
-        rgba(210, 224, 211, 0.03) 0%,
-        transparent 50%
-      );
-  }
-
-  /* Enhanced hover effects for dark mode */
-  .dark .hover-enhanced:hover {
+@utility hover-enhanced {
+  &:hover {
     transform: translateY(-2px);
     box-shadow:
       0 10px 25px rgba(0, 0, 0, 0.3),
-      0 0 20px rgba(151, 179, 174, 0.1);
-  }
-
-  /* Subtle text enhancement for dark mode */
-  .dark .text-enhanced {
-    background: linear-gradient(
-      135deg,
-      hsl(0 0% 98%) 0%,
-      hsl(0 0% 95%) 50%,
-      hsl(0 0% 98%) 100%
-    );
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+      0 0 10px rgba(151, 179, 174, 0.05);
   }
 }
 
-/* App content sits above the overlay */
-#app {
-  position: relative;
-  z-index: 1;
+@utility text-enhanced {
+  background: linear-gradient(
+    135deg,
+    hsl(0 0% 98%) 0%,
+    hsl(0 0% 95%) 50%,
+    hsl(0 0% 98%) 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }

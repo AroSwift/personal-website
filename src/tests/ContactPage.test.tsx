@@ -30,8 +30,8 @@ const filterMotionProps = (props: Record<string, any>) => {
   return result
 }
 
-vi.mock('framer-motion', () => ({
-  motion: {
+vi.mock('framer-motion', () => {
+  const elements = {
     div: ({ children, ...props }: any) => (
       <div {...filterMotionProps(props)}>{children}</div>
     ),
@@ -62,18 +62,23 @@ vi.mock('framer-motion', () => ({
     main: ({ children, ...props }: any) => (
       <main {...filterMotionProps(props)}>{children}</main>
     ),
-  },
-  AnimatePresence: ({ children }: { children: React.ReactNode }) => children,
-}))
+  }
+  return {
+    motion: elements,
+    m: elements,
+    AnimatePresence: ({ children }: { children: React.ReactNode }) => children,
+  }
+})
 
 vi.mock('lucide-react', () => ({
   Mail: () => <div data-testid="mail-icon" />,
   Copy: () => <div data-testid="copy-icon" />,
   Check: () => <div data-testid="check-icon" />,
   ExternalLink: () => <div data-testid="external-link-icon" />,
+  BookOpen: () => <div data-testid="book-open-icon" />,
 }))
 
-vi.mock('@radix-ui/react-icons', () => ({
+vi.mock('@/components/ui/brand-icons', () => ({
   GitHubLogoIcon: () => <div data-testid="github-icon" />,
   LinkedInLogoIcon: () => <div data-testid="linkedin-icon" />,
 }))
@@ -144,6 +149,15 @@ describe('ContactPage', () => {
     render(<ContactPage />)
     const githubLink = screen.getByRole('link', { name: 'GitHub' })
     expect(githubLink).toHaveAttribute('href', 'https://github.com/AroSwift')
+  })
+
+  it('renders ORCID link', () => {
+    render(<ContactPage />)
+    const orcidLink = screen.getByRole('link', { name: 'ORCID' })
+    expect(orcidLink).toHaveAttribute(
+      'href',
+      'https://orcid.org/0000-0003-0363-209X'
+    )
   })
 
   it('opens button links without exposing window.opener', () => {

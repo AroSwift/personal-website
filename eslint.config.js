@@ -39,6 +39,8 @@ export default [
         HTMLImageElement: 'readonly',
         HTMLAnchorElement: 'readonly',
         SVGPathElement: 'readonly',
+        SVGSVGElement: 'readonly',
+        Event: 'readonly',
         MouseEvent: 'readonly',
         global: 'readonly',
         __dirname: 'readonly',

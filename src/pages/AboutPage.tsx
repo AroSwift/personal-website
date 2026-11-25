@@ -1,5 +1,5 @@
 import React from 'react'
-import { motion } from 'framer-motion'
+import { m } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import {
@@ -9,8 +9,10 @@ import {
   FileText,
   Calendar,
   MapPin,
+  BookOpen,
+  Users,
 } from 'lucide-react'
-import { GitHubLogoIcon } from '@radix-ui/react-icons'
+import { GitHubLogoIcon } from '@/components/ui/brand-icons'
 
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -130,7 +132,7 @@ const AboutPage = () => {
       school: 'Pellissippi State Community College',
       degree: 'Associate of Science, Computer and Information Sciences',
       period: 'Aug 2015 - May 2017',
-      gpa: '3.84/4',
+      gpa: '3.84/4.00',
       honors: "Dean's List",
       activities: 'Phi Theta Kappa Honor Society, Gamma Beta Phi Society',
       bannerImage: '/about/pscc.webp',
@@ -145,13 +147,41 @@ const AboutPage = () => {
     'Ethical Hacking - Vice President (Jan 2018 - Dec 2019)',
   ]
 
+  // Peer-reviewed publications
+  const publications = [
+    {
+      title:
+        'Centralizing Scheduler Policy at the OLCF: A Facility-Wide Approach to Consistent Multi-Workload Configuration',
+      venue: 'Proceedings of the Cray User Group',
+      conference: 'CUG 2026',
+      publisher: 'ACM',
+      type: 'Conference Paper',
+      date: 'April 26, 2026',
+      location: 'Nice, France',
+      pages: 'pp. 229–237',
+      authors: ['Aaron Barlow', 'James Davis', 'Alan Longcoy'],
+      doi: '10.1145/3837730.3837751',
+      doiUrl: 'https://doi.org/10.1145/3837730.3837751',
+      description:
+        'Presents a workload-agnostic architecture for facility-wide scheduler policy management using RATS CRM, decoupling policy intent from system-level enforcement across 24 HPC and support systems at the OLCF spanning Slurm, Kubernetes, LSF, and Moab.',
+      tags: [
+        'HPC',
+        'Scheduler Policy',
+        'Slurm',
+        'Kubernetes',
+        'RATS CRM',
+        'OLCF',
+      ],
+    },
+  ]
+
   // Conference presentations and talks with PDF downloads
   const presentations = [
     {
       title:
         'Employing a Software-Driven Approach to Scalable HPC System Management',
       conference: 'CUG 2025',
-      date: '2025',
+      date: 'May 2025',
       location: 'In-Person',
       description:
         'Presentation on implementing software-driven approaches for managing large-scale HPC systems, focusing on automation and scalability.',
@@ -163,7 +193,7 @@ const AboutPage = () => {
     {
       title: 'Employing DevOps in HPC Operational Management',
       conference: 'NLIT 2024',
-      date: '2024',
+      date: 'April 2024',
       location: 'In-Person',
       description:
         'Presentation on applying DevOps principles and practices to High Performance Computing operational workflows and infrastructure management.',
@@ -194,7 +224,7 @@ const AboutPage = () => {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col flex-1 justify-start pb-16 sm:pb-24 lg:pb-32 relative z-20">
           {/* Hero Section with Profile and Bio */}
-          <motion.div
+          <m.div
             className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 mb-16 lg:mb-24 items-start"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
@@ -203,7 +233,7 @@ const AboutPage = () => {
             {/* Left Column - Profile Image and Contact Info */}
             <div className="lg:col-span-7">
               {/* Profile Image with Hover Effects */}
-              <motion.div
+              <m.div
                 className="w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 lg:w-52 lg:h-52 xl:w-72 xl:h-72 rounded-2xl sm:rounded-3xl md:rounded-[2rem] overflow-hidden mb-4 sm:mb-6 md:mb-8 border-2 sm:border-4 border-border/50 dark:border-border/30 bg-muted shadow-lg hover:shadow-xl transition-all duration-500 hover:scale-105"
                 initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
                 animate={{ opacity: 1, scale: 1, rotate: 0 }}
@@ -216,55 +246,55 @@ const AboutPage = () => {
                   height={800}
                   className="w-full h-full object-cover hover:scale-110 transition-transform duration-700 ease-out"
                   srcSet="/profile-aaron-400.webp 400w, /profile-aaron-800.webp 800w"
-                  sizes="(max-width: 640px) 400px, 800px"
+                  sizes="(max-width: 640px) 144px, 288px"
                   loading="eager"
-                  decoding="sync"
+                  decoding="async"
                   fetchPriority="high"
                 />
-              </motion.div>
+              </m.div>
 
               {/* Personal Information and Contact Details */}
-              <motion.div
+              <m.div
                 className="mb-8 sm:mb-12 md:mb-16"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.2, ease: 'easeOut' }}
               >
-                <motion.p
+                <m.p
                   className="font-mono text-xs sm:text-sm uppercase tracking-[0.2em] text-gray-600 dark:text-gray-400 mb-4"
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.3, delay: 0.25 }}
                 >
                   About
-                </motion.p>
-                <motion.h1
+                </m.p>
+                <m.h1
                   className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-normal leading-tight tracking-tight max-w-4xl mb-4"
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.3, delay: 0.3 }}
                 >
                   Aaron Barlow
-                </motion.h1>
-                <motion.p
+                </m.h1>
+                <m.p
                   className="text-lg sm:text-xl text-muted-foreground mb-2"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.3, delay: 0.4 }}
                 >
                   He/Him
-                </motion.p>
-                <motion.p
+                </m.p>
+                <m.p
                   className="text-xl sm:text-2xl font-medium mb-6"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.3, delay: 0.5 }}
                 >
                   HPC Software Engineer @ Oak Ridge National Laboratory
-                </motion.p>
+                </m.p>
 
                 {/* Contact Information Links */}
-                <motion.div
+                <m.div
                   className="flex flex-wrap gap-4 text-base text-muted-foreground mb-6"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -295,28 +325,40 @@ const AboutPage = () => {
                   <div className="flex items-center gap-2">
                     <GitHubLogoIcon className="h-5 w-5" />
                     <a
-                      href="https://github.com/aroswift"
+                      href="https://github.com/AroSwift"
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label="Visit Aaron's GitHub profile (opens in new tab)"
                       className="hover:text-foreground transition-colors no-underline"
                     >
-                      github.com/aroswift
+                      github.com/AroSwift
                     </a>
                   </div>
-                </motion.div>
-              </motion.div>
+                  <div className="flex items-center gap-2">
+                    <BookOpen className="h-5 w-5" />
+                    <a
+                      href="https://orcid.org/0000-0003-0363-209X"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="Visit Aaron Barlow's ORCID profile (opens in new tab)"
+                      className="hover:text-foreground transition-colors no-underline"
+                    >
+                      ORCID
+                    </a>
+                  </div>
+                </m.div>
+              </m.div>
             </div>
 
             {/* Right Column - Bio and Personal Statement */}
             <div className="lg:col-span-5 lg:pt-0">
-              <motion.div
+              <m.div
                 className="pt-0 w-full"
                 initial={{ opacity: 0, x: 40 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.4, delay: 0.25, ease: 'easeOut' }}
               >
-                <motion.p
+                <m.p
                   className="text-base sm:text-lg leading-relaxed mb-6 text-foreground"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -328,9 +370,9 @@ const AboutPage = () => {
                   quickly prototype MVPs for new businesses. When I'm not
                   coding, you'll find me obsessed with volleyball, dancing,
                   hiking, gaming, or playing piano.
-                </motion.p>
+                </m.p>
 
-                <motion.p
+                <m.p
                   className="text-base sm:text-lg leading-relaxed mb-6 text-foreground"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -345,47 +387,52 @@ const AboutPage = () => {
                   architecting complex systems, working with distributed
                   systems, optimizing for performance at scale, and developing
                   agentic workflows.
-                </motion.p>
-              </motion.div>
+                </m.p>
+              </m.div>
             </div>
-          </motion.div>
+          </m.div>
 
           {/* Professional Experience Section */}
-          <motion.section
+          <m.section
             className="mb-16 lg:mb-24"
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.75, duration: 0.4, ease: 'easeOut' }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 'some' }}
+            transition={{ duration: 0.35, ease: 'easeOut' }}
           >
-            <motion.h2
-              className="font-mono text-sm sm:text-base uppercase tracking-[0.2em] text-gray-600 dark:text-gray-400 mb-8 text-center"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8, duration: 0.3 }}
-            >
+            <h2 className="font-mono text-sm sm:text-base uppercase tracking-[0.2em] text-gray-600 dark:text-gray-400 mb-8 text-center">
               Experience
-            </motion.h2>
+            </h2>
             <div className="space-y-8">
               {experience.map((job, index) => (
-                <motion.div
+                <m.div
                   key={index}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 'some' }}
                   transition={{
-                    delay: 0.9 + index * 0.1,
+                    delay: index * 0.06,
                     duration: 0.3,
                     ease: 'easeOut',
                   }}
                 >
                   <Card className="border-border/50 hover:shadow-lg transition-all duration-300 group hover:border-border dark:card-enhanced dark:hover-enhanced overflow-hidden">
-                    {/* Banner Image */}
+                    {/* Banner Image — cinematic muted-color editorial grade with hover color bloom */}
                     {job.bannerImage && (
-                      <div className="w-full h-24 max-h-24 overflow-hidden">
+                      <div className="relative w-full h-28 max-h-28 overflow-hidden rounded-t-xl bg-muted">
                         <img
                           src={job.bannerImage}
                           alt={`${job.company} office`}
-                          className="w-full h-full object-cover object-center"
+                          className="w-full h-full object-cover object-center saturate-[0.55] contrast-[1.08] brightness-[0.96] dark:saturate-[0.65] dark:brightness-[0.8] dark:contrast-[1.12] group-hover:saturate-100 group-hover:brightness-100 dark:group-hover:brightness-[0.92] transition-[filter] duration-500"
                           loading="lazy"
+                        />
+                        <div
+                          aria-hidden="true"
+                          className="absolute inset-0 bg-gradient-to-tr from-slate-950/25 via-transparent to-amber-500/12 dark:from-black/45 dark:via-transparent dark:to-amber-400/12 pointer-events-none"
+                        />
+                        <div
+                          aria-hidden="true"
+                          className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-card via-card/50 to-transparent pointer-events-none"
                         />
                       </div>
                     )}
@@ -426,56 +473,42 @@ const AboutPage = () => {
                       </ul>
                     </CardContent>
                   </Card>
-                </motion.div>
+                </m.div>
               ))}
             </div>
-          </motion.section>
+          </m.section>
 
           {/* Skills and Technologies Section */}
-          <motion.section
+          <m.section
             className="mb-16 lg:mb-24"
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.2, duration: 0.4, ease: 'easeOut' }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 'some' }}
+            transition={{ duration: 0.35, ease: 'easeOut' }}
           >
-            <motion.h2
-              className="font-mono text-sm sm:text-base uppercase tracking-[0.2em] text-gray-600 dark:text-gray-400 mb-8 text-center"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.25, duration: 0.3 }}
-            >
+            <h2 className="font-mono text-sm sm:text-base uppercase tracking-[0.2em] text-gray-600 dark:text-gray-400 mb-8 text-center">
               Skills & Technologies
-            </motion.h2>
-            <motion.div
-              className="flex flex-wrap gap-2 justify-center"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 1.35, duration: 0.4, ease: 'easeOut' }}
-            >
-              {skills.map((skill, index) => (
-                <motion.div
+            </h2>
+            <div className="flex flex-wrap gap-2 justify-center">
+              {skills.map(skill => (
+                <Badge
                   key={skill}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 1.4 + index * 0.01, duration: 0.2 }}
+                  variant="secondary"
+                  className="px-3 py-1 text-base hover:scale-105 transition-transform duration-200 dark:enhanced-glow"
                 >
-                  <Badge
-                    variant="secondary"
-                    className="px-3 py-1 text-base hover:scale-105 transition-transform duration-200 dark:enhanced-glow"
-                  >
-                    {skill}
-                  </Badge>
-                </motion.div>
+                  {skill}
+                </Badge>
               ))}
-            </motion.div>
-          </motion.section>
+            </div>
+          </m.section>
 
           {/* Education Section */}
-          <motion.section
+          <m.section
             className="mb-16 lg:mb-24"
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.6, duration: 0.4, ease: 'easeOut' }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 'some' }}
+            transition={{ duration: 0.35, ease: 'easeOut' }}
           >
             <h2 className="font-mono text-sm sm:text-base uppercase tracking-[0.2em] text-gray-600 dark:text-gray-400 mb-8 text-center">
               Education
@@ -486,14 +519,22 @@ const AboutPage = () => {
                   key={index}
                   className="border-border/50 hover:shadow-lg transition-all duration-300 group hover:border-border dark:card-enhanced dark:hover-enhanced overflow-hidden"
                 >
-                  {/* Banner Image */}
+                  {/* Banner Image — cinematic muted-color editorial grade with hover color bloom */}
                   {edu.bannerImage && (
-                    <div className="w-full h-24 max-h-24 overflow-hidden">
+                    <div className="relative w-full h-28 max-h-28 overflow-hidden rounded-t-xl bg-muted">
                       <img
                         src={edu.bannerImage}
                         alt={`${edu.school} campus`}
-                        className="w-full h-full object-cover object-center"
+                        className="w-full h-full object-cover object-center saturate-[0.55] contrast-[1.08] brightness-[0.96] dark:saturate-[0.65] dark:brightness-[0.8] dark:contrast-[1.12] group-hover:saturate-100 group-hover:brightness-100 dark:group-hover:brightness-[0.92] transition-[filter] duration-500"
                         loading="lazy"
+                      />
+                      <div
+                        aria-hidden="true"
+                        className="absolute inset-0 bg-gradient-to-tr from-slate-950/25 via-transparent to-amber-500/12 dark:from-black/45 dark:via-transparent dark:to-amber-400/12 pointer-events-none"
+                      />
+                      <div
+                        aria-hidden="true"
+                        className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-card via-card/50 to-transparent pointer-events-none"
                       />
                     </div>
                   )}
@@ -524,31 +565,173 @@ const AboutPage = () => {
                 </Card>
               ))}
             </div>
-          </motion.section>
+          </m.section>
+
+          {/* Publications Section */}
+          <m.section
+            className="mb-16 lg:mb-24"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 'some' }}
+            transition={{ duration: 0.35, ease: 'easeOut' }}
+          >
+            <h2 className="font-mono text-sm sm:text-base uppercase tracking-[0.2em] text-gray-600 dark:text-gray-400 mb-8 text-center">
+              Publications
+            </h2>
+            <div className="max-w-4xl mx-auto space-y-6">
+              {publications.map((pub, index) => (
+                <m.div
+                  key={pub.doi}
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 'some' }}
+                  transition={{
+                    delay: index * 0.06,
+                    duration: 0.3,
+                    ease: 'easeOut',
+                  }}
+                >
+                  <Card className="border-border/50 hover:shadow-lg transition-all duration-300 h-full group hover:border-border dark:card-enhanced dark:hover-enhanced">
+                    <CardHeader className="pb-4">
+                      <div className="flex items-start justify-between mb-3">
+                        <div className="flex-1">
+                          {/* Publication Type, Conference, and Publisher Badges */}
+                          <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-3">
+                            <Badge
+                              variant="secondary"
+                              className="text-xs dark:enhanced-glow"
+                            >
+                              {pub.type}
+                            </Badge>
+                            <Badge
+                              variant="outline"
+                              className="text-xs dark:enhanced-glow"
+                            >
+                              {pub.conference}
+                            </Badge>
+                            <Badge
+                              variant="outline"
+                              className="text-xs dark:enhanced-glow"
+                            >
+                              {pub.publisher}
+                            </Badge>
+                          </div>
+                          <CardTitle className="text-xl sm:text-2xl font-bold group-hover:text-muted-foreground transition-colors leading-tight">
+                            {pub.title}
+                          </CardTitle>
+                          <p className="text-sm sm:text-base text-muted-foreground mt-2">
+                            {pub.venue} · {pub.pages}
+                          </p>
+                        </div>
+                        {/* Book Icon */}
+                        <div className="text-muted-foreground group-hover:text-foreground transition-colors p-2">
+                          <BookOpen className="h-6 w-6" />
+                        </div>
+                      </div>
+
+                      {/* Authors, Date, and Location */}
+                      <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
+                        <div className="flex items-center gap-1.5">
+                          <Users className="h-4 w-4 flex-shrink-0" />
+                          <span>
+                            {pub.authors.map((author, authorIndex) => (
+                              <React.Fragment key={author}>
+                                {authorIndex > 0 && ', '}
+                                {author === 'Aaron Barlow' ? (
+                                  <strong className="text-foreground font-semibold">
+                                    {author}
+                                  </strong>
+                                ) : (
+                                  author
+                                )}
+                              </React.Fragment>
+                            ))}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <Calendar className="h-4 w-4 flex-shrink-0" />
+                          <span>{pub.date}</span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <MapPin className="h-4 w-4 flex-shrink-0" />
+                          <span>{pub.location}</span>
+                        </div>
+                      </div>
+                    </CardHeader>
+
+                    <CardContent className="pt-0">
+                      <p className="text-base leading-relaxed mb-4 text-foreground">
+                        {pub.description}
+                      </p>
+
+                      {/* Tags */}
+                      <div className="flex flex-wrap gap-1 mb-5">
+                        {pub.tags.map((tag, tagIndex) => (
+                          <Badge
+                            key={tagIndex}
+                            variant="outline"
+                            className="text-xs font-normal dark:enhanced-glow"
+                          >
+                            {tag}
+                          </Badge>
+                        ))}
+                      </div>
+
+                      {/* DOI & Read Paper Link */}
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2 border-t border-border/30">
+                        <span className="text-xs font-mono text-muted-foreground tracking-wider">
+                          DOI: {pub.doi}
+                        </span>
+                        <a
+                          href={pub.doiUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`Read ${pub.title} via DOI (opens in new tab)`}
+                          className="inline-flex items-center justify-center gap-2 bg-black dark:bg-soft-white text-white dark:text-black border-2 border-black dark:border-soft-white hover:bg-gray-800 dark:hover:bg-soft-white-hover rounded-full px-6 py-3 text-sm font-medium transition-colors duration-300 hover:scale-105 dark:enhanced-glow dark:hover-enhanced"
+                        >
+                          <ExternalLink className="h-4 w-4" />
+                          Read Paper
+                        </a>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </m.div>
+              ))}
+              <div className="text-center pt-2">
+                <a
+                  href="https://orcid.org/0000-0003-0363-209X"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="View full publication record on ORCID (opens in new tab)"
+                  className="inline-flex items-center gap-1.5 text-sm font-mono text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  <span>ORCID · 0000-0003-0363-209X</span>
+                  <ExternalLink className="h-3.5 w-3.5" />
+                </a>
+              </div>
+            </div>
+          </m.section>
 
           {/* Technical Talks Section */}
-          <motion.section
+          <m.section
             className="mb-16 lg:mb-24"
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.8, duration: 0.4, ease: 'easeOut' }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 'some' }}
+            transition={{ duration: 0.35, ease: 'easeOut' }}
           >
-            <motion.h2
-              className="font-mono text-sm sm:text-base uppercase tracking-[0.2em] text-gray-600 dark:text-gray-400 mb-8 text-center"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.85, duration: 0.3 }}
-            >
+            <h2 className="font-mono text-sm sm:text-base uppercase tracking-[0.2em] text-gray-600 dark:text-gray-400 mb-8 text-center">
               Technical Talks
-            </motion.h2>
+            </h2>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {presentations.map((presentation, index) => (
-                <motion.div
+                <m.div
                   key={index}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 'some' }}
                   transition={{
-                    delay: 1.9 + index * 0.1,
+                    delay: index * 0.06,
                     duration: 0.3,
                     ease: 'easeOut',
                   }}
@@ -614,10 +797,7 @@ const AboutPage = () => {
                       </div>
 
                       {/* Download Button */}
-                      <div className="flex items-center justify-end gap-3">
-                        <span className="text-xs font-mono text-muted-foreground uppercase tracking-wider">
-                          PDF · ~4.3 MB
-                        </span>
+                      <div className="flex items-center justify-end">
                         <a
                           href={presentation.pdfUrl}
                           target="_blank"
@@ -631,17 +811,18 @@ const AboutPage = () => {
                       </div>
                     </CardContent>
                   </Card>
-                </motion.div>
+                </m.div>
               ))}
             </div>
-          </motion.section>
+          </m.section>
 
           {/* Organizations & Community Involvement */}
-          <motion.section
+          <m.section
             className="mb-16 lg:mb-24"
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 2, duration: 0.4, ease: 'easeOut' }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 'some' }}
+            transition={{ duration: 0.35, ease: 'easeOut' }}
           >
             <h2 className="font-mono text-sm sm:text-base uppercase tracking-[0.2em] text-gray-600 dark:text-gray-400 mb-8 text-center">
               Organizations & Community
@@ -668,14 +849,15 @@ const AboutPage = () => {
                 </CardContent>
               </Card>
             </div>
-          </motion.section>
+          </m.section>
 
           {/* Call-to-Action Buttons */}
-          <motion.div
+          <m.div
             className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6 mb-16 lg:mb-24"
-            initial={{ opacity: 0, y: 30, scale: 0.9 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 0.4, delay: 1.9, ease: 'easeOut' }}
+            initial={{ opacity: 0, y: 24, scale: 0.95 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: true, amount: 'some' }}
+            transition={{ duration: 0.35, ease: 'easeOut' }}
           >
             <Link to="/projects" className="w-full sm:w-auto">
               <Button className="w-full sm:w-auto bg-black dark:bg-soft-white text-white dark:text-black border-2 border-black dark:border-soft-white hover:bg-gray-800 dark:hover:bg-soft-white-hover rounded-full px-8 sm:px-12 py-4 sm:py-6 text-lg sm:text-xl font-medium transition-colors duration-500 dark:enhanced-glow dark:hover-enhanced">
@@ -690,11 +872,11 @@ const AboutPage = () => {
                 Get in touch
               </Button>
             </Link>
-          </motion.div>
+          </m.div>
 
           {/* Footer Information Section */}
           <Footer
-            animationDelay={2.0}
+            animationDelay={0.15}
             textColor="text-muted-foreground"
             borderColor="border-border/50"
           />

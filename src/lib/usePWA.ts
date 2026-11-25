@@ -80,12 +80,14 @@ export function usePWA() {
         handleControllerChange
       )
 
-      const swVersion =
-        import.meta.env.VITE_BUILD_VERSION || Date.now().toString()
-      const swUrl = `/service-worker.js?v=${swVersion}`
-
+      // Always register the service worker at a stable URL without query-string
+      // version params. Changing the script URL across builds (e.g. `?v=<build>`)
+      // forces the browser to treat the already-active new worker as a second
+      // update right after reload, causing a double "Update & Reload" prompt.
+      // `updateViaCache: 'none'` + the build-stamped CACHE_VERSION inside
+      // `service-worker.js` handle byte-for-byte update detection cleanly.
       navigator.serviceWorker
-        .register(swUrl, { updateViaCache: 'none' })
+        .register('/service-worker.js', { updateViaCache: 'none' })
         .then(registration => {
           // Check for updates periodically
           const checkForUpdates = () => {
@@ -140,7 +142,7 @@ export function usePWA() {
       // Clean up controllerchange listener
       if (
         controllerChangeListenerRef.current !== null &&
-        'serviceWorker' in navigator
+        navigator.serviceWorker
       ) {
         navigator.serviceWorker.removeEventListener(
           'controllerchange',

@@ -1,5 +1,4 @@
-import React from 'react'
-import { motion } from 'framer-motion'
+import { m } from 'framer-motion'
 import { cn } from '@/lib/utils'
 
 interface FooterProps {
@@ -16,15 +15,16 @@ const Footer = ({
   borderColor = 'border-gray-300/50 dark:border-gray-600/50',
 }: FooterProps) => {
   return (
-    <motion.div
+    <m.div
       className={cn(
         'pt-10 sm:pt-16 border-t transition-colors duration-800',
         borderColor,
         className
       )}
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: animationDelay, duration: 0.4 }}
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 'some' }}
+      transition={{ delay: Math.min(animationDelay, 0.3), duration: 0.35 }}
     >
       <div
         className={cn(
@@ -68,10 +68,7 @@ const Footer = ({
           <p className="text-sm mt-1">Open source</p>
         </div>
       </div>
-      <p className="mt-10 font-mono text-xs tracking-[0.1em] text-gray-600 dark:text-gray-400 transition-colors duration-800">
-        © {new Date().getFullYear()} Aaron Barlow · MIT Licensed
-      </p>
-    </motion.div>
+    </m.div>
   )
 }
 

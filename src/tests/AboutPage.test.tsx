@@ -5,26 +5,73 @@ import { describe, it, expect, vi } from 'vitest'
 import { render, screen } from './utils'
 
 // Mock external dependencies
-vi.mock('framer-motion', () => ({
-  motion: {
-    div: ({ children, ...props }: any) => <div {...props}>{children}</div>,
-    h1: ({ children, ...props }: any) => <h1 {...props}>{children}</h1>,
-    h2: ({ children, ...props }: any) => <h2 {...props}>{children}</h2>,
-    h3: ({ children, ...props }: any) => <h3 {...props}>{children}</h3>,
-    p: ({ children, ...props }: any) => <p {...props}>{children}</p>,
-    span: ({ children, ...props }: any) => <span {...props}>{children}</span>,
-    img: ({ children, ...props }: any) => <img {...props}>{children}</img>,
-    button: ({ children, ...props }: any) => (
-      <button {...props}>{children}</button>
-    ),
-    a: ({ children, ...props }: any) => <a {...props}>{children}</a>,
-    section: ({ children, ...props }: any) => (
-      <section {...props}>{children}</section>
-    ),
-    main: ({ children, ...props }: any) => <main {...props}>{children}</main>,
-  },
-  AnimatePresence: ({ children }: { children: React.ReactNode }) => children,
-}))
+vi.mock('framer-motion', () => {
+  const MOTION_KEYS = new Set([
+    'whileInView',
+    'viewport',
+    'initial',
+    'animate',
+    'transition',
+  ])
+  const stripMotion = ({ children, ...props }: any) => {
+    const rest: Record<string, any> = {}
+    for (const [k, v] of Object.entries(props)) {
+      if (!MOTION_KEYS.has(k)) rest[k] = v
+    }
+    return { children, rest }
+  }
+  const elements = {
+    div: (props: any) => {
+      const { children, rest } = stripMotion(props)
+      return <div {...rest}>{children}</div>
+    },
+    h1: (props: any) => {
+      const { children, rest } = stripMotion(props)
+      return <h1 {...rest}>{children}</h1>
+    },
+    h2: (props: any) => {
+      const { children, rest } = stripMotion(props)
+      return <h2 {...rest}>{children}</h2>
+    },
+    h3: (props: any) => {
+      const { children, rest } = stripMotion(props)
+      return <h3 {...rest}>{children}</h3>
+    },
+    p: (props: any) => {
+      const { children, rest } = stripMotion(props)
+      return <p {...rest}>{children}</p>
+    },
+    span: (props: any) => {
+      const { children, rest } = stripMotion(props)
+      return <span {...rest}>{children}</span>
+    },
+    img: (props: any) => {
+      const { children, rest } = stripMotion(props)
+      return <img {...rest}>{children}</img>
+    },
+    button: (props: any) => {
+      const { children, rest } = stripMotion(props)
+      return <button {...rest}>{children}</button>
+    },
+    a: (props: any) => {
+      const { children, rest } = stripMotion(props)
+      return <a {...rest}>{children}</a>
+    },
+    section: (props: any) => {
+      const { children, rest } = stripMotion(props)
+      return <section {...rest}>{children}</section>
+    },
+    main: (props: any) => {
+      const { children, rest } = stripMotion(props)
+      return <main {...rest}>{children}</main>
+    },
+  }
+  return {
+    motion: elements,
+    m: elements,
+    AnimatePresence: ({ children }: { children: React.ReactNode }) => children,
+  }
+})
 
 vi.mock('lucide-react', () => ({
   ExternalLink: () => <div data-testid="external-link-icon" />,
@@ -33,9 +80,11 @@ vi.mock('lucide-react', () => ({
   FileText: () => <div data-testid="file-text-icon" />,
   Calendar: () => <div data-testid="calendar-icon" />,
   MapPin: () => <div data-testid="map-pin-icon" />,
+  BookOpen: () => <div data-testid="book-open-icon" />,
+  Users: () => <div data-testid="users-icon" />,
 }))
 
-vi.mock('@radix-ui/react-icons', () => ({
+vi.mock('@/components/ui/brand-icons', () => ({
   GitHubLogoIcon: () => <div data-testid="github-icon" />,
 }))
 
@@ -71,7 +120,9 @@ import AboutPage from '../pages/AboutPage'
 describe('AboutPage', () => {
   it('renders main heading', () => {
     render(<AboutPage />)
-    expect(screen.getByText('Aaron Barlow')).toBeInTheDocument()
+    expect(
+      screen.getByRole('heading', { level: 1, name: 'Aaron Barlow' })
+    ).toBeInTheDocument()
   })
 
   it('renders profile image', () => {
@@ -101,6 +152,21 @@ describe('AboutPage', () => {
   it('renders education section', () => {
     render(<AboutPage />)
     expect(screen.getByText('Education')).toBeInTheDocument()
+  })
+
+  it('renders publications section with CUG 2026 paper', () => {
+    render(<AboutPage />)
+    expect(screen.getByText('Publications')).toBeInTheDocument()
+    expect(
+      screen.getByText(
+        'Centralizing Scheduler Policy at the OLCF: A Facility-Wide Approach to Consistent Multi-Workload Configuration'
+      )
+    ).toBeInTheDocument()
+    const paperLink = screen.getByRole('link', { name: /Read Centralizing/i })
+    expect(paperLink).toHaveAttribute(
+      'href',
+      'https://doi.org/10.1145/3837730.3837751'
+    )
   })
 
   it('renders technical talks section', () => {

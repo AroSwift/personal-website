@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react'
-import { motion } from 'framer-motion'
+import { m } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
@@ -143,7 +143,7 @@ function HomePage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-12 items-start mb-6 sm:mb-8 lg:mb-10">
             {/* Interactive Profile Image */}
             <div className="lg:col-span-4 xl:col-span-3 flex justify-center lg:justify-start">
-              <motion.div
+              <m.div
                 ref={profileImageRef}
                 className={cn(
                   'profile-image-container w-44 h-44 sm:w-56 sm:h-56 md:w-64 md:h-64 lg:w-72 lg:h-72 xl:w-80 xl:h-80 rounded-2xl sm:rounded-3xl overflow-hidden bg-muted dark:bg-gray-800 shadow-lg hover:shadow-2xl cursor-pointer relative select-none',
@@ -180,16 +180,16 @@ function HomePage() {
                 }}
               >
                 {/* Guy profile image - shown by default with cartoon-like filters */}
-                <motion.img
+                <m.img
                   src="/profile-guy-800.webp"
                   alt="Profile"
                   width={800}
                   height={800}
                   className="w-full h-full object-cover relative z-10"
                   srcSet="/profile-guy-400.webp 400w, /profile-guy-800.webp 800w"
-                  sizes="(max-width: 640px) 400px, 800px"
+                  sizes="(max-width: 640px) 176px, 320px"
                   loading="eager"
-                  decoding="sync"
+                  decoding="async"
                   fetchPriority="high"
                   style={{
                     userSelect: 'none',
@@ -210,15 +210,16 @@ function HomePage() {
                 />
 
                 {/* Real Aaron image underneath - revealed on hover */}
-                <motion.img
+                <m.img
                   src="/profile-aaron-800.webp"
                   alt="Aaron Barlow"
                   width={800}
                   height={800}
                   className="absolute inset-0 w-full h-full object-cover z-0"
                   srcSet="/profile-aaron-400.webp 400w, /profile-aaron-800.webp 800w"
-                  sizes="(max-width: 640px) 400px, 800px"
+                  sizes="(max-width: 640px) 176px, 320px"
                   loading="lazy"
+                  decoding="async"
                   animate={{
                     opacity: isHovering ? 1 : 0,
                   }}
@@ -228,19 +229,19 @@ function HomePage() {
 
                 {/* Hover hint text */}
                 {isHovering && !isDragging && (
-                  <motion.div
+                  <m.div
                     className="absolute -bottom-12 left-1/2 transform -translate-x-1/2 bg-foreground text-background px-3 py-1 rounded-full text-sm font-medium whitespace-nowrap pointer-events-none"
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                   >
                     It's really me! 👋
-                  </motion.div>
+                  </m.div>
                 )}
 
                 {/* Dragging hint text */}
                 {isDragging && (
-                  <motion.div
+                  <m.div
                     className="absolute -bottom-12 left-1/2 transform -translate-x-1/2 bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-medium whitespace-nowrap pointer-events-none"
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{
@@ -255,13 +256,13 @@ function HomePage() {
                     }}
                   >
                     Surprise! It's really me!
-                  </motion.div>
+                  </m.div>
                 )}
-              </motion.div>
+              </m.div>
             </div>
 
             {/* Intro copy - eyebrow, description, projects link */}
-            <motion.div
+            <m.div
               className="lg:col-span-8 xl:col-span-9 flex flex-col text-center sm:text-left"
               initial={{ opacity: 0, x: 30 }}
               animate={{ opacity: 1, x: 0 }}
@@ -289,11 +290,11 @@ function HomePage() {
                 </Link>{' '}
                 for latest work
               </p>
-            </motion.div>
+            </m.div>
           </div>
 
           {/* Kicker + Main Heading - full width */}
-          <motion.div
+          <m.div
             className="relative z-10"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -306,11 +307,11 @@ function HomePage() {
               I build code that thinks <br className="hidden lg:block" />
               and infrastructure that lasts.
             </h1>
-          </motion.div>
+          </m.div>
 
           {/* Action Buttons */}
           <div className="flex flex-col sm:flex-row justify-center sm:justify-start gap-3 sm:gap-4 relative z-20">
-            <motion.div
+            <m.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: 0.3, ease: 'easeOut' }}
@@ -321,8 +322,8 @@ function HomePage() {
                   Selected Projects
                 </Button>
               </Link>
-            </motion.div>
-            <motion.div
+            </m.div>
+            <m.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: 0.35, ease: 'easeOut' }}
@@ -336,7 +337,7 @@ function HomePage() {
                   About me
                 </Button>
               </Link>
-            </motion.div>
+            </m.div>
           </div>
         </div>
       </main>

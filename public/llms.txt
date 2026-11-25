@@ -1,0 +1,66 @@
+# Aaron Barlow
+
+> HPC Software Engineer at Oak Ridge National Laboratory (National Center for Computational Sciences / OLCF) building software-driven exascale HPC management platforms and agentic AI workflows.
+
+## Canonical Pages
+
+- [Home](https://aaronbarlow.dev/): Overview and introduction
+- [About](https://aaronbarlow.dev/about): Experience, education, peer-reviewed publications, conference presentations, skills, and leadership
+- [Projects](https://aaronbarlow.dev/projects): Professional HPC platforms, enterprise AI systems, and personal agentic AI projects
+- [Contact](https://aaronbarlow.dev/contact): Email and social profiles
+
+## Profiles & Identifiers
+
+- Email: abarlow505@gmail.com
+- ORCID: https://orcid.org/0000-0003-0363-209X
+- GitHub: https://github.com/AroSwift
+- LinkedIn: https://www.linkedin.com/in/allaaronbarlow
+- Resume (PDF): https://aroswift.github.io/resume/resume.pdf
+
+## Experience
+
+- **HPC Software Engineer**, Oak Ridge National Laboratory — National Center for Computational Sciences (Jun 2020 – Present, Remote)
+  - Core developer of RATS (Resource Allocation and Tracking System), the system of record managing canonical state, provisioning, access controls, and scheduler policy across 27+ HPC clusters (including Frontier, the world's first exascale supercomputer) representing $700M+ in compute systems.
+  - Optimized a core policy/filesystem API across 100k+ directories and 27 clusters, cutting RTT from 272s to 0.178s (~1,528x faster).
+  - Delivered and expanded [myOLCF](https://my.olcf.ornl.gov), a researcher self-service portal serving 4,000+ users across 1,000+ HPC campaigns (~99.9% availability).
+  - Co-architected the Smart Facility System delivering 100k time-series records in 87ms.
+  - Delivered AMD ROCm-compatible NVFLARE on Frontier (MI250X GPUs + PyTorch) for privacy-preserving federated learning of medical foundation models.
+- **Machine Learning Engineer Intern**, Bank of America — Consumer and Wealth Management (Jun 2019 – Aug 2019, Los Angeles, CA)
+  - Built an NLP entity extraction pipeline (spaCy, Rasa, Python) for 100M+ bank documents achieving 96% F1 score and $20M+ in annual automation savings.
+- **Software Developer Intern**, Oak Ridge National Laboratory — National Center for Computational Sciences (May 2015 – May 2019, Oak Ridge, TN)
+  - Built operational software for 20+ HPC clusters (~$250M in compute systems), automated policy-aware access communications, and built a WordPress/REST metrics plugin for olcf.ornl.gov.
+
+## Peer-Reviewed Publications
+
+- **Centralizing Scheduler Policy at the OLCF: A Facility-Wide Approach to Consistent Multi-Workload Configuration** (April 26, 2026)
+  - Authors: Aaron Barlow, James Davis, Alan Longcoy
+  - Venue: *Proceedings of the Cray User Group (CUG 2026)*, ACM, pp. 229–237, Nice, France
+  - DOI: https://doi.org/10.1145/3837730.3837751
+  - Summary: Workload-agnostic architecture for facility-wide scheduler policy management using RATS CRM across 24 HPC and support systems at the OLCF spanning Slurm, Kubernetes, LSF, and Moab.
+
+## Conference Presentations
+
+- [Employing a Software-Driven Approach to Scalable HPC System Management (CUG 2025, PDF)](https://aaronbarlow.dev/presentations/cug-2025-hpc-system-management.pdf) — May 2025
+- [Employing DevOps in HPC Operational Management (NLIT 2024, PDF)](https://aaronbarlow.dev/presentations/nlit-2024-devops-hpc.pdf) — April 2024
+
+## Selected Projects
+
+### Work Projects
+- **American Science Cloud Hub & Portal** (2025–Present, NCCS): U.S. DOE multi-facility HPC allocation hub and self-management portal with federated authentication.
+- **[myOLCF](https://my.olcf.ornl.gov)** (2020–Present, NCCS): Researcher self-service and monitoring portal with OIDC auth, allocation management, and GPU/filesystem metrics.
+- **[RATS](https://doi.org/10.1145/3837730.3837751)** (2015–Present, NCCS): Canonical state and centralized scheduler policy platform across 27+ HPC clusters.
+- **Structured Bank Document Extraction Pipeline** (2019–2020, Bank of America): Production NLP workflow for 100M+ digitized records (96% F1, $20M+ annual savings).
+
+### Personal & Agentic AI Projects
+- **[AI Podcast Production Pipeline](https://podcasts.apple.com/us/podcast/understand-all/id1755823546)** (2023): Automated research, scripting, ElevenLabs audio, and RSS publishing (192 episodes).
+- **[Project Cadenza](https://www.youtube.com/@ProjectCadenza)** (2023–Present): Agentic music and video pipeline (150 published music videos).
+- **Anthologia** (2024–Present): Multi-agent narrative video storytelling pipeline (Python, CrewAI, LangChain, ElevenLabs).
+- **AI Event Prediction Trading System** (2024–Present): Real-time sentiment and event-contract trading system for Kalshi (Python, Vector DB, WebSockets).
+- **Automatic E-commerce Product Creation** (2023): Automated product design, copy, pricing, and Etsy publishing (152 products).
+- **HOA Management Platform** (2018–Present): Multi-community property, payments, violations, and elections platform (Ruby on Rails, React, Vite, Inertia).
+
+## Education & Leadership
+
+- **B.S. in Computer Science**, East Tennessee State University (2017–2020, GPA 3.94, Dean's List; ACM President, Ethical Hacking VP)
+- **A.S. in Computer and Information Sciences**, Pellissippi State Community College (2015–2017, GPA 3.84, Dean's List)
+- **Leadership:** ORNL Pathways to Computing Internship Program Workshop Organizer (2022–Present); PEARC Student Program Committee Chair (2021–Present).

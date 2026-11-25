@@ -8,7 +8,7 @@ A modern, responsive personal website for Aaron Barlow built with React, TypeScr
 
 ### Prerequisites
 
-- Bun (version 1.3.10 or higher)
+- Bun (version 1.4.5 or higher)
 - Docker (for deployment)
 
 ### Installation
@@ -229,7 +229,6 @@ personal-website/
 ├── docker-compose.yml                 # Docker Compose for production
 ├── docker-compose.local.yml           # Docker Compose for local testing
 ├── vite.config.ts                     # Vite build configuration
-├── tailwind.config.js                 # Tailwind CSS configuration
 ├── tsconfig.json                      # TypeScript configuration
 ├── tsconfig.node.json                 # TypeScript config for Node/Vite
 ├── eslint.config.js                   # ESLint configuration

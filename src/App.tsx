@@ -5,18 +5,20 @@
  * Copyright (c) 2024-2026 Aaron Barlow. Released under the MIT License.
  */
 
-import React, { useState, useEffect, lazy, Suspense } from 'react'
+import { useState, useEffect, lazy, Suspense } from 'react'
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   useLocation,
 } from 'react-router-dom'
-import { MotionConfig } from 'framer-motion'
-import LoadingScreen from './components/LoadingScreen'
+import { MotionConfig, LazyMotion, domAnimation } from 'framer-motion'
+import { ErrorBoundary } from './components/ErrorBoundary'
 import { PWAStatus } from './components/PWAStatus'
+import { useScrollToTop } from './lib/useScrollToTop'
 
-// Lazy load page components for route-based code splitting
+// Lazy load page components and first-visit splash screen for route-based code splitting
+const LoadingScreen = lazy(() => import('./components/LoadingScreen'))
 const HomePage = lazy(() => import('./pages/HomePage'))
 const AboutPage = lazy(() => import('./pages/AboutPage'))
 const ProjectsPage = lazy(() => import('./pages/ProjectsPage'))
@@ -71,17 +73,17 @@ const metaTagsConfig = {
   '/about': {
     title: 'About Aaron Barlow - HPC Software Engineer',
     description:
-      "Learn about Aaron Barlow's experience as an HPC Software Engineer at Oak Ridge National Laboratory, skills, education, and professional background.",
+      "Learn about Aaron Barlow's experience as an HPC Software Engineer at Oak Ridge National Laboratory, publications, technical talks, skills, and education.",
     keywords:
-      'Aaron Barlow, about, HPC Software Engineer, Oak Ridge National Laboratory, experience, skills, education',
+      'Aaron Barlow, about, HPC Software Engineer, Oak Ridge National Laboratory, publications, CUG 2026, ORCID, experience, skills, education',
     ogTitle: 'About Aaron Barlow - HPC Software Engineer',
     ogDescription:
-      "Learn about Aaron Barlow's experience as an HPC Software Engineer at Oak Ridge National Laboratory, skills, education, and professional background.",
+      "Learn about Aaron Barlow's experience as an HPC Software Engineer at Oak Ridge National Laboratory, publications, technical talks, skills, and education.",
     ogType: 'website',
     twitterCard: 'summary_large_image',
     twitterTitle: 'About Aaron Barlow - HPC Software Engineer',
     twitterDescription:
-      "Learn about Aaron Barlow's experience as an HPC Software Engineer at Oak Ridge National Laboratory, skills, education, and professional background.",
+      "Learn about Aaron Barlow's experience as an HPC Software Engineer at Oak Ridge National Laboratory, publications, technical talks, skills, and education.",
   },
   '/projects': {
     title: 'Projects by Aaron Barlow - AI Automation & HPC Solutions',
@@ -120,6 +122,7 @@ const updateMetaTags = (pathname: string) => {
   // gets the 404 metadata. Without this fallback the previous page's title
   // and canonical persisted on a real 404, since no config is keyed by the
   // bogus pathname and the function bailed out early.
+  const isKnownRoute = pathname in metaTagsConfig && pathname !== '/404'
   const config =
     metaTagsConfig[pathname as keyof typeof metaTagsConfig] ??
     metaTagsConfig['/404']
@@ -166,6 +169,12 @@ const updateMetaTags = (pathname: string) => {
   updateCanonical(fullUrl)
 
   // Update meta tags
+  updateMetaTag(
+    'robots',
+    isKnownRoute
+      ? 'index, follow, max-image-preview:large'
+      : 'noindex, nofollow'
+  )
   updateMetaTag('description', config.description)
   updateMetaTag('keywords', config.keywords)
   updatePropertyMetaTag('og:title', config.ogTitle)
@@ -191,18 +200,7 @@ const MetaTagManager = () => {
 
 // Component to handle scroll to top (must be inside Router context)
 const ScrollToTopInner = () => {
-  const location = useLocation()
-
-  useEffect(() => {
-    // Simple scroll to top with smooth behavior
-    if (typeof window !== 'undefined') {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth',
-      })
-    }
-  }, [location.pathname])
-
+  useScrollToTop()
   return null
 }
 
@@ -240,20 +238,28 @@ const AppContent = () => {
 
   // Show loading screen only for first-time visitors
   if (isLoading && !hasVisited) {
-    return <LoadingScreen onComplete={handleLoadingComplete} />
+    return (
+      <ErrorBoundary>
+        <Suspense fallback={<PageLoader />}>
+          <LoadingScreen onComplete={handleLoadingComplete} />
+        </Suspense>
+      </ErrorBoundary>
+    )
   }
 
   return (
     <div className="App">
-      <Suspense fallback={<PageLoader />}>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/projects" element={<ProjectsPage />} />
-          <Route path="/contact" element={<ContactPage />} />
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-      </Suspense>
+      <ErrorBoundary>
+        <Suspense fallback={<PageLoader />}>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/projects" element={<ProjectsPage />} />
+            <Route path="/contact" element={<ContactPage />} />
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+        </Suspense>
+      </ErrorBoundary>
       <PWAStatus />
     </div>
   )
@@ -262,17 +268,19 @@ const AppContent = () => {
 function App() {
   return (
     <MotionConfig reducedMotion="user">
-      <Router>
-        <a
-          href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground focus:rounded-md focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-ring"
-        >
-          Skip to main content
-        </a>
-        <MetaTagManager />
-        <ScrollToTopInner />
-        <AppContent />
-      </Router>
+      <LazyMotion features={domAnimation} strict>
+        <Router>
+          <a
+            href="#main-content"
+            className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground focus:rounded-md focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-ring"
+          >
+            Skip to main content
+          </a>
+          <MetaTagManager />
+          <ScrollToTopInner />
+          <AppContent />
+        </Router>
+      </LazyMotion>
     </MotionConfig>
   )
 }

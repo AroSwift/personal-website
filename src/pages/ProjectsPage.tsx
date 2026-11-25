@@ -1,5 +1,4 @@
-import React from 'react'
-import { motion } from 'framer-motion'
+import { m } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import { ExternalLink } from 'lucide-react'
@@ -7,20 +6,27 @@ import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
+import ProjectGraphic, { ProjectGraphicId } from '@/components/ProjectGraphic'
 
 // Projects page
 const ProjectsPage = () => {
   // Work Projects
   const workProjects: Array<{
+    graphicId: ProjectGraphicId
+    graphicTag: string
     title: string
     description: string
     tech: string
     category: string
     year: string
     status: string
+    featured?: boolean
     link?: string
+    linkLabel?: string
   }> = [
     {
+      graphicId: 'asc',
+      graphicTag: 'FEDERATED · DOE',
       title: 'American Science Cloud Hub & Portal',
       description:
         "Developing U.S. Department of Energy's American Science Cloud Hub & Portal. The Hub enables backend multi high-performance computing (HPC) facility allocation requests for open science research, provider management, service management, and centralized authoritative control of multiple facility management with federated authentication across HPC facilities under various security enclaves. The Portal provides centralized visualization of HPC utilization and self-management of multi-facility research.",
@@ -30,6 +36,8 @@ const ProjectsPage = () => {
       status: 'In-Development',
     },
     {
+      graphicId: 'myolcf',
+      graphicTag: 'TELEMETRY · 4K+ USERS',
       title: 'myOLCF',
       description:
         'HPC self-service portal that I took over and delivered to production in 4 months, empowering scientists to access HPC services, manage projects, check allocations, and update profiles. Enables allocation requests for open science research and provides comprehensive metrics including burn-down charts across research projects. Features granular reporting on filesystem usage, GPU utilization, aggregated allocation usage across research projects, HPC systems, and users. Implemented OIDC authentication.',
@@ -40,15 +48,21 @@ const ProjectsPage = () => {
       link: 'https://my.olcf.ornl.gov',
     },
     {
+      graphicId: 'rats',
+      graphicTag: '27+ CLUSTERS · EXASCALE',
       title: 'RATS',
       description:
-        "RATS (Resource Allocation and Tracking System) is a comprehensive HPC management and CRM application that maintains canonical state across 27+ HPC clusters including Frontier, the world's first exascale supercomputer. I've contributed to ~35% of the current production codebase. Provisions filesystem directories, UNIX users/groups, access controls, scheduler configuration (SLURM, LSF, MOAB, & KUBE), automated policy enforcement, and more for $700M+ in compute systems.",
+        "RATS (Resource Allocation and Tracking System) is a comprehensive HPC management and CRM application that maintains canonical state across 27+ HPC clusters including Frontier, the world's first exascale supercomputer. I've contributed to ~35% of the current production codebase. Provisions filesystem directories, UNIX users/groups, access controls, scheduler configuration (Slurm, Kubernetes, LSF, & Moab), automated policy enforcement, and more for $700M+ in compute systems.",
       tech: 'Ruby on Rails, CoffeeScript, SQL, LDAP, Kubernetes, Docker',
       category: 'HPC Management',
       year: '2015-Present @ National Center for Computational Sciences',
       status: 'Production',
+      link: 'https://doi.org/10.1145/3837730.3837751',
+      linkLabel: 'CUG 2026 Paper',
     },
     {
+      graphicId: 'bofa-nlp',
+      graphicTag: 'NLP · 96% F1',
       title: 'Structured Bank Document Extraction Pipeline',
       description:
         'Built and productionized a natural language processing workflow for 100M+ documents in response to SEC requirements mandating digitization of Bank of America paper records. The NLP workflow processes digitized records through a pipeline that extracts entities like name components (first name, middle name, last name), routing numbers, statement numbers, record numbers, and address components with 96% F1 score, supporting $20M+ annual automation savings.',
@@ -61,15 +75,51 @@ const ProjectsPage = () => {
 
   // Personal Projects
   const personalProjects: Array<{
+    graphicId: ProjectGraphicId
+    graphicTag: string
     title: string
     description: string
     tech: string
     category: string
     year: string
     status: string
+    featured?: boolean
+    highlights?: Array<{ label: string; detail: string }>
     link?: string
+    linkLabel?: string
   }> = [
     {
+      graphicId: 'turio',
+      graphicTag: 'VLA · DIGITAL TWIN · 30M STEPS',
+      title: 'Turio — Autonomous Hydroponics & AI Robotics',
+      description:
+        'Research and engineering platform combining modular ebb-and-flow hydroponics, embodied AI robotics, and physics-based digital twins to make fresh, locally grown food more affordable. Built around a 6-ft vertical growing rack (3 active levels, 12 trays, 27-gal recirculating reservoir) and an open-source SO-101 robotic arm, Turio explores both hybrid visual robotics and strict vision-language-action (VLA) policies trained from synthetic simulation demonstrations.',
+      tech: 'Python, PyTorch, LeRobot, MuJoCo, Isaac Sim, TypeScript, Raspberry Pi, SmolVLA',
+      category: 'Embodied AI & Robotics',
+      year: '2026-Present',
+      status: 'Research & Development',
+      featured: true,
+      highlights: [
+        {
+          label: 'Modular Hydroponics',
+          detail:
+            'Automated 3-level ebb-and-flow rack with Raspberry Pi valve control for fast-cycling leafy greens and culinary herbs.',
+        },
+        {
+          label: 'Embodied AI & VLA',
+          detail:
+            '3-camera RGB perception with 50×6 action-chunking policies (SmolVLA, ACT, GR00T) and independent safety supervision; 96.9% (62/64) reference policy success across 30M simulation steps.',
+        },
+        {
+          label: 'Agricultural Digital Twin',
+          detail:
+            'TypeScript and YAML simulation engine modeling hydraulics, geometry, lighting, climate, crop biology, and 10-year production economics alongside simulated robotic workcells.',
+        },
+      ],
+    },
+    {
+      graphicId: 'podcast',
+      graphicTag: '192 EPISODES · RSS',
       title: 'AI Podcast Production Pipeline',
       description:
         'Automatic podcast creation system that has produced 192 engaging podcast episodes so far (1.8k downloads, 50+ hours listened) through a fully automated pipeline including research, script writing, refinement, audio creation, to scheduled distribution through high-level configuration. Built with scalability in mind to easily scale up production as needed.',
@@ -80,6 +130,8 @@ const ProjectsPage = () => {
       link: 'https://podcasts.apple.com/us/podcast/understand-all/id1755823546',
     },
     {
+      graphicId: 'ecommerce',
+      graphicTag: '152 PRODUCTS · AUTO',
       title: 'Automatic E-commerce Product Creation',
       description:
         'AI-driven workflow to automate the creation and distribution of products like t-shirts and mugs. The system handles design generation, product descriptions, pricing optimization, and inventory management through an AI-driven workflow. Generated 152 products (~$0.31/unit) with descriptions and printed designs, and auto-publish to Etsy for sale.',
@@ -89,6 +141,8 @@ const ProjectsPage = () => {
       status: 'Production',
     },
     {
+      graphicId: 'anthologia',
+      graphicTag: 'MULTI-AGENT · VIDEO',
       title: 'Anthologia',
       description:
         'Created agentic system that conceptualizes, refines, and scripts intricate narrative ideas, transforming them into videos to create an anthology. Features automated review and critique of video sequences, narration, and sound effects. Due to cost constraints, videos are kept below 5 minutes.',
@@ -98,6 +152,8 @@ const ProjectsPage = () => {
       status: 'Development',
     },
     {
+      graphicId: 'cadenza',
+      graphicTag: '150 VIDEOS · AUDIO',
       title: 'Project Cadenza',
       description:
         'AI-driven workflow creates artists, albums, writes lyrics, generates songs, masters audio, produces art, and auto-uploads to YouTube. Has published 150 music videos with high-level configuration for genre selection, artist persona development, and automated content scheduling.',
@@ -108,6 +164,8 @@ const ProjectsPage = () => {
       link: 'https://www.youtube.com/@ProjectCadenza',
     },
     {
+      graphicId: 'kalshi',
+      graphicTag: 'SIGNALS · WEBSOCKETS',
       title: 'AI Event Prediction Trading System',
       description:
         'AI-driven trading system for prediction markets on Kalshi that identifies short-term inefficiencies, makes predictions of price movement, and places/manages event contracts (probability of an event occurring). Analyzes trends from polarizing platforms and extreme news sources to identify behavioral patterns influencing market sentiment, enabling strategic trade execution based on mass psychology. Generates profit from Kalshi trades but operates at a minor loss due to inference costs.',
@@ -117,6 +175,8 @@ const ProjectsPage = () => {
       status: 'Production',
     },
     {
+      graphicId: 'hoa',
+      graphicTag: 'MULTI-TENANT · SAAS',
       title: 'HOA Management Platform',
       description:
         'Comprehensive HOA management platform serving multiple communities with centralized property management, automated payment processing, violation tracking, maintenance requests, and community communication tools. Includes financial reporting, election management, and public-facing community websites.',
@@ -169,29 +229,29 @@ const ProjectsPage = () => {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col flex-1 justify-start pb-16 sm:pb-24 lg:pb-32 relative z-20">
           {/* Hero Section with Title and Description */}
-          <motion.div
+          <m.div
             className="mb-16 lg:mb-24"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, ease: 'easeOut' }}
           >
-            <motion.p
+            <m.p
               className="font-mono text-xs sm:text-sm uppercase tracking-[0.2em] text-gray-600 dark:text-gray-400 mb-4 sm:mb-6"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.3, delay: 0.05 }}
             >
               Portfolio
-            </motion.p>
-            <motion.h1
+            </m.p>
+            <m.h1
               className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-normal leading-tight tracking-tight mb-8 dark:text-enhanced"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.3, delay: 0.1 }}
             >
               Selected Projects
-            </motion.h1>
-            <motion.p
+            </m.h1>
+            <m.p
               className="text-xl sm:text-2xl text-muted-foreground max-w-3xl leading-relaxed"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -199,30 +259,30 @@ const ProjectsPage = () => {
             >
               A collection of professional work and personal projects spanning
               high-performance computing systems management, software
-              development, and agentic AI workflows. These showcase my
-              professional contributions and my personal exploration of
-              cutting-edge technologies.
-            </motion.p>
-          </motion.div>
+              development, agentic AI workflows, and embodied AI robotics. These
+              showcase my professional contributions and my personal exploration
+              of cutting-edge technologies.
+            </m.p>
+          </m.div>
 
           {/* Work Projects Section */}
-          <motion.section
+          <m.section
             className="mb-16 lg:mb-24"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.4, ease: 'easeOut' }}
           >
-            <motion.h2
+            <m.h2
               className="font-mono text-sm sm:text-base uppercase tracking-[0.2em] text-gray-600 dark:text-gray-400 mb-8 text-center"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.35, duration: 0.3 }}
             >
               Work Projects
-            </motion.h2>
+            </m.h2>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {workProjects.map((project, index) => (
-                <motion.div
+                <m.div
                   key={index}
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -232,7 +292,12 @@ const ProjectsPage = () => {
                     ease: 'easeOut',
                   }}
                 >
-                  <Card className="border-border/50 hover:shadow-lg transition-all duration-300 h-full group hover:border-border dark:card-enhanced dark:hover-enhanced">
+                  <Card className="border-border/50 hover:shadow-lg transition-all duration-300 h-full group hover:border-border dark:card-enhanced dark:hover-enhanced overflow-hidden flex flex-col">
+                    <ProjectGraphic
+                      id={project.graphicId}
+                      tag={project.graphicTag}
+                      wide={project.featured}
+                    />
                     <CardHeader className="pb-4">
                       <div className="flex items-start justify-between mb-3">
                         <div className="flex-1">
@@ -270,10 +335,10 @@ const ProjectsPage = () => {
                             href={project.link}
                             target="_blank"
                             rel="noopener noreferrer"
-                            aria-label={`Visit ${project.title} website (opens in new tab)`}
-                            className="text-muted-foreground hover:text-foreground transition-colors p-1 flex items-center gap-1 text-sm"
+                            aria-label={`${project.linkLabel ?? `Visit ${project.title} website`} (opens in new tab)`}
+                            className="text-muted-foreground hover:text-foreground transition-colors p-1 flex items-center gap-1 text-sm whitespace-nowrap"
                           >
-                            <span>Visit</span>
+                            <span>{project.linkLabel ?? 'Visit'}</span>
                             <ExternalLink className="h-4 w-4" />
                           </a>
                         )}
@@ -297,39 +362,42 @@ const ProjectsPage = () => {
                       </div>
                     </CardContent>
                   </Card>
-                </motion.div>
+                </m.div>
               ))}
             </div>
-          </motion.section>
+          </m.section>
 
           {/* Personal Projects Section */}
-          <motion.section
+          <m.section
             className="mb-16 lg:mb-24"
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6, duration: 0.4, ease: 'easeOut' }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 'some' }}
+            transition={{ duration: 0.35, ease: 'easeOut' }}
           >
-            <motion.h2
-              className="font-mono text-sm sm:text-base uppercase tracking-[0.2em] text-gray-600 dark:text-gray-400 mb-8 text-center"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.65, duration: 0.3 }}
-            >
+            <h2 className="font-mono text-sm sm:text-base uppercase tracking-[0.2em] text-gray-600 dark:text-gray-400 mb-8 text-center">
               Personal Projects
-            </motion.h2>
+            </h2>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {personalProjects.map((project, index) => (
-                <motion.div
+                <m.div
                   key={index}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
+                  className={project.featured ? 'lg:col-span-2' : undefined}
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 'some' }}
                   transition={{
-                    delay: 0.7 + index * 0.05, // Staggered animation delay
+                    delay: index * 0.04,
                     duration: 0.3,
                     ease: 'easeOut',
                   }}
                 >
-                  <Card className="border-border/50 hover:shadow-lg transition-all duration-300 h-full group hover:border-border dark:card-enhanced dark:hover-enhanced">
+                  <Card className="border-border/50 hover:shadow-lg transition-all duration-300 h-full group hover:border-border dark:card-enhanced dark:hover-enhanced overflow-hidden flex flex-col">
+                    <ProjectGraphic
+                      id={project.graphicId}
+                      tag={project.graphicTag}
+                      wide={project.featured}
+                    />
                     <CardHeader className="pb-4">
                       <div className="flex items-start justify-between mb-3">
                         <div className="flex-1">
@@ -367,10 +435,10 @@ const ProjectsPage = () => {
                             href={project.link}
                             target="_blank"
                             rel="noopener noreferrer"
-                            aria-label={`Visit ${project.title} website (opens in new tab)`}
-                            className="text-muted-foreground hover:text-foreground transition-colors p-1 flex items-center gap-1 text-sm"
+                            aria-label={`${project.linkLabel ?? `Visit ${project.title} website`} (opens in new tab)`}
+                            className="text-muted-foreground hover:text-foreground transition-colors p-1 flex items-center gap-1 text-sm whitespace-nowrap"
                           >
-                            <span>Visit</span>
+                            <span>{project.linkLabel ?? 'Visit'}</span>
                             <ExternalLink className="h-4 w-4" />
                           </a>
                         )}
@@ -380,6 +448,20 @@ const ProjectsPage = () => {
                       <p className="text-base leading-relaxed mb-4 text-foreground">
                         {project.description}
                       </p>
+                      {project.highlights && (
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-5 pt-4 border-t border-border/50">
+                          {project.highlights.map(highlight => (
+                            <div key={highlight.label} className="space-y-1">
+                              <h4 className="font-mono text-xs uppercase tracking-[0.14em] text-muted-foreground">
+                                {highlight.label}
+                              </h4>
+                              <p className="text-sm leading-relaxed text-foreground/90">
+                                {highlight.detail}
+                              </p>
+                            </div>
+                          ))}
+                        </div>
+                      )}
                       {/* Technology Stack Badges */}
                       <div className="flex flex-wrap gap-1">
                         {project.tech.split(', ').map((tech, techIndex) => (
@@ -394,34 +476,31 @@ const ProjectsPage = () => {
                       </div>
                     </CardContent>
                   </Card>
-                </motion.div>
+                </m.div>
               ))}
             </div>
-          </motion.section>
+          </m.section>
 
           {/* Key Achievements Section */}
-          <motion.section
+          <m.section
             className="mb-16 lg:mb-24"
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.1, duration: 0.4, ease: 'easeOut' }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 'some' }}
+            transition={{ duration: 0.35, ease: 'easeOut' }}
           >
-            <motion.h2
-              className="font-mono text-sm sm:text-base uppercase tracking-[0.2em] text-gray-600 dark:text-gray-400 mb-8 text-center"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.15, duration: 0.3 }}
-            >
+            <h2 className="font-mono text-sm sm:text-base uppercase tracking-[0.2em] text-gray-600 dark:text-gray-400 mb-8 text-center">
               Achievement Highlights
-            </motion.h2>
+            </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {achievements.map((achievement, index) => (
-                <motion.div
+                <m.div
                   key={index}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 'some' }}
                   transition={{
-                    delay: 1.25 + index * 0.1, // Staggered animation
+                    delay: index * 0.06,
                     duration: 0.3,
                     ease: 'easeOut',
                   }}
@@ -439,17 +518,18 @@ const ProjectsPage = () => {
                       </p>
                     </CardContent>
                   </Card>
-                </motion.div>
+                </m.div>
               ))}
             </div>
-          </motion.section>
+          </m.section>
 
           {/* Call-to-Action Buttons */}
-          <motion.div
+          <m.div
             className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6 mb-16 lg:mb-24"
-            initial={{ opacity: 0, y: 30, scale: 0.9 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 0.4, delay: 1.5, ease: 'easeOut' }}
+            initial={{ opacity: 0, y: 24, scale: 0.95 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: true, amount: 'some' }}
+            transition={{ duration: 0.35, ease: 'easeOut' }}
           >
             <Link to="/about" className="w-full sm:w-auto">
               <Button className="w-full sm:w-auto bg-black dark:bg-soft-white text-white dark:text-black border-2 border-black dark:border-soft-white hover:bg-gray-800 dark:hover:bg-soft-white-hover rounded-full px-8 sm:px-12 py-4 sm:py-6 text-lg sm:text-xl font-medium transition-colors duration-500 dark:enhanced-glow dark:hover-enhanced">
@@ -464,11 +544,11 @@ const ProjectsPage = () => {
                 Get in Touch
               </Button>
             </Link>
-          </motion.div>
+          </m.div>
 
           {/* Footer Information Section */}
           <Footer
-            animationDelay={1.6}
+            animationDelay={0.15}
             textColor="text-muted-foreground"
             borderColor="border-border/50"
           />

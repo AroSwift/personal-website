@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { Moon, Sun, Menu, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
-import { motion, AnimatePresence, useAnimation } from 'framer-motion'
+import { m, AnimatePresence, useAnimation } from 'framer-motion'
 import LinkRoll from '@/components/LinkRoll'
 
 interface HeaderProps {
@@ -218,7 +218,7 @@ const Header = ({ className = '' }: HeaderProps) => {
         className={cn(
           'absolute inset-0 transition-all duration-300 ease-out border-b border-transparent',
           shouldShowBackground &&
-            'backdrop-blur-xl border-border/10 dark:border-border/20 shadow-sm'
+            'backdrop-blur-xl border-border/10 dark:border-border/20 shadow-xs'
         )}
         style={{
           backgroundColor: shouldShowBackground
@@ -243,15 +243,15 @@ const Header = ({ className = '' }: HeaderProps) => {
           isScrolled ? 'py-4 sm:py-5' : 'py-6 sm:py-8 md:py-10'
         )}
       >
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center space-x-2 sm:space-x-3 min-w-0">
           {/* Logo/Name with letter wave animation */}
           <Link
             to="/"
-            className="cursor-pointer"
+            className="cursor-pointer shrink-0"
             aria-label="Aaron Barlow - Home"
           >
-            <span className="font-px-grotesk font-medium tracking-tight hover:text-muted-foreground transition-colors text-xl sm:text-2xl md:text-3xl inline-block">
-              <span className="header-name-text inline-block align-top">
+            <span className="font-px-grotesk font-medium tracking-tight hover:text-muted-foreground transition-colors text-xl sm:text-2xl md:text-3xl inline-block whitespace-nowrap">
+              <span className="header-name-text inline-block align-top whitespace-nowrap">
                 {'Aaron Barlow'.split('').map((letter, index) => (
                   <span
                     key={index}
@@ -272,9 +272,9 @@ const Header = ({ className = '' }: HeaderProps) => {
           {/* Page suffix indicator */}
           <AnimatePresence mode="wait">
             {pageSuffix && (
-              <motion.div
+              <m.div
                 key={pageSuffix}
-                className="flex items-center space-x-3"
+                className="flex items-center space-x-2 sm:space-x-3 whitespace-nowrap"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
@@ -284,7 +284,7 @@ const Header = ({ className = '' }: HeaderProps) => {
                 <span className="text-muted-foreground text-sm sm:text-base">
                   {pageSuffix}
                 </span>
-              </motion.div>
+              </m.div>
             )}
           </AnimatePresence>
         </div>
@@ -308,7 +308,7 @@ const Header = ({ className = '' }: HeaderProps) => {
         </nav>
 
         {/* Mobile Menu Button */}
-        <div className="flex items-center gap-2 ml-16 lg:ml-24 xl:ml-32">
+        <div className="flex items-center gap-2 ml-4 md:ml-16 lg:ml-24 xl:ml-32 shrink-0">
           {/* Dark / light switch icon with enhanced animation */}
           <Button
             variant="ghost"
@@ -317,7 +317,7 @@ const Header = ({ className = '' }: HeaderProps) => {
             aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
             className="rounded-full transition-all duration-500 ease-in-out w-12 h-12 hover:scale-110 active:scale-95"
           >
-            <motion.div
+            <m.div
               animate={themeIconAnimation}
               initial={{ rotate: 0, scale: 1 }}
             >
@@ -326,7 +326,7 @@ const Header = ({ className = '' }: HeaderProps) => {
               ) : (
                 <Sun className="h-5 w-5" />
               )}
-            </motion.div>
+            </m.div>
           </Button>
 
           {/* Mobile menu toggle button */}
@@ -351,7 +351,7 @@ const Header = ({ className = '' }: HeaderProps) => {
       {/* Mobile Menu */}
       <AnimatePresence>
         {mobileMenuOpen && (
-          <motion.div
+          <m.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
@@ -360,8 +360,8 @@ const Header = ({ className = '' }: HeaderProps) => {
             style={{
               backgroundColor:
                 theme === 'dark'
-                  ? 'rgba(5, 5, 5, 0.9) !important'
-                  : 'rgba(248, 250, 252, 0.9) !important',
+                  ? 'rgba(5, 5, 5, 0.9)'
+                  : 'rgba(248, 250, 252, 0.9)',
             }}
           >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4">
@@ -383,7 +383,7 @@ const Header = ({ className = '' }: HeaderProps) => {
                 ))}
               </nav>
             </div>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
     </header>

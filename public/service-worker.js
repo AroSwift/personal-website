@@ -15,13 +15,10 @@ let STATIC_FILES = [
   '/offline.html',
   '/manifest.json',
   '/robots.txt',
-  '/profile-aaron-400.webp',
-  '/profile-aaron-800.webp',
-  // Conference PDFs are deliberately NOT precached: together they are ~8.6 MB
-  // and would download during install on every first visit and every deploy,
-  // competing with the actual page load. They are only reachable behind a
-  // click on the About page, so they cache on demand via the fetch handler.
-  '/icons/favicon.ico',
+  '/profile-guy-400.webp',
+  // profile-guy-800.webp, About page photos, and conference PDFs (~8.4 MB) are
+  // cached on demand via cacheFirst rather than downloaded on install.
+  '/favicon.ico',
   '/icons/favicon-16x16.png',
   '/icons/favicon-32x32.png',
   '/icons/favicon-48x48.png',
@@ -294,71 +291,6 @@ async function networkFirst(request, cacheName) {
     return new Response('Network error', { status: 503 })
   }
 }
-
-// Background sync for offline actions
-self.addEventListener('sync', event => {
-  if (event.tag === 'background-sync') {
-    event.waitUntil(
-      doBackgroundSync().catch(error => {
-        console.error('Service Worker: Background sync failed:', error)
-      })
-    )
-  }
-})
-
-async function doBackgroundSync() {
-  try {
-    // Handle any pending offline actions here
-  } catch (error) {
-    console.error('Service Worker: Background sync error:', error)
-    throw error
-  }
-}
-
-// Push notification handling
-self.addEventListener('push', event => {
-  const options = {
-    body: event.data ? event.data.text() : 'New notification from Aaron Barlow',
-    icon: '/icons/icon-192x192.png',
-    badge: '/icons/icon-72x72.png',
-    vibrate: [100, 50, 100],
-    data: {
-      dateOfArrival: Date.now(),
-      primaryKey: 1,
-    },
-    actions: [
-      {
-        action: 'explore',
-        title: 'View Website',
-        icon: '/icons/icon-192x192.png',
-      },
-      {
-        action: 'close',
-        title: 'Close',
-        icon: '/icons/icon-192x192.png',
-      },
-    ],
-  }
-
-  event.waitUntil(
-    self.registration.showNotification('Aaron Barlow', options).catch(error => {
-      console.error('Service Worker: Failed to show notification:', error)
-    })
-  )
-})
-
-// Notification click handling
-self.addEventListener('notificationclick', event => {
-  event.notification.close()
-
-  if (event.action === 'explore') {
-    event.waitUntil(
-      clients.openWindow('/').catch(error => {
-        console.error('Service Worker: Failed to open window:', error)
-      })
-    )
-  }
-})
 
 // Message handling for communication with main thread
 self.addEventListener('message', event => {
