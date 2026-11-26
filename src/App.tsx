@@ -116,15 +116,21 @@ const metaTagsConfig = {
   },
 }
 
+// Normalize trailing slashes so `/about/` resolves to `/about` while keeping `/` intact
+const normalizePathname = (pathname: string) =>
+  pathname.length > 1 ? pathname.replace(/\/+$/, '') || '/' : pathname
+
 // Function to update meta tags
 const updateMetaTags = (pathname: string) => {
+  const normalizedPath = normalizePathname(pathname)
   // Any unmatched path is rendered by the catch-all `path="*"` route, so it
   // gets the 404 metadata. Without this fallback the previous page's title
   // and canonical persisted on a real 404, since no config is keyed by the
   // bogus pathname and the function bailed out early.
-  const isKnownRoute = pathname in metaTagsConfig && pathname !== '/404'
+  const isKnownRoute =
+    normalizedPath in metaTagsConfig && normalizedPath !== '/404'
   const config =
-    metaTagsConfig[pathname as keyof typeof metaTagsConfig] ??
+    metaTagsConfig[normalizedPath as keyof typeof metaTagsConfig] ??
     metaTagsConfig['/404']
 
   // Update document title
@@ -164,8 +170,8 @@ const updateMetaTags = (pathname: string) => {
     meta.content = content
   }
 
-  // Update canonical URL based on current path
-  const fullUrl = `https://aaronbarlow.dev${pathname}`
+  // Update canonical URL based on normalized path
+  const fullUrl = `https://aaronbarlow.dev${normalizedPath}`
   updateCanonical(fullUrl)
 
   // Update meta tags
